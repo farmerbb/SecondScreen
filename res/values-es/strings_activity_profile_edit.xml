@@ -9,7 +9,6 @@
 
     <!-- Titles and descriptions -->
     <string name="pref_title_profile_name">Nombre de perfil</string>
-    <string name="pref_default_display_name">Nuevo Perfil</string>
     <string name="pref_title_resolution">Resolución</string>
     <string name="pref_title_dpi">Densidad</string>
     <string name="pref_title_overscan_settings">Ajustar bordes (overscan)</string>

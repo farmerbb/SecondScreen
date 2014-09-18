@@ -10,6 +10,7 @@
     <string name="action_load">Načítať</string>
     <string name="action_new">Nový profil</string>
     <string name="action_quick">Akcie</string>
+    <string name="action_save">Uložiť</string>
     <string name="action_save_reload">Uložiť a načítať znovu</string>
     <string name="action_save_only">Iba uložiť</string>
     <string name="action_ok">OK</string>
@@ -21,7 +22,6 @@
     <string name="backlight_off_message">Niektoré kernely môžu zabrániť úplnému vypnutiu podsvietenia.</string>
     <string name="backlight_off_message_samsung">Niektoré kernely môžu zabrániť úplnému vypnutiu podsvietenia.</string>
     <string name="blacklisted">Pre ochranu vašeho zariadenia, SecondScreen nedovolí uložiť tento profil so zvoleným rozlíšením a hustotou.</string>
-    <string name="changes_discarded">Zmeny zrušené</string>
     <string name="decline">Nesúhlasím</string>
     <string name="deleting_current_profile">Aktívny profil nie je možné vymazať</string>
     <string name="dialog_about_message">SecondScreen: optimalizujte váš Android pre veľkú obrazovku\n\n&#169; 2014 Braden Farmer\n\nTáto aplikácia používa kód z nasledujúcich open source projektov, všetky licencované pod <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2.0</a>:\n\n&#8226; <a href="http://github.com/farmerbb/Notepad">Notepad</a>\n\n&#8226; <a href="http://jgilfelt.github.io/android-actionbarstylegenerator/">Android Action Bar Style Generator</a>\n\n&#8226; <a href="http://github.com/Chainfire/libsuperuser">libsuperuser</a>\n\n&#8226; <a href="http://www.twofortyfouram.com/developer.html">Locale Developer API</a></string>
@@ -36,9 +36,9 @@
     <string name="dialog_upgrade_message">SecondScreen nebol testovaný na tejto verzia Androida. Môže padať alebo sa správať nečakane.</string>
     <string name="display_disconnected">Vypnúť profil</string>
     <string name="dpi">dpi</string>
+    <string name="editing_current_profile">Tento profil je momentálne aktívny. Chcete ho načítať znovu pre aplikovanie zmien?</string>
     <string name="empty_profile_name">Prosím, zadajte meno!</string>
     <string name="enter_profile_name">Zadajte meno profilu</string>
-    <string name="editing_current_profile">Tento profil je momentálne aktívny. Chcete ho načítať znovu pre aplikovanie zmien?</string>
     <string name="error_loading_list">Chyba pri načítaní zoznamu profilov!</string>
     <string name="error_loading_profile">Chyba pri načítaní profilu!</string>
     <string name="expert_mode">Expert mode</string>
@@ -76,8 +76,10 @@
     <string name="quick_actions_message">Použite rýchle akcie pre prístup k funkciám SecondScreen bez potreby vytvoriť nový profil alebo dočasne upraviť existujúci aktívny profil.</string>
     <string name="recreate_shortcut">Profil nebol nájdený!\n\nProsím, vymažte alebo vytvorte znovu tento odkaz.</string>
     <string name="reload_profile">Načítať aktívny profil znovu pre aplikovanie zmien?</string>
+    <string name="requesting_superuser">SecondScreen is requesting superuser access&#8230; please wait.</string>
     <string name="safeguard_title">POZOR</string>
     <string name="select_profile">Zvoľte profil</string>
+    <string name="select_screen_type">Select screen type:</string>
     <string name="show_list">Zobraziť zoznam profilov</string>
     <string name="sorry">Prepáčte, táto funkcia je dostupná len v platenej verzii aplikácie SecondScreen!</string>
     <string name="this_profile">Tento profil</string>
@@ -87,10 +89,15 @@
     <string name="upgrade_option_title">Kúpiť plnú verziu</string>
     <string name="upgrade_option_google_play">Kúpiť v Obchode Play</string>
     <string name="upgrade_option_promo_code">Zadať promo kód</string>
-    <string name="monitor_1080p">Monitor (1080p)</string>
-    <string name="tv_720p">TV (720p)</string>
-    <string name="tv_1080p">TV (1080p)</string>
     <string name="welcome">Vitajte v aplikácii SecondScreen</string>
     <string name="welcome_toast">Vytvorte nový profil kliknutím na tlačidlo Nový profil alebo vyskúšajte niektorý prednastavený profil!</string>
+
+    <string-array name="new_profile_templates">
+        <item>TV (1080p)</item>
+        <item>TV (720p)</item>
+        <item>Monitor (1080p)</item>
+        <item>AppRadio</item>
+        <item>Other / None</item>
+    </string-array>
 
 </resources>

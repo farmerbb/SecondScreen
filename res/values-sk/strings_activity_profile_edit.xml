@@ -9,7 +9,6 @@
 
     <!-- Titles and descriptions -->
     <string name="pref_title_profile_name">Meno profilu</string>
-    <string name="pref_default_display_name">Nový profil</string>
     <string name="pref_title_resolution">Rozlíšenie</string>
     <string name="pref_title_dpi">Hustota</string>
     <string name="pref_title_overscan_settings">Nastavenia overscan</string>
