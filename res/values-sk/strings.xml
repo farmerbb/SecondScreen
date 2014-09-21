@@ -72,7 +72,7 @@
     <string name="reload_profile">Načítať aktívny profil znovu pre aplikovanie zmien?</string>
     <string name="safeguard_title">POZOR</string>
     <string name="select_profile">Zvoľte profil</string>
-    <string name="select_screen_type">Zvoľte type obrazovky:</string>
+    <string name="select_screen_type">Zvoľte typ obrazovky:</string>
     <string name="show_list">Zobraziť zoznam profilov</string>
     <string name="this_profile">Tento profil</string>
     <string name="turn_off">Vypnúť</string>
