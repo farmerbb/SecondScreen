@@ -15,14 +15,14 @@
     <string name="action_save_only">Iba uložiť</string>
     <string name="action_ok">OK</string>
     <string name="action_settings">Nastavenia</string>
-    <string name="am_restart_warning">This option is not recommended when mirroring to wireless displays</string>
+    <string name="am_restart_warning">Toto nastavenie nie je odporúčané pri bezdrôtovom zrkadlení</string>
     <string name="any_profile">Žiadny profil</string>
     <string name="app_name">SecondScreen</string>
     <string name="available_actions">Dostupné akcie</string>
     <string name="backlight_off_message">Niektoré kernely môžu zabrániť úplnému vypnutiu podsvietenia.</string>
     <string name="backlight_off_message_samsung">Niektoré kernely môžu zabrániť úplnému vypnutiu podsvietenia.</string>
     <string name="blacklisted">Pre ochranu vašeho zariadenia, SecondScreen nedovolí uložiť tento profil so zvoleným rozlíšením a hustotou.</string>
-    <string name="both_versions_installed">Please uninstall this version of SecondScreen and use the previously installed version instead.</string>
+    <string name="both_versions_installed">Prosím, odinštalujte túto verziu aplikácie SecondScreen a používajte predtým nainštalovanú verziu.</string>
     <string name="decline">Nesúhlasím</string>
     <string name="deleting_current_profile">Aktívny profil nie je možné vymazať</string>
     <string name="dialog_about_message">SecondScreen: optimalizujte váš Android pre veľkú obrazovku\n\n&#169; 2014 Braden Farmer\n\nTáto aplikácia používa kód z nasledujúcich open source projektov, všetky licencované pod <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2.0</a>:\n\n&#8226; <a href="http://github.com/farmerbb/Notepad">Notepad</a>\n\n&#8226; <a href="http://jgilfelt.github.io/android-actionbarstylegenerator/">Android Action Bar Style Generator</a>\n\n&#8226; <a href="http://github.com/Chainfire/libsuperuser">libsuperuser</a>\n\n&#8226; <a href="http://www.twofortyfouram.com/developer.html">Locale Developer API</a></string>
@@ -42,9 +42,9 @@
     <string name="enter_profile_name">Zadajte meno profilu</string>
     <string name="error_loading_list">Chyba pri načítaní zoznamu profilov!</string>
     <string name="error_loading_profile">Chyba pri načítaní profilu!</string>
-    <string name="expert_mode">Enable expert mode</string>
-    <string name="expert_mode_dialog">Expert mode overrides SecondScreen\'s internal blacklist of unsafe resolution and density combinations. Only use this option if you know exactly what you are doing. Safe mode is strongly recommended when using this option.\n\nReally enable expert mode?</string>
-    <string name="expert_mode_summary">Allow any user-defined value to be set for resolution and DPI</string>
+    <string name="expert_mode">Povoliť režim experta</string>
+    <string name="expert_mode_dialog">Režim experta povolí nebezpečné kombinácie rozlíšenia a hustoty. Používajte túto funkciu iba ak presne viete čo robíte. Odporúča sa povoliť bezpečný režim pri používaní tejto funkcie.\n\nNaozaj povoliť režim experta?</string>
+    <string name="expert_mode_summary">Povolí nastaviť akékoľvek užívateľom definované hodnoty pre rozlíšenie a DPI</string>
     <string name="failed_to_save">Chyba: Profil sa nepodarilo uložiť!</string>
     <string name="first_run">Táto aplikácia VYŽADUJE root prístup a je IBA pre zariadenia s AOSP alebo stock Android ROM! Funkčnosť na iných zariadeniach nie je zaručená.\n\nSte VÝHRADNE zodpovedný za to, ako používate túto aplikáciu a na akom zariadení ju používate.</string>
     <string name="hdmi_checkbox">Spustiť SecondScreen po pripojení HDMI</string>
@@ -56,7 +56,7 @@
     <string name="notification">SecondScreen je aktívny</string>
     <string name="new_device_message">Zdá sa, že SecondScreen bol obnovený zo zálohy.\n\nAk je toto iné zariadenie, prosím, vymažte údaje aplikácie a znovu spustite SecondScreen pre zabezpečenie správneho fungovania (inak môže dôjsť k problémom).</string>
     <string name="no_profiles_found">Neboli nájdené žiadne profily</string>
-    <string name="no_superuser">Unable to obtain superuser permissions!</string>
+    <string name="no_superuser">Nemožno získať superuser prístup!</string>
     <string name="pref_description_safe_mode">Ak je povolený bezpečný režim, profil neostane po reštartovaní aktívny.</string>
 	<string name="pref_title_hdmi">Spustiť po pripojení HDMI</string>
     <string name="pref_title_hdmi_select_profile">Načítať profil</string>
@@ -72,7 +72,7 @@
     <string name="reload_profile">Načítať aktívny profil znovu pre aplikovanie zmien?</string>
     <string name="safeguard_title">POZOR</string>
     <string name="select_profile">Zvoľte profil</string>
-    <string name="select_screen_type">Select screen type:</string>
+    <string name="select_screen_type">Zvoľte typ obrazovky:</string>
     <string name="show_list">Zobraziť zoznam profilov</string>
     <string name="this_profile">Tento profil</string>
     <string name="turn_off">Vypnúť</string>
@@ -85,7 +85,7 @@
         <item>TV (720p)</item>
         <item>Monitor (1080p)</item>
         <item>AppRadio</item>
-        <item>Other / None</item>
+        <item>Iné / Žiadne</item>
     </string-array>
 
 </resources>
