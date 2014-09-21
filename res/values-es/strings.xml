@@ -22,6 +22,7 @@
     <string name="backlight_off_message">Algunos núcleos pueden evitar que la retroiluminación se apague por completo.</string>
     <string name="backlight_off_message_samsung">Algunos núcleos pueden evitar que la retroiluminación se apague por completo.</string>
     <string name="blacklisted">Para proteger su dispositivo, SecondScreen no le permitirá guardar este perfil con la resolución y la densidad seleccionada.</string>
+    <string name="both_versions_installed">Please uninstall this version of SecondScreen and use the previously installed version instead.</string>
     <string name="decline">No acepto</string>
     <string name="deleting_current_profile">No se puede eliminar el perfil activo</string>
     <string name="dialog_about_message">SecondScreen: Optimiza tu Android para las grandes pantallas\n\n&#169; 2014 Braden Farmer\n\nEsta aplicación utiliza el código de los siguientes proyectos de código abierto, todos registrados bajo <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2.0</a>:\n\n&#8226; <a href="http://github.com/farmerbb/Notepad">Notepad</a>\n\n&#8226; <a href="http://jgilfelt.github.io/android-actionbarstylegenerator/">Android Action Bar Style Generator</a>\n\n&#8226; <a href="http://github.com/Chainfire/libsuperuser">libsuperuser</a>\n\n&#8226; <a href="http://www.twofortyfouram.com/developer.html">Locale Developer API</a></string>
@@ -41,17 +42,13 @@
     <string name="enter_profile_name">Introduzca el nombre del perfil</string>
     <string name="error_loading_list">¡No se puede cargar la lista de perfiles!</string>
     <string name="error_loading_profile">¡Error al cargar el perfil!</string>
-    <string name="expert_mode">Expert mode</string>
-    <string name="expert_mode_summary">Allow any user-defined value to be set for resolution and DPI. Safe mode is strongly recommended when using this option.</string>
+    <string name="expert_mode">Enable expert mode</string>
+    <string name="expert_mode_dialog">Expert mode overrides SecondScreen\'s internal blacklist of unsafe resolution and density combinations. Only use this option if you know exactly what you are doing. Safe mode is strongly recommended when using this option.\n\nReally enable expert mode?</string>
+    <string name="expert_mode_summary">Allow any user-defined value to be set for resolution and DPI</string>
     <string name="failed_to_save">¡Error: Fallo al guardar el perfil!</string>
     <string name="first_run">¡Esta aplicación REQUIERE acceso de root para funcionar y es sólo para dispositivos con AOSP o acciones ROMs Android! No se garantiza que funcione correctamente en otros dispositivos.\n\nUsted es el ÚNICO RESPONSABLE de la forma en que utilice esta aplicación, del tipo de dispositivo que se utiliza, y así como de los métodos que utilice para lograr el acceso root en su dispositivo.</string>
-    <string name="free">(Gratis)</string>
-    <string name="full_version_title">Obtenga funciones adicionales</string>
-    <string name="full_version_description">Actualizar a la versión completa de SecondScreen para tener acceso a estas características:\n\n&#8226; Atajos de Pantalla\n&#8226; Auto-Inicio al conectar HDMI\n&#8226; Integración Tasker\n&#8226; Acciones rápidas</string>
     <string name="hdmi_checkbox">Inicie SecondScreen cuando el HDMI este conectado</string>
     <string name="hdmi_connected">HDMI conectado</string>
-    <string name="import_message">¡Gracias por comprar la versión completa de SecondScreen!\n\nPresione \"Importar\" para transferir sus perfiles y opciones actuales sobre. La versión gratuita también será desinstalado de su dispositivo.</string>
-    <string name="importing_profiles">Importación de perfiles y opciones&#8230; por favor espera.</string>
     <string name="label_load_profile">SecondScreen - Cargar Perfiles</string>
     <string name="label_profile_active">SecondScreen - Profil Activo</string>
     <string name="label_quick_actions">SecondScreen - Aciones Rapidas</string>
@@ -70,27 +67,19 @@
     <string name="profile_saved">Perfil guardado</string>
     <string name="profile_helper_text">Conecta la pantalla y luego seleccione un perfil.\nMantenga presionado el perfil para acceder a su configuración.</string>
     <string name="profile_helper_text_alt">El perfil se destaca a continuación está activo actualmente.\nSelecciona su nombre para cerrarlo.</string>
-    <string name="promo_code_blurb">Si ha recibido un código de promocional, introdúzcalo aquí para desbloquear la versión completa.</string>
-    <string name="promo_code_invalid">¡Código promocional no válido!</string>
-    <string name="promo_code_valid">¡Código promocional aceptado! Todas las características SecondScreen ahora han sido desbloqueados.</string>
     <string name="quick_actions_message">Utilice acciones rápidas para acceder a la funcionalidad SecondScreen sin crear un nuevo perfil o modificar temporalmente un perfil de ejecución existente sin modificarlo.</string>
     <string name="recreate_shortcut">¡Perfil No encontrado!\n\nPor favor, vuelva a crear o eliminar este acceso directo.</string>
     <string name="reload_profile">¿Desea actualizar el perfil activo para aplicar los ajustes modificados?</string>
-    <string name="requesting_superuser">SecondScreen is requesting superuser access&#8230; please wait.</string>
     <string name="safeguard_title">ATENCIÓN</string>
     <string name="select_profile">Seleccione el perfil</string>
     <string name="select_screen_type">Select screen type:</string>
     <string name="show_list">Mostrar lista de perfiles</string>
-    <string name="sorry">¡Lo sentimos, esta función sólo está disponible en la versión completa de SecondScreen!</string>
     <string name="this_profile">Este perfil</string>
     <string name="turn_off">Cerrar</string>
     <string name="turning_off_profile">Apagando SecondScreen&#8230;</string>
     <string name="unable_to_initialize">¡No se puede inicializar perfiles!</string>
-    <string name="upgrade_option_title">Actualizar</string>
-    <string name="upgrade_option_google_play">Compra en Google Play</string>
-    <string name="upgrade_option_promo_code">Introduce el código de promocional</string>
     <string name="welcome">Bienvenido a SecondScreen</string>
-    <string name="welcome_toast">¡Crear un nuevo perfil pulsando el botón Nuevo perfil en la parte superior, o probar uno de estos ejemplos de perfiles!</string>
+    <string name="welcome_toast">¡Crear un nuevo perfil pulsando el botón Nuevo perfil en la parte superior!</string>
 
     <string-array name="new_profile_templates">
         <item>TV (1080p)</item>

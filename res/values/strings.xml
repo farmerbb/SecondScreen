@@ -22,7 +22,8 @@
     <string name="backlight_off_message">NOTE: Some custom kernels may prevent the backlight from turning off completely with this option.</string>
     <string name="backlight_off_message_samsung">NOTE: On Samsung devices, the backlight may not turn off completely with this option.</string>
     <string name="blacklisted">To protect your device, SecondScreen will not allow you to save this profile with the selected resolution and density.</string>
-    <string name="decline">I Decline</string>
+    <string name="both_versions_installed">Please uninstall this version of SecondScreen and use the previously installed version instead.</string>
+	<string name="decline">I Decline</string>
     <string name="deleting_current_profile">Cannot delete the currently active profile</string>
     <string name="dialog_about_message">SecondScreen: optimize your Android for the big screen\n\n&#169; 2014 Braden Farmer\n\nThis app uses code from the following open source projects, all licensed under <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2.0</a>:\n&#8226; <a href="http://github.com/farmerbb/Notepad">Notepad</a>\n&#8226; <a href="http://jgilfelt.github.io/android-actionbarstylegenerator/">Android Action Bar Style Generator</a>\n&#8226; <a href="http://github.com/Chainfire/libsuperuser">libsuperuser</a>\n&#8226; <a href="http://www.twofortyfouram.com/developer.html">Locale Developer API</a>\n\nThis app uses graphical assets from the following sources, licensed under <a href="http://creativecommons.org/licenses/by/3.0/">CC-BY-3.0</a>:\n&#8226; <a href="http://developer.android.com/distribute/tools/promote/brand.html">Android robot (Google)</a>\n&#8226; <a href="http://romannurik.github.io/AndroidAssetStudio/">Android Asset Studio"</a></string>
     <string name="dialog_about_title">About SecondScreen</string>
@@ -41,17 +42,13 @@
     <string name="enter_profile_name">Enter profile name</string>
     <string name="error_loading_list">Error loading list of profiles!</string>
     <string name="error_loading_profile">Error loading profile!</string>
-    <string name="expert_mode">Expert mode</string>
-    <string name="expert_mode_summary">Allow any user-defined value to be set for resolution and DPI. Safe mode is strongly recommended when using this option.</string>
+    <string name="expert_mode">Enable expert mode</string>
+    <string name="expert_mode_dialog">Expert mode overrides SecondScreen\'s internal blacklist of unsafe resolution and density combinations. Only use this option if you know exactly what you are doing. Safe mode is strongly recommended when using this option.\n\nReally enable expert mode?</string>
+    <string name="expert_mode_summary">Allow any user-defined value to be set for resolution and DPI</string>
     <string name="failed_to_save">Error: Failed to save profile!</string>
     <string name="first_run">This app REQUIRES root access to operate and is ONLY for devices with AOSP or stock (Google) Android ROMs! It is not guaranteed to function properly on devices with manufacturer-skinned ROMs.\n\nYou are SOLELY held responsible for how you use this app, for the type of device you use it on, and for the methods of obtaining root access on your device.</string>
-    <string name="free">(Free)</string>
-    <string name="full_version_title">Get additional features</string>
-    <string name="full_version_description">Upgrade to the full version of SecondScreen to get access to these features:\n\n&#8226; Homescreen shortcuts\n&#8226; Auto-start on display connection\n&#8226; Tasker integration\n&#8226; Quick Actions</string>
     <string name="hdmi_checkbox">Start SecondScreen when connecting a display</string>
     <string name="hdmi_connected">Display connected</string>
-    <string name="import_message">Thanks for purchasing the full version of SecondScreen!\n\nPress \"Import\" to transfer your existing profiles and settings over. The free version will also be uninstalled from your device.</string>
-    <string name="importing_profiles">Importing profiles and settings&#8230; please wait.</string>
     <string name="label_load_profile">SecondScreen - Load Profile</string>
     <string name="label_profile_active">SecondScreen - Profile Active</string>
     <string name="label_quick_actions">SecondScreen - Quick Actions</string>
@@ -70,27 +67,19 @@
     <string name="profile_saved">Profile saved</string>
     <string name="profile_helper_text">Connect your display, then tap a profile name to load it.\nLong-press a profile name to edit its settings.</string>
     <string name="profile_helper_text_alt">The highlighted profile below is currently active.\nTap its name to turn it off.</string>
-    <string name="promo_code_blurb">If you\'ve received a promo code, enter it here to unlock the full version.</string>
-    <string name="promo_code_invalid">Invalid promo code!</string>
-    <string name="promo_code_valid">Promo code accepted! All SecondScreen features have now been unlocked.</string>
     <string name="quick_actions_message">Use Quick Actions to access SecondScreen functionality without creating a new profile, or temporarily modify an existing running profile without editing it.</string>
     <string name="recreate_shortcut">Profile not found!\n\nPlease recreate or delete this shortcut.</string>
     <string name="reload_profile">Reload the currently active profile to apply changed settings?</string>
-    <string name="requesting_superuser">SecondScreen is requesting superuser access&#8230; please wait.</string>
     <string name="safeguard_title">ATTENTION</string>
     <string name="select_profile">Select profile</string>
     <string name="select_screen_type">Select screen type:</string>
     <string name="show_list">Show list of profiles</string>
-    <string name="sorry">Sorry, this feature is only available in the full version of SecondScreen!</string>
     <string name="this_profile">This profile</string>
     <string name="turn_off">Turn Off</string>
     <string name="turning_off_profile">Turning SecondScreen off&#8230;</string>
     <string name="unable_to_initialize">Unable to initialize profiles!</string>
-    <string name="upgrade_option_title">Upgrade</string>
-    <string name="upgrade_option_google_play">Buy from Google Play</string>
-    <string name="upgrade_option_promo_code">Enter promo code</string>
     <string name="welcome">Welcome to SecondScreen</string>
-    <string name="welcome_toast">Create a new profile by tapping the New Profile button at the top, or try one of these example profiles!</string>
+    <string name="welcome_toast">Create a new profile by tapping the New Profile button at the top!</string>
 
     <string-array name="new_profile_templates">
         <item>TV (1080p)</item>
