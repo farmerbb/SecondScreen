@@ -65,8 +65,16 @@
 	<string name="pref_title_safe_mode">Mode sécurisé</string>
 	<string name="profile_deleted">Profile supprimé</string>
     <string name="profile_saved">Profile sauvegardé</string>
+    <string name="profile_settings">Profile Settings</string>
     <string name="profile_helper_text">Connectez votre écran, puis appuyez sur un profile pour le charger.\nAppuyez longuement sur le nom d\'un profile pour editer ses paramètres.</string>
     <string name="profile_helper_text_alt">Le profile selectionné ci dessous est actuellement actif.\nAppuyez sur son nom pour le désactiver.</string>
+    <string name="profile_view_bluetooth_on">Activer le Bluetooth</string>
+    <string name="profile_view_daydreams_on">Activer Daydreams</string>
+    <string name="profile_view_rotation_autorotate">Rotation (auto-rotate)</string>
+    <string name="profile_view_rotation_landscape">Rotation (landscape)</string>
+    <string name="profile_view_ui_refresh_systemui">UI refresh (System UI)</string>
+    <string name="profile_view_ui_refresh_soft_reboot">UI refresh (soft reboot)</string>
+    <string name="profile_view_wifi_on">Activer le Wi-Fi</string>
     <string name="quick_actions_message">Utilisez les actions rapides pour accéder à des fontionnalités de SecondScreen sans créer un nouveau profile, ou pour modifier temporairement un profile actif sans l\'editer.</string>
     <string name="recreate_shortcut">Profile non trouvé!\n\nVeuillez recréer ou supprimer ce raccourcis.</string>
     <string name="reload_profile">Recharger le profile actuellement actif pour appliquer les paramètres modifiés?</string>

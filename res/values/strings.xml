@@ -65,8 +65,16 @@
 	<string name="pref_title_safe_mode">Enable safe mode</string>
 	<string name="profile_deleted">Profile deleted</string>
     <string name="profile_saved">Profile saved</string>
+    <string name="profile_settings">Profile Settings</string>
     <string name="profile_helper_text">Connect your display, then tap a profile name to load it.\nLong-press a profile name to edit its settings.</string>
     <string name="profile_helper_text_alt">The highlighted profile below is currently active.\nTap its name to turn it off.</string>
+    <string name="profile_view_bluetooth_on">Bluetooth on</string>
+    <string name="profile_view_daydreams_on">Daydreams on</string>
+    <string name="profile_view_rotation_autorotate">Rotation (auto-rotate)</string>
+    <string name="profile_view_rotation_landscape">Rotation (landscape)</string>
+    <string name="profile_view_ui_refresh_systemui">UI refresh (System UI)</string>
+    <string name="profile_view_ui_refresh_soft_reboot">UI refresh (soft reboot)</string>
+    <string name="profile_view_wifi_on">Wi-Fi on</string>
     <string name="quick_actions_message">Use Quick Actions to access SecondScreen functionality without creating a new profile, or temporarily modify an existing running profile without editing it.</string>
     <string name="recreate_shortcut">Profile not found!\n\nPlease recreate or delete this shortcut.</string>
     <string name="reload_profile">Reload the currently active profile to apply changed settings?</string>
