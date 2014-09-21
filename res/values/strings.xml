@@ -77,7 +77,6 @@
     <string name="this_profile">This profile</string>
     <string name="turn_off">Turn Off</string>
     <string name="turning_off_profile">Turning SecondScreen off&#8230;</string>
-    <string name="unable_to_initialize">Unable to initialize profiles!</string>
     <string name="welcome">Welcome to SecondScreen</string>
     <string name="welcome_toast">Create a new profile by tapping the New Profile button at the top!</string>
 

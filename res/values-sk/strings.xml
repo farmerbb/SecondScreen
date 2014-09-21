@@ -77,7 +77,6 @@
     <string name="this_profile">Tento profil</string>
     <string name="turn_off">Vypnúť</string>
     <string name="turning_off_profile">Vypínanie SecondScreen&#8230;</string>
-    <string name="unable_to_initialize">Nemožno inicializovať profily!</string>
     <string name="welcome">Vitajte v aplikácii SecondScreen</string>
     <string name="welcome_toast">Vytvorte nový profil kliknutím na tlačidlo Nový profil alebo vyskúšajte niektorý prednastavený profil!</string>
 

@@ -77,7 +77,6 @@
     <string name="this_profile">Ce profile</string>
     <string name="turn_off">Désactiver</string>
     <string name="turning_off_profile">Désactivation de SecondScreen &#8230;</string>
-    <string name="unable_to_initialize">Impossible d\'initialiser les profiles!</string>
     <string name="welcome">Bienvenu dans SecondScreen</string>
     <string name="welcome_toast">Créez un nouveau profile en appuyant sur le bouton Nouveau Profile en haut!</string>
 
