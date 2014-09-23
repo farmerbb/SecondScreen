@@ -19,26 +19,26 @@
     <string name="any_profile">Any profile</string>
     <string name="app_name">SecondScreen</string>
     <string name="available_actions">Available Actions</string>
-    <string name="backlight_off_message">NOTE: Some custom kernels may prevent the backlight from turning off completely with this option.</string>
-    <string name="backlight_off_message_samsung">NOTE: On Samsung devices, the backlight may not turn off completely with this option.</string>
+    <string name="backlight_off_message">NOTE: Some custom kernels may prevent the backlight from turning off completely with the Backlight Off option.</string>
+    <string name="backlight_off_message_samsung">NOTE: On Samsung devices, the backlight may not turn off completely with the Backlight Off option.</string>
     <string name="blacklisted">To protect your device, SecondScreen will not allow you to save this profile with the selected resolution and density.</string>
     <string name="both_versions_installed">Please uninstall this version of SecondScreen and use the previously installed version instead.</string>
 	<string name="decline">I Decline</string>
     <string name="deleting_current_profile">Cannot delete the currently active profile</string>
-    <string name="dialog_about_message">SecondScreen: optimize your Android for the big screen\n\n&#169; 2014 Braden Farmer\n\nThis app uses code from the following open source projects, all licensed under <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2.0</a>:\n&#8226; <a href="http://github.com/farmerbb/Notepad">Notepad</a>\n&#8226; <a href="http://jgilfelt.github.io/android-actionbarstylegenerator/">Android Action Bar Style Generator</a>\n&#8226; <a href="http://github.com/Chainfire/libsuperuser">libsuperuser</a>\n&#8226; <a href="http://www.twofortyfouram.com/developer.html">Locale Developer API</a>\n\nThis app uses graphical assets from the following sources, licensed under <a href="http://creativecommons.org/licenses/by/3.0/">CC-BY-3.0</a>:\n&#8226; <a href="http://developer.android.com/distribute/tools/promote/brand.html">Android robot (Google)</a>\n&#8226; <a href="http://romannurik.github.io/AndroidAssetStudio/">Android Asset Studio"</a></string>
+    <string name="dialog_about_message">SecondScreen: optimize your Android for the big screen\n\n&#169; 2014 Braden Farmer\n\nThis app uses code from the following open source projects, all licensed under <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2.0</a>:\n\n&#8226; <a href="http://github.com/farmerbb/Notepad">Notepad</a>\n\n&#8226; <a href="http://jgilfelt.github.io/android-actionbarstylegenerator/">Android Action Bar Style Generator</a>\n\n&#8226; <a href="http://github.com/Chainfire/libsuperuser">libsuperuser</a>\n\n&#8226; <a href="http://www.twofortyfouram.com/developer.html">Locale Developer API</a>\n\nThis app uses graphical assets from the following sources, licensed under <a href="http://creativecommons.org/licenses/by/3.0/">CC-BY-3.0</a>:\n\n&#8226; <a href="http://developer.android.com/distribute/tools/promote/brand.html">Android robot (Google)</a>\n\n&#8226; <a href="http://romannurik.github.io/AndroidAssetStudio/">Android Asset Studio"</a></string>
     <string name="dialog_about_title">About SecondScreen</string>
     <string name="dialog_are_you_sure">Are you sure?</string>
     <string name="dialog_delete_button_title">Delete profile</string>
-    <string name="dialog_first_load">SecondScreen will now request superuser access and load the profile. Your screen will flicker as it changes resolution and/or density &#8211; this is normal.\n\nTo turn off an active profile, tap its name and select Turn Off.</string>
-    <string name="dialog_load_profile">Load profile</string>
+    <string name="dialog_first_load">&#8226; Connect your display first, if you have not already done so.\n\n&#8226; Make sure you\'ve granted root access to SecondScreen - otherwise, it won\'t do anything.\n\n&#8226; The app will exit as it starts loading the profile in the background.\n\n&#8226; Hang tight for a few seconds as your device changes its resolution and density!\n\n&#8226; When the SecondScreen icon appears in the status bar, your device is ready to use.\n\n&#8226; For best results, connect any Bluetooth devices after the profile is finished loading.\n\n&#8226; When you\'re finished using your display, select the Turn Off option in the notification.</string>
+    <string name="dialog_load_profile">Instructions</string>
     <string name="dialog_reload_profile_title">Reload profile?</string>
     <string name="dialog_turn_off_message">is currently active. Would you like to turn it off?</string>
     <string name="dialog_turn_off_title">Turn profile off</string>
     <string name="dialog_upgrade_message">SecondScreen has not been tested on this version of Android. It may crash or behave in other unexpected ways.</string>
     <string name="display_disconnected">Display disconnected</string>
+    <string name="dont_show_again">Don\'t show again</string>
     <string name="dpi">dpi</string>
     <string name="editing_current_profile">This is the currently active profile. Would you like to reload it to apply your changes?</string>
-    <string name="empty_profile_name">Please enter a name!</string>
     <string name="enter_profile_name">Enter profile name</string>
     <string name="error_loading_list">Error loading list of profiles!</string>
     <string name="error_loading_profile">Error loading profile!</string>
@@ -86,7 +86,7 @@
     <string name="turn_off">Turn Off</string>
     <string name="turning_off_profile">Turning SecondScreen off&#8230;</string>
     <string name="welcome">Welcome to SecondScreen</string>
-    <string name="welcome_toast">Create a new profile by tapping the New Profile button at the top!</string>
+    <string name="welcome_message">Create your first profile by tapping the New Profile button (plus sign) at the top</string>
 
     <string-array name="new_profile_templates">
         <item>TV (1080p)</item>

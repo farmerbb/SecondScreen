@@ -36,9 +36,9 @@
     <string name="dialog_turn_off_title">Cerrar Perfil</string>
     <string name="dialog_upgrade_message">SecondScreen no ha sido probado en esta versión de Android. Se puede bloquearse o comportarse de otras formas inesperadas.</string>
     <string name="display_disconnected">Cerrar Perfil</string>
+    <string name="dont_show_again">Don\'t show again</string>
     <string name="dpi">dpi</string>
     <string name="editing_current_profile">Este es el modo que está activo. ¿Te gustaría volver a cargarlo para aplicar los cambios?</string>
-    <string name="empty_profile_name">¡Por favor, introduzca un nombre!</string>
     <string name="enter_profile_name">Introduzca el nombre del perfil</string>
     <string name="error_loading_list">¡No se puede cargar la lista de perfiles!</string>
     <string name="error_loading_profile">¡Error al cargar el perfil!</string>
@@ -86,7 +86,7 @@
     <string name="turn_off">Cerrar</string>
     <string name="turning_off_profile">Apagando SecondScreen&#8230;</string>
     <string name="welcome">Bienvenido a SecondScreen</string>
-    <string name="welcome_toast">¡Crear un nuevo perfil pulsando el botón Nuevo perfil en la parte superior!</string>
+    <string name="welcome_message">Crear un nuevo perfil pulsando el botón Nuevo perfil en la parte superior</string>
 
     <string-array name="new_profile_templates">
         <item>TV (1080p)</item>

@@ -36,9 +36,9 @@
     <string name="dialog_turn_off_title">Vypnúť profil</string>
     <string name="dialog_upgrade_message">SecondScreen nebol testovaný na tejto verzia Androida. Môže padať alebo sa správať nečakane.</string>
     <string name="display_disconnected">Vypnúť profil</string>
+    <string name="dont_show_again">Don\'t show again</string>
     <string name="dpi">dpi</string>
     <string name="editing_current_profile">Tento profil je momentálne aktívny. Chcete ho načítať znovu pre aplikovanie zmien?</string>
-    <string name="empty_profile_name">Prosím, zadajte meno!</string>
     <string name="enter_profile_name">Zadajte meno profilu</string>
     <string name="error_loading_list">Chyba pri načítaní zoznamu profilov!</string>
     <string name="error_loading_profile">Chyba pri načítaní profilu!</string>
@@ -86,7 +86,7 @@
     <string name="turn_off">Vypnúť</string>
     <string name="turning_off_profile">Vypínanie SecondScreen&#8230;</string>
     <string name="welcome">Vitajte v aplikácii SecondScreen</string>
-    <string name="welcome_toast">Vytvorte nový profil kliknutím na tlačidlo Nový profil alebo vyskúšajte niektorý prednastavený profil!</string>
+    <string name="welcome_message">Vytvorte nový profil kliknutím na tlačidlo Nový profil</string>
 
     <string-array name="new_profile_templates">
         <item>TV (1080p)</item>

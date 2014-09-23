@@ -36,9 +36,9 @@
     <string name="dialog_turn_off_title">Désactiver le profile?</string>
     <string name="dialog_upgrade_message">SecondScreen n\'a pas été testé sur cette version d\'Android. Il peut planter ou se comporter de manière inattendue</string>
     <string name="display_disconnected">Désactiver le profile?</string>
+    <string name="dont_show_again">Don\'t show again</string>
     <string name="dpi">dpi</string>
     <string name="editing_current_profile">Ce profile est actuellement actif. Voulez vous le recharger pour appliquer vos modifications?</string>
-    <string name="empty_profile_name">Veuillez entrer un nom!</string>
     <string name="enter_profile_name">Entrez un nom de profile?</string>
     <string name="error_loading_list">Erreur de chargement de la liste des profiles!</string>
     <string name="error_loading_profile">Erreur de chargement du profile!</string>
@@ -86,7 +86,7 @@
     <string name="turn_off">Désactiver</string>
     <string name="turning_off_profile">Désactivation de SecondScreen &#8230;</string>
     <string name="welcome">Bienvenu dans SecondScreen</string>
-    <string name="welcome_toast">Créez un nouveau profile en appuyant sur le bouton Nouveau Profile en haut!</string>
+    <string name="welcome_message">Créez un nouveau profile en appuyant sur le bouton Nouveau Profile en haut</string>
 
     <string-array name="new_profile_templates">
         <item>TV (1080p)</item>
