@@ -29,7 +29,7 @@
     <string name="dialog_about_title">About SecondScreen</string>
     <string name="dialog_are_you_sure">Are you sure?</string>
     <string name="dialog_delete_button_title">Delete profile</string>
-    <string name="dialog_first_load">&#8226; Connect your display first, if you have not already done so.\n\n&#8226; Make sure you\'ve granted root access to SecondScreen - otherwise, it won\'t do anything.\n\n&#8226; The app will exit as it starts loading the profile in the background.\n\n&#8226; Hang tight for a few seconds as your device changes its resolution and density!\n\n&#8226; When the SecondScreen icon appears in the status bar, your device is ready to use.\n\n&#8226; For best results, connect any Bluetooth devices after the profile is finished loading.\n\n&#8226; When you\'re finished using your display, select the Turn Off option in the notification.</string>
+    <string name="dialog_first_load">&#8226; Connect your display first, if you have not already done so.\n\n&#8226; Make sure you\'ve granted root access to SecondScreen - otherwise, it won\'t do anything.\n\n&#8226; Hang tight for a few seconds as your device changes its resolution and density!\n\n&#8226; When the SecondScreen icon appears in the status bar, your device is ready to use.\n\n&#8226; For best results, connect any Bluetooth devices after the profile is finished loading.\n\n&#8226; When you\'re finished using your display, select the Turn Off option in the notification.</string>
     <string name="dialog_load_profile">Instructions</string>
     <string name="dialog_reload_profile_title">Reload profile?</string>
     <string name="dialog_turn_off_message">is currently active. Would you like to turn it off?</string>
