@@ -43,7 +43,7 @@
     <string name="error_loading_list">¡No se puede cargar la lista de perfiles!</string>
     <string name="error_loading_profile">¡Error al cargar el perfil!</string>
     <string name="expert_mode">Activar el modo experto</string>
-    <string name="expert_mode_dialog">Modo experto anula lista negra interna de SecondScreen de combinaciones de resolución y densidad inseguras. Utilice esta opción sólo si usted sabe exactamente lo que está haciendo. El modo seguro es muy recomendable cuando se utiliza esta opción.\n\n¿Quieres activar el modo experto?</string>
+    <string name="expert_mode_dialog">El Modo experto anula la lista negra interna de SecondScreen de combinaciones de resolución y densidades inseguras. Utilice esta opción sólo si usted sabe exactamente lo que está haciendo. El modo seguro es muy recomendable cuando se utiliza esta opción.\n\n¿Quieres activar el modo experto?</string>
     <string name="expert_mode_summary">Permitir que cualquier valor definido por el usuario, sea usado como resolución y DPI</string>
     <string name="failed_to_save">¡Error: Fallo al guardar el perfil!</string>
     <string name="first_run">¡Esta aplicación REQUIERE acceso de root para funcionar y es sólo para dispositivos con AOSP o acciones ROMs Android! No se garantiza que funcione correctamente en otros dispositivos.\n\nUsted es el ÚNICO RESPONSABLE de la forma en que utilice esta aplicación, del tipo de dispositivo que se utiliza, y así como de los métodos que utilice para lograr el acceso root en su dispositivo.</string>
