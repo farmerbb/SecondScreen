@@ -29,7 +29,7 @@
     <string name="dialog_about_title">Acerca SecondScreen</string>
     <string name="dialog_are_you_sure">¿Estás seguro?</string>
     <string name="dialog_delete_button_title">Eliminar perfil</string>
-    <string name="dialog_first_load">SecondScreen ahora solicitar el acceso de superusuario y cargar el perfil. Su pantalla puede parpadear a medida que cambia la resolución y la densidad.\n\nPara desactivar un perfil activo, toque su nombre y seleccione Cerrar.</string>
+    <string name="dialog_first_load">SecondScreen ahora solicita el acceso de superusuario y se cargará el perfil. Su pantalla puede parpadear a medida que cambia la resolución y la densidad.\n\nPara desactivar un perfil activo, toque su nombre y seleccione Cerrar.</string>
     <string name="dialog_load_profile">Cargar Perfil</string>
     <string name="dialog_reload_profile_title">¿Actualizar el perfil?</string>
     <string name="dialog_turn_off_message">esta actualmente activo. ¿Le gustaría cerrarlo?</string>
