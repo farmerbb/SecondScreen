@@ -15,7 +15,7 @@
     <string name="action_save_only">Guardar sólo</string>
     <string name="action_ok">Aceptar</string>
     <string name="action_settings">Configuración</string>
-    <string name="am_restart_warning">This option is not recommended when mirroring to wireless displays</string>
+    <string name="am_restart_warning">Este método no se recomienda con el mirroring, pantalla inalámbrica</string>
     <string name="any_profile">Cualquier perfil</string>
     <string name="app_name">SecondScreen</string>
     <string name="available_actions">Acciones Disponibles</string>
@@ -36,51 +36,51 @@
     <string name="dialog_turn_off_title">Cerrar Perfil</string>
     <string name="dialog_upgrade_message">SecondScreen no ha sido probado en esta versión de Android. Se puede bloquearse o comportarse de otras formas inesperadas.</string>
     <string name="display_disconnected">Cerrar Perfil</string>
-    <string name="dont_show_again">Don\'t show again</string>
+    <string name="dont_show_again">No mostrar de nuevo</string>
     <string name="dpi">dpi</string>
     <string name="editing_current_profile">Este es el modo que está activo. ¿Te gustaría volver a cargarlo para aplicar los cambios?</string>
     <string name="enter_profile_name">Introduzca el nombre del perfil</string>
     <string name="error_loading_list">¡No se puede cargar la lista de perfiles!</string>
     <string name="error_loading_profile">¡Error al cargar el perfil!</string>
-    <string name="expert_mode">Enable expert mode</string>
-    <string name="expert_mode_dialog">Expert mode overrides SecondScreen\'s internal blacklist of unsafe resolution and density combinations. Only use this option if you know exactly what you are doing. Safe mode is strongly recommended when using this option.\n\nReally enable expert mode?</string>
-    <string name="expert_mode_summary">Allow any user-defined value to be set for resolution and DPI</string>
+    <string name="expert_mode">Activar el modo experto</string>
+    <string name="expert_mode_dialog">Modo experto anula lista negra interna de SecondScreen de combinaciones de resolución y densidad inseguras. Utilice esta opción sólo si usted sabe exactamente lo que está haciendo. El modo seguro es muy recomendable cuando se utiliza esta opción.\n\n¿Quieres activar el modo experto?</string>
+    <string name="expert_mode_summary">Permitir que cualquier valor definido por el usuario, sea usado como resolución y DPI</string>
     <string name="failed_to_save">¡Error: Fallo al guardar el perfil!</string>
     <string name="first_run">¡Esta aplicación REQUIERE acceso de root para funcionar y es sólo para dispositivos con AOSP o acciones ROMs Android! No se garantiza que funcione correctamente en otros dispositivos.\n\nUsted es el ÚNICO RESPONSABLE de la forma en que utilice esta aplicación, del tipo de dispositivo que se utiliza, y así como de los métodos que utilice para lograr el acceso root en su dispositivo.</string>
-    <string name="hdmi_checkbox">Inicie SecondScreen cuando el HDMI este conectado</string>
-    <string name="hdmi_connected">HDMI conectado</string>
+    <string name="hdmi_checkbox">Inicie SecondScreen cuando el Chromecast/HDMI este conectado</string>
+    <string name="hdmi_connected">Chromecast/HDMI conectado</string>
     <string name="label_load_profile">SecondScreen - Cargar Perfiles</string>
-    <string name="label_profile_active">SecondScreen - Profil Activo</string>
+    <string name="label_profile_active">SecondScreen - Prefil Activo</string>
     <string name="label_quick_actions">SecondScreen - Aciones Rapidas</string>
     <string name="loading_profile">Cargando SecondScreen&#8230;</string>
     <string name="notification">SecondScreen está activo</string>
     <string name="new_device_message">SecondScreen parece que han sido restaurados desde una copia de seguridad.\n\nSi se trata de un dispositivo diferente, por favor borrar los datos de la aplicación y vuelva a ejecutar SecondScreen para asegurarse de que funciona correctamente (en caso contrario, pueden ocurrir problemas).</string>
     <string name="no_profiles_found">No se han encontrado perfiles</string>
-    <string name="no_superuser">Unable to obtain superuser permissions!</string>
+    <string name="no_superuser">¡No se puede obtener permisos de superusuario!</string>
     <string name="pref_description_safe_mode">Cuando el modo seguro está activado, los perfiles no se quedarán activos después de un reinicio.</string>
-	<string name="pref_title_hdmi">Iniciar con HDMI conectado</string>
+	<string name="pref_title_hdmi">Iniciar con Chromecast/HDMI conectado</string>
     <string name="pref_title_hdmi_select_profile">Cargar Perfil</string>
 	<string name="pref_title_hide_notification">Ocultar notificaciones</string>
     <string name="pref_title_notification_action">Botón de acción de notificación</string>
 	<string name="pref_title_safe_mode">Modo Seguro</string>
 	<string name="profile_deleted">Perfil Eliminado</string>
     <string name="profile_saved">Perfil guardado</string>
-    <string name="profile_settings">Profile Settings</string>
+    <string name="profile_settings">Ajustes del Perfil</string>
     <string name="profile_helper_text">Conecta la pantalla y luego seleccione un perfil.\nMantenga presionado el perfil para acceder a su configuración.</string>
     <string name="profile_helper_text_alt">El perfil se destaca a continuación está activo actualmente.\nSelecciona su nombre para cerrarlo.</string>
     <string name="profile_view_bluetooth_on">Activar Bluetooth</string>
     <string name="profile_view_daydreams_on">Activar protector de pantalla</string>
-    <string name="profile_view_rotation_autorotate">Rotation (auto-rotate)</string>
-    <string name="profile_view_rotation_landscape">Rotation (landscape)</string>
-    <string name="profile_view_ui_refresh_systemui">UI refresh (System UI)</string>
-    <string name="profile_view_ui_refresh_soft_reboot">UI refresh (soft reboot)</string>
+    <string name="profile_view_rotation_autorotate">Rotación (auto-rotación)</string>
+    <string name="profile_view_rotation_landscape">Rotación (Apaisada)</string>
+    <string name="profile_view_ui_refresh_systemui">Refrescar UI (Reiniciar Sistema)</string>
+    <string name="profile_view_ui_refresh_soft_reboot">Refrescar UI (Reiniciar software)</string>
     <string name="profile_view_wifi_on">Activar Wi-Fi</string>
     <string name="quick_actions_message">Utilice acciones rápidas para acceder a la funcionalidad SecondScreen sin crear un nuevo perfil o modificar temporalmente un perfil de ejecución existente sin modificarlo.</string>
     <string name="recreate_shortcut">¡Perfil No encontrado!\n\nPor favor, vuelva a crear o eliminar este acceso directo.</string>
     <string name="reload_profile">¿Desea actualizar el perfil activo para aplicar los ajustes modificados?</string>
     <string name="safeguard_title">ATENCIÓN</string>
     <string name="select_profile">Seleccione el perfil</string>
-    <string name="select_screen_type">Select screen type:</string>
+    <string name="select_screen_type">Seleccione el tipo de pantalla:</string>
     <string name="show_list">Mostrar lista de perfiles</string>
     <string name="this_profile">Este perfil</string>
     <string name="turn_off">Cerrar</string>
@@ -93,7 +93,7 @@
         <item>TV (720p)</item>
         <item>Monitor (1080p)</item>
         <item>AppRadio</item>
-        <item>Other / None</item>
+        <item>Otro / Ninguno</item>
     </string-array>
 
 </resources>
