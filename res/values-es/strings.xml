@@ -15,7 +15,7 @@
     <string name="action_save_only">Guardar sólo</string>
     <string name="action_ok">Aceptar</string>
     <string name="action_settings">Configuración</string>
-    <string name="am_restart_warning">Este método no se recomienda cuando el mirroring, pantalla inalámbrica</string>
+    <string name="am_restart_warning">Este método no se recomienda con el mirroring, pantalla inalámbrica</string>
     <string name="any_profile">Cualquier perfil</string>
     <string name="app_name">SecondScreen</string>
     <string name="available_actions">Acciones Disponibles</string>
