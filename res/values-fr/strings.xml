@@ -23,6 +23,7 @@
     <string name="backlight_off_message_samsung">Certains kernels peuvent empecher de désactiver le rétroéclairage complètement.</string>
     <string name="blacklisted">Pour protéger votre appareil, SecondScreen ne vous autorisera pas à sauvegarder ce profil avec la résolution et la densité choisies</string>
     <string name="both_versions_installed">Please uninstall this version of SecondScreen and use the previously installed version instead.</string>
+    <string name="check_for_update">Check For Update</string>
     <string name="decline">Je refuse</string>
     <string name="deleting_current_profile">Impossible de supprimer le profile en cours</string>
     <string name="dialog_about_message">SecondScreen: optimisez votre Android pour les grands écrans\n\n&#169; 2014 Braden Farmer\n\nCette application utilise les projets open sources suivants, tous sous licence <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2.0</a>:\n\n&#8226; <a href="http://github.com/farmerbb/Notepad">Notepad</a>\n\n&#8226; <a href="http://jgilfelt.github.io/android-actionbarstylegenerator/">Android Action Bar Style Generator</a>\n\n&#8226; <a href="http://github.com/Chainfire/libsuperuser">libsuperuser</a>\n\n&#8226; <a href="http://www.twofortyfouram.com/developer.html">Locale Developer API</a></string>
