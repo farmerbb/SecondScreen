@@ -23,7 +23,7 @@
     <string name="backlight_off_message_samsung">Algunos núcleos pueden evitar que la retroiluminación se apague por completo.</string>
     <string name="blacklisted">Para proteger su dispositivo, SecondScreen no le permitirá guardar este perfil con la resolución y la densidad seleccionada.</string>
     <string name="both_versions_installed">Por favor, desinstale esta versión de SecondScreen y utilice la versión previamente instalada en su lugar.</string>
-    <string name="check_for_update">Check For Update</string>
+    <string name="check_for_update">Buscar actualizaciones</string>
     <string name="decline">No acepto</string>
     <string name="deleting_current_profile">No se puede eliminar el perfil activo</string>
     <string name="dialog_about_message">SecondScreen: Optimiza tu Android para las grandes pantallas\n\n&#169; 2014 Braden Farmer\n\nEsta aplicación utiliza el código de los siguientes proyectos de código abierto, todos registrados bajo <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2.0</a>:\n\n&#8226; <a href="http://github.com/farmerbb/Notepad">Notepad</a>\n\n&#8226; <a href="http://jgilfelt.github.io/android-actionbarstylegenerator/">Android Action Bar Style Generator</a>\n\n&#8226; <a href="http://github.com/Chainfire/libsuperuser">libsuperuser</a>\n\n&#8226; <a href="http://www.twofortyfouram.com/developer.html">Locale Developer API</a></string>
