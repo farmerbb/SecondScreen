@@ -11,7 +11,7 @@
     <string name="pref_title_profile_name">Nombre de perfil</string>
     <string name="pref_title_resolution">Resolución</string>
     <string name="pref_title_dpi">Densidad</string>
-    <string name="pref_title_overscan_settings">Ajustar bordes (overscan)</string>
+    <string name="pref_title_overscan_settings">Ajustar bordes (Overscan)</string>
     <string name="pref_title_overscan">Habilitar Bordes</string>
     <string name="pref_description_overscan">Útil para los televisores más antiguos,  para envitar el corte de parte de la imagen</string>
     <string name="pref_title_bluetooth_on">Activar Bluetooth</string>
@@ -27,7 +27,7 @@
     <string name="pref_description_backlight_off">Desactive temporalmente la retroiluminación del dispositivo\s para ahorrar batería (sólo funciona en algunos dispositivos)</string>
     <string name="pref_title_vibration_off">Apagar vibración</string>
     <string name="pref_description_vibration_off">Desactive temporalmente motor de vibración del dispositivo\s (sólo funciona en algunos dispositivos)</string>
-    <string name="pref_title_chrome">Chrome Modo escritório</string>
+    <string name="pref_title_chrome">Chrome modo escritório</string>
     <string name="pref_description_chrome">Mostrar siempre los sitios en modo escritorio en el navegador Chrome para una experiencia más PC</string>
     <string name="pref_title_ui_refresh">Método de actualización de UI</string>
     <string name="pref_overscan_values">Valores de Bordes</string>
