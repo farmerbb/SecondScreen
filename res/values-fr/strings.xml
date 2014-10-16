@@ -71,6 +71,7 @@
     <string name="profile_helper_text_alt">Le profile selectionné ci dessous est actuellement actif.\nAppuyez sur son nom pour le désactiver.</string>
     <string name="profile_view_bluetooth_on">Activer le Bluetooth</string>
     <string name="profile_view_daydreams_on">Activer Daydreams</string>
+    <string name="profile_view_navbar">Navigation bar</string>
     <string name="profile_view_rotation_autorotate">Rotation (auto-rotate)</string>
     <string name="profile_view_rotation_landscape">Rotation (landscape)</string>
     <string name="profile_view_ui_refresh_systemui">UI refresh (System UI)</string>

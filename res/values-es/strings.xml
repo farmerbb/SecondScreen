@@ -71,6 +71,7 @@
     <string name="profile_helper_text_alt">El perfil se destaca a continuación está activo actualmente.\nSelecciona su nombre para cerrarlo.</string>
     <string name="profile_view_bluetooth_on">Activar Bluetooth</string>
     <string name="profile_view_daydreams_on">Activar protector de pantalla</string>
+    <string name="profile_view_navbar">Navigation bar</string>
     <string name="profile_view_rotation_autorotate">Rotación (auto-rotación)</string>
     <string name="profile_view_rotation_landscape">Rotación (Apaisada)</string>
     <string name="profile_view_ui_refresh_systemui">Refrescar UI (Reiniciar Sistema)</string>

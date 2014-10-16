@@ -71,6 +71,7 @@
     <string name="profile_helper_text_alt">The highlighted profile below is currently active.\nTap its name to turn it off.</string>
     <string name="profile_view_bluetooth_on">Bluetooth on</string>
     <string name="profile_view_daydreams_on">Daydreams on</string>
+    <string name="profile_view_navbar">Navigation bar</string>
     <string name="profile_view_rotation_autorotate">Rotation (auto-rotate)</string>
     <string name="profile_view_rotation_landscape">Rotation (landscape)</string>
     <string name="profile_view_ui_refresh_systemui">UI refresh (System UI)</string>
