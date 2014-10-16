@@ -71,7 +71,7 @@
     <string name="profile_helper_text_alt">Zvýraznený profil je aktívny.\nKliknite naň pre vypnutie.</string>
     <string name="profile_view_bluetooth_on">Zapnúť Bluetooth</string>
     <string name="profile_view_daydreams_on">Zapnúť šetrič obrazovky</string>
-    <string name="profile_view_navbar">Navigation bar</string>
+    <string name="profile_view_navbar">Navigačná lišta</string>
     <string name="profile_view_rotation_autorotate">Otáčanie (autom. otáčanie)</string>
     <string name="profile_view_rotation_landscape">Otáčanie (na šírku)</string>
     <string name="profile_view_ui_refresh_systemui">Obnovenie užívateľského prostredia (System UI)</string>
