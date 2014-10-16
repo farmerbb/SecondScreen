@@ -92,8 +92,8 @@
         <item>100%</item>
     </string-array>
     <string-array name="pref_notification_action_list">
-        <item>Zamknúť zariadenie</item>
         <item>Rýchle akcie</item>
+        <item>Zamknúť zariadenie</item>
     </string-array>
 
 </resources>

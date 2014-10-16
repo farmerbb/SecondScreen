@@ -31,7 +31,7 @@
     <string name="pref_description_chrome">Toujours afficher la version ordinateur dans le navigateur Chrome pour une expérience comme sur un PC</string>
     <string name="pref_title_ui_refresh">Méthode de rafraichissement de l\'interface</string>
     <string name="pref_title_navbar">Show navigation bar</string>
-    <string name="pref_description_navbar">Shows the navigation bar at the bottom of the screen, on custom ROMs that support it</string>
+    <string name="pref_description_navbar">Shows the navigation bar at the bottom of the screen (only works on CyanogenMod ROMs)</string>
     <string name="pref_overscan_values">Valeurs d\'Overscan</string>
     <string name="top">Haut</string>
     <string name="bottom">Bas</string>
@@ -92,8 +92,8 @@
         <item>100%</item>
     </string-array>
     <string-array name="pref_notification_action_list">
-        <item>Vérouiller l\'appareil</item>
         <item>Actions rapides</item>
+        <item>Vérouiller l\'appareil</item>
     </string-array>
 
 </resources>

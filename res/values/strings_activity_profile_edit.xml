@@ -31,7 +31,7 @@
     <string name="pref_description_chrome">Always show desktop sites in Chrome browser for a more PC-like experience</string>
     <string name="pref_title_ui_refresh">UI refresh method</string>
     <string name="pref_title_navbar">Show navigation bar</string>
-    <string name="pref_description_navbar">Shows the navigation bar at the bottom of the screen, on custom ROMs that support it</string>
+    <string name="pref_description_navbar">Shows the navigation bar at the bottom of the screen (only works on CyanogenMod ROMs)</string>
     <string name="pref_overscan_values">Overscan values</string>
     <string name="top">Top</string>
     <string name="bottom">Bottom</string>
@@ -92,8 +92,8 @@
         <item>100%</item>
     </string-array>
     <string-array name="pref_notification_action_list">
-        <item>Lock Device</item>
         <item>Quick Actions</item>
+        <item>Lock Device</item>
     </string-array>
 
 </resources>
