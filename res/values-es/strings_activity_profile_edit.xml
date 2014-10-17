@@ -30,8 +30,8 @@
     <string name="pref_title_chrome">Chrome modo escritório</string>
     <string name="pref_description_chrome">Mostrar siempre los sitios en modo escritorio en el navegador Chrome para una experiencia más PC</string>
     <string name="pref_title_ui_refresh">Método de actualización de UI</string>
-    <string name="pref_title_navbar">Barra de navegación</string>
-    <string name="pref_description_navbar">Shows the navigation bar at the bottom of the screen (only works on CyanogenMod ROMs)</string>
+    <string name="pref_title_navbar">Mostrar barra de navegación</string>
+    <string name="pref_description_navbar">Muestra la barra de navegación en la parte inferior de la pantalla (sólo funciona en ROM CyanogenMod)</string>
     <string name="pref_overscan_values">Valores de Bordes</string>
     <string name="top">Superior</string>
     <string name="bottom">Inferior</string>
