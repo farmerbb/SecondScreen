@@ -55,6 +55,7 @@
     <string name="label_quick_actions">SecondScreen - Rýchle akcie</string>
     <string name="loading_profile">Načítavanie SecondScreen&#8230;</string>
     <string name="notification">SecondScreen je aktívny</string>
+    <string name="notification_settings">Notification settings</string>
     <string name="new_device_message">Zdá sa, že SecondScreen bol obnovený zo zálohy.\n\nAk je toto iné zariadenie, prosím, vymažte údaje aplikácie a znovu spustite SecondScreen pre zabezpečenie správneho fungovania (inak môže dôjsť k problémom).</string>
     <string name="no_profiles_found">Neboli nájdené žiadne profily</string>
     <string name="no_superuser">Nemožno získať superuser prístup!</string>

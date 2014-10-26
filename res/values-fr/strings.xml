@@ -55,6 +55,7 @@
     <string name="label_quick_actions">SecondScreen - Actions Rapides</string>
     <string name="loading_profile">Chargement de SecondScreen&#8230;</string>
     <string name="notification">SecondScreen est actif</string>
+    <string name="notification_settings">Notification settings</string>
     <string name="new_device_message">SecondScreen semble avoir été restauré depuis une sauvegarde.\n\nSi c\'est un autre appareil, veuillez effacer les données de l\'application et relancer SecondScreen pour vous assurer qu\'il fonctionne correctement (sinon, des problèmes peuvent survenir).</string>
     <string name="no_profiles_found">Aucun profile trouvé</string>
     <string name="no_superuser">Unable to obtain superuser permissions!</string>

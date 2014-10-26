@@ -55,6 +55,7 @@
     <string name="label_quick_actions">SecondScreen - Quick Actions</string>
     <string name="loading_profile">Loading SecondScreen&#8230;</string>
     <string name="notification">SecondScreen is active</string>
+    <string name="notification_settings">Notification settings</string>
     <string name="new_device_message">SecondScreen appears to have been restored from a backup.\n\nIf this is a different device, please clear app data and re-run SecondScreen to ensure that it operates correctly (otherwise, problems may occur).</string>
     <string name="no_profiles_found">No profiles found</string>
     <string name="no_superuser">Unable to obtain superuser permissions!</string>
@@ -68,7 +69,7 @@
     <string name="profile_saved">Profile saved</string>
     <string name="profile_settings">Profile Settings</string>
     <string name="profile_helper_text">Tap a profile name to view or load its settings.\nCreate additional profiles using the plus button.</string>
-    <string name="profile_helper_text_alt">The highlighted profile below is currently active.\nTap its name to view its settings, or turn it off.</string>
+    <string name="profile_helper_text_alt">The highlighted profile below is currently active.\nTap its name to view its settings or turn it off.</string>
     <string name="profile_view_bluetooth_on">Bluetooth on</string>
     <string name="profile_view_daydreams_on">Daydreams on</string>
     <string name="profile_view_navbar">Navigation bar</string>
