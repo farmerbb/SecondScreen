@@ -67,8 +67,8 @@
 	<string name="profile_deleted">Profile deleted</string>
     <string name="profile_saved">Profile saved</string>
     <string name="profile_settings">Profile Settings</string>
-    <string name="profile_helper_text">Connect your display, then tap a profile name to load it.\nLong-press a profile name to edit its settings.</string>
-    <string name="profile_helper_text_alt">The highlighted profile below is currently active.\nTap its name to turn it off.</string>
+    <string name="profile_helper_text">Tap a profile name to view or load its settings.\nCreate additional profiles using the plus button.</string>
+    <string name="profile_helper_text_alt">The highlighted profile below is currently active.\nTap its name to view its settings, or turn it off.</string>
     <string name="profile_view_bluetooth_on">Bluetooth on</string>
     <string name="profile_view_daydreams_on">Daydreams on</string>
     <string name="profile_view_navbar">Navigation bar</string>
