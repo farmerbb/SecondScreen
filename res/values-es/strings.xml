@@ -83,13 +83,14 @@
     <string name="reload_profile">¿Desea actualizar el perfil activo para aplicar los ajustes modificados?</string>
     <string name="safeguard_title">ATENCIÓN</string>
     <string name="select_profile">Seleccione el perfil</string>
+    <string name="select_profile_alt">Seleccione el perfil</string>
     <string name="select_screen_type">Seleccione el tipo de pantalla:</string>
     <string name="show_list">Mostrar lista de perfiles</string>
     <string name="this_profile">Este perfil</string>
     <string name="turn_off">Cerrar</string>
     <string name="turning_off_profile">Apagando SecondScreen&#8230;</string>
     <string name="welcome">Bienvenido a SecondScreen</string>
-    <string name="welcome_message">Toque en el botón más para crear su primer perfil/string>
+    <string name="welcome_message">Toque en el botón más para crear su primer perfil</string>
 
     <string-array name="new_profile_templates">
         <item>TV (1080p)</item>
