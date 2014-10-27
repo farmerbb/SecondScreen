@@ -26,7 +26,7 @@
     <string name="check_for_update">Buscar actualizaciones</string>
     <string name="decline">No acepto</string>
     <string name="deleting_current_profile">No se puede eliminar el perfil activo</string>
-    <string name="dialog_about_message">SecondScreen: Optimiza tu Android para las grandes pantallas\n\n&#169; 2014 Braden Farmer\n\nEsta aplicación utiliza el código de los siguientes proyectos de código abierto, todos registrados bajo <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2.0</a>:\n\n&#8226; <a href="http://github.com/farmerbb/Notepad">Notepad</a>\n\n&#8226; <a href="http://jgilfelt.github.io/android-actionbarstylegenerator/">Android Action Bar Style Generator</a>\n\n&#8226; <a href="http://github.com/Chainfire/libsuperuser">libsuperuser</a>\n\n&#8226; <a href="http://www.twofortyfouram.com/developer.html">Locale Developer API</a>\n\nThis app uses code derived from the <a href="https://github.com/afollestad/FloatingActionButton">FloatingActionButton</a> project, licensed under the MIT License.\n\nEsta aplicación utiliza elementos gráficos de las siguientes fuentes, autorizadas bajo <a href="http://creativecommons.org/licenses/by/3.0/">CC-BY-3.0</a>:\n\n&#8226; <a href="http://developer.android.com/distribute/tools/promote/brand.html">Android robot (Google)</a>\n\n&#8226; <a href="http://shreyasachar.github.io/AndroidAssetStudio/">Android Asset Studio for Material Design"</a></string>
+    <string name="dialog_about_message">SecondScreen: Optimiza tu Android para las grandes pantallas\n\n&#169; 2014 Braden Farmer\n\nEsta aplicación utiliza el código de los siguientes proyectos de código abierto, todos registrados bajo <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2.0</a>:\n\n&#8226; <a href="http://github.com/farmerbb/Notepad">Notepad</a>\n\n&#8226; <a href="http://jgilfelt.github.io/android-actionbarstylegenerator/">Android Action Bar Style Generator</a>\n\n&#8226; <a href="http://github.com/Chainfire/libsuperuser">libsuperuser</a>\n\n&#8226; <a href="http://www.twofortyfouram.com/developer.html">Locale Developer API</a>\n\nEsta aplicación utiliza código derivado del proyecto <a href="https://github.com/afollestad/FloatingActionButton">FloatingActionButton</a>, licenciado bajo la licencia MIT.\n\nEsta aplicación utiliza elementos gráficos de las siguientes fuentes, autorizadas bajo <a href="http://creativecommons.org/licenses/by/3.0/">CC-BY-3.0</a>:\n\n&#8226; <a href="http://developer.android.com/distribute/tools/promote/brand.html">Android robot (Google)</a>\n\n&#8226; <a href="http://shreyasachar.github.io/AndroidAssetStudio/">Android Asset Studio for Material Design"</a></string>
     <string name="dialog_about_title">Acerca SecondScreen</string>
     <string name="dialog_are_you_sure">¿Estás seguro?</string>
     <string name="dialog_delete_button_title">Eliminar perfil</string>
@@ -55,7 +55,7 @@
     <string name="label_quick_actions">SecondScreen - Aciones Rapidas</string>
     <string name="loading_profile">Cargando SecondScreen&#8230;</string>
     <string name="notification">SecondScreen está activo</string>
-    <string name="notification_settings">Notification settings</string>
+    <string name="notification_settings">Configuración de notificaciones</string>
     <string name="new_device_message">SecondScreen parece que han sido restaurados desde una copia de seguridad.\n\nSi se trata de un dispositivo diferente, por favor borrar los datos de la aplicación y vuelva a ejecutar SecondScreen para asegurarse de que funciona correctamente (en caso contrario, pueden ocurrir problemas).</string>
     <string name="no_profiles_found">No se han encontrado perfiles</string>
     <string name="no_superuser">¡No se puede obtener permisos de superusuario!</string>
@@ -89,7 +89,7 @@
     <string name="turn_off">Cerrar</string>
     <string name="turning_off_profile">Apagando SecondScreen&#8230;</string>
     <string name="welcome">Bienvenido a SecondScreen</string>
-    <string name="welcome_message">Crear un nuevo perfil pulsando el botón Nuevo perfil en la parte superior</string>
+    <string name="welcome_message">Toque en el botón más para crear su primer perfil/string>
 
     <string-array name="new_profile_templates">
         <item>TV (1080p)</item>
