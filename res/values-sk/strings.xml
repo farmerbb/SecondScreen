@@ -26,7 +26,7 @@
     <string name="check_for_update">Skontrolovať aktualizácie</string>
     <string name="decline">Nesúhlasím</string>
     <string name="deleting_current_profile">Aktívny profil nie je možné vymazať</string>
-    <string name="dialog_about_message">SecondScreen: optimalizujte váš Android pre veľkú obrazovku\n\n&#169; 2014 Braden Farmer\n\nTáto aplikácia používa kód z nasledujúcich open source projektov, všetky licencované pod <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2.0</a>:\n\n&#8226; <a href="http://github.com/farmerbb/Notepad">Notepad</a>\n\n&#8226; <a href="http://jgilfelt.github.io/android-actionbarstylegenerator/">Android Action Bar Style Generator</a>\n\n&#8226; <a href="http://github.com/Chainfire/libsuperuser">libsuperuser</a>\n\n&#8226; <a href="http://www.twofortyfouram.com/developer.html">Locale Developer API</a>\n\n&#8226; <a href="http://www.twofortyfouram.com/developer.html">Locale Developer API</a>\n\nThis app uses code derived from the <a href="https://github.com/afollestad/FloatingActionButton">FloatingActionButton</a> project, licensed under the MIT License.\n\nThis app uses graphical assets from the following sources, licensed under <a href="http://creativecommons.org/licenses/by/3.0/">CC-BY-3.0</a>:\n\n&#8226; <a href="http://developer.android.com/distribute/tools/promote/brand.html">Android robot (Google)</a>\n\n&#8226; <a href="http://shreyasachar.github.io/AndroidAssetStudio/">Android Asset Studio for Material Design"</a></string>
+    <string name="dialog_about_message">SecondScreen: optimalizujte váš Android pre veľkú obrazovku\n\n&#169; 2014 Braden Farmer\n\nTáto aplikácia používa kód z nasledujúcich open source projektov, všetky licencované pod <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2.0</a>:\n\n&#8226; <a href="http://github.com/farmerbb/Notepad">Notepad</a>\n\n&#8226; <a href="http://jgilfelt.github.io/android-actionbarstylegenerator/">Android Action Bar Style Generator</a>\n\n&#8226; <a href="http://github.com/Chainfire/libsuperuser">libsuperuser</a>\n\n&#8226; <a href="http://www.twofortyfouram.com/developer.html">Locale Developer API</a>\n\n&#8226; <a href="http://www.twofortyfouram.com/developer.html">Locale Developer API</a>\n\nTáto aplikácia používa kód odvodený od projektu <a href="https://github.com/afollestad/FloatingActionButton">FloatingActionButton</a>, ktorý je licencovaný pod MIT licenciou.\n\nTáto aplikácia používa grafické prvky z nasledujúcich zdrojov, ktoré sú licencované pod <a href="http://creativecommons.org/licenses/by/3.0/">CC-BY-3.0</a>:\n\n&#8226; <a href="http://developer.android.com/distribute/tools/promote/brand.html">Android robot (Google)</a>\n\n&#8226; <a href="http://shreyasachar.github.io/AndroidAssetStudio/">Android Asset Studio for Material Design"</a></string>
     <string name="dialog_about_title">O aplikácii SecondScreen</string>
     <string name="dialog_are_you_sure">Ste si istý?</string>
     <string name="dialog_delete_button_title">Vymazať profil</string>
@@ -55,7 +55,7 @@
     <string name="label_quick_actions">SecondScreen - Rýchle akcie</string>
     <string name="loading_profile">Načítavanie SecondScreen&#8230;</string>
     <string name="notification">SecondScreen je aktívny</string>
-    <string name="notification_settings">Notification settings</string>
+    <string name="notification_settings">Nastavenia oznámení</string>
     <string name="new_device_message">Zdá sa, že SecondScreen bol obnovený zo zálohy.\n\nAk je toto iné zariadenie, prosím, vymažte údaje aplikácie a znovu spustite SecondScreen pre zabezpečenie správneho fungovania (inak môže dôjsť k problémom).</string>
     <string name="no_profiles_found">Neboli nájdené žiadne profily</string>
     <string name="no_superuser">Nemožno získať superuser prístup!</string>
@@ -68,8 +68,8 @@
     <string name="profile_deleted">Profil bol vymazaný</string>
     <string name="profile_saved">Profil bol uložený</string>
     <string name="profile_settings">Nastavenia profilu</string>
-    <string name="profile_helper_text">Pripojte vašu obrazovku, potom kliknite na profil pre jeho načítanie.\nPodržte dlhšie na profile pre upravenie jeho nastavení.</string>
-    <string name="profile_helper_text_alt">Zvýraznený profil je aktívny.\nKliknite naň pre vypnutie.</string>
+    <string name="profile_helper_text">Kliknite na profil pre zobrazenie alebo načítanie jeho nastavení.\nĎalšie profily vytvoríte tlačidlom plus.</string>
+    <string name="profile_helper_text_alt">Zvýraznený profil je aktívny.\nKliknite naň pre zobrazenie jeho nastavení alebo vypnutie.</string>
     <string name="profile_view_bluetooth_on">Zapnúť Bluetooth</string>
     <string name="profile_view_daydreams_on">Zapnúť šetrič obrazovky</string>
     <string name="profile_view_navbar">Navigačná lišta</string>
