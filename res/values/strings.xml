@@ -21,7 +21,7 @@
     <string name="available_actions">Available Actions</string>
     <string name="backlight_off_message">NOTE: Some custom kernels may prevent the backlight from turning off completely with the Backlight Off option.</string>
     <string name="backlight_off_message_samsung">NOTE: On Samsung devices, the backlight may not turn off completely with the Backlight Off option.</string>
-    <string name="blacklisted">To protect your device, SecondScreen will not allow you to save this profile with the selected resolution and density.</string>
+    <string name="blacklisted">To protect your device, SecondScreen will not allow you to use this resolution and/or density value.</string>
     <string name="both_versions_installed">Please uninstall this version of SecondScreen and use the previously installed version instead.</string>
     <string name="check_for_update">Check For Update</string>
 	<string name="decline">I Decline</string>
