@@ -21,7 +21,7 @@
     <string name="available_actions">Dostupné akcie</string>
     <string name="backlight_off_message">Niektoré kernely môžu zabrániť úplnému vypnutiu podsvietenia.</string>
     <string name="backlight_off_message_samsung">Niektoré kernely môžu zabrániť úplnému vypnutiu podsvietenia.</string>
-    <string name="blacklisted">Pre ochranu vašeho zariadenia, SecondScreen nedovolí uložiť tento profil so zvoleným rozlíšením a hustotou.</string>
+    <string name="blacklisted">Pre ochranu vášho zariadenia, SecondScreen nedovolí použiť toto rozlíšenie a/alebo hustotou.</string>
     <string name="both_versions_installed">Prosím, odinštalujte túto verziu aplikácie SecondScreen a používajte predtým nainštalovanú verziu.</string>
     <string name="check_for_update">Skontrolovať aktualizácie</string>
     <string name="decline">Nesúhlasím</string>
