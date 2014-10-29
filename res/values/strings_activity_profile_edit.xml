@@ -79,7 +79,7 @@
     </string-array>
     <string-array name="pref_ui_refresh_list">
         <item>Do nothing</item>
-        <item>Restart SystemUI and kill background apps</item>
+        <item>Restart System UI and kill background apps</item>
         <item>Restart ActivityManager (soft reboot)</item>
     </string-array>
     <string-array name="pref_rotation_list">

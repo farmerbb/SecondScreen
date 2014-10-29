@@ -79,7 +79,7 @@
     </string-array>
     <string-array name="pref_ui_refresh_list">
         <item>Ne rien faire</item>
-        <item>Redémarrer SystemUI et terminer les application en fond</item>
+        <item>Redémarrer System UI et terminer les application en fond</item>
         <item>Redémarrer ActivityManager (soft reboot)</item>
     </string-array>
     <string-array name="pref_rotation_list">
