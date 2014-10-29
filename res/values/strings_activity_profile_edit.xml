@@ -19,7 +19,7 @@
     <string name="pref_title_wifi_on">Turn Wi-Fi on</string>
     <string name="pref_description_wifi_on">Automatically enable Wi-Fi</string>
     <string name="pref_title_daydreams_on">Turn Daydreams on</string>
-    <string name="pref_description_daydreams_on">Show a screensaver when device is locked</string>
+    <string name="pref_description_daydreams_on">Show a screensaver when device is locked (wired connections only)</string>
     <string name="pref_title_show_touches">Show touches</string>
     <string name="pref_description_show_touches">Show visual feedback for touchscreen events</string>
     <string name="pref_title_rotation">Screen rotation</string>
@@ -44,20 +44,25 @@
     <string name="enabled">Enabled</string>
     <string name="quick_backlight">Backlight</string>
     <string name="quick_vibration">Vibration</string>
-    <string name="quick_chrome">Chrome Desktop mode</string>
+    <string name="quick_chrome">Chrome Desktop Mode</string>
     <string name="quick_overscan">Overscan</string>
     <string name="quick_turn_off">Reset settings</string>
     <string name="quick_turn_off_description">Tap to restore changed settings</string>
 
     <string-array name="pref_resolution_list">
         <item>Device native</item>
-        <item>1920x1200</item>
         <item>1920x1080 (1080p)</item>
+        <item>1280x720 (720p)</item>
+        <item>854x480 (480p)</item>
+        <item>2560x1600</item>
+        <item>2560x1440</item>
+        <item>2048x1536</item>
+        <item>1920x1200</item>
         <item>1280x800</item>
         <item>1280x768</item>
-        <item>1280x720 (720p)</item>
+        <item>1024x768</item>
         <item>960x600</item>
-        <item>854x480 (480p)</item>
+        <item>800x600</item>
         <item>800x480</item>
     </string-array>
     <string-array name="pref_dpi_list">
@@ -67,7 +72,10 @@
         <item>213dpi (tvdpi)</item>
         <item>240dpi (hdpi)</item>
         <item>320dpi (xhdpi)</item>
+        <item>400dpi</item>
         <item>480dpi (xxhdpi)</item>
+        <item>560dpi</item>
+        <item>640dpi (xxxhdpi)</item>
     </string-array>
     <string-array name="pref_ui_refresh_list">
         <item>Do nothing</item>
