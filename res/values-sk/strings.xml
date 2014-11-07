@@ -35,7 +35,7 @@
     <string name="dialog_reload_profile_title">Načítať znovu profil?</string>
     <string name="dialog_turn_off_message">je momentálne aktívny. Chcete ho vypnúť?</string>
     <string name="dialog_turn_off_title">Vypnúť profil</string>
-    <string name="dialog_ui_refresh">You\'ve left your UI refresh method as "Do nothing".  Selecting a UI refresh method is highly recommended when changing your resolution and/or density.\n\nSave anyway?</string>
+    <string name="dialog_ui_refresh">Ponechali ste metódu obnovenia UI na "Neurobiť nič".  Odporúčame zvoliť metódu obnovenia UI pri zmene rozlíšenia a/alebo hustoty.\n\nAj tak uložiť?</string>
     <string name="dialog_upgrade_message">SecondScreen nebol testovaný na tejto verzia Androida. Môže padať alebo sa správať nečakane.</string>
     <string name="display_disconnected">Vypnúť profil</string>
     <string name="dont_show_again">Znovu nezobrazovať</string>
