@@ -35,11 +35,10 @@
     <string name="dialog_reload_profile_title">¿Actualizar el perfil?</string>
     <string name="dialog_turn_off_message">esta actualmente activo. ¿Le gustaría cerrarlo?</string>
     <string name="dialog_turn_off_title">Cerrar Perfil</string>
-    <string name="dialog_ui_refresh">You\'ve left your UI refresh method as "Do nothing".  Selecting a UI refresh method is highly recommended when changing your resolution and/or density.\n\nSave anyway?</string>
+    <string name="dialog_ui_refresh">You\'ve left your UI refresh method as \"Do nothing\".  Selecting a UI refresh method is highly recommended when changing your resolution and/or density.\n\nSave anyway?</string>
     <string name="dialog_upgrade_message">SecondScreen no ha sido probado en esta versión de Android. Se puede bloquearse o comportarse de otras formas inesperadas.</string>
     <string name="display_disconnected">Cerrar Perfil</string>
     <string name="dont_show_again">No mostrar de nuevo</string>
-    <string name="dpi">dpi</string>
     <string name="editing_current_profile">Este es el modo que está activo. ¿Te gustaría volver a cargarlo para aplicar los cambios?</string>
     <string name="enter_profile_name">Introduzca el nombre del perfil</string>
     <string name="error_loading_list">¡No se puede cargar la lista de perfiles!</string>
