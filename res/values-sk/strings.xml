@@ -73,8 +73,8 @@
     <string name="profile_view_bluetooth_on">Zapnúť Bluetooth</string>
     <string name="profile_view_daydreams_on">Zapnúť šetrič obrazovky</string>
     <string name="profile_view_navbar">Navigačná lišta</string>
-    <string name="profile_view_screen_timeout_always_on">Timeout (always on)</string>
-	<string name="profile_view_screen_timeout_always_on_charging">Timeout (charging only)</string>
+    <string name="profile_view_screen_timeout_always_on">Vypnutie (vždy zapnutá)</string>
+    <string name="profile_view_screen_timeout_always_on_charging">Vypnutie (zapnutá pri nabíjaní)</string>
     <string name="profile_view_rotation_autorotate">Otáčanie (autom. otáčanie)</string>
     <string name="profile_view_rotation_landscape">Otáčanie (na šírku)</string>
     <string name="profile_view_ui_refresh_systemui">Obnovenie užívateľského prostredia (System UI)</string>
