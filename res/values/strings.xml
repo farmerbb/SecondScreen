@@ -62,7 +62,7 @@
     <string name="pref_description_safe_mode">Profiles will not stay active after a reboot</string>
 	<string name="pref_title_hdmi">Enable auto-start</string>
     <string name="pref_title_hdmi_select_profile">Auto-start action</string>
-	<string name="pref_title_hide_notification">Hide notification</string>
+	<string name="pref_title_hide_notification">Hide notification icon</string>
     <string name="pref_title_notification_action">Notification action button</string>
 	<string name="pref_title_safe_mode">Enable safe mode</string>
 	<string name="profile_deleted">Profile deleted</string>
@@ -73,6 +73,8 @@
     <string name="profile_view_bluetooth_on">Bluetooth on</string>
     <string name="profile_view_daydreams_on">Daydreams on</string>
     <string name="profile_view_navbar">Navigation bar</string>
+	<string name="profile_view_screen_timeout_always_on">Timeout (always on)</string>
+	<string name="profile_view_screen_timeout_always_on_charging">Timeout (charging only)</string>
     <string name="profile_view_rotation_autorotate">Rotation (auto-rotate)</string>
     <string name="profile_view_rotation_landscape">Rotation (landscape)</string>
     <string name="profile_view_ui_refresh_systemui">UI refresh (System UI)</string>

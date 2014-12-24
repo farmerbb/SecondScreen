@@ -32,6 +32,7 @@
     <string name="pref_title_ui_refresh">UI refresh method</string>
     <string name="pref_title_navbar">Show navigation bar</string>
     <string name="pref_description_navbar">Shows the navigation bar at the bottom of the screen (only works on CyanogenMod ROMs)</string>
+    <string name="pref_title_screen_timeout">Screen timeout</string>
     <string name="pref_overscan_values">Overscan values</string>
     <string name="top">Top</string>
     <string name="bottom">Bottom</string>
@@ -103,5 +104,10 @@
         <item>Quick Actions</item>
         <item>Lock Device</item>
     </string-array>
+	<string-array name="pref_screen_timeout_list">
+		<item>Use system setting</item>
+		<item>Always on</item>
+		<item>Always on while charging</item>
+	</string-array>
 
 </resources>

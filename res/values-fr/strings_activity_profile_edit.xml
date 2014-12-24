@@ -32,6 +32,7 @@
     <string name="pref_title_ui_refresh">Méthode de rafraichissement de l\'interface</string>
     <string name="pref_title_navbar">Show navigation bar</string>
     <string name="pref_description_navbar">Shows the navigation bar at the bottom of the screen (only works on CyanogenMod ROMs)</string>
+    <string name="pref_title_screen_timeout">Screen timeout</string>
     <string name="pref_overscan_values">Valeurs d\'Overscan</string>
     <string name="top">Haut</string>
     <string name="bottom">Bas</string>
@@ -103,5 +104,10 @@
         <item>Actions rapides</item>
         <item>Vérouiller l\'appareil</item>
     </string-array>
+	<string-array name="pref_screen_timeout_list">
+		<item>Use system setting</item>
+		<item>Always on</item>
+		<item>Always on while charging</item>
+	</string-array>
 
 </resources>

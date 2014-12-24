@@ -32,6 +32,7 @@
     <string name="pref_title_ui_refresh">Metóda obnovenia UI</string>
     <string name="pref_title_navbar">Zobraziť navigačnú lištu</string>
     <string name="pref_description_navbar">Zobrazí navigačnú lištu na spodku obrazovky, (funguje iba na CyanogenMod ROMkách)</string>
+    <string name="pref_title_screen_timeout">Screen timeout</string>
     <string name="pref_overscan_values">Hodnoty overscan</string>
     <string name="top">Hore</string>
     <string name="bottom">Dole</string>
@@ -103,5 +104,10 @@
         <item>Rýchle akcie</item>
         <item>Zamknúť zariadenie</item>
     </string-array>
+	<string-array name="pref_screen_timeout_list">
+		<item>Use system setting</item>
+		<item>Always on</item>
+		<item>Always on while charging</item>
+	</string-array>
 
 </resources>
