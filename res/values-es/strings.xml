@@ -73,8 +73,8 @@
     <string name="profile_view_bluetooth_on">Activar Bluetooth</string>
     <string name="profile_view_daydreams_on">Activar protector de pantalla</string>
     <string name="profile_view_navbar">Barra de navegación</string>
-    <string name="profile_view_screen_timeout_always_on">Timeout (always on)</string>
-	<string name="profile_view_screen_timeout_always_on_charging">Timeout (charging only)</string>
+    <string name="profile_view_screen_timeout_always_on">Tiempo de espera (siempre encendido)</string>
+	<string name="profile_view_screen_timeout_always_on_charging">Tiempo de espera (sólo carga)</string>
     <string name="profile_view_rotation_autorotate">Rotación (auto-rotación)</string>
     <string name="profile_view_rotation_landscape">Rotación (Apaisada)</string>
     <string name="profile_view_ui_refresh_systemui">Refrescar UI (Reiniciar Sistema)</string>
