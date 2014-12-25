@@ -32,7 +32,7 @@
     <string name="pref_title_ui_refresh">Método de actualización de UI</string>
     <string name="pref_title_navbar">Mostrar barra de navegación</string>
     <string name="pref_description_navbar">Muestra la barra de navegación en la parte inferior de la pantalla (sólo funciona en ROM CyanogenMod)</string>
-    <string name="pref_title_screen_timeout">Screen timeout</string>
+    <string name="pref_title_screen_timeout">Tiempo de espera</string>
     <string name="pref_overscan_values">Valores de Bordes</string>
     <string name="top">Superior</string>
     <string name="bottom">Inferior</string>
@@ -105,9 +105,9 @@
         <item>Bloqueo de dispositivo</item>
     </string-array>
 	<string-array name="pref_screen_timeout_list">
-		<item>Use system setting</item>
-		<item>Always on</item>
-		<item>Always on while charging</item>
+		<item>Utilice la configuración del sistema</item>
+		<item>siempre encendida</item>
+		<item>Siempre encendida mientras se carga</item>
 	</string-array>
 
 </resources>
