@@ -15,6 +15,7 @@
     <string name="action_save_only">Save only</string>
     <string name="action_ok">OK</string>
     <string name="action_settings">Settings</string>
+	<string name="action_uninstall">Uninstall</string>
     <string name="am_restart_warning">This method is not recommended when mirroring to wireless displays</string>
     <string name="any_profile">Any profile</string>
     <string name="app_name">SecondScreen</string>
@@ -22,8 +23,9 @@
     <string name="backlight_off_message">NOTE: Some custom kernels may prevent the backlight from turning off completely with the Backlight Off option.</string>
     <string name="backlight_off_message_samsung">NOTE: On Samsung devices, the backlight may not turn off completely with the Backlight Off option.</string>
     <string name="blacklisted">To protect your device, SecondScreen will not allow you to use this resolution and/or density value.</string>
-    <string name="both_versions_installed">Please uninstall this version of SecondScreen and use the previously installed version instead.</string>
+    <string name="both_versions_installed">Multiple versions of SecondScreen are installed on your device. Only one version may be installed at a time.\n\nPress Uninstall to remove the duplicate version, then reload the app.</string>
     <string name="check_for_update">Check For Update</string>
+	<string name="checking_for_superuser">Checking for superuser access&#8230; please wait.</string>
 	<string name="decline">I Decline</string>
     <string name="deleting_current_profile">Cannot delete the currently active profile</string>
     <string name="dialog_about_message">SecondScreen: better screen mirroring for rooted devices\n\n&#169; 2014 Braden Farmer\n\nThis app uses code from the following open source projects, licensed under <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2.0</a>:\n\n&#8226; <a href="http://github.com/farmerbb/Notepad">Notepad</a>\n\n&#8226; <a href="http://jgilfelt.github.io/android-actionbarstylegenerator/">Android Action Bar Style Generator</a>\n\n&#8226; <a href="http://github.com/Chainfire/libsuperuser">libsuperuser</a>\n\n&#8226; <a href="http://www.twofortyfouram.com/developer.html">Locale Developer API</a>\n\nThis app uses code derived from the <a href="https://github.com/makovkastar/FloatingActionButton">FloatingActionButton</a> project, licensed under the MIT License.\n\nThis app uses graphical assets from the following sources, licensed under <a href="http://creativecommons.org/licenses/by/3.0/">CC-BY-3.0</a>:\n\n&#8226; <a href="http://developer.android.com/distribute/tools/promote/brand.html">Android robot (Google)</a>\n\n&#8226; <a href="http://shreyasachar.github.io/AndroidAssetStudio/">Android Asset Studio for Material Design"</a></string>

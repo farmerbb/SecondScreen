@@ -15,6 +15,7 @@
     <string name="action_save_only">Sauvegarder uniquement</string>
     <string name="action_ok">OK</string>
     <string name="action_settings">Paramètres</string>
+    <string name="action_uninstall">Uninstall</string>
     <string name="am_restart_warning">This option is not recommended when mirroring to wireless displays</string>
     <string name="any_profile">N\'importe quel profile?</string>
     <string name="app_name">SecondScreen</string>
@@ -24,7 +25,8 @@
     <string name="blacklisted">Pour protéger votre appareil, SecondScreen ne vous autorisera pas à sauvegarder ce profil avec la résolution et la densité choisies</string>
     <string name="both_versions_installed">Please uninstall this version of SecondScreen and use the previously installed version instead.</string>
     <string name="check_for_update">Check For Update</string>
-    <string name="decline">Je refuse</string>
+    <string name="checking_for_superuser">Checking for superuser access&#8230; please wait.</string>
+	<string name="decline">Je refuse</string>
     <string name="deleting_current_profile">Impossible de supprimer le profile en cours</string>
     <string name="dialog_about_message">SecondScreen: optimisez votre Android pour les grands écrans\n\n&#169; 2014 Braden Farmer\n\nCette application utilise les projets open sources suivants, tous sous licence <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2.0</a>:\n\n&#8226; <a href="http://github.com/farmerbb/Notepad">Notepad</a>\n\n&#8226; <a href="http://jgilfelt.github.io/android-actionbarstylegenerator/">Android Action Bar Style Generator</a>\n\n&#8226; <a href="http://github.com/Chainfire/libsuperuser">libsuperuser</a>\n\n&#8226; <a href="http://www.twofortyfouram.com/developer.html">Locale Developer API</a>\n\n&#8226; <a href="http://www.twofortyfouram.com/developer.html">Locale Developer API</a>\n\nThis app uses code derived from the <a href="https://github.com/makovkastar/FloatingActionButton">FloatingActionButton</a> project, licensed under the MIT License.\n\nThis app uses graphical assets from the following sources, licensed under <a href="http://creativecommons.org/licenses/by/3.0/">CC-BY-3.0</a>:\n\n&#8226; <a href="http://developer.android.com/distribute/tools/promote/brand.html">Android robot (Google)</a>\n\n&#8226; <a href="http://shreyasachar.github.io/AndroidAssetStudio/">Android Asset Studio for Material Design"</a></string>
     <string name="dialog_about_title">A propos de SecondScreen</string>
