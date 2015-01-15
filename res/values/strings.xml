@@ -76,7 +76,7 @@
     <string name="profile_view_daydreams_on">Daydreams on</string>
     <string name="profile_view_navbar">Navigation bar</string>
 	<string name="profile_view_screen_timeout_always_on">Timeout (always on)</string>
-	<string name="profile_view_screen_timeout_always_on_charging">Timeout (charging only)</string>
+	<string name="profile_view_screen_timeout_always_on_charging">Timeout (charging)</string>
     <string name="profile_view_rotation_autorotate">Rotation (auto-rotate)</string>
     <string name="profile_view_rotation_landscape">Rotation (landscape)</string>
     <string name="profile_view_ui_refresh_systemui">UI refresh (System UI)</string>
