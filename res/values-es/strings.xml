@@ -90,7 +90,8 @@
     <string name="select_profile_alt">Seleccione el perfil</string>
     <string name="select_screen_type">Seleccione el tipo de pantalla:</string>
     <string name="show_list">Mostrar lista de perfiles</string>
-    <string name="this_profile">Este perfil</string>
+    <string name="swiftkey">SwiftKey is installed on your device.\n\nThis app cannot properly handle resolution and density changes. If you intend to change your device\'s resolution and/or density using SecondScreen, using a different software or hardware keyboard is highly recommended.</string>
+	<string name="this_profile">Este perfil</string>
     <string name="turn_off">Cerrar</string>
     <string name="turning_off_profile">Apagando SecondScreen&#8230;</string>
     <string name="welcome">Bienvenido a SecondScreen</string>
