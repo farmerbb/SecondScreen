@@ -1,55 +1,12 @@
 <resources>
 
-    <string name="title_activity_profile_edit">Edit Profile</string>
-
-    <!-- Headers -->
-
-    <string name="pref_header_display_settings">Display settings</string>
-    <string name="pref_header_additional_settings">Additional settings</string>
-
-    <!-- Titles and descriptions -->
-    <string name="pref_title_profile_name">Profile name</string>
-    <string name="pref_title_resolution">Resolution</string>
-    <string name="pref_title_dpi">Density</string>
-    <string name="pref_title_overscan_settings">Overscan settings</string>
-    <string name="pref_title_overscan">Enable overscan</string>
-    <string name="pref_description_overscan">Useful for older TVs that crop parts of the image</string>
-    <string name="pref_title_bluetooth_on">Turn Bluetooth on</string>
-    <string name="pref_description_bluetooth_on">Automatically enable Bluetooth (to connect a keyboard, mouse, and/or game controller)</string>
-    <string name="pref_title_wifi_on">Turn Wi-Fi on</string>
-    <string name="pref_description_wifi_on">Automatically enable Wi-Fi</string>
-    <string name="pref_title_daydreams_on">Turn Daydreams on</string>
-    <string name="pref_description_daydreams_on">Show a screensaver when device is locked (wired connections only)</string>
-    <string name="pref_title_show_touches">Show touches</string>
-    <string name="pref_description_show_touches">Show visual feedback for touchscreen events</string>
-    <string name="pref_title_rotation">Screen rotation</string>
-    <string name="pref_title_backlight_off">Backlight off</string>
-    <string name="pref_description_backlight_off">Disable the device\'s backlight while a display is connected (only works on some devices)</string>
-    <string name="pref_title_vibration_off">Vibration off</string>
-    <string name="pref_description_vibration_off">Disable the device\'s vibration motor (only works on some devices)</string>
-    <string name="pref_title_chrome">Desktop mode in Chrome</string>
-    <string name="pref_description_chrome">Always show desktop sites in Chrome browser for a more PC-like experience</string>
-    <string name="pref_title_ui_refresh">UI refresh method</string>
-    <string name="pref_title_navbar">Show navigation bar</string>
-    <string name="pref_description_navbar">Shows the navigation bar at the bottom of the screen (only works on CyanogenMod ROMs)</string>
-    <string name="pref_title_screen_timeout">Screen timeout</string>
-    <string name="pref_overscan_values">Overscan values</string>
-    <string name="top">Top</string>
-    <string name="bottom">Bottom</string>
-    <string name="left">Left</string>
-    <string name="right">Right</string>
-    <string name="pref_title_test_overscan">Test overscan</string>
-    <string name="pref_description_test_overscan">Note: The overscan values are only accurate if you are testing them while the profile is active.</string>
-    <string name="configure_daydreams">Please ensure that Daydreams is fully configured (in the system display settings) before loading this profile.</string>
-    <string name="disabled">Disabled</string>
-    <string name="enabled">Enabled</string>
-    <string name="quick_backlight">Backlight</string>
-    <string name="quick_vibration">Vibration</string>
-    <string name="quick_chrome">Chrome Desktop Mode</string>
-    <string name="quick_overscan">Overscan</string>
-    <string name="quick_turn_off">Reset settings</string>
-    <string name="quick_turn_off_description">Tap to restore changed settings</string>
-
+    <string-array name="new_profile_templates">
+        <item>TV (1080p)</item>
+        <item>TV (720p)</item>
+        <item>Monitor (1080p)</item>
+        <item>AppRadio</item>
+        <item>Other / None</item>
+    </string-array>
     <string-array name="pref_resolution_list">
         <item>Device native</item>
         <item>1920x1080 (1080p)</item>

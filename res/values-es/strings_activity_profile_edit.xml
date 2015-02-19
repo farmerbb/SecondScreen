@@ -1,55 +1,12 @@
 <resources>
 
-    <string name="title_activity_profile_edit">Editar Perfil</string>
-
-    <!-- Headers -->
-
-    <string name="pref_header_display_settings">Ajustes de pantalla</string>
-    <string name="pref_header_additional_settings">Ajustes adicionales</string>
-
-    <!-- Titles and descriptions -->
-    <string name="pref_title_profile_name">Nombre de perfil</string>
-    <string name="pref_title_resolution">Resolución</string>
-    <string name="pref_title_dpi">Densidad</string>
-    <string name="pref_title_overscan_settings">Ajustar bordes (Overscan)</string>
-    <string name="pref_title_overscan">Habilitar Bordes</string>
-    <string name="pref_description_overscan">Útil para los televisores más antiguos,  para envitar el corte de parte de la imagen</string>
-    <string name="pref_title_bluetooth_on">Activar Bluetooth</string>
-    <string name="pref_description_bluetooth_on">Habilitar Bluetooth automáticamente (para conectar un teclado, un ratón y/o el mando)</string>
-    <string name="pref_title_wifi_on">Activar Wi-Fi</string>
-    <string name="pref_description_wifi_on">Activar automáticamente la Wi-Fi</string>
-    <string name="pref_title_daydreams_on">Activar protector de pantalla</string>
-    <string name="pref_description_daydreams_on">Mostrar un protector de pantalla cuando el dispositivo está bloqueado</string>
-    <string name="pref_title_show_touches">Mostrar detalles</string>
-    <string name="pref_description_show_touches">Mostrar información visual para los eventos de pantalla táctil</string>
-    <string name="pref_title_rotation">Rotación pantalla</string>
-    <string name="pref_title_backlight_off">Sin retroiluminación</string>
-    <string name="pref_description_backlight_off">Desactive temporalmente la retroiluminación del dispositivo\s para ahorrar batería (sólo funciona en algunos dispositivos)</string>
-    <string name="pref_title_vibration_off">Apagar vibración</string>
-    <string name="pref_description_vibration_off">Desactive temporalmente motor de vibración del dispositivo\s (sólo funciona en algunos dispositivos)</string>
-    <string name="pref_title_chrome">Chrome modo escritório</string>
-    <string name="pref_description_chrome">Mostrar siempre los sitios en modo escritorio en el navegador Chrome para una experiencia más PC</string>
-    <string name="pref_title_ui_refresh">Método de actualización de UI</string>
-    <string name="pref_title_navbar">Mostrar barra de navegación</string>
-    <string name="pref_description_navbar">Muestra la barra de navegación en la parte inferior de la pantalla (sólo funciona en ROM CyanogenMod)</string>
-    <string name="pref_title_screen_timeout">Tiempo de espera</string>
-    <string name="pref_overscan_values">Valores de Bordes</string>
-    <string name="top">Superior</string>
-    <string name="bottom">Inferior</string>
-    <string name="left">Izquierda</string>
-    <string name="right">Derecha</string>
-    <string name="pref_title_test_overscan">Pruebar bordes</string>
-    <string name="pref_description_test_overscan">Nota: Los valores de sobreexploración sólo son exactas si se está probando mientras que el perfil está activo.</string>
-    <string name="configure_daydreams">Por favor asegúrese de que los protectores de pantalla se configura plenamente (en la configuración de pantalla del sistema) antes de cargar este perfil.</string>
-    <string name="disabled">Desactivado</string>
-    <string name="enabled">Activado</string>
-    <string name="quick_backlight">Retroiluminación</string>
-    <string name="quick_vibration">Vibración</string>
-    <string name="quick_chrome">Chrome Modo escritório</string>
-    <string name="quick_overscan">Bordes</string>
-    <string name="quick_turn_off">Restablecer los ajustes</string>
-    <string name="quick_turn_off_description">Presiona para restaurar los ajustes</string>
-
+    <string-array name="new_profile_templates">
+        <item>TV (1080p)</item>
+        <item>TV (720p)</item>
+        <item>Monitor (1080p)</item>
+        <item>AppRadio</item>
+        <item>Otro / Ninguno</item>
+    </string-array>
     <string-array name="pref_resolution_list">
         <item>Nativa del Dispositivo</item>
         <item>1920x1080 (1080p)</item>

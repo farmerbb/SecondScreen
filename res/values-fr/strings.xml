@@ -96,13 +96,49 @@
     <string name="turning_off_profile">Désactivation de SecondScreen &#8230;</string>
     <string name="welcome">Bienvenu dans SecondScreen</string>
     <string name="welcome_message">Créez un nouveau profile en appuyant sur le bouton Nouveau Profile en haut</string>
-
-    <string-array name="new_profile_templates">
-        <item>TV (1080p)</item>
-        <item>TV (720p)</item>
-        <item>Moniteur (1080p)</item>
-        <item>AppRadio</item>
-        <item>Other / None</item>
-    </string-array>
+    <string name="title_activity_profile_edit">Editer le Profile</string>
+    <string name="pref_header_display_settings">Paramètres d\'affichage</string>
+    <string name="pref_header_additional_settings">Paramètres supplémentaires</string>
+    <string name="pref_title_profile_name">Nom du profile</string>
+    <string name="pref_title_resolution">Resolution</string>
+    <string name="pref_title_dpi">Densité</string>
+    <string name="pref_title_overscan_settings">Paramètres d\'Overscan</string>
+    <string name="pref_title_overscan">Activer l\'overscan</string>
+    <string name="pref_description_overscan">Utile pour les anciennes TV qui coupent des parties de l\'image</string>
+    <string name="pref_title_bluetooth_on">Activer le Bluetooth</string>
+    <string name="pref_description_bluetooth_on">Activer le Bluetooth automatiquement (pour connecter un clavier, une souris, et/ou une mannette)</string>
+    <string name="pref_title_wifi_on">Activer le Wi-Fi</string>
+    <string name="pref_description_wifi_on">Activer automatiquement le Wi-Fi</string>
+    <string name="pref_title_daydreams_on">Activer Daydreams</string>
+    <string name="pref_description_daydreams_on">Afficher l\'écran de veille quand l\'appareil est vérouillé</string>
+    <string name="pref_title_show_touches">Afficher les touchés</string>
+    <string name="pref_description_show_touches">Afficher un retour visuel pour les évènements de l\'écran tactile</string>
+    <string name="pref_title_rotation">Rotation de l\'écran</string>
+    <string name="pref_title_backlight_off">Rétroéclairage désactivé</string>
+    <string name="pref_description_backlight_off">Désactiver temporairement le rétroéclairage de l\'appareil pour préserver la batterie (fonctionne seulement sur certains appareils)</string>
+    <string name="pref_title_vibration_off">Vivreur désactivé</string>
+    <string name="pref_description_vibration_off">Désactiver temporairement le moteur de vibration de l\'appareil (fonctionne seulement sur certains appareils)</string>
+    <string name="pref_title_chrome">Mode bureau dans Chrome</string>
+    <string name="pref_description_chrome">Toujours afficher la version ordinateur dans le navigateur Chrome pour une expérience comme sur un PC</string>
+    <string name="pref_title_ui_refresh">Méthode de rafraichissement de l\'interface</string>
+    <string name="pref_title_navbar">Show navigation bar</string>
+    <string name="pref_description_navbar">Shows the navigation bar at the bottom of the screen (only works on CyanogenMod ROMs)</string>
+    <string name="pref_title_screen_timeout">Screen timeout</string>
+    <string name="pref_overscan_values">Valeurs d\'Overscan</string>
+    <string name="top">Haut</string>
+    <string name="bottom">Bas</string>
+    <string name="left">Gauche</string>
+    <string name="right">Droite</string>
+    <string name="pref_title_test_overscan">Tester l\'overscan</string>
+    <string name="pref_description_test_overscan">Note: Les valeurs d\'overscan seront fidèles uniquements si vous les testez pendant que le profile est actif</string>
+    <string name="configure_daydreams">Veuillez vous assurer que Daydreams est entièrement configuré (dans les paramètres d\'affichage) avant d\'activer ce profile.</string>
+    <string name="disabled">Désactivé</string>
+    <string name="enabled">Activé</string>
+    <string name="quick_backlight">Rétroéclairage</string>
+    <string name="quick_vibration">Vibreur</string>
+    <string name="quick_chrome">Mode Chrome pour PC</string>
+    <string name="quick_overscan">Overscan</string>
+    <string name="quick_turn_off">Réinitialiser les paramètres</string>
+    <string name="quick_turn_off_description">Appuyez pour restaurer les paramètres modifiés</string>
 
 </resources>

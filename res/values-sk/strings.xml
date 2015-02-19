@@ -96,13 +96,49 @@
     <string name="turning_off_profile">Vypínanie SecondScreen&#8230;</string>
     <string name="welcome">Vitajte v aplikácii SecondScreen</string>
     <string name="welcome_message">Vytvorte nový profil kliknutím na tlačidlo Nový profil</string>
-
-    <string-array name="new_profile_templates">
-        <item>TV (1080p)</item>
-        <item>TV (720p)</item>
-        <item>Monitor (1080p)</item>
-        <item>AppRadio</item>
-        <item>Iné / Žiadne</item>
-    </string-array>
+    <string name="title_activity_profile_edit">Upraviť profil</string>
+    <string name="pref_header_display_settings">Nastavenia zobrazenia</string>
+    <string name="pref_header_additional_settings">Ďalšie nastavenia</string>
+    <string name="pref_title_profile_name">Meno profilu</string>
+    <string name="pref_title_resolution">Rozlíšenie</string>
+    <string name="pref_title_dpi">Hustota</string>
+    <string name="pref_title_overscan_settings">Nastavenia overscan</string>
+    <string name="pref_title_overscan">Povoliť overscan</string>
+    <string name="pref_description_overscan">Užitočné pre staršie TV, ktoré orezávajú časti obraz</string>
+    <string name="pref_title_bluetooth_on">Zapnúť Bluetooth</string>
+    <string name="pref_description_bluetooth_on">Automaticky zapne Bluetooth (pre pripojenie klávesnice, myši, a/alebo herného ovládača)</string>
+    <string name="pref_title_wifi_on">Zapnúť Wi-Fi</string>
+    <string name="pref_description_wifi_on">Automaticky zapne Wi-Fi</string>
+    <string name="pref_title_daydreams_on">Zapnúť šetrič obrazovky</string>
+    <string name="pref_description_daydreams_on">Zobrazí šetrič obrazovky keď je zariadenie zamknuté</string>
+    <string name="pref_title_show_touches">Zobraziť dotyky</string>
+    <string name="pref_description_show_touches">Zobrazí vizuálnu odozvu pri dotyku</string>
+    <string name="pref_title_rotation">Otočenie obrazovky</string>
+    <string name="pref_title_backlight_off">Vypnúť podsvietenie</string>
+    <string name="pref_description_backlight_off">Dočasne zakáže podsvietenie zariadenia pre ušetrenie batérie (funguje iba na niektorých zariadeniach)</string>
+    <string name="pref_title_vibration_off">Vypnúť vibrácie</string>
+    <string name="pref_description_vibration_off">Dočasne zakáže vibrácie zariadenia (funguje iba na niektorých zariadeniach)</string>
+    <string name="pref_title_chrome">Režim zobrazenia stránok ako na PC pre Chrome</string>
+    <string name="pref_description_chrome">Vždy zobrazovať stránky v prehliadači Chrome ako na PC</string>
+    <string name="pref_title_ui_refresh">Metóda obnovenia UI</string>
+    <string name="pref_title_navbar">Zobraziť navigačnú lištu</string>
+    <string name="pref_description_navbar">Zobrazí navigačnú lištu na spodku obrazovky, (funguje iba na CyanogenMod ROMkách)</string>
+    <string name="pref_title_screen_timeout">Vypnutie obrazovky</string>
+    <string name="pref_overscan_values">Hodnoty overscan</string>
+    <string name="top">Hore</string>
+    <string name="bottom">Dole</string>
+    <string name="left">Vľavo</string>
+    <string name="right">Vpravo</string>
+    <string name="pref_title_test_overscan">Test overscan</string>
+    <string name="pref_description_test_overscan">Poznámka: Hodnoty overscan sú presné len v prípade, ak ich testujete pri aktívnom profile.</string>
+    <string name="configure_daydreams">Prosím, pred aktivovaním profilu sa uistite, že šetrič obrazovky je nastavený (v nastaveniach zariadenia - Zobrazenie).</string>
+    <string name="disabled">Zakázané</string>
+    <string name="enabled">Povolené</string>
+    <string name="quick_backlight">Podsvietenie</string>
+    <string name="quick_vibration">Vibrácie</string>
+    <string name="quick_chrome">Chrome režim PC</string>
+    <string name="quick_overscan">Overscan</string>
+    <string name="quick_turn_off">Obnoviť nastavenia</string>
+    <string name="quick_turn_off_description">Kliknite pre obnovenie zmenených nastavení</string>
 
 </resources>
