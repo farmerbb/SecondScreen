@@ -65,7 +65,7 @@
 	<string name="pref_title_hdmi">Enable auto-start</string>
     <string name="pref_title_hdmi_select_profile">Auto-start action</string>
 	<string name="pref_title_hide_notification">Hide notification icon</string>
-    <string name="pref_title_notification_action">Notification action button</string>
+    <string name="pref_title_notification_action">Secondary action button</string>
 	<string name="pref_title_safe_mode">Enable safe mode</string>
 	<string name="profile_deleted">Profile deleted</string>
     <string name="profile_saved">Profile saved</string>
@@ -92,7 +92,6 @@
     <string name="show_list">Show list of profiles</string>
     <string name="swiftkey">SwiftKey is installed on your device.\n\nThis keyboard cannot properly handle resolution and density changes. If you intend to change your device\'s resolution and/or density using SecondScreen, using a different software or hardware keyboard is highly recommended.</string>
 	<string name="this_profile">This profile</string>
-    <string name="turn_off">Turn Off</string>
     <string name="turning_off_profile">Turning SecondScreen off&#8230;</string>
     <string name="welcome">Welcome to SecondScreen</string>
     <string name="welcome_message">Tap the plus button to create your first profile</string>
@@ -140,5 +139,9 @@
     <string name="quick_overscan">Overscan</string>
     <string name="quick_turn_off">Reset settings</string>
     <string name="quick_turn_off_description">Tap to restore changed settings</string>
+    <string name="keep_overscan">Keep the currently active overscan values?</string>
+    <string name="not_compatible">Not compatible with this device</string>
+    <string name="desktop">Desktop</string>
+    <string name="pref_title_notification_action_2">Primary action button</string>
 
 </resources>

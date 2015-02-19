@@ -48,6 +48,7 @@
     <string-array name="pref_quick_actions">
         <item>ZAP</item>
         <item>VYP</item>
+		<item>Toggle</item>
     </string-array>
     <string-array name="pref_quick_actions_overscan">
         <item>VYP</item>
@@ -56,10 +57,16 @@
         <item>60%</item>
         <item>80%</item>
         <item>100%</item>
+		<item>Toggle</item>
     </string-array>
     <string-array name="pref_notification_action_list">
+        <item>Vypnúť</item>
         <item>Rýchle akcie</item>
         <item>Zamknúť zariadenie</item>
+		<item>Toggle Podsvietenie</item>
+		<item>Toggle Chrome režim PC</item>
+		<item>Toggle Overscan</item>
+		<item>Toggle Vibrácie</item>
     </string-array>
 	<string-array name="pref_screen_timeout_list">
 		<item>Použiť nastavenia systému</item>

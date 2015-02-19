@@ -48,6 +48,7 @@
     <string-array name="pref_quick_actions">
         <item>On</item>
         <item>Off</item>
+		<item>Toggle</item>
     </string-array>
     <string-array name="pref_quick_actions_overscan">
         <item>Off</item>
@@ -56,11 +57,17 @@
         <item>60%</item>
         <item>80%</item>
         <item>100%</item>
+		<item>Toggle</item>
     </string-array>
     <string-array name="pref_notification_action_list">
+        <item>Turn Off</item>
         <item>Quick Actions</item>
         <item>Lock Device</item>
-    </string-array>
+		<item>Toggle Backlight</item>
+		<item>Toggle Chrome Desktop mode</item>
+		<item>Toggle Overscan</item>
+		<item>Toggle Vibration</item>
+	</string-array>
 	<string-array name="pref_screen_timeout_list">
 		<item>Use system setting</item>
 		<item>Always on</item>

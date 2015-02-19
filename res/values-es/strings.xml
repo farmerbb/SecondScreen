@@ -92,7 +92,6 @@
     <string name="show_list">Mostrar lista de perfiles</string>
     <string name="swiftkey">SwiftKey is installed on your device.\n\nThis keyboard cannot properly handle resolution and density changes. If you intend to change your device\'s resolution and/or density using SecondScreen, using a different software or hardware keyboard is highly recommended.</string>
 	<string name="this_profile">Este perfil</string>
-    <string name="turn_off">Cerrar</string>
     <string name="turning_off_profile">Apagando SecondScreen&#8230;</string>
     <string name="welcome">Bienvenido a SecondScreen</string>
     <string name="welcome_message">Toque en el botón más para crear su primer perfil</string>
@@ -140,5 +139,9 @@
     <string name="quick_overscan">Bordes</string>
     <string name="quick_turn_off">Restablecer los ajustes</string>
     <string name="quick_turn_off_description">Presiona para restaurar los ajustes</string>
+    <string name="keep_overscan">Keep the currently active overscan values?</string>
+    <string name="not_compatible">Not compatible with this device</string>
+    <string name="desktop">Desktop</string>
+    <string name="pref_title_notification_action_2">Botón de acción de notificación</string>
 
 </resources>

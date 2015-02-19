@@ -48,6 +48,7 @@
     <string-array name="pref_quick_actions">
         <item>On</item>
         <item>Off</item>
+		<item>Toggle</item>
     </string-array>
     <string-array name="pref_quick_actions_overscan">
         <item>Sin bordes</item>
@@ -56,10 +57,16 @@
         <item>60%</item>
         <item>80%</item>
         <item>100%</item>
+		<item>Toggle</item>
     </string-array>
     <string-array name="pref_notification_action_list">
+        <item>Cerrar</item>
         <item>Acciones Rápidas</item>
         <item>Bloqueo de dispositivo</item>
+		<item>Toggle Retroiluminación</item>
+		<item>Toggle Chrome Modo escritório</item>
+		<item>Toggle Bordes</item>
+		<item>Toggle Vibración</item>
     </string-array>
 	<string-array name="pref_screen_timeout_list">
 		<item>Utilice la configuración del sistema</item>
