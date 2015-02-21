@@ -139,7 +139,7 @@
     <string name="quick_overscan">Overscan</string>
     <string name="quick_turn_off">Reset settings</string>
     <string name="quick_turn_off_description">Tap to restore changed settings</string>
-    <string name="keep_overscan">Keep the currently active overscan values?</string>
+    <string name="keep_overscan">Keep using the currently active overscan values?</string>
     <string name="not_compatible">Not compatible with this device</string>
     <string name="desktop">Desktop</string>
     <string name="pref_title_notification_action_2">Primary action button</string>
