@@ -84,7 +84,6 @@
     <string name="profile_view_wifi_on">Zapnúť Wi-Fi</string>
     <string name="quick_actions_message">Použite rýchle akcie pre prístup k funkciám SecondScreen bez potreby vytvoriť nový profil alebo dočasne upraviť existujúci aktívny profil.</string>
     <string name="recreate_shortcut">Profil nebol nájdený!\n\nProsím, vymažte alebo vytvorte znovu tento odkaz.</string>
-    <string name="reload_profile">Načítať aktívny profil znovu pre aplikovanie zmien?</string>
     <string name="safeguard_title">POZOR</string>
     <string name="select_profile">Zvoľte profil</string>
     <string name="select_profile_alt">Zvoľte profil</string>

@@ -84,7 +84,6 @@
     <string name="profile_view_wifi_on">Wi-Fi on</string>
     <string name="quick_actions_message">Use Quick Actions to access SecondScreen functionality without creating a new profile, or temporarily modify an existing running profile without editing it.</string>
     <string name="recreate_shortcut">Profile not found!\n\nPlease recreate or delete this shortcut.</string>
-    <string name="reload_profile">Reload the currently active profile to apply changed settings?</string>
     <string name="safeguard_title">ATTENTION</string>
     <string name="select_profile">Select profile</string>
     <string name="select_profile_alt">Select a profile</string>
