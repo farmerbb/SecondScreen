@@ -65,6 +65,7 @@
         <item>Zamknúť zariadenie</item>
 		<item>Prepnúť podsvietenie</item>
 		<item>Prepnúť Chrome režim PC</item>
+		<item>Toggle Immersive Mode</item>
 		<item>Prepnúť overscan</item>
 		<item>Prepnúť vibrácie</item>
     </string-array>

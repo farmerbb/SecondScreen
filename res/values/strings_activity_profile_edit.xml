@@ -65,6 +65,7 @@
         <item>Lock Device</item>
 		<item>Toggle Backlight</item>
 		<item>Toggle Chrome Desktop mode</item>
+		<item>Toggle Immersive Mode</item>
 		<item>Toggle Overscan</item>
 		<item>Toggle Vibration</item>
 	</string-array>

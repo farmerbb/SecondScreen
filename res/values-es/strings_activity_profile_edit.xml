@@ -65,6 +65,7 @@
         <item>Bloqueo de dispositivo</item>
 		<item>Toggle Retroiluminación</item>
 		<item>Toggle Chrome Modo escritório</item>
+		<item>Toggle Immersive Mode</item>
 		<item>Toggle Bordes</item>
 		<item>Toggle Vibración</item>
     </string-array>

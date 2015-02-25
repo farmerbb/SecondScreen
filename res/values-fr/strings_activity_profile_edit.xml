@@ -65,6 +65,7 @@
         <item>Vérouiller l\'appareil</item>
 		<item>Toggle Rétroéclairage</item>
 		<item>Toggle Mode Chrome pour PC</item>
+		<item>Toggle Immersive Mode</item>
 		<item>Toggle Overscan</item>
 		<item>Toggle Vibreur</item>
     </string-array>
