@@ -145,5 +145,7 @@
 	<string name="pref_title_immersive">Immersive mode</string>
 	<string name="pref_description_immersive">Force immersive mode system-wide (Lollipop only)</string>
 	<string name="immersive">Immersive</string>
+    <string name="quick_immersive">Immersive Mode</string>
+    <string name="quick_rotation">Screen Rotation</string>
 	
 </resources>

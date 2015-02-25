@@ -145,5 +145,7 @@
     <string name="pref_title_immersive">Režim na celú obrazovku</string>
     <string name="pref_description_immersive">Vynúti režim na celú obrazovku v celom systéme (iba Lollipop)</string>
     <string name="immersive">Na celú obrazovku</string>
+    <string name="quick_immersive">Režim na celú obrazovku</string>
+    <string name="quick_rotation">Otočenie obrazovky</string>
 	
 </resources>
