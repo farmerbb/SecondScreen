@@ -41,7 +41,7 @@
     <string name="both_versions_installed">Please uninstall this version of SecondScreen and use the previously installed version instead.</string>
     <string name="check_for_update">Check For Update</string>
     <string name="checking_for_superuser">Checking for superuser access&#8230; please wait.</string>
-	<string name="decline">Je refuse</string>
+    <string name="decline">Je refuse</string>
     <string name="deleting_current_profile">Impossible de supprimer le profile en cours</string>
     <string name="dialog_about_message">SecondScreen: optimisez votre Android pour les grands écrans\n\n&#169; 2015 Braden Farmer\n\nCette application utilise les projets open sources suivants, tous sous licence <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2.0</a>:\n\n&#8226; <a href="http://github.com/farmerbb/Notepad">Notepad</a>\n\n&#8226; <a href="http://jgilfelt.github.io/android-actionbarstylegenerator/">Android Action Bar Style Generator</a>\n\n&#8226; <a href="http://github.com/Chainfire/libsuperuser">libsuperuser</a>\n\n&#8226; <a href="http://www.twofortyfouram.com/developer.html">Locale Developer API</a>\n\n&#8226; <a href="http://stackoverflow.com/a/28402378">SystemProperties</a>\n\nThis app uses code derived from the <a href="https://github.com/makovkastar/FloatingActionButton">FloatingActionButton</a> project, licensed under the MIT License.\n\nThis app uses graphical assets from the following sources, licensed under <a href="http://creativecommons.org/licenses/by/3.0/">CC-BY-3.0</a>:\n\n&#8226; <a href="http://developer.android.com/distribute/tools/promote/brand.html">Android robot (Google)</a>\n\n&#8226; <a href="http://shreyasachar.github.io/AndroidAssetStudio/">Android Asset Studio for Material Design"</a></string>
     <string name="dialog_about_title">A propos de SecondScreen</string>
@@ -77,12 +77,12 @@
     <string name="no_profiles_found">Aucun profile trouvé</string>
     <string name="no_superuser">Unable to obtain superuser permissions!</string>
     <string name="pref_description_safe_mode">Quand le mode sécurisé est actif, les profiles ne restent pas actifs après un redémarrage</string>
-	<string name="pref_title_hdmi">Démarrer quand un écran est connecté</string>
+    <string name="pref_title_hdmi">Démarrer quand un écran est connecté</string>
     <string name="pref_title_hdmi_select_profile">Profile à charger</string>
-	<string name="pref_title_hide_notification">Masquer la notification</string>
+    <string name="pref_title_hide_notification">Masquer la notification</string>
     <string name="pref_title_notification_action">Bouton notification d\'action</string>
-	<string name="pref_title_safe_mode">Mode sécurisé</string>
-	<string name="profile_deleted">Profile supprimé</string>
+    <string name="pref_title_safe_mode">Mode sécurisé</string>
+    <string name="profile_deleted">Profile supprimé</string>
     <string name="profile_saved">Profile sauvegardé</string>
     <string name="profile_settings">Profile Settings</string>
     <string name="profile_helper_text">Connectez votre écran, puis appuyez sur un profile pour le charger.\nAppuyez longuement sur le nom d\'un profile pour editer ses paramètres.</string>
@@ -91,7 +91,7 @@
     <string name="profile_view_daydreams_on">Activer Daydreams</string>
     <string name="profile_view_navbar">Navigation bar</string>
     <string name="profile_view_screen_timeout_always_on">Timeout (always on)</string>
-	<string name="profile_view_screen_timeout_always_on_charging">Timeout (charging only)</string>
+    <string name="profile_view_screen_timeout_always_on_charging">Timeout (charging only)</string>
     <string name="profile_view_rotation_autorotate">Rotation (auto-rotate)</string>
     <string name="profile_view_rotation_landscape">Rotation (landscape)</string>
     <string name="profile_view_ui_refresh_systemui">UI refresh (System UI)</string>
@@ -105,7 +105,7 @@
     <string name="select_screen_type">Select screen type:</string>
     <string name="show_list">Afficher la liste des profiles</string>
     <string name="swiftkey">SwiftKey is installed on your device.\n\nThis keyboard cannot properly handle resolution and density changes. If you intend to change your device\'s resolution and/or density using SecondScreen, using a different software or hardware keyboard is highly recommended.</string>
-	<string name="this_profile">Ce profile</string>
+    <string name="this_profile">Ce profile</string>
     <string name="turning_off_profile">Désactivation de SecondScreen &#8230;</string>
     <string name="welcome">Bienvenu dans SecondScreen</string>
     <string name="welcome_message">Créez un nouveau profile en appuyant sur le bouton Nouveau Profile en haut</string>
@@ -157,10 +157,10 @@
     <string name="not_compatible">Not compatible with this device</string>
     <string name="desktop">Desktop</string>
     <string name="pref_title_notification_action_2">Bouton notification d\'action</string>
-	<string name="pref_title_immersive">Immersive mode</string>
-	<string name="pref_description_immersive">Force immersive mode system-wide (Lollipop only)</string>
-	<string name="immersive">Immersive</string>
+    <string name="pref_title_immersive">Immersive mode</string>
+    <string name="pref_description_immersive">Force immersive mode system-wide (Lollipop only)</string>
+    <string name="immersive">Immersive</string>
     <string name="quick_immersive">Immersive Mode</string>
     <string name="quick_rotation">Rotation de l\'écran</string>
-	
+
 </resources>

@@ -1,0 +1,14 @@
+SecondScreen
+Copyright 2015 Braden Farmer
+
+This app's source code [http://github.com/farmerbb/SecondScreen] is licensed under Apache 2.0 [http://www.apache.org/licenses/LICENSE-2.0.html] (except as otherwise noted), and uses Apache-licensed code from the following projects:
+- Android Action Bar Style Generator [http://jgilfelt.github.io/android-actionbarstylegenerator/]
+- libsuperuser [http://github.com/Chainfire/libsuperuser]
+- Locale Developer API [http://www.twofortyfouram.com/developer.html]
+- SystemProperties [http://stackoverflow.com/a/28402378]
+
+This app uses code derived from the FloatingActionButton [https://github.com/makovkastar/FloatingActionButton] project, licensed under the MIT License.
+
+This app uses graphical assets from the following sources, licensed under CC-BY-3.0 [http://creativecommons.org/licenses/by/3.0/]:
+- Android robot (Google) [http://developer.android.com/distribute/tools/promote/brand.html]
+- Android Asset Studio for Material Design [http://shreyasachar.github.io/AndroidAssetStudio/]

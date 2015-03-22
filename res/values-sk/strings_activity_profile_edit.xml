@@ -64,7 +64,7 @@
     <string-array name="pref_quick_actions">
         <item>ZAP</item>
         <item>VYP</item>
-		<item>Prepnúť</item>
+        <item>Prepnúť</item>
     </string-array>
     <string-array name="pref_quick_actions_overscan">
         <item>VYP</item>
@@ -73,22 +73,22 @@
         <item>60%</item>
         <item>80%</item>
         <item>100%</item>
-		<item>Prepnúť</item>
+        <item>Prepnúť</item>
     </string-array>
     <string-array name="pref_notification_action_list">
         <item>Vypnúť</item>
         <item>Rýchle akcie</item>
         <item>Zamknúť zariadenie</item>
-		<item>Prepnúť podsvietenie</item>
-		<item>Prepnúť Chrome režim PC</item>
-		<item>Prepnúť režim na celú obrazovku</item>
-		<item>Prepnúť overscan</item>
-		<item>Prepnúť vibrácie</item>
+        <item>Prepnúť podsvietenie</item>
+        <item>Prepnúť Chrome režim PC</item>
+        <item>Prepnúť režim na celú obrazovku</item>
+        <item>Prepnúť overscan</item>
+        <item>Prepnúť vibrácie</item>
     </string-array>
-	<string-array name="pref_screen_timeout_list">
-		<item>Použiť nastavenia systému</item>
-		<item>Vždy zapnutá</item>
-		<item>Zapnutá pri nabíjaní</item>
-	</string-array>
+    <string-array name="pref_screen_timeout_list">
+        <item>Použiť nastavenia systému</item>
+        <item>Vždy zapnutá</item>
+        <item>Zapnutá pri nabíjaní</item>
+    </string-array>
 
 </resources>

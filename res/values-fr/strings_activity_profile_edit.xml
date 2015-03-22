@@ -64,7 +64,7 @@
     <string-array name="pref_quick_actions">
         <item>Activé</item>
         <item>Desactivé</item>
-		<item>Toggle</item>
+        <item>Toggle</item>
     </string-array>
     <string-array name="pref_quick_actions_overscan">
         <item>Désactivé</item>
@@ -73,22 +73,22 @@
         <item>60%</item>
         <item>80%</item>
         <item>100%</item>
-		<item>Toggle</item>
+        <item>Toggle</item>
     </string-array>
     <string-array name="pref_notification_action_list">
         <item>Désactiver</item>
         <item>Actions rapides</item>
         <item>Vérouiller l\'appareil</item>
-		<item>Toggle Rétroéclairage</item>
-		<item>Toggle Mode Chrome pour PC</item>
-		<item>Toggle Immersive Mode</item>
-		<item>Toggle Overscan</item>
-		<item>Toggle Vibreur</item>
+        <item>Toggle Rétroéclairage</item>
+        <item>Toggle Mode Chrome pour PC</item>
+        <item>Toggle Immersive Mode</item>
+        <item>Toggle Overscan</item>
+        <item>Toggle Vibreur</item>
     </string-array>
-	<string-array name="pref_screen_timeout_list">
-		<item>Use system setting</item>
-		<item>Always on</item>
-		<item>Always on while charging</item>
-	</string-array>
+    <string-array name="pref_screen_timeout_list">
+        <item>Use system setting</item>
+        <item>Always on</item>
+        <item>Always on while charging</item>
+    </string-array>
 
 </resources>

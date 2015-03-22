@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Braden Farmer
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.farmerbb.secondscreen"
+    android:installLocation="internalOnly"
+    android:versionCode="102"
+    android:versionName="2.4" >
+
+    <uses-sdk
+        android:minSdkVersion="17"
+        android:targetSdkVersion="22" />
+
+    <uses-feature
+        android:name="android.hardware.touchscreen"
+        android:required="false" />
+
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:smallScreens="true"
+        android:xlargeScreens="true" />
+
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/Theme.Secondscreen.2" >
+        <activity
+            android:name="com.farmerbb.secondscreen.activity.FragmentContainerActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="com.farmerbb.secondscreen.activity.HdmiActivity"
+            android:excludeFromRecents="true"
+            android:label="@string/app_name"
+            android:launchMode="singleInstance"
+            android:documentLaunchMode="always"
+            android:theme="@style/Theme.Secondscreen.Dialog" >
+        </activity>
+        <activity
+            android:name="com.farmerbb.secondscreen.activity.HdmiProfileSelectActivity"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Secondscreen.Dialog" >
+        </activity>
+        <activity
+            android:name="com.farmerbb.secondscreen.activity.MainActivity"
+            android:label="@string/app_name"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustPan" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.farmerbb.secondscreen.activity.NotificationSettingsActivity"
+            android:excludeFromRecents="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Secondscreen.Dialog"
+            android:documentLaunchMode="always" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.NOTIFICATION_PREFERENCES" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.farmerbb.secondscreen.activity.QuickLaunchActivity"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/label_load_profile"
+            android:launchMode="singleInstance"
+            android:documentLaunchMode="always"
+            android:theme="@style/Theme.Secondscreen.Dialog" >
+            <intent-filter>
+                <action android:name="com.twofortyfouram.locale.intent.action.EDIT_SETTING" />
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.CREATE_SHORTCUT" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.farmerbb.secondscreen.activity.TaskerQuickActionsActivity"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/label_quick_actions"
+            android:launchMode="singleInstance"
+            android:documentLaunchMode="always"
+            android:theme="@style/Theme.Secondscreen.Dialog" >
+            <intent-filter>
+                <action android:name="com.twofortyfouram.locale.intent.action.EDIT_SETTING" />
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.CREATE_SHORTCUT" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.farmerbb.secondscreen.activity.TaskerConditionActivity"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/label_profile_active"
+            android:launchMode="singleInstance"
+            android:documentLaunchMode="always"
+            android:theme="@style/Theme.Secondscreen.Dialog" >
+            <intent-filter>
+                <action android:name="com.twofortyfouram.locale.intent.action.EDIT_CONDITION" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.farmerbb.secondscreen.activity.TurnOffActivity"
+            android:excludeFromRecents="true"
+            android:label="@string/app_name"
+            android:launchMode="singleInstance"
+            android:documentLaunchMode="always"
+            android:theme="@style/Theme.Secondscreen.Dialog"
+            android:configChanges="orientation|screenSize" >
+        </activity>
+
+        <receiver
+            android:name="com.farmerbb.secondscreen.receiver.BootReceiver"
+            android:enabled="true"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.farmerbb.secondscreen.receiver.PackageUpgradeReceiver"
+            android:enabled="true"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.farmerbb.secondscreen.receiver.TaskerActionReceiver"
+            android:exported="true"
+            android:process=":background" >
+            <intent-filter>
+                <action android:name="com.twofortyfouram.locale.intent.action.FIRE_SETTING" />
+            </intent-filter>
+        </receiver>
+        <receiver
+            android:name="com.farmerbb.secondscreen.receiver.TaskerConditionReceiver"
+            android:exported="true"
+            android:process=":background" >
+            <intent-filter>
+                <action android:name="com.twofortyfouram.locale.intent.action.QUERY_CONDITION" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name="com.farmerbb.secondscreen.service.BootService"
+            android:exported="true" >
+        </service>
+        <service
+            android:name="com.farmerbb.secondscreen.service.DisplayConnectionService"
+            android:exported="true" >
+        </service>
+        <service
+            android:name="com.farmerbb.secondscreen.service.LockDeviceService"
+            android:exported="true" >
+        </service>
+        <service
+            android:name="com.farmerbb.secondscreen.service.NotificationService"
+            android:exported="true" >
+        </service>
+        <service
+            android:name="com.farmerbb.secondscreen.service.ProfileLoadService"
+            android:exported="true" >
+        </service>
+        <service
+            android:name="com.farmerbb.secondscreen.service.SafeModeToggleService"
+            android:exported="true" >
+        </service>
+        <service
+            android:name="com.farmerbb.secondscreen.service.ScreenOnService"
+            android:exported="true" >
+        </service>
+        <service
+            android:name="com.farmerbb.secondscreen.service.TempBacklightOnService"
+            android:exported="true" >
+        </service>
+        <service
+            android:name="com.farmerbb.secondscreen.service.TestOverscanService"
+            android:exported="true" >
+        </service>
+        <service
+            android:name="com.farmerbb.secondscreen.service.TimeoutService"
+            android:exported="true" >
+        </service>
+        <service
+            android:name="com.farmerbb.secondscreen.service.TurnOffService"
+            android:exported="true" >
+        </service>
+    </application>
+
+</manifest>

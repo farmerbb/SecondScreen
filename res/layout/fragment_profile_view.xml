@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Braden Farmer
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:paddingBottom="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_weight="1" >
+
+            <TextView
+                android:layout_height="match_parent"
+                android:text="@string/pref_title_resolution"
+                android:textSize="18sp"
+                android:background="@color/accent"
+                android:layout_width="match_parent"
+                android:textIsSelectable="false"
+                android:layout_weight="1"
+                android:paddingStart="16dp"
+                android:gravity="center_vertical"
+                android:id="@+id/pvHeaderResolution"
+                android:textColor="@color/text_color_secondary"
+                android:textStyle="italic" />
+
+        <TextView
+            android:layout_height="match_parent"
+            android:text="@string/pref_title_dpi"
+            android:textSize="18sp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:background="@color/accent"
+            android:layout_width="match_parent"
+            android:textIsSelectable="false"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:id="@+id/pvHeaderDensity"
+            android:textColor="@color/text_color_secondary"
+            android:textStyle="italic" />
+
+        </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_weight="0.9">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@null"
+                android:id="@+id/pvResolution"
+                android:layout_weight="1"
+                android:paddingStart="16dp"
+                android:paddingTop="16dp"
+                android:textSize="18sp"
+                android:textColor="@color/text_color_primary" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="16dp"
+                android:text="@null"
+                android:id="@+id/pvDensity"
+                android:layout_weight="1"
+                android:textSize="18sp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:textColor="@color/text_color_primary" />
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_height="match_parent"
+        android:text="@string/profile_settings"
+        android:textSize="18sp"
+        android:paddingStart="16dp"
+        android:background="@color/accent"
+        android:layout_width="match_parent"
+        android:gravity="center_vertical"
+        android:textIsSelectable="false"
+        android:layout_weight="1"
+        android:id="@+id/pvHeaderProfileSettings"
+        android:textColor="@color/text_color_secondary"
+        android:textStyle="italic" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_weight="0.55" >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textSize="15sp"
+                    android:text="@null"
+                    android:paddingStart="16dp"
+                    android:id="@+id/pvProfileSettingsLeft"
+                    android:layout_weight="1"
+                    android:lineSpacingExtra="5dp"
+                    android:paddingTop="16dp"
+                    android:textColor="@color/text_color_primary" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:textSize="15sp"
+                    android:text="@null"
+                    android:paddingLeft="8dp"
+                    android:paddingRight="8dp"
+                    android:id="@+id/pvProfileSettingsRight"
+                    android:layout_weight="1"
+                    android:paddingTop="16dp"
+                    android:lineSpacingExtra="5dp"
+                    android:textColor="@color/text_color_primary" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="0.95"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp" >
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@null"
+            android:id="@+id/pvButton"
+            android:layout_gravity="center_vertical"
+            android:textSize="18sp" />
+        </LinearLayout>
+
+</LinearLayout>
+

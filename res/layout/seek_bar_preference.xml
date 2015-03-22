@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Public domain; see http://robobunny.com/wp/2013/08/24/android-seekbar-preference-v2/ -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@android:id/widget_frame"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="5dp"
+    android:paddingStart="15dp"
+    android:paddingEnd="10dp"
+    android:paddingTop="5dp" >
+
+    <TextView
+        android:id="@+id/seekBarPrefUnitsRight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/seekBarPrefValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toStartOf="@id/seekBarPrefUnitsRight"
+        android:gravity="end" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/seekBarPrefUnitsLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toStartOf="@id/seekBarPrefValue" >
+    </TextView>
+
+    <LinearLayout
+        android:id="@+id/seekBarPrefBarContainer"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/seekBarPrefUnitsRight"
+        android:orientation="horizontal" >
+
+        <SeekBar
+            android:id="@+id/seekBarPrefSeekBar"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+</RelativeLayout>

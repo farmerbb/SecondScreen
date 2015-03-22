@@ -1,0 +1,70 @@
+<!-- Copyright 2015 Braden Farmer
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="@string/pref_title_overscan_settings" >
+
+    <CheckBoxPreference
+        android:defaultValue="false"
+        android:key="overscan"
+        android:summary="@string/pref_description_overscan"
+        android:title="@string/pref_title_overscan" />
+
+    <PreferenceCategory android:title="@string/pref_overscan_values" >
+        <EditTextPreference
+            android:dependency="overscan"
+            android:defaultValue="0"
+            android:inputType="number"
+            android:key="overscan_top_expert"
+            android:maxLines="1"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="@string/top" />
+        <EditTextPreference
+            android:dependency="overscan"
+            android:defaultValue="0"
+            android:inputType="number"
+            android:key="overscan_bottom_expert"
+            android:maxLines="1"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="@string/bottom" />
+        <EditTextPreference
+            android:dependency="overscan"
+            android:defaultValue="0"
+            android:inputType="number"
+            android:key="overscan_left_expert"
+            android:maxLines="1"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="@string/left" />
+        <EditTextPreference
+            android:dependency="overscan"
+            android:defaultValue="0"
+            android:inputType="number"
+            android:key="overscan_right_expert"
+            android:maxLines="1"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="@string/right" />
+
+        <Preference
+            android:dependency="overscan"
+            android:key="test_overscan"
+            android:summary="@string/pref_description_test_overscan"
+            android:title="@string/pref_title_test_overscan" />
+    </PreferenceCategory>
+
+</PreferenceScreen>
