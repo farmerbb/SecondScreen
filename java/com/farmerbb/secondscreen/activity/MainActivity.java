@@ -64,10 +64,7 @@ import com.farmerbb.secondscreen.service.NotificationService;
 import com.farmerbb.secondscreen.util.U;
 import com.jrummyapps.android.os.SystemProperties;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -634,7 +631,7 @@ ProfileViewFragment.Listener {
             bundle.putString("filename", filename);
 
             try {
-                bundle.putString("title", getProfileTitle(filename));
+                bundle.putString("title", U.getProfileTitle(this, filename));
             } catch (IOException e) {}
 
             fragment.setArguments(bundle);
@@ -648,22 +645,9 @@ ProfileViewFragment.Listener {
         }
     }
 
-    // Loads first line of a profile for display in the ListView
     @Override
     public String getProfileTitle(String filename) throws IOException {
-
-        // Open the file on disk
-        FileInputStream input = openFileInput(filename);
-        InputStreamReader reader = new InputStreamReader(input);
-        BufferedReader buffer = new BufferedReader(reader);
-
-        // Load the file
-        String line = buffer.readLine();
-
-        // Close file on disk
-        reader.close();
-
-        return(line);
+        return U.getProfileTitle(this, filename);
     }
 
     @Override

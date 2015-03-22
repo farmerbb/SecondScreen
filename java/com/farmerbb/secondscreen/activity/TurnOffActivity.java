@@ -28,10 +28,7 @@ import com.farmerbb.secondscreen.R;
 import com.farmerbb.secondscreen.fragment.dialog.TurnOffDialogFragment;
 import com.farmerbb.secondscreen.util.U;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 
 // This activity is responsible for invoking the TurnOffService via either the notification
 // action button, or when a display is disconnected.  (When a profile is turned off via
@@ -82,7 +79,7 @@ public final class TurnOffActivity extends Activity implements TurnOffDialogFrag
                     bundle.putString("name", getResources().getStringArray(R.array.pref_notification_action_list)[1]);
                 else {
                     try {
-                        bundle.putString("name", getProfileTitle(filename));
+                        bundle.putString("name", U.getProfileTitle(this, filename));
                     } catch (IOException e) {
                         bundle.putString("name", getResources().getString(R.string.this_profile));
                     }
@@ -100,7 +97,7 @@ public final class TurnOffActivity extends Activity implements TurnOffDialogFrag
             } else {
                 Bundle bundle = new Bundle();
                 try {
-                    bundle.putString("name", getProfileTitle(filename));
+                    bundle.putString("name", U.getProfileTitle(this, filename));
                 } catch (IOException e) {
                     bundle.putString("name", getResources().getString(R.string.this_profile));
                 }
@@ -132,23 +129,6 @@ public final class TurnOffActivity extends Activity implements TurnOffDialogFrag
 
         if(dialog)
             unregisterReceiver(receiver);
-    }
-
-    // Loads first line of a profile for display in the ListView
-    private String getProfileTitle(String filename) throws IOException {
-
-        // Open the file on disk
-        FileInputStream input = openFileInput(filename);
-        InputStreamReader reader = new InputStreamReader(input);
-        BufferedReader buffer = new BufferedReader(reader);
-
-        // Load the file
-        String line = buffer.readLine();
-
-        // Close file on disk
-        reader.close();
-
-        return(line);
     }
 
     @Override

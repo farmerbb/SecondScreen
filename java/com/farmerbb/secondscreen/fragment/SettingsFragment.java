@@ -35,11 +35,8 @@ import com.farmerbb.secondscreen.service.DisplayConnectionService;
 import com.farmerbb.secondscreen.service.SafeModeToggleService;
 import com.farmerbb.secondscreen.util.U;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 
 // Fragment launched as part of FragmentContainerActivity that shows a list of application settings.
 // Settings are saved as soon as onPause is called or the back button is pressed.
@@ -143,7 +140,7 @@ public final class SettingsFragment extends PreferenceFragment implements OnPref
             File file = new File(getActivity().getFilesDir() + File.separator + prefMain.getString("hdmi_load_profile", "show_list"));
             if(file.exists()) {
                 try {
-                    findPreference("hdmi_select_profile").setSummary(getResources().getString(R.string.action_load) + " " + getProfileTitle(prefMain.getString("hdmi_load_profile", "show_list")));
+                    findPreference("hdmi_select_profile").setSummary(getResources().getString(R.string.action_load) + " " + U.getProfileTitle(getActivity(), prefMain.getString("hdmi_load_profile", "show_list")));
                 } catch (IOException e) {}
             } else
                 findPreference("hdmi_select_profile").setSummary(getResources().getString(R.string.show_list));
@@ -165,23 +162,6 @@ public final class SettingsFragment extends PreferenceFragment implements OnPref
     public void onBackPressed() {
         saveSettings();
         getActivity().finish();
-    }
-
-    // Loads first line of a profile for display in the ListView
-    private String getProfileTitle(String filename) throws IOException {
-
-        // Open the file on disk
-        FileInputStream input = getActivity().openFileInput(filename);
-        InputStreamReader reader = new InputStreamReader(input);
-        BufferedReader buffer = new BufferedReader(reader);
-
-        // Load the file
-        String line = buffer.readLine();
-
-        // Close file on disk
-        reader.close();
-
-        return(line);
     }
 
     private void saveSettings() {
@@ -240,7 +220,7 @@ public final class SettingsFragment extends PreferenceFragment implements OnPref
                 break;
             case "hdmi_select_profile":
                 // Get number of files
-                int numOfFiles = getNumOfFiles(getActivity().getFilesDir());
+                int numOfFiles = U.getNumOfFiles(getActivity().getFilesDir());
 
                 if(numOfFiles == 0)
                     U.showToast(getActivity(), R.string.no_profiles_found);
@@ -278,10 +258,5 @@ public final class SettingsFragment extends PreferenceFragment implements OnPref
         editor.apply();
 
         checkBoxPreference.setChecked(true);
-    }
-
-    // Returns an integer with number of files in /data/data/com.farmerbb.secondscreen/files/
-    private static int getNumOfFiles(File file) {
-        return new File(file.getPath()).list().length;
     }
 }

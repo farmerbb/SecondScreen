@@ -84,7 +84,6 @@ public final class U {
             new File("/sys/class/timed_output/vibrator", "amp"),
             new File("/sys/drv2605", "rtp_strength")};
 
-
     // Tests if backlight/vibration off files exist
     public static boolean filesExist(File[] array) {
         boolean exists = false;
@@ -342,7 +341,7 @@ public final class U {
     }
 
     // Returns an integer with number of files in /data/data/com.farmerbb.secondscreen/files/
-    private static int getNumOfFiles(File file) {
+    public static int getNumOfFiles(File file) {
         return new File(file.getPath()).list().length;
     }
 
