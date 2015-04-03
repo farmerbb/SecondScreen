@@ -229,6 +229,7 @@ public final class ProfileListFragment extends Fragment {
             empty.setText(getResources().getString(R.string.no_profiles_found));
             empty.setBackgroundColor(getResources().getColor(R.color.accent));
 
+            listView.setAdapter(null);
             listView.setEmptyView(empty);
 
             helper.setText(" ");

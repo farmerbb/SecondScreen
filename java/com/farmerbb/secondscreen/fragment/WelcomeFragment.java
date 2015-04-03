@@ -64,8 +64,14 @@ public final class WelcomeFragment extends Fragment {
                 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             LinearLayout profileViewEdit = (LinearLayout) getActivity().findViewById(R.id.profileViewEdit);
             LinearLayout profileList = (LinearLayout) getActivity().findViewById(R.id.profileList);
-            profileViewEdit.animate().z(0f);
-            profileList.animate().z(45f);
+
+            if(getArguments().getBoolean("show-welcome-message", true)) {
+                profileList.animate().z(0f);
+                profileViewEdit.animate().z(35f);
+            } else {
+                profileViewEdit.animate().z(0f);
+                profileList.animate().z(45f);
+            }
         }
     }
 
