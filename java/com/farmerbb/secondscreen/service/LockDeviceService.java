@@ -77,16 +77,18 @@ public final class LockDeviceService extends IntentService {
         }
 
         // In order to ensure that the device locks itself when the following code is run,
-        // we need to temporarily set the lock screen lock after timeout value to 0.
+        // we need to temporarily set the lock screen lock after timeout value.
+        // For a smooth transition into the daydream, we set this value to one millisecond,
+        // locking the device at the soonest opportunity after the transition completes.
         // This value will be reset via either ScreenOnService or TimeoutService
-        int timeout = Settings.Secure.getInt(getContentResolver(), "lock_screen_lock_after_timeout", 0);
-        if(timeout != 0) {
+        int timeout = Settings.Secure.getInt(getContentResolver(), "lock_screen_lock_after_timeout", 5000);
+        if(timeout != 1) {
             SharedPreferences prefMain = U.getPrefMain(this);
             SharedPreferences.Editor editor = prefMain.edit();
-            editor.putInt("timeout", Settings.Secure.getInt(getContentResolver(), "lock_screen_lock_after_timeout", 0));
+            editor.putInt("timeout", Settings.Secure.getInt(getContentResolver(), "lock_screen_lock_after_timeout", 5000));
             editor.apply();
 
-            Shell.SU.run(U.timeoutCommand + "0");
+            Shell.SU.run(U.timeoutCommand + "1");
         }
 
         // If Daydreams is enabled and the device is charging, then lock the device by launching the daydream.
