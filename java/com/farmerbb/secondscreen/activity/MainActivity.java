@@ -187,9 +187,9 @@ ProfileViewFragment.Listener {
         boolean stopAppLaunch = false;
 
         if((getPackageName().equals("com.farmerbb.secondscreen.free")
-               && isActivityAvailable(this, "com.farmerbb.secondscreen", MainActivity.class.getName()))
+               && isActivityAvailable("com.farmerbb.secondscreen", MainActivity.class.getName()))
             || (getPackageName().equals("com.farmerbb.secondscreen")
-            && isActivityAvailable(this, "com.farmerbb.secondscreen.free", MainActivity.class.getName()))) {
+            && isActivityAvailable("com.farmerbb.secondscreen.free", MainActivity.class.getName()))) {
             stopAppLaunch = true;
 
             Bundle bundle = new Bundle();
@@ -311,9 +311,9 @@ ProfileViewFragment.Listener {
             SharedPreferences prefMain = U.getPrefMain(this);
             if(prefMain.getBoolean("show-welcome-message", false)
                     || (getFragmentManager().findFragmentById(R.id.profileViewEdit) == null
-                    && findViewById(R.id.layoutMain).getTag().equals("main-layout-landscape"))
+                    && findViewById(R.id.layoutMain).getTag().equals("main-layout-large"))
                     || ((getFragmentManager().findFragmentById(R.id.profileViewEdit) instanceof ProfileListFragment)
-                    && findViewById(R.id.layoutMain).getTag().equals("main-layout-landscape"))) {
+                    && findViewById(R.id.layoutMain).getTag().equals("main-layout-large"))) {
                 // Show welcome message
                 Bundle bundle = new Bundle();
                 bundle.putBoolean("show-welcome-message", prefMain.getBoolean("show-welcome-message", false));
@@ -322,7 +322,7 @@ ProfileViewFragment.Listener {
                 fragment.setArguments(bundle);
 
                 transaction.replace(R.id.profileViewEdit, fragment, "NoteListFragment");
-            } else if(findViewById(R.id.layoutMain).getTag().equals("main-layout-portrait"))
+            } else if(findViewById(R.id.layoutMain).getTag().equals("main-layout-normal"))
                 transaction.replace(R.id.profileViewEdit, new ProfileListFragment(), "NoteListFragment");
         }
 
@@ -375,8 +375,8 @@ ProfileViewFragment.Listener {
                 PackageManager.DONT_KILL_APP);
     }
 
-    private boolean isActivityAvailable(Context context, String packageName, String className) {
-        final PackageManager packageManager = context.getPackageManager();
+    private boolean isActivityAvailable(String packageName, String className) {
+        final PackageManager packageManager = getPackageManager();
         final Intent intent = new Intent();
         intent.setClassName(packageName, className);
 
@@ -415,7 +415,7 @@ ProfileViewFragment.Listener {
 
             // Add ProfileListFragment or WelcomeFragment
             Fragment fragment;
-            if(findViewById(R.id.layoutMain).getTag().equals("main-layout-portrait"))
+            if(findViewById(R.id.layoutMain).getTag().equals("main-layout-normal"))
                 fragment = new ProfileListFragment();
             else {
                 SharedPreferences prefMain = U.getPrefMain(this);
@@ -490,7 +490,7 @@ ProfileViewFragment.Listener {
 
                 // Add ProfileListFragment or WelcomeFragment
                 Fragment fragment;
-                if(findViewById(R.id.layoutMain).getTag().equals("main-layout-portrait"))
+                if(findViewById(R.id.layoutMain).getTag().equals("main-layout-normal"))
                     fragment = new ProfileListFragment();
                 else {
                     Bundle bundle = new Bundle();
@@ -525,7 +525,7 @@ ProfileViewFragment.Listener {
 
             // Add ProfileListFragment or WelcomeFragment
             Fragment fragment;
-            if(findViewById(R.id.layoutMain).getTag().equals("main-layout-portrait"))
+            if(findViewById(R.id.layoutMain).getTag().equals("main-layout-normal"))
                 fragment = new ProfileListFragment();
             else {
                 SharedPreferences prefMain = U.getPrefMain(this);

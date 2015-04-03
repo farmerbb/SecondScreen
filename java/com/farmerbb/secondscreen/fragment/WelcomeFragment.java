@@ -15,6 +15,7 @@
 
 package com.farmerbb.secondscreen.fragment;
 
+import android.annotation.TargetApi;
 import android.app.DialogFragment;
 import android.app.Fragment;
 import android.content.Intent;
@@ -26,6 +27,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.farmerbb.secondscreen.R;
 import com.farmerbb.secondscreen.activity.FragmentContainerActivity;
@@ -48,6 +50,7 @@ public final class WelcomeFragment extends Fragment {
             return inflater.inflate(R.layout.fragment_welcome_alt, container, false);
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -55,6 +58,15 @@ public final class WelcomeFragment extends Fragment {
         // Set values
         setRetainInstance(true);
         setHasOptionsMenu(true);
+
+        // Animate elevation change
+        if(getActivity().findViewById(R.id.layoutMain).getTag().equals("main-layout-large")
+                && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            LinearLayout profileViewEdit = (LinearLayout) getActivity().findViewById(R.id.profileViewEdit);
+            LinearLayout profileList = (LinearLayout) getActivity().findViewById(R.id.profileList);
+            profileViewEdit.animate().z(0f);
+            profileList.animate().z(45f);
+        }
     }
 
     @Override

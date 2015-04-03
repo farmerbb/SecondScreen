@@ -15,6 +15,7 @@
 
 package com.farmerbb.secondscreen.fragment;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
@@ -34,6 +35,7 @@ import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.LinearLayout;
 
 import com.farmerbb.secondscreen.R;
 import com.farmerbb.secondscreen.activity.FragmentContainerActivity;
@@ -92,6 +94,7 @@ SharedPreferences.OnSharedPreferenceChangeListener {
         }
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -102,6 +105,15 @@ SharedPreferences.OnSharedPreferenceChangeListener {
 
         // Show the Up button in the action bar.
         getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
+
+        // Animate elevation change
+        if(getActivity().findViewById(R.id.layoutMain).getTag().equals("main-layout-large")
+                && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            LinearLayout profileViewEdit = (LinearLayout) getActivity().findViewById(R.id.profileViewEdit);
+            LinearLayout profileList = (LinearLayout) getActivity().findViewById(R.id.profileList);
+            profileList.animate().z(0f);
+            profileViewEdit.animate().z(35f);
+        }
     }
 
     @SuppressWarnings("deprecation")
@@ -611,7 +623,7 @@ SharedPreferences.OnSharedPreferenceChangeListener {
             U.listProfilesBroadcast(getActivity());
 
             // Add ProfileListFragment or WelcomeFragment
-            if(getActivity().findViewById(R.id.layoutMain).getTag().equals("main-layout-portrait"))
+            if(getActivity().findViewById(R.id.layoutMain).getTag().equals("main-layout-normal"))
                 fragment = new ProfileListFragment();
             else {
                 Bundle bundle = new Bundle();
@@ -638,7 +650,7 @@ SharedPreferences.OnSharedPreferenceChangeListener {
         // if we were not currently viewing or editing a profile, or if we are creating a new profile.
         // This method should then return the user to ProfileListFragment.
         if(returnToList) {
-            if(getActivity().findViewById(R.id.layoutMain).getTag().equals("main-layout-portrait"))
+            if(getActivity().findViewById(R.id.layoutMain).getTag().equals("main-layout-normal"))
                 fragment = new ProfileListFragment();
             else {
                 SharedPreferences prefMain = U.getPrefMain(getActivity());

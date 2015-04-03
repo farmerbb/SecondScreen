@@ -15,6 +15,7 @@
 
 package com.farmerbb.secondscreen.fragment;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
@@ -30,6 +31,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.farmerbb.secondscreen.R;
@@ -79,6 +81,7 @@ public final class ProfileViewFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_profile_view, container, false);
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @SuppressWarnings("deprecation")
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -96,6 +99,15 @@ public final class ProfileViewFragment extends Fragment {
 
         // Show the Up button in the action bar.
         getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
+
+        // Animate elevation change
+        if(getActivity().findViewById(R.id.layoutMain).getTag().equals("main-layout-large")
+                && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            LinearLayout profileViewEdit = (LinearLayout) getActivity().findViewById(R.id.profileViewEdit);
+            LinearLayout profileList = (LinearLayout) getActivity().findViewById(R.id.profileList);
+            profileList.animate().z(0f);
+            profileViewEdit.animate().z(35f);
+        }
 
         // Get filename of saved note
         filename = getArguments().getString("filename");
@@ -292,7 +304,7 @@ public final class ProfileViewFragment extends Fragment {
     public void onBackPressed() {
         // Add ProfileListFragment or WelcomeFragment
         Fragment fragment;
-        if(getActivity().findViewById(R.id.layoutMain).getTag().equals("main-layout-portrait"))
+        if(getActivity().findViewById(R.id.layoutMain).getTag().equals("main-layout-normal"))
             fragment = new ProfileListFragment();
         else {
             SharedPreferences prefMain = U.getPrefMain(getActivity());

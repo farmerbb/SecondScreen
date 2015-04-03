@@ -709,7 +709,7 @@ public final class ProfileLoadService extends IntentService {
                 && !prefSaved.getString("ui_refresh", "do-nothing").equals("activity-manager")
                 && su[uiRefreshCommand].equals("")
                 && !su[backlightCommand].equals(""))
-            su[backlightCommand] = "sleep 2 && " + backlightCommand;
+            su[backlightCommand] = "sleep 2 && " + su[backlightCommand];
 
         // Remove any special preferences that are not needed after profile load
         if(prefCurrent.getBoolean("force_safe_mode", false)) {

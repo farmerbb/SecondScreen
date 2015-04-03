@@ -16,7 +16,7 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/layoutMain"
-    android:tag="main-layout-landscape"
+    android:tag="main-layout-large"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/primary"
@@ -40,7 +40,6 @@
         android:layout_height="match_parent"
         android:layout_marginStart="2dp"
         android:background="@color/window_background"
-        android:orientation="horizontal"
-        android:elevation="16dp" />
+        android:orientation="horizontal" />
 
 </LinearLayout>
