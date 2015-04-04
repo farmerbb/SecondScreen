@@ -44,17 +44,6 @@ public final class ScreenOnService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        // Check to see if we need to reset the lock screen lock after timeout value
-        SharedPreferences prefMain = U.getPrefMain(this);
-        int timeout = prefMain.getInt("timeout", -1);
-        if(timeout != -1) {
-            SharedPreferences.Editor editor = prefMain.edit();
-            editor.remove("timeout");
-            editor.apply();
-
-            Shell.SU.run(U.timeoutCommand + Integer.toString(timeout));
-        }
-
         // Turn the backlight back off after the device wakes up
         SharedPreferences prefCurrent = U.getPrefCurrent(this);
         DisplayManager dm = (DisplayManager) getSystemService(DISPLAY_SERVICE);

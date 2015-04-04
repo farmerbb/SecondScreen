@@ -83,14 +83,6 @@ public final class NotificationService extends Service {
         }
     };
 
-    BroadcastReceiver timeoutReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-                Intent timeoutServiceIntent = new Intent(context, TimeoutService.class);
-                context.startService(timeoutServiceIntent);
-        }
-    };
-
     DisplayManager.DisplayListener listener = new DisplayManager.DisplayListener() {
         @Override
         public void onDisplayAdded(int displayId) {
@@ -147,16 +139,13 @@ public final class NotificationService extends Service {
         // Register broadcast receivers for screen on and user present
         final IntentFilter filter1 = new IntentFilter();
         final IntentFilter filter2 = new IntentFilter();
-        final IntentFilter filter3 = new IntentFilter();
 
         filter1.addAction(Intent.ACTION_SCREEN_ON);
         filter1.addAction(Intent.ACTION_DREAMING_STARTED);
         filter2.addAction(Intent.ACTION_USER_PRESENT);
-        filter3.addAction(Intent.ACTION_DREAMING_STOPPED);
 
         registerReceiver(screenOnReceiver, filter1);
         registerReceiver(userPresentReceiver, filter2);
-        registerReceiver(timeoutReceiver, filter3);
 
         DisplayManager manager = (DisplayManager) getSystemService(DISPLAY_SERVICE);
         manager.registerDisplayListener(listener, null);
@@ -200,7 +189,6 @@ public final class NotificationService extends Service {
     public void onDestroy() {
         unregisterReceiver(screenOnReceiver);
         unregisterReceiver(userPresentReceiver);
-        unregisterReceiver(timeoutReceiver);
 
         DisplayManager manager = (DisplayManager) getSystemService(DISPLAY_SERVICE);
         manager.unregisterDisplayListener(listener);

@@ -15,7 +15,9 @@
 
 package com.farmerbb.secondscreen.service;
 
+import android.app.AlarmManager;
 import android.app.IntentService;
+import android.app.PendingIntent;
 import android.app.UiModeManager;
 import android.content.ComponentName;
 import android.content.Context;
@@ -80,7 +82,6 @@ public final class LockDeviceService extends IntentService {
         // we need to temporarily set the lock screen lock after timeout value.
         // For a smooth transition into the daydream, we set this value to one millisecond,
         // locking the device at the soonest opportunity after the transition completes.
-        // This value will be reset via either ScreenOnService or TimeoutService
         int timeout = Settings.Secure.getInt(getContentResolver(), "lock_screen_lock_after_timeout", 5000);
         if(timeout != 1) {
             SharedPreferences prefMain = U.getPrefMain(this);
@@ -90,6 +91,13 @@ public final class LockDeviceService extends IntentService {
 
             Shell.SU.run(U.timeoutCommand + "1");
         }
+
+        // Schedule TimeoutService to reset lock screen timeout to original value
+        Intent timeoutService = new Intent(this, TimeoutService.class);
+        PendingIntent pendingIntent = PendingIntent.getService(this, 123456, timeoutService, PendingIntent.FLAG_CANCEL_CURRENT);
+
+        AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        manager.set(AlarmManager.RTC, System.currentTimeMillis() + 1000, pendingIntent);
 
         // If Daydreams is enabled and the device is charging, then lock the device by launching the daydream.
         if(isCharging
