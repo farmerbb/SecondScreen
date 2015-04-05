@@ -112,7 +112,7 @@ SharedPreferences.OnSharedPreferenceChangeListener {
             LinearLayout profileViewEdit = (LinearLayout) getActivity().findViewById(R.id.profileViewEdit);
             LinearLayout profileList = (LinearLayout) getActivity().findViewById(R.id.profileList);
             profileList.animate().z(0f);
-            profileViewEdit.animate().z(35f);
+            profileViewEdit.animate().z(getResources().getDimensionPixelSize(R.dimen.profile_view_edit_elevation));
         }
     }
 
@@ -463,6 +463,15 @@ SharedPreferences.OnSharedPreferenceChangeListener {
         editor.putBoolean("navbar", prefNew.getBoolean("navbar", false));
         editor.putString("screen_timeout", prefNew.getString("screen_timeout", "do-nothing"));
         editor.putBoolean("immersive", prefNew.getBoolean("immersive", false));
+
+        if(prefMain.getBoolean("expert_mode", false)) {
+            if(prefNew.getBoolean("size-reset", false))
+                editor.putBoolean("size-reset", true);
+
+            if(prefNew.getBoolean("density-reset", false))
+                editor.putBoolean("density-reset", true);
+        }
+
         editor.apply();
 
         // Save profile name to file, for use with MainActivity

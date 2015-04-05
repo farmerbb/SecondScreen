@@ -106,7 +106,7 @@ public final class ProfileViewFragment extends Fragment {
             LinearLayout profileViewEdit = (LinearLayout) getActivity().findViewById(R.id.profileViewEdit);
             LinearLayout profileList = (LinearLayout) getActivity().findViewById(R.id.profileList);
             profileList.animate().z(0f);
-            profileViewEdit.animate().z(35f);
+            profileViewEdit.animate().z(getResources().getDimensionPixelSize(R.dimen.profile_view_edit_elevation));
         }
 
         // Get filename of saved note

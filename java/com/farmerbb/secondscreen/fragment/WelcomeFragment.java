@@ -67,10 +67,10 @@ public final class WelcomeFragment extends Fragment {
 
             if(getArguments().getBoolean("show-welcome-message", true)) {
                 profileList.animate().z(0f);
-                profileViewEdit.animate().z(35f);
+                profileViewEdit.animate().z(getResources().getDimensionPixelSize(R.dimen.profile_view_edit_elevation));
             } else {
                 profileViewEdit.animate().z(0f);
-                profileList.animate().z(45f);
+                profileList.animate().z(getResources().getDimensionPixelSize(R.dimen.profile_list_elevation));
             }
         }
     }

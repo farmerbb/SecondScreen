@@ -177,7 +177,7 @@ ProfileViewFragment.Listener {
             layout.setLayoutParams(params);
 
             // Set action bar elevation
-            getActionBar().setElevation(15f);
+            getActionBar().setElevation(getResources().getDimensionPixelSize(R.dimen.action_bar_elevation));
         } else
             // Change window title on pre-Lollipop devices
             setTitle(" " + getResources().getString(R.string.app_name));

@@ -67,7 +67,7 @@ public final class FragmentContainerActivity extends Activity implements
 
             // Set action bar elevation
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-                getActionBar().setElevation(15f);
+                getActionBar().setElevation(getResources().getDimensionPixelSize(R.dimen.action_bar_elevation));
 
             // Begin a new FragmentTransaction
             FragmentTransaction transaction = getFragmentManager().beginTransaction();

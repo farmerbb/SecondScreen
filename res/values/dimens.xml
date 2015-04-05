@@ -12,4 +12,8 @@
     <dimen name="fab_min_significant_scroll">4dp</dimen>
     <dimen name="fab_elevation_lollipop">5dp</dimen>
 
+    <dimen name="action_bar_elevation">7.5dp</dimen>
+    <dimen name="profile_list_elevation">22.5dp</dimen>
+    <dimen name="profile_view_edit_elevation">17.5dp</dimen>
+
 </resources>
