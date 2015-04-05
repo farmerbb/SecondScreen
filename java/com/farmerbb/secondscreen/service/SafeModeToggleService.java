@@ -32,7 +32,7 @@ public final class SafeModeToggleService extends IntentService {
      * constructor with a name for the worker thread.
      */
     public SafeModeToggleService() {
-        super("LockDeviceService");
+        super("SafeModeToggleService");
     }
 
     @Override

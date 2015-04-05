@@ -16,7 +16,6 @@
 package com.farmerbb.secondscreen.activity;
 
 import android.app.Activity;
-import android.app.ActivityManager;
 import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
@@ -456,23 +455,11 @@ ProfileViewFragment.Listener {
             editor.putBoolean("hdmi", true);
             editor.putString("notification_action", "quick-actions");
             editor.putBoolean("show-welcome-message", true);
-
-                // Restore DisplayConnectionService
-                boolean displayConnectionServiceRunning = false;
-
-                ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-                for(ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-                    if(DisplayConnectionService.class.getName().equals(service.service.getClassName()))
-                        displayConnectionServiceRunning = true;
-                }
-
-                if(!displayConnectionServiceRunning) {
-                    // Start DisplayConnectionService
-                    Intent serviceIntent = new Intent(this, DisplayConnectionService.class);
-                    startService(serviceIntent);
-                }
-
             editor.apply();
+
+            // Restore DisplayConnectionService
+            Intent serviceIntent = new Intent(this, DisplayConnectionService.class);
+            startService(serviceIntent);
 
             // Determine if we need to show any dialogs before we create the fragments
             showDialogs();
