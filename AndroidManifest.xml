@@ -17,7 +17,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.farmerbb.secondscreen"
     android:installLocation="internalOnly"
-    android:versionCode="107"
+    android:versionCode="108"
     android:versionName="2.4.1" >
 
     <uses-sdk
@@ -96,7 +96,6 @@
             android:exported="true"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/label_load_profile"
-            android:launchMode="singleInstance"
             android:documentLaunchMode="always"
             android:theme="@style/Theme.Secondscreen.Dialog" >
             <intent-filter>
@@ -113,7 +112,6 @@
             android:exported="true"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/label_quick_actions"
-            android:launchMode="singleInstance"
             android:documentLaunchMode="always"
             android:theme="@style/Theme.Secondscreen.Dialog" >
             <intent-filter>
@@ -130,7 +128,6 @@
             android:exported="true"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/label_profile_active"
-            android:launchMode="singleInstance"
             android:documentLaunchMode="always"
             android:theme="@style/Theme.Secondscreen.Dialog" >
             <intent-filter>

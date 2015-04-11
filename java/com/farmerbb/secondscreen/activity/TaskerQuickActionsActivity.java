@@ -569,11 +569,4 @@ SharedPreferences.OnSharedPreferenceChangeListener {
             }
         }
     }
-
-    @Override
-    public void finish() {
-        // Fixes undesired animation on 4.x devices
-        super.finish();
-        overridePendingTransition(0, 0);
-    }
 }
