@@ -24,4 +24,5 @@
     <color name="pl_selected">#D2E39C</color>
     <color name="pl_selected_pressed">#B8C788</color>
     <color name="navbar">#000000</color>
+    <color name="close_button">#009688</color>
 </resources>

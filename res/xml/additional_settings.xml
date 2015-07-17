@@ -38,11 +38,6 @@
             android:title="@string/pref_title_chrome" />
         <CheckBoxPreference
             android:defaultValue="false"
-            android:key="immersive"
-            android:summary="@string/pref_description_immersive"
-            android:title="@string/pref_title_immersive" />
-        <CheckBoxPreference
-            android:defaultValue="false"
             android:key="show_touches"
             android:summary="@string/pref_description_show_touches"
             android:title="@string/pref_title_show_touches" />

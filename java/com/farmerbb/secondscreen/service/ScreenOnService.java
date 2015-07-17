@@ -26,8 +26,6 @@ import com.farmerbb.secondscreen.util.U;
 
 import java.io.File;
 
-import eu.chainfire.libsuperuser.Shell;
-
 // The ScreenOnService is responsible for turning the backlight off again if the user happens to
 // turn their device off and back on.
 // This service will turn the backlight off immediately after the user wakes their device from sleep.
@@ -62,7 +60,7 @@ public final class ScreenOnService extends IntentService {
             // Run superuser command to blank screen again after device was turned off
             for(File backlightOff : U.backlightOff) {
                 if(backlightOff.exists()) {
-                    Shell.SU.run("sleep 2 && echo 0 > " + backlightOff.getAbsolutePath());
+                    U.runCommand(this, "sleep 2 && echo 0 > " + backlightOff.getAbsolutePath());
                     break;
                 }
             }

@@ -47,8 +47,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 
-import eu.chainfire.libsuperuser.Shell;
-
 // The ProfileLoadService is an important service that is responsible for loading all profiles.
 // It loads a xml file created by ProfileEditService, and will execute the actions based on
 // what options are set.  For actions requiring superuser access, it will instead generate a list
@@ -80,7 +78,7 @@ public final class ProfileLoadService extends IntentService {
         SharedPreferences prefCurrent = U.getPrefCurrent(this);
 
         // Check for root and then load profile
-        if(Shell.SU.available())
+        if(U.hasRoot(this))
             loadProfile(prefCurrent);
         else {
             SharedPreferences.Editor editor = prefCurrent.edit();
@@ -105,7 +103,10 @@ public final class ProfileLoadService extends IntentService {
 
         // Handle toggling of certain values
         String toggle = prefCurrent.getString("toggle", "null");
-        if(!toggle.equals("null") && filename.equals("quick_actions")) {
+        if(!"null".equals(toggle) && filename.equals("quick_actions")) {
+            if("immersive_new".equals(toggle))
+                toggle = "immersive";
+
             SharedPreferences.Editor editorSaved = prefSaved.edit();
             editorSaved.putBoolean(toggle, !prefSaved.getBoolean(toggle, false));
             editorSaved.commit();
@@ -145,37 +146,47 @@ public final class ProfileLoadService extends IntentService {
         // Bluetooth
         if(getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH)) {
             BluetoothAdapter bluetooth = BluetoothAdapter.getDefaultAdapter();
-            if(prefCurrent.getBoolean("not_active", true)) {
-                if(bluetooth.isEnabled())
-                    editor.putBoolean("bluetooth_on_system", true);
-                else
-                    editor.putBoolean("bluetooth_on_system", false);
-            }
+            if(bluetooth != null) {
+                if(prefCurrent.getBoolean("not_active", true))
+                    editor.putBoolean("bluetooth_on_system", bluetooth.isEnabled());
 
-            if(prefSaved.getBoolean("bluetooth_on", false) && (prefCurrent.getBoolean("not_active", true) || !prefCurrent.getBoolean("bluetooth_on", false)))
-                bluetooth.enable();
-            else if(!prefCurrent.getBoolean("not_active", true) && prefCurrent.getBoolean("bluetooth_on", false)) {
-                if(prefCurrent.getBoolean("bluetooth_on_system", false))
-                    bluetooth.enable();
-                else
-                    bluetooth.disable();
+                if(prefSaved.getBoolean("bluetooth_on", false)) {
+                    if(prefCurrent.getBoolean("not_active", true))
+                        bluetooth.enable();
+                    else {
+                        if(!prefCurrent.getBoolean("bluetooth_on", false))
+                            bluetooth.enable();
+                    }
+                } else {
+                    if(!prefCurrent.getBoolean("not_active", true))
+                        if(prefCurrent.getBoolean("bluetooth_on", false)) {
+                            if(prefCurrent.getBoolean("bluetooth_on_system", false))
+                                bluetooth.enable();
+                            else
+                                bluetooth.disable();
+                        }
+                }
             }
         }
 
         // Wi-Fi
         if(getPackageManager().hasSystemFeature(PackageManager.FEATURE_WIFI)) {
             WifiManager wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
-            if(prefCurrent.getBoolean("not_active", true)) {
-                if(wifi.isWifiEnabled())
-                    editor.putBoolean("wifi_on_system", true);
-                else
-                    editor.putBoolean("wifi_on_system", false);
-            }
+            if(prefCurrent.getBoolean("not_active", true))
+                editor.putBoolean("wifi_on_system", wifi.isWifiEnabled());
 
-            if(prefSaved.getBoolean("wifi_on", false) && (prefCurrent.getBoolean("not_active", true) || !prefCurrent.getBoolean("wifi_on", false)))
-                wifi.setWifiEnabled(true);
-            else if(!prefCurrent.getBoolean("not_active", true) && prefCurrent.getBoolean("wifi_on", false))
-                wifi.setWifiEnabled(prefCurrent.getBoolean("wifi_on_system", false));
+            if(prefSaved.getBoolean("wifi_on", false)) {
+                if(prefCurrent.getBoolean("not_active", true))
+                    wifi.setWifiEnabled(true);
+                else {
+                    if(!prefCurrent.getBoolean("wifi_on", false))
+                        wifi.setWifiEnabled(true);
+                }
+            } else {
+                if(!prefCurrent.getBoolean("not_active", true))
+                    if(prefCurrent.getBoolean("wifi_on", false))
+                        wifi.setWifiEnabled(prefCurrent.getBoolean("wifi_on_system", false));
+            }
         }
 
         // Resolution and density
@@ -184,9 +195,9 @@ public final class ProfileLoadService extends IntentService {
 
         if(runSizeCommand) {
             String size = prefSaved.getString("size", "reset");
-            if(prefSaved.getString("ui_refresh", "do-nothing").equals("activity-manager")) {
+            if("activity-manager".equals(prefSaved.getString("ui_refresh", "do-nothing"))) {
                 // Run a different command if we are restarting the ActivityManager
-                if(size.equals("reset"))
+                if("reset".equals(size))
                     su[sizeCommand] = U.safeModeSizeCommand + "null";
                 else
                     su[sizeCommand] = U.safeModeSizeCommand + size.replace('x', ',');
@@ -196,9 +207,9 @@ public final class ProfileLoadService extends IntentService {
 
         if(runDensityCommand) {
             String density = prefSaved.getString("density", "reset");
-            if(prefSaved.getString("ui_refresh", "do-nothing").equals("activity-manager")) {
+            if("activity-manager".equals(prefSaved.getString("ui_refresh", "do-nothing"))) {
                 // Run a different command if we are restarting the ActivityManager
-                if(density.equals("reset"))
+                if("reset".equals(density))
                     su[densityCommand] = U.safeModeDensityCommand + "null";
                 else
                     su[densityCommand] = U.safeModeDensityCommand + density;
@@ -241,7 +252,7 @@ public final class ProfileLoadService extends IntentService {
         }
 
         // Screen rotation
-        if(prefSaved.getString("rotation_lock_new", "fallback").equals("fallback") && prefSaved.getBoolean("rotation_lock", false))
+        if("fallback".equals(prefSaved.getString("rotation_lock_new", "fallback")) && prefSaved.getBoolean("rotation_lock", false))
             editor.putString("rotation_lock_new", "landscape");
         else
             editor.putString("rotation_lock_new", prefSaved.getString("rotation_lock_new", "do-nothing"));
@@ -344,21 +355,21 @@ public final class ProfileLoadService extends IntentService {
 
         switch(prefSaved.getString("screen_timeout", "do-nothing")) {
             case "always-on":
-                if(!prefCurrent.getString("screen_timeout", "null").equals("always-on")) {
+                if(!"always-on".equals(prefCurrent.getString("screen_timeout", "null"))) {
                     Settings.System.putInt(getContentResolver(), Settings.System.SCREEN_OFF_TIMEOUT, 2147482000);
                     if(!prefCurrent.getBoolean("not_active", true))
                         su[stayOnCommand] = U.stayOnCommand + Integer.toString(prefCurrent.getInt("stay_on_while_plugged_in_system", 0));
                 }
                 break;
             case "always-on-charging":
-                if(!prefCurrent.getString("screen_timeout", "null").equals("always-on-charging")) {
+                if(!"always-on-charging".equals(prefCurrent.getString("screen_timeout", "null"))) {
                     su[stayOnCommand] = U.stayOnCommand + "1";
                     if(!prefCurrent.getBoolean("not_active", true))
                         Settings.System.putInt(getContentResolver(), Settings.System.SCREEN_OFF_TIMEOUT, prefCurrent.getInt("screen_timeout_system", 60000));
                 }
                 break;
             case "do-nothing":
-                if(!prefCurrent.getString("screen_timeout", "null").equals("do-nothing") && !prefCurrent.getBoolean("not_active", true)) {
+                if(!"do-nothing".equals(prefCurrent.getString("screen_timeout", "null")) && !prefCurrent.getBoolean("not_active", true)) {
                     Settings.System.putInt(getContentResolver(), Settings.System.SCREEN_OFF_TIMEOUT, prefCurrent.getInt("screen_timeout_system", 60000));
                     su[stayOnCommand] = U.stayOnCommand + Integer.toString(prefCurrent.getInt("stay_on_while_plugged_in_system", 0));
                 }
@@ -368,35 +379,43 @@ public final class ProfileLoadService extends IntentService {
         // Get Chrome version
         PackageInfo pInfo;
         String chromeVersion = " ";
-        boolean isChromeBeta = false;
+        int channel = 0;
+
+        // If multiple versions of Chrome are installed on the device,
+        // assume that the user is running the newest version.
         try {
-            pInfo = getPackageManager().getPackageInfo("com.chrome.beta", 0);
+            pInfo = getPackageManager().getPackageInfo("com.chrome.dev", 0);
             chromeVersion = pInfo.versionName;
-            isChromeBeta = true;
+            channel = 2;
         } catch (NameNotFoundException e) {
             try {
-                pInfo = getPackageManager().getPackageInfo("com.android.chrome", 0);
+                pInfo = getPackageManager().getPackageInfo("com.chrome.beta", 0);
                 chromeVersion = pInfo.versionName;
-                isChromeBeta = false;
-            } catch (NameNotFoundException e1) {}
+                channel = 1;
+            } catch (NameNotFoundException e1) {
+                try {
+                    pInfo = getPackageManager().getPackageInfo("com.android.chrome", 0);
+                    chromeVersion = pInfo.versionName;
+                } catch (NameNotFoundException e2) {}
+            }
         }
 
         // Chrome desktop mode
         if(prefSaved.getBoolean("chrome", false)) {
             if(prefCurrent.getBoolean("not_active", true)) {
                 su[chromeCommand] = U.chromeCommand(chromeVersion);
-                su[chromeCommand2] = U.chromeCommand2(isChromeBeta);
+                su[chromeCommand2] = U.chromeCommand2(channel);
             } else {
                 if(!prefCurrent.getBoolean("chrome", false)) {
                     su[chromeCommand] = U.chromeCommand(chromeVersion);
-                    su[chromeCommand2] = U.chromeCommand2(isChromeBeta);
+                    su[chromeCommand2] = U.chromeCommand2(channel);
                 }
             }
         } else {
             if(!prefCurrent.getBoolean("not_active", true))
                 if(prefCurrent.getBoolean("chrome", false)) {
                     su[chromeCommand] = U.chromeCommandRemove;
-                    su[chromeCommand2] = U.chromeCommand2(isChromeBeta);
+                    su[chromeCommand2] = U.chromeCommand2(channel);
                 }
         }
 
@@ -423,11 +442,13 @@ public final class ProfileLoadService extends IntentService {
                     su[daydreamsChargingCommand] = U.daydreamsChargingCommand(true);
                 }
             }
-        } else if(!prefCurrent.getBoolean("not_active", true) && prefCurrent.getBoolean("daydreams_on", false)) {
-            su[daydreamsCommand] = U.daydreamsCommand(prefCurrent.getBoolean("daydreams_on_system", false));
-            su[daydreamsChargingCommand] = U.daydreamsChargingCommand(prefCurrent.getBoolean("daydreams_while_charging", false));
+        } else {
+            if(!prefCurrent.getBoolean("not_active", true))
+                if(prefCurrent.getBoolean("daydreams_on", false)) {
+                    su[daydreamsCommand] = U.daydreamsCommand(prefCurrent.getBoolean("daydreams_on_system", false));
+                    su[daydreamsChargingCommand] = U.daydreamsChargingCommand(prefCurrent.getBoolean("daydreams_while_charging", false));
+                }
         }
-
 
         // Vibration off
         String vibrationValue = "-1";
@@ -506,7 +527,7 @@ public final class ProfileLoadService extends IntentService {
                     editor.putInt("backlight_value", Settings.System.getInt(getContentResolver(), Settings.System.SCREEN_BRIGHTNESS));
             } catch (SettingNotFoundException e1) {}
 
-            if(!prefSaved.getString("ui_refresh", "do-nothing").equals("activity-manager")) {
+            if(!"activity-manager".equals(prefSaved.getString("ui_refresh", "do-nothing"))) {
                 // Check to see if Chromecast screen mirroring is active.
                 // If it is, and user has "Restart SystemUI" as their UI refresh method,
                 // then don't immediately dim the screen.
@@ -519,7 +540,7 @@ public final class ProfileLoadService extends IntentService {
 
                 if(displays[displays.length - 1].getDisplayId() != Display.DEFAULT_DISPLAY) {
                     if(U.castScreenActive(this)
-                        && prefSaved.getString("ui_refresh", "do-nothing").equals("system-ui")
+                        && "system-ui".equals(prefSaved.getString("ui_refresh", "do-nothing"))
                         && ((runSizeCommand || runDensityCommand)
                         || prefCurrent.getBoolean("not_active", true)
                         || prefCurrent.getBoolean("force_ui_refresh", false))) {
@@ -598,10 +619,18 @@ public final class ProfileLoadService extends IntentService {
                 editor.putBoolean("show_touches_system", false);
         }
 
-        if(prefSaved.getBoolean("show_touches", false) && (prefCurrent.getBoolean("not_active", true) || !prefCurrent.getBoolean("show_touches", false)))
-            su[showTouchesCommand] = U.showTouchesCommand(true);
-        else if(!prefCurrent.getBoolean("not_active", true) && prefCurrent.getBoolean("show_touches", false))
-            su[showTouchesCommand] = U.showTouchesCommand(prefCurrent.getBoolean("show_touches_system", false));
+        if(prefSaved.getBoolean("show_touches", false)) {
+            if(prefCurrent.getBoolean("not_active", true))
+                su[showTouchesCommand] = U.showTouchesCommand(true);
+            else {
+                if(!prefCurrent.getBoolean("show_touches", false))
+                    su[showTouchesCommand] = U.showTouchesCommand(true);
+            }
+        } else {
+            if(!prefCurrent.getBoolean("not_active", true))
+                if(prefCurrent.getBoolean("show_touches", false))
+                    su[showTouchesCommand] = U.showTouchesCommand(prefCurrent.getBoolean("show_touches_system", false));
+        }
 
         // Navigation bar
         if(getPackageManager().hasSystemFeature("com.cyanogenmod.android")) {
@@ -612,35 +641,71 @@ public final class ProfileLoadService extends IntentService {
                     editor.putBoolean("navbar_system", false);
             }
 
-            if(prefSaved.getBoolean("navbar", false) && (prefCurrent.getBoolean("not_active", true) || !prefCurrent.getBoolean("navbar", false))) {
-                try {
-                    Settings.System.putInt(getContentResolver(), "dev_force_show_navbar", 1);
-                } catch (SecurityException e) {
-                    su[navbarCommand] = U.navbarCommand(true);
-                }
-            } else if(!prefCurrent.getBoolean("not_active", true) && prefCurrent.getBoolean("navbar", false))
-                if(prefCurrent.getBoolean("navbar_system", false))
+            if(prefSaved.getBoolean("navbar", false)) {
+                if(prefCurrent.getBoolean("not_active", true))
                     try {
                         Settings.System.putInt(getContentResolver(), "dev_force_show_navbar", 1);
                     } catch (SecurityException e) {
                         su[navbarCommand] = U.navbarCommand(true);
                     }
-                else
-                    try {
-                        Settings.System.putInt(getContentResolver(), "dev_force_show_navbar", 0);
-                    } catch (SecurityException e) {
-                        su[navbarCommand] = U.navbarCommand(false);
-                    }
+                else {
+                    if(!prefCurrent.getBoolean("navbar", false))
+                        try {
+                            Settings.System.putInt(getContentResolver(), "dev_force_show_navbar", 1);
+                        } catch (SecurityException e) {
+                            su[navbarCommand] = U.navbarCommand(true);
+                        }
+                }
+            } else {
+                if(!prefCurrent.getBoolean("not_active", true))
+                    if(prefCurrent.getBoolean("navbar", false))
+                        if(prefCurrent.getBoolean("navbar_system", false))
+                            try {
+                                Settings.System.putInt(getContentResolver(), "dev_force_show_navbar", 1);
+                            } catch (SecurityException e) {
+                                su[navbarCommand] = U.navbarCommand(true);
+                            }
+                        else
+                            try {
+                                Settings.System.putInt(getContentResolver(), "dev_force_show_navbar", 0);
+                            } catch (SecurityException e) {
+                                su[navbarCommand] = U.navbarCommand(false);
+                            }
+            }
         }
 
         // Immersive mode
-        if(prefSaved.getBoolean("immersive", false)) {
-            if(prefCurrent.getBoolean("not_active", true))
-                su[immersiveCommand] = U.immersiveCommand(true);
-            else if(!prefCurrent.getBoolean("immersive", false))
-                su[immersiveCommand] = U.immersiveCommand(true);
-        } else if(!prefCurrent.getBoolean("not_active", true) && prefCurrent.getBoolean("immersive", false))
-            su[immersiveCommand] = U.immersiveCommand(false);
+        if("fallback".equals(prefSaved.getString("immersive_new", "fallback")) && prefSaved.getBoolean("immersive", false))
+            editor.putString("immersive_new", "immersive-mode");
+        else
+            editor.putString("immersive_new", prefSaved.getString("immersive_new", "do-nothing"));
+
+        switch(prefSaved.getString("immersive_new", "fallback")) {
+            case "fallback":
+                if(prefSaved.getBoolean("immersive", false)) {
+                    if(!"immersive-mode".equals(prefCurrent.getString("immersive_new", "do-nothing"))) {
+                        su[immersiveCommand] = U.immersiveCommand("immersive-mode");
+                    }
+                } else {
+                    if(!"do-nothing".equals(prefCurrent.getString("immersive_new", "do-nothing")) && !prefCurrent.getBoolean("not_active", true))
+                        su[immersiveCommand] = U.immersiveCommand("do-nothing");
+                }
+                break;
+            case "status-only":
+                if(!"status-only".equals(prefCurrent.getString("immersive_new", "do-nothing"))) {
+                    su[immersiveCommand] = U.immersiveCommand("status-only");
+                }
+                break;
+            case "immersive-mode":
+                if(!"immersive-mode".equals(prefCurrent.getString("immersive_new", "do-nothing"))) {
+                    su[immersiveCommand] = U.immersiveCommand("immersive-mode");
+                }
+                break;
+            case "do-nothing":
+                if(!"do-nothing".equals(prefCurrent.getString("immersive_new", "do-nothing")) && !prefCurrent.getBoolean("not_active", true))
+                    su[immersiveCommand] = U.immersiveCommand("do-nothing");
+                break;
+        }
 
         // UI refresh
         String uiRefresh = prefSaved.getString("ui_refresh", "do-nothing");
@@ -648,8 +713,8 @@ public final class ProfileLoadService extends IntentService {
         // If a UI refresh command was run on the current profile, and we are loading a different
         // profile without a UI refresh command, run the previous one to restore things back to normal
         if(!prefCurrent.getBoolean("not_active", true)
-                && !prefCurrent.getString("ui_refresh", "do-nothing").equals("do-nothing")
-                && uiRefresh.equals("do-nothing"))
+                && !"do-nothing".equals(prefCurrent.getString("ui_refresh", "do-nothing"))
+                && "do-nothing".equals(uiRefresh))
             uiRefresh = prefCurrent.getString("ui_refresh", "do-nothing");
 
         // Only refresh the UI if any of these conditions are met:
@@ -706,7 +771,7 @@ public final class ProfileLoadService extends IntentService {
 
         // Handle backlight command delay
         if(prefSaved.getBoolean("backlight_off", false)
-                && !prefSaved.getString("ui_refresh", "do-nothing").equals("activity-manager")
+                && !"activity-manager".equals(prefSaved.getString("ui_refresh", "do-nothing"))
                 && su[uiRefreshCommand].equals("")
                 && !su[backlightCommand].equals(""))
             su[backlightCommand] = "sleep 2 && " + su[backlightCommand];
@@ -715,7 +780,7 @@ public final class ProfileLoadService extends IntentService {
         if(prefCurrent.getBoolean("force_safe_mode", false)) {
             editor.remove("force_safe_mode");
 
-            if(!prefSaved.getString("ui_refresh", "do-nothing").equals("activity-manager")) {
+            if(!"activity-manager".equals(prefSaved.getString("ui_refresh", "do-nothing"))) {
                 su[safeModeSizeCommand] = U.safeModeSizeCommand + "null";
                 su[safeModeDensityCommand] = U.safeModeDensityCommand + "null";
             }
@@ -739,7 +804,6 @@ public final class ProfileLoadService extends IntentService {
         editor.putBoolean("wifi_on", prefSaved.getBoolean("wifi_on", false));
         editor.putBoolean("bluetooth_on", prefSaved.getBoolean("bluetooth_on", false));
         editor.putBoolean("navbar", prefSaved.getBoolean("navbar", false));
-        editor.putBoolean("immersive", prefSaved.getBoolean("immersive", false));
         editor.putInt("overscan_left", prefSaved.getInt("overscan_left", 20));
         editor.putInt("overscan_right", prefSaved.getInt("overscan_right", 20));
         editor.putInt("overscan_top", prefSaved.getInt("overscan_top", 20));
@@ -763,7 +827,7 @@ public final class ProfileLoadService extends IntentService {
         // Run superuser commands
         for(String command : su) {
             if(!command.equals("")) {
-                Shell.SU.run(su);
+                U.runCommands(this, su);
                 break;
             }
         }

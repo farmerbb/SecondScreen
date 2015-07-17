@@ -37,6 +37,7 @@ import android.view.Surface;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.farmerbb.secondscreen.R;
 import com.farmerbb.secondscreen.fragment.ProfileEditFragment;
@@ -63,12 +64,11 @@ import com.farmerbb.secondscreen.service.NotificationService;
 import com.farmerbb.secondscreen.util.U;
 import com.jrummyapps.android.os.SystemProperties;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-
-import eu.chainfire.libsuperuser.Shell;
 
 // This is the main activity of the application.  This is the activity that is launched when
 // SecondScreen is selected in the user's application launcher.
@@ -134,10 +134,10 @@ ProfileViewFragment.Listener {
                 su[overscanCommand] = U.overscanCommand + "reset";
 
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-                su[immersiveCommand] = U.immersiveCommand(false);
+                su[immersiveCommand] = U.immersiveCommand("do-nothing");
 
             // Run superuser commands
-            Shell.SU.run(su);
+            U.runCommands(MainActivity.this, su);
 
             return null;
         }
@@ -159,6 +159,8 @@ ProfileViewFragment.Listener {
     }
 
     boolean showUpgradeDialog = true;
+    int clicks = 0;
+    Toast debugToast = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -248,7 +250,7 @@ ProfileViewFragment.Listener {
                 }
 
                 // Save preferences when upgrading to 2.0+ from a previous free version
-                if(prefMain.getString("notification_action", "null").equals("null")) {
+                if("null".equals(prefMain.getString("notification_action", "null"))) {
                     SharedPreferences.Editor editor = prefMain.edit();
                     editor.putString("notification_action", "quick-actions");
                     editor.apply();
@@ -256,6 +258,10 @@ ProfileViewFragment.Listener {
 
                 // Determine if we need to show any dialogs before we create the fragments
                 showDialogs();
+
+                // Read debug mode preference
+                if(isDebugModeEnabled(false))
+                    clicks = 10;
 
                 // Finally, create fragments
                 createFragments();
@@ -350,8 +356,7 @@ ProfileViewFragment.Listener {
                 editor.putInt("height", metrics.heightPixels);
                 editor.putInt("width", metrics.widthPixels);
             }
-        }
-        else if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+        } else if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             if(wm.getDefaultDisplay().getRotation() == Surface.ROTATION_0
                || wm.getDefaultDisplay().getRotation() == Surface.ROTATION_180) {
                 editor.putBoolean("landscape", true);
@@ -651,27 +656,27 @@ ProfileViewFragment.Listener {
         int height;
         int width;
 
-        if(size.equals("reset")) {
+        if("reset".equals(size)) {
             height = prefMain.getInt("height", 0);
             width = prefMain.getInt("width", 0);
         } else {
             Scanner scanner = new Scanner(size);
             scanner.useDelimiter("x");
 
-            if(prefMain.getBoolean("landscape", false)) {
-                height = scanner.nextInt();
-                width = scanner.nextInt();
-            } else {
-                width = scanner.nextInt();
-                height = scanner.nextInt();
-            }
+            width = scanner.nextInt();
+            height = scanner.nextInt();
 
             scanner.close();
         }
 
         Bundle bundle = new Bundle();
-        bundle.putString("height", Integer.toString(height));
-        bundle.putString("width", Integer.toString(width));
+        if(prefMain.getBoolean("landscape", false)) {
+            bundle.putString("height", Integer.toString(width));
+            bundle.putString("width", Integer.toString(height));
+        } else {
+            bundle.putString("height", Integer.toString(height));
+            bundle.putString("width", Integer.toString(width));
+        }
 
         DialogFragment sizeFragment = new ExpertModeSizeDialogFragment();
         sizeFragment.setArguments(bundle);
@@ -755,16 +760,22 @@ ProfileViewFragment.Listener {
                 editor.putString("ui_refresh", "system-ui");
 
                 try {
-                    getPackageManager().getPackageInfo("com.chrome.beta", 0);
+                    getPackageManager().getPackageInfo("com.chrome.dev", 0);
                     editor.putBoolean("chrome", true);
                 } catch (PackageManager.NameNotFoundException e) {
                     try {
-                        getPackageManager().getPackageInfo("com.android.chrome", 0);
+                        getPackageManager().getPackageInfo("com.chrome.beta", 0);
                         editor.putBoolean("chrome", true);
                     } catch (PackageManager.NameNotFoundException e1) {
-                        editor.putBoolean("chrome", false);
+                        try {
+                            getPackageManager().getPackageInfo("com.android.chrome", 0);
+                            editor.putBoolean("chrome", true);
+                        } catch (PackageManager.NameNotFoundException e2) {
+                            editor.putBoolean("chrome", false);
+                        }
                     }
                 }
+
                 break;
 
             // TV (720p)
@@ -779,16 +790,22 @@ ProfileViewFragment.Listener {
                 editor.putString("ui_refresh", "system-ui");
 
                 try {
-                    getPackageManager().getPackageInfo("com.chrome.beta", 0);
+                    getPackageManager().getPackageInfo("com.chrome.dev", 0);
                     editor.putBoolean("chrome", true);
                 } catch (PackageManager.NameNotFoundException e) {
                     try {
-                        getPackageManager().getPackageInfo("com.android.chrome", 0);
+                        getPackageManager().getPackageInfo("com.chrome.beta", 0);
                         editor.putBoolean("chrome", true);
                     } catch (PackageManager.NameNotFoundException e1) {
-                        editor.putBoolean("chrome", false);
+                        try {
+                            getPackageManager().getPackageInfo("com.android.chrome", 0);
+                            editor.putBoolean("chrome", true);
+                        } catch (PackageManager.NameNotFoundException e2) {
+                            editor.putBoolean("chrome", false);
+                        }
                     }
                 }
+
                 break;
 
             // Monitor (1080p)
@@ -803,16 +820,22 @@ ProfileViewFragment.Listener {
                 editor.putString("ui_refresh", "system-ui");
 
                 try {
-                    getPackageManager().getPackageInfo("com.chrome.beta", 0);
+                    getPackageManager().getPackageInfo("com.chrome.dev", 0);
                     editor.putBoolean("chrome", true);
                 } catch (PackageManager.NameNotFoundException e) {
                     try {
-                        getPackageManager().getPackageInfo("com.android.chrome", 0);
+                        getPackageManager().getPackageInfo("com.chrome.beta", 0);
                         editor.putBoolean("chrome", true);
                     } catch (PackageManager.NameNotFoundException e1) {
-                        editor.putBoolean("chrome", false);
+                        try {
+                            getPackageManager().getPackageInfo("com.android.chrome", 0);
+                            editor.putBoolean("chrome", true);
+                        } catch (PackageManager.NameNotFoundException e2) {
+                            editor.putBoolean("chrome", false);
+                        }
                     }
                 }
+
                 break;
 
             // AppRadio
@@ -833,14 +856,9 @@ ProfileViewFragment.Listener {
                     editor.putBoolean("vibration_off", true);
 
                 if(prefMain.getBoolean("expert_mode", false)) {
-                    if(prefMain.getBoolean("landscape", false))
-                        editor.putString("size", Integer.toString(prefMain.getInt("height", 0))
-                                + "x"
-                                + Integer.toString(prefMain.getInt("width", 0)));
-                    else
-                        editor.putString("size", Integer.toString(prefMain.getInt("width", 0))
-                                + "x"
-                                + Integer.toString(prefMain.getInt("height", 0)));
+                    editor.putString("size", Integer.toString(prefMain.getInt("width", 0))
+                            + "x"
+                            + Integer.toString(prefMain.getInt("height", 0)));
 
                     editor.putString("density", Integer.toString(SystemProperties.getInt("ro.sf.lcd_density", prefMain.getInt("density", 0))));
 
@@ -853,14 +871,9 @@ ProfileViewFragment.Listener {
             // Other / None
             case 4:
                 if(prefMain.getBoolean("expert_mode", false)) {
-                    if(prefMain.getBoolean("landscape", false))
-                        editor.putString("size", Integer.toString(prefMain.getInt("height", 0))
-                                + "x"
-                                + Integer.toString(prefMain.getInt("width", 0)));
-                    else
-                        editor.putString("size", Integer.toString(prefMain.getInt("width", 0))
-                                + "x"
-                                + Integer.toString(prefMain.getInt("height", 0)));
+                    editor.putString("size", Integer.toString(prefMain.getInt("width", 0))
+                            + "x"
+                            + Integer.toString(prefMain.getInt("height", 0)));
 
                     editor.putString("density", Integer.toString(SystemProperties.getInt("ro.sf.lcd_density", prefMain.getInt("density", 0))));
 
@@ -887,16 +900,23 @@ ProfileViewFragment.Listener {
         SharedPreferences prefNew = U.getPrefNew(this);
         SharedPreferences.Editor editor = prefNew.edit();
 
-        if(height.isEmpty())
-            height = Integer.toString(prefMain.getInt("height", 0));
+        if(prefMain.getBoolean("landscape", false)) {
+            if(height.isEmpty())
+                height = Integer.toString(prefMain.getInt("width", 0));
 
-        if(width.isEmpty())
-            width = Integer.toString(prefMain.getInt("width", 0));
+            if(width.isEmpty())
+                width = Integer.toString(prefMain.getInt("height", 0));
 
-        if(prefMain.getBoolean("landscape", false))
             editor.putString("size", height + "x" + width);
-        else
+        } else {
+            if(height.isEmpty())
+                height = Integer.toString(prefMain.getInt("height", 0));
+
+            if(width.isEmpty())
+                width = Integer.toString(prefMain.getInt("width", 0));
+
             editor.putString("size", width + "x" + height);
+        }
 
         editor.apply();
 
@@ -998,11 +1018,11 @@ ProfileViewFragment.Listener {
         }
 
         // Save Android ID to preferences, and show dialog if ID does not match (new device)
-        if(prefMain.getString("android_id", "null").equals("null")) {
+        if("null".equals(prefMain.getString("android_id", "null"))) {
             SharedPreferences.Editor editor = prefMain.edit();
             editor.putString("android_id", Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID));
             editor.apply();
-        } else if(!prefMain.getString("android_id", "null").equals(Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID))) {
+        } else if(!Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID).equals(prefMain.getString("android_id", "null"))) {
             SharedPreferences.Editor editor = prefMain.edit();
             editor.putString("android_id", Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID));
             editor.apply();
@@ -1023,10 +1043,13 @@ ProfileViewFragment.Listener {
             DialogFragment swiftkeyFragment = new SwiftkeyDialogFragment();
             swiftkeyFragment.show(getFragmentManager(), "swiftkey-fragment");
 
-        // Show dialog if device is newer than API 22 (Lollipop MR1)
-        } else if(Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1
+        // Show dialog if device is newer than API 22 (Lollipop MR1).
+        // If debug mode is enabled, the dialog is never shown.
+        } else if((Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1
+                || "MNC".equals(Build.VERSION.CODENAME))
                 && getFragmentManager().findFragmentByTag("upgrade-fragment") == null
-                && showUpgradeDialog) {
+                && showUpgradeDialog
+                && !isDebugModeEnabled(false)) {
             DialogFragment upgradeFragment = new AndroidUpgradeDialogFragment();
             upgradeFragment.show(getFragmentManager(), "upgrade-fragment");
             showUpgradeDialog = false;
@@ -1037,5 +1060,50 @@ ProfileViewFragment.Listener {
     public void onSwiftkeyDialogPositiveClick(DialogFragment dialog) {
         dialog.dismiss();
         showDialogs();
+    }
+
+    // Enables and disables debug mode.  Debug mode can be enabled by tapping on the helper text
+    // 10 times, and is used for simulating actions on non-rooted devices, among other things.
+    @Override
+    public boolean isDebugModeEnabled(boolean isClick) {
+        SharedPreferences prefMain = U.getPrefMain(this);
+
+        if(isClick && U.getPrefCurrent(this).getBoolean("not_active", true)) {
+            clicks++;
+
+            if(debugToast != null)
+                debugToast.cancel();
+
+            if(clicks > 5 && clicks < 10) {
+                String message = String.format(getResources().getString(R.string.debug_mode_enabling), 10 - clicks);
+                debugToast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
+                debugToast.show();
+            } else if(clicks >= 10) {
+                SharedPreferences.Editor editor = prefMain.edit();
+                if(prefMain.getBoolean("debug_mode", false)) {
+                    editor.putBoolean("debug_mode", false);
+                    debugToast = Toast.makeText(this, R.string.debug_mode_disabled, Toast.LENGTH_SHORT);
+                    debugToast.show();
+
+                    // Clean up leftover log files
+                    File file = new File(getExternalFilesDir(null), "prefCurrent");
+                    File file2 = new File(getExternalFilesDir(null), "prefSaved");
+                    File file3 = new File(getExternalFilesDir(null), "prefMain");
+                    File file4 = new File(getExternalFilesDir(null), "prefNew");
+                    file.delete();
+                    file2.delete();
+                    file3.delete();
+                    file4.delete();
+                } else {
+                    editor.putBoolean("debug_mode", true);
+                    debugToast = Toast.makeText(this, R.string.debug_mode_enabled, Toast.LENGTH_SHORT);
+                    debugToast.show();
+                }
+
+                editor.apply();
+            }
+        }
+
+        return prefMain.getBoolean("debug_mode", false);
     }
 }

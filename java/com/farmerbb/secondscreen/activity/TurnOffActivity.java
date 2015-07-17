@@ -16,16 +16,17 @@
 package com.farmerbb.secondscreen.activity;
 
 import android.app.Activity;
-import android.app.DialogFragment;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.farmerbb.secondscreen.R;
-import com.farmerbb.secondscreen.fragment.dialog.TurnOffDialogFragment;
 import com.farmerbb.secondscreen.util.U;
 
 import java.io.IOException;
@@ -35,8 +36,8 @@ import java.io.IOException;
 // ProfileViewFragment, this activity is not invoked and TurnOffService is run directly.)
 //
 // The activity invokes the TurnOffService immediately if run via the notification action button;
-// it will show the TurnOffDialogFragment first if run when a display is disconnected.
-public final class TurnOffActivity extends Activity implements TurnOffDialogFragment.Listener {
+// it will show a confirmation dialog first if run when a display is disconnected.
+public final class TurnOffActivity extends Activity {
 
     public final class FinishReceiver extends BroadcastReceiver {
         @Override
@@ -68,50 +69,57 @@ public final class TurnOffActivity extends Activity implements TurnOffDialogFrag
             finish();
         } else {
             dialog = true;
+            String name;
             setTitle(getResources().getString(R.string.display_disconnected));
+            setContentView(R.layout.activity_turn_off);
 
-            if(prefCurrent.getString("filename", "0").equals("quick_actions")) {
+            if("quick_actions".equals(prefCurrent.getString("filename", "0"))) {
                 SharedPreferences prefSaved = U.getPrefQuickActions(this);
                 filename = prefSaved.getString("original_filename", "0");
 
-                Bundle bundle = new Bundle();
-                if(filename.equals("0"))
-                    bundle.putString("name", getResources().getStringArray(R.array.pref_notification_action_list)[1]);
+                if("0".equals(filename))
+                    name = getResources().getStringArray(R.array.pref_notification_action_list)[1];
                 else {
                     try {
-                        bundle.putString("name", U.getProfileTitle(this, filename));
+                        name = U.getProfileTitle(this, filename);
                     } catch (IOException e) {
-                        bundle.putString("name", getResources().getString(R.string.this_profile));
+                        name = getResources().getString(R.string.this_profile);
                     }
                 }
-
-                bundle.putString("title", getResources().getString(R.string.display_disconnected));
-
-                try {
-                    if(getFragmentManager().findFragmentByTag("turn-off") == null) {
-                        DialogFragment turnOffFragment = new TurnOffDialogFragment();
-                        turnOffFragment.setArguments(bundle);
-                        turnOffFragment.show(getFragmentManager(), "turn-off");
-                    }
-                } catch (IllegalStateException e) {}
             } else {
-                Bundle bundle = new Bundle();
                 try {
-                    bundle.putString("name", U.getProfileTitle(this, filename));
+                    name = U.getProfileTitle(this, filename);
                 } catch (IOException e) {
-                    bundle.putString("name", getResources().getString(R.string.this_profile));
+                    name = getResources().getString(R.string.this_profile);
                 }
-
-                bundle.putString("title", getResources().getString(R.string.display_disconnected));
-
-                try {
-                    if(getFragmentManager().findFragmentByTag("turn-off") == null) {
-                        DialogFragment turnOffFragment = new TurnOffDialogFragment();
-                        turnOffFragment.setArguments(bundle);
-                        turnOffFragment.show(getFragmentManager(), "turn-off");
-                    }
-                } catch (IllegalStateException e) {}
             }
+
+            // Set TextView contents
+            TextView textView = (TextView) findViewById(R.id.turnOffTextView);
+            textView.setText(name + " " + getResources().getString(R.string.dialog_turn_off_message));
+
+            // Set OnClickListeners for the buttons
+            Button buttonSecondary = (Button) findViewById(R.id.turnOffButtonSecondary);
+            buttonSecondary.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    finish();
+                }
+            });
+
+            Button buttonPrimary = (Button) findViewById(R.id.turnOffButtonPrimary);
+            buttonPrimary.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    try {
+                        SharedPreferences prefCurrent = U.getPrefCurrent(TurnOffActivity.this);
+                        if(!prefCurrent.getBoolean("not_active", true))
+                            U.turnOffProfile(TurnOffActivity.this);
+                    } catch (NullPointerException e) {}
+
+                    finish();
+                }
+            });
         }
     }
 
@@ -129,23 +137,5 @@ public final class TurnOffActivity extends Activity implements TurnOffDialogFrag
 
         if(dialog)
             unregisterReceiver(receiver);
-    }
-
-    @Override
-    public void onTurnOffDialogPositiveClick(DialogFragment dialog) {
-        // User touched the dialog's positive button
-        try {
-            // Dismiss dialog
-            dialog.dismiss();
-
-            SharedPreferences prefCurrent = U.getPrefCurrent(this);
-            if(!prefCurrent.getBoolean("not_active", true))
-                U.turnOffProfile(this);
-        } catch (NullPointerException e) {}
-    }
-
-    @Override
-    public void finishActivity() {
-        finish();
     }
 }

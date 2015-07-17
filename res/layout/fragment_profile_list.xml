@@ -34,7 +34,8 @@
         android:text="@null"
         android:textColor="@color/text_color_secondary"
         android:textSize="15sp"
-        android:textStyle="italic" />
+        android:textStyle="italic"
+        android:clickable="true" />
 
     <FrameLayout
         android:layout_width="match_parent"

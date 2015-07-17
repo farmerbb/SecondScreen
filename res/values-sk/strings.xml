@@ -30,6 +30,7 @@
     <string name="action_save_only">Iba uložiť</string>
     <string name="action_ok">OK</string>
     <string name="action_settings">Nastavenia</string>
+    <string name="action_turn_off">Vypnúť</string>
     <string name="action_uninstall">Odinštalovať</string>
     <string name="am_restart_warning">Toto nastavenie nie je odporúčané pri bezdrôtovom zrkadlení</string>
     <string name="any_profile">Žiadny profil</string>
@@ -158,9 +159,17 @@
     <string name="desktop">Plocha</string>
     <string name="pref_title_notification_action_2">Tlačidlo Upozornenie akcie</string>
     <string name="pref_title_immersive">Režim na celú obrazovku</string>
-    <string name="pref_description_immersive">Vynúti režim na celú obrazovku v celom systéme (iba Lollipop)</string>
+    <string name="pref_title_immersive_alt">Režim na celú obrazovku</string>
     <string name="immersive">Na celú obrazovku</string>
     <string name="quick_immersive">Režim na celú obrazovku</string>
     <string name="quick_rotation">Otočenie obrazovky</string>
+    <string name="debug_mode_enabling">You are now %1$s steps away from enabling debug mode.</string>
+    <string name="debug_mode_enabled">Debug mode enabled</string>
+    <string name="debug_mode_disabled">Debug mode disabled</string>
+    <string name="profile_helper_text_debug">Debug mode enabled\nTap to disable debug mode</string>
+    <string name="debug_show_simulated_size_density">Show simulated size/density</string>
+    <string name="debug_simulate_reboot">Simulate reboot</string>
+    <string name="debug_simulate_app_upgrade">Simulate application upgrade</string>
+    <string name="debug_dump_app_state">Dump current application state</string>
 
 </resources>

@@ -17,6 +17,8 @@ package com.farmerbb.secondscreen.util;
 
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -48,7 +50,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
+
+import eu.chainfire.libsuperuser.Shell;
 
 // Utility class to store common methods and objects shared between multiple classes
 public final class U {
@@ -64,6 +69,10 @@ public final class U {
 
     // Sent when SecondScreen detects a screen disconnection
     public static final String SCREEN_DISCONNECT = "com.farmerbb.secondscreen.SCREEN_DISCONNECT";
+
+    // Used by debug mode
+    public static final String SIMULATE_REBOOT = "com.farmerbb.secondscreen.SIMULATE_REBOOT";
+    public static final String SIMULATE_APP_UPGRADE = "com.farmerbb.secondscreen.SIMULATE_APP_UPGRADE";
 
     // Extras for intents sent via homescreen shortcuts or Tasker
     public static final String NAME = "com.farmerbb.secondscreen.NAME";
@@ -100,14 +109,6 @@ public final class U {
 
     // Commands for features with boolean values.
     // "true" to turn a feature on, "false" to turn it off
-    private static final String immersiveCommand = "settings put global policy_control ";
-    public static String immersiveCommand(boolean checked) {
-        if(checked)
-            return immersiveCommand + "immersive.full=*";
-        else
-            return immersiveCommand + "null";
-    }
-
     private static final String navbarCommand = "settings put secure dev_force_show_navbar ";
     public static String navbarCommand(boolean checked) {
         if(checked)
@@ -169,16 +170,44 @@ public final class U {
         return "echo 'chrome --user-agent=\"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/" + chromeVersion + " Safari/537.36\"' > /data/local/chrome-command-line && chmod 644 /data/local/chrome-command-line";
     }
 
-    public static String chromeCommand2(boolean isChromeBeta) {
-        if(isChromeBeta)
-            return "am force-stop com.chrome.beta && am force-stop com.android.chrome";
-        else
-            return "am force-stop com.android.chrome";
+    public static String chromeCommand2(int channel) {
+        String returnCommand = "am force-stop ";
+
+        switch(channel) {
+            case 0:
+                returnCommand = returnCommand + "com.android.chrome";
+                break;
+            case 1:
+                returnCommand = returnCommand + "com.chrome.beta";
+                break;
+            case 2:
+                returnCommand = returnCommand + "com.chrome.dev";
+                break;
+        }
+
+        return returnCommand;
+    }
+
+    public static String immersiveCommand(String pref) {
+        String returnCommand = "settings put global policy_control ";
+        switch(pref) {
+            case "status-only":
+                returnCommand = returnCommand + "immersive.navigation=*";
+                break;
+            case "immersive-mode":
+                returnCommand = returnCommand + "immersive.full=*";
+                break;
+            case "do-nothing":
+                returnCommand = returnCommand + "null";
+                break;
+        }
+
+        return returnCommand;
     }
 
     public static String uiRefreshCommand(Context context, boolean restartActivityManager) {
         ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-        List<ActivityManager.RunningAppProcessInfo> pids = am.getRunningAppProcesses();
+        List<ActivityManager.RunningAppProcessInfo> pids = am.getRunningAppProcesses(); // broken in M Preview
         int processid = 0;
 
         if(restartActivityManager) {
@@ -248,25 +277,30 @@ public final class U {
                     + "x"
                     + Integer.toString(prefMain.getInt("height", 0));
 
-        if((context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT && !prefMain.getBoolean("landscape", false))
-                || (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE && prefMain.getBoolean("landscape", false))) {
-            currentRes = Integer.toString(metrics.widthPixels)
-                    + "x"
-                    + Integer.toString(metrics.heightPixels);
-        } else if((context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE && !prefMain.getBoolean("landscape", false))
-                || (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT && prefMain.getBoolean("landscape", false))) {
-            currentRes = Integer.toString(metrics.heightPixels)
-                    + "x"
-                    + Integer.toString(metrics.widthPixels);
+        if(prefMain.getBoolean("debug_mode", false)) {
+            SharedPreferences prefCurrent = getPrefCurrent(context);
+            currentRes = prefCurrent.getString("size", "reset");
+
+            if("reset".equals(currentRes))
+                currentRes = nativeRes;
+        } else {
+            if((context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT && !prefMain.getBoolean("landscape", false))
+                    || (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE && prefMain.getBoolean("landscape", false))) {
+                currentRes = Integer.toString(metrics.widthPixels)
+                        + "x"
+                        + Integer.toString(metrics.heightPixels);
+            } else if((context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE && !prefMain.getBoolean("landscape", false))
+                    || (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT && prefMain.getBoolean("landscape", false))) {
+                currentRes = Integer.toString(metrics.heightPixels)
+                        + "x"
+                        + Integer.toString(metrics.widthPixels);
+            }
         }
 
         if(requestedRes.equals("reset"))
             requestedRes = nativeRes;
 
-        if(requestedRes.equals(currentRes))
-            return false;
-        else
-            return true;
+        return !requestedRes.equals(currentRes);
     }
 
     public static boolean runDensityCommand(Context context, String requestedDpi) {
@@ -276,16 +310,22 @@ public final class U {
         disp.getRealMetrics(metrics);
 
         SharedPreferences prefMain = getPrefMain(context);
-        String currentDpi = Integer.toString(metrics.densityDpi);
+        String currentDpi;
         String nativeDpi = Integer.toString(SystemProperties.getInt("ro.sf.lcd_density", prefMain.getInt("density", 0)));
+
+        if(prefMain.getBoolean("debug_mode", false)) {
+            SharedPreferences prefCurrent = getPrefCurrent(context);
+            currentDpi = prefCurrent.getString("density", "reset");
+
+            if("reset".equals(currentDpi))
+                currentDpi = nativeDpi;
+        } else
+            currentDpi = Integer.toString(metrics.densityDpi);
 
         if(requestedDpi.equals("reset"))
             requestedDpi = nativeDpi;
 
-        if(requestedDpi.equals(currentDpi))
-            return false;
-        else
-            return true;
+        return !requestedDpi.equals(currentDpi);
     }
 
     // Methods used to retrieve SharedPreferences objects
@@ -464,6 +504,47 @@ public final class U {
 
     // Miscellaneous utility methods
 
+    // Checks if superuser access is available.
+    // If debug mode is enabled, the app acts as if superuser access is always available,
+    // even on non-rooted devices.
+    public static boolean hasRoot(Context context) {
+        return Shell.SU.available() || getPrefMain(context).getBoolean("debug_mode", false);
+    }
+
+    // Executes multiple superuser commands.
+    // If debug mode is enabled, the command is not actually run; instead, this will show a
+    // notification containing the command that would have been run instead.
+    public static void runCommands(Context context, String[] commands) {
+        if(getPrefMain(context).getBoolean("debug_mode", false)) {
+            String dump = "";
+
+            for(String command : commands) {
+                if(!command.equals(""))
+                    dump = dump + context.getResources().getString(R.string.bullet) + " " + command + "\n";
+            }
+
+            Notification notification = new Notification.Builder(context)
+                    .setSmallIcon(R.drawable.ic_action_settings)
+                    .setContentTitle(context.getResources().getString(R.string.debug_mode_enabled))
+                    .setContentText(dump)
+                    .setStyle(new Notification.BigTextStyle().bigText(dump))
+                    .build();
+
+            NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            nm.notify(new Random().nextInt(), notification);
+
+            // Some devices (Android TV) don't show notifications, so let's also print the commands
+            // to the log just in case.
+            System.out.println(dump);
+        } else
+            Shell.SU.run(commands);
+    }
+
+    // Executes a single superuser command.  Same debug mode behavior applies.
+    public static void runCommand(Context context, String command) {
+        runCommands(context, new String[]{command});
+    }
+
     // Loads a profile with the given filename
     public static void loadProfile(Context context, String filename) {
         // Set filename in current.xml
@@ -529,10 +610,18 @@ public final class U {
                             value = a.getResources().getStringArray(R.array.pref_quick_actions)[0];
                         break;
                     case "temp_immersive":
-                        if(prefCurrent.getBoolean("immersive", false))
-                            value = a.getResources().getStringArray(R.array.pref_quick_actions)[1];
-                        else
-                            value = a.getResources().getStringArray(R.array.pref_quick_actions)[0];
+                    case "temp_immersive_new":
+                        if(key.equals("temp_immersive_new"))
+                            key = "temp_immersive";
+
+                        switch(prefCurrent.getString("immersive_new", "fallback")) {
+                            case "immersive-mode":
+                                value = a.getResources().getStringArray(R.array.pref_quick_actions)[1];
+                                break;
+                            default:
+                                value = a.getResources().getStringArray(R.array.pref_quick_actions)[0];
+                                break;
+                        }
                         break;
                     case "temp_overscan":
                         if(prefCurrent.getBoolean("overscan", false))
@@ -575,6 +664,22 @@ public final class U {
                 break;
             case "temp_immersive":
                 blurb = a.getResources().getString(R.string.quick_immersive) + " " + value;
+                break;
+            case "temp_immersive_new":
+                switch(value) {
+                    case "do-nothing":
+                        blurb = a.getResources().getStringArray(R.array.pref_immersive_list_alt)[0];
+                        break;
+                    case "status-only":
+                        blurb = a.getResources().getStringArray(R.array.pref_immersive_list_alt)[1];
+                        break;
+                    case "immersive-mode":
+                        blurb = a.getResources().getStringArray(R.array.pref_immersive_list_alt)[2];
+                        break;
+                    case "Toggle":
+                        blurb = a.getResources().getStringArray(R.array.pref_immersive_list_alt)[3];
+                        break;
+                }
                 break;
             case "density":
             case "temp_density":

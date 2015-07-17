@@ -51,7 +51,7 @@ public final class SettingsFragment extends PreferenceFragment implements OnPref
     /* The activity that creates an instance of this fragment must
      * implement this interface in order to receive event call backs. */
     public interface Listener {
-        public void showExpertModeDialog(CheckBoxPreference checkBoxPreference);
+        void showExpertModeDialog(CheckBoxPreference checkBoxPreference);
     }
 
     // Use this instance of the interface to deliver action events
@@ -215,7 +215,7 @@ public final class SettingsFragment extends PreferenceFragment implements OnPref
                 break;
             case "safe_mode":
                 SharedPreferences prefCurrent = U.getPrefCurrent(getActivity());
-                if(!prefCurrent.getBoolean("not_active", true) && !prefCurrent.getString("filename", "0").equals("quick_actions"))
+                if(!prefCurrent.getBoolean("not_active", true) && !"quick_actions".equals(prefCurrent.getString("filename", "0")))
                     safeMode = true;
                 break;
             case "hdmi_select_profile":
@@ -252,11 +252,13 @@ public final class SettingsFragment extends PreferenceFragment implements OnPref
     }
 
     public void onExpertModeDialogPositiveClick(CheckBoxPreference checkBoxPreference) {
-        SharedPreferences prefNew = U.getPrefNew(getActivity());
-        SharedPreferences.Editor editor = prefNew.edit();
-        editor.putBoolean("expert_mode", true);
-        editor.apply();
+        try {
+            checkBoxPreference.setChecked(true);
 
-        checkBoxPreference.setChecked(true);
+            SharedPreferences prefNew = U.getPrefNew(getActivity());
+            SharedPreferences.Editor editor = prefNew.edit();
+            editor.putBoolean("expert_mode", true);
+            editor.apply();
+        } catch (NullPointerException e) {}
     }
 }

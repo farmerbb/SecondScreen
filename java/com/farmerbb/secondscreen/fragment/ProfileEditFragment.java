@@ -66,14 +66,14 @@ SharedPreferences.OnSharedPreferenceChangeListener {
     /* The activity that creates an instance of this fragment must
      * implement this interface in order to receive event call backs. */
     public interface Listener {
-        public void showDeleteDialog();
-        public void showExpertModeDialog();
-        public void showReloadDialog(String filename, boolean isEdit, boolean returnToList);
-        public String getProfileTitle(String filename) throws IOException;
-        public void setDefaultDensity();
-        public String generateBlurb(String key, String value);
-        public void setEmptyTitle(String title);
-        public void showUiRefreshDialog(String filename, boolean isEdit, boolean returnToList);
+        void showDeleteDialog();
+        void showExpertModeDialog();
+        void showReloadDialog(String filename, boolean isEdit, boolean returnToList);
+        String getProfileTitle(String filename) throws IOException;
+        void setDefaultDensity();
+        String generateBlurb(String key, String value);
+        void setEmptyTitle(String title);
+        void showUiRefreshDialog(String filename, boolean isEdit, boolean returnToList);
     }
 
     // Use this instance of the interface to deliver action events
@@ -136,10 +136,15 @@ SharedPreferences.OnSharedPreferenceChangeListener {
             SharedPreferences prefSaved = U.getPrefSaved(getActivity(), filename);
             SharedPreferences.Editor editor = prefNew.edit();
 
-            if(prefSaved.getString("rotation_lock_new", "fallback").equals("fallback") && prefSaved.getBoolean("rotation_lock", false))
+            if("fallback".equals(prefSaved.getString("rotation_lock_new", "fallback")) && prefSaved.getBoolean("rotation_lock", false))
                 editor.putString("rotation_lock_new", "landscape");
             else
                 editor.putString("rotation_lock_new", prefSaved.getString("rotation_lock_new", "do-nothing"));
+
+            if("fallback".equals(prefSaved.getString("immersive_new", "fallback")) && prefSaved.getBoolean("immersive", false))
+                editor.putString("immersive_new", "immersive-mode");
+            else
+                editor.putString("immersive_new", prefSaved.getString("immersive_new", "do-nothing"));
 
             if(prefSaved.getBoolean("overscan", false)) {
                 editor.putBoolean("overscan", true);
@@ -156,7 +161,7 @@ SharedPreferences.OnSharedPreferenceChangeListener {
             }
 
             if(prefMain.getBoolean("expert_mode", false)) {
-                if(prefSaved.getString("size", "reset").equals("reset")) {
+                if("reset".equals(prefSaved.getString("size", "reset"))) {
                     if(prefMain.getBoolean("landscape", false))
                         editor.putString("size", Integer.toString(prefMain.getInt("height", 0))
                                 + "x"
@@ -170,7 +175,7 @@ SharedPreferences.OnSharedPreferenceChangeListener {
                 } else
                     editor.putString("size", prefSaved.getString("size", "reset"));
 
-                if(prefSaved.getString("density", "reset").equals("reset")) {
+                if("reset".equals(prefSaved.getString("density", "reset"))) {
                     editor.putString("density", Integer.toString(SystemProperties.getInt("ro.sf.lcd_density", prefMain.getInt("density", 0))));
                     editor.putBoolean("density-reset", true);
                 } else
@@ -189,7 +194,7 @@ SharedPreferences.OnSharedPreferenceChangeListener {
                                 + "x"
                                 + Integer.toString(prefMain.getInt("height", 0));
 
-                    if(prefSaved.getString("size", "reset").equals(nativeRes))
+                    if(nativeRes.equals(prefSaved.getString("size", "reset")))
                         editor.putString("size", "reset");
                     else
                         editor.putString("size", prefSaved.getString("size", "reset"));
@@ -199,7 +204,7 @@ SharedPreferences.OnSharedPreferenceChangeListener {
                 if(prefSaved.getBoolean("density-reset", false)) {
                     editor.remove("density-reset");
 
-                    if(prefSaved.getString("density", "reset").equals(Integer.toString(SystemProperties.getInt("ro.sf.lcd_density", prefMain.getInt("density", 0)))))
+                    if(Integer.toString(SystemProperties.getInt("ro.sf.lcd_density", prefMain.getInt("density", 0))).equals(prefSaved.getString("density", "reset")))
                         editor.putString("density", "reset");
                     else
                         editor.putString("density", prefSaved.getString("density", "reset"));
@@ -218,7 +223,6 @@ SharedPreferences.OnSharedPreferenceChangeListener {
             editor.putString("ui_refresh", prefSaved.getString("ui_refresh", "do-nothing"));
             editor.putBoolean("navbar", prefSaved.getBoolean("navbar", false));
             editor.putString("screen_timeout", prefSaved.getString("screen_timeout", "do-nothing"));
-            editor.putBoolean("immersive", prefSaved.getBoolean("immersive", false));
             editor.apply();
 
             name = prefSaved.getString("profile_name", getResources().getString(R.string.action_new));
@@ -257,6 +261,7 @@ SharedPreferences.OnSharedPreferenceChangeListener {
         U.bindPreferenceSummaryToValue(findPreference("rotation_lock_new"), opcl);
         U.bindPreferenceSummaryToValue(findPreference("ui_refresh"), opcl);
         U.bindPreferenceSummaryToValue(findPreference("screen_timeout"), opcl);
+        U.bindPreferenceSummaryToValue(findPreference("immersive_new"), opcl);
 
         // Disable unsupported preferences
         if(!getActivity().getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH))
@@ -278,15 +283,19 @@ SharedPreferences.OnSharedPreferenceChangeListener {
             getPreferenceScreen().findPreference("overscan_settings").setEnabled(false);
 
         if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
-            disablePreference(prefNew, "immersive");
+            disablePreference(prefNew, "immersive_new");
 
         try {
-            getActivity().getPackageManager().getPackageInfo("com.chrome.beta", 0);
+            getActivity().getPackageManager().getPackageInfo("com.chrome.dev", 0);
         } catch(NameNotFoundException e) {
             try {
-                getActivity().getPackageManager().getPackageInfo("com.android.chrome", 0);
-            } catch(NameNotFoundException e1) {
-                disablePreference(prefNew, "chrome");
+                getActivity().getPackageManager().getPackageInfo("com.chrome.beta", 0);
+            } catch (NameNotFoundException e1) {
+                try {
+                    getActivity().getPackageManager().getPackageInfo("com.android.chrome", 0);
+                } catch (NameNotFoundException e2) {
+                    disablePreference(prefNew, "chrome");
+                }
             }
         }
 
@@ -350,7 +359,7 @@ SharedPreferences.OnSharedPreferenceChangeListener {
             case R.id.action_delete:
                 // Show toast if this is the currently active profile
                 SharedPreferences prefCurrent = U.getPrefCurrent(getActivity());
-                if(prefCurrent.getString("filename", "0").equals("quick_actions")) {
+                if("quick_actions".equals(prefCurrent.getString("filename", "0"))) {
                     SharedPreferences prefSaved = U.getPrefQuickActions(getActivity());
                     if(filename.equals(prefSaved.getString("original_filename", "0")))
                         U.showToast(getActivity(), R.string.deleting_current_profile);
@@ -372,7 +381,7 @@ SharedPreferences.OnSharedPreferenceChangeListener {
 
         switch(key) {
             case "ui_refresh":
-                if(uiRefreshWarning && sharedPreferences.getString(key, "do-nothing").equals("activity-manager"))
+                if(uiRefreshWarning && "activity-manager".equals(sharedPreferences.getString(key, "do-nothing")))
                     U.showToastLong(getActivity(), R.string.am_restart_warning);
                 break;
             case "density":
@@ -462,7 +471,7 @@ SharedPreferences.OnSharedPreferenceChangeListener {
         editor.putString("ui_refresh", prefNew.getString("ui_refresh", "do-nothing"));
         editor.putBoolean("navbar", prefNew.getBoolean("navbar", false));
         editor.putString("screen_timeout", prefNew.getString("screen_timeout", "do-nothing"));
-        editor.putBoolean("immersive", prefNew.getBoolean("immersive", false));
+        editor.putString("immersive_new", prefNew.getString("immersive_new", "do-nothing"));
 
         if(prefMain.getBoolean("expert_mode", false)) {
             if(prefNew.getBoolean("size-reset", false))
@@ -507,9 +516,9 @@ SharedPreferences.OnSharedPreferenceChangeListener {
 
             if(blacklisted && !prefMain.getBoolean("expert_mode", false))
                 U.showToastLong(getActivity(), R.string.blacklisted);
-            else if(!(requestedRes.equals("reset")
-                    && requestedDpi.equals("reset"))
-                    && prefNew.getString("ui_refresh", "do-nothing").equals("do-nothing")
+            else if(!("reset".equals(requestedRes)
+                    && "reset".equals(requestedDpi))
+                    && "do-nothing".equals(prefNew.getString("ui_refresh", "do-nothing"))
                     && !prefMain.getBoolean("expert_mode", false)) {
                 listener.showUiRefreshDialog(filename, isEdit, returnToList);
             } else
@@ -722,7 +731,7 @@ SharedPreferences.OnSharedPreferenceChangeListener {
         SharedPreferences prefNew = U.getPrefNew(getActivity());
 
         // Show dialog if this is the currently active profile
-        if(prefCurrent.getString("filename", "0").equals("quick_actions")) {
+        if("quick_actions".equals(prefCurrent.getString("filename", "0"))) {
             SharedPreferences prefSaved = U.getPrefQuickActions(getActivity());
             if(this.filename.equals(prefSaved.getString("original_filename", "0")))
                 listener.showReloadDialog(filename, isEdit, returnToList);

@@ -21,8 +21,6 @@ import android.content.SharedPreferences;
 
 import com.farmerbb.secondscreen.util.U;
 
-import eu.chainfire.libsuperuser.Shell;
-
 // This service is launched via OverscanActivity to temporarily test (and restore) overscan values.
 public final class TestOverscanService extends IntentService {
 
@@ -60,6 +58,6 @@ public final class TestOverscanService extends IntentService {
             }
         }
 
-        Shell.SU.run(overscanCommand);
+        U.runCommand(this, overscanCommand);
     }
 }

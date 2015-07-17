@@ -40,6 +40,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.farmerbb.secondscreen.R;
+import com.farmerbb.secondscreen.activity.DebugModeActivity;
 import com.farmerbb.secondscreen.activity.FragmentContainerActivity;
 import com.farmerbb.secondscreen.activity.TaskerQuickActionsActivity;
 import com.farmerbb.secondscreen.fragment.dialog.NewProfileDialogFragment;
@@ -93,11 +94,12 @@ public final class ProfileListFragment extends Fragment {
     /* The activity that creates an instance of this dialog fragment must
      * implement this interface in order to receive event call backs. */
     public interface Listener {
-        public void viewProfile(String filename);
-        public void editProfile(String filename);
-        public SharedPreferences getPrefCurrent();
-        public SharedPreferences getPrefQuickActions();
-        public TextView getHelperText();
+        void viewProfile(String filename);
+        void editProfile(String filename);
+        SharedPreferences getPrefCurrent();
+        SharedPreferences getPrefQuickActions();
+        TextView getHelperText();
+        boolean isDebugModeEnabled(boolean isClick);
     }
 
     // Use this instance of the interface to deliver action events
@@ -217,7 +219,7 @@ public final class ProfileListFragment extends Fragment {
     }
 
     private void listProfiles() {
-        TextView helper = (TextView) getActivity().findViewById(R.id.textView1);
+        final TextView helper = (TextView) getActivity().findViewById(R.id.textView1);
         final ListView listView = (ListView) getActivity().findViewById(R.id.listView1);
 
         // Get array of profiles
@@ -232,8 +234,13 @@ public final class ProfileListFragment extends Fragment {
             listView.setAdapter(null);
             listView.setEmptyView(empty);
 
-            helper.setText(" ");
-            helper.setBackgroundColor(Color.WHITE);
+            if(listener.isDebugModeEnabled(false)) {
+                helper.setText(R.string.debug_mode_enabled);
+                helper.setBackgroundColor(Color.RED);
+            } else {
+                helper.setText(" ");
+                helper.setBackgroundColor(Color.WHITE);
+            }
         } else {
             final int numOfFiles = profileList[1].length;
 
@@ -254,7 +261,7 @@ public final class ProfileListFragment extends Fragment {
 
                     // Update status of indicated item
                     SharedPreferences prefCurrent = listener.getPrefCurrent();
-                    if(prefCurrent.getString("filename", "0").equals("quick_actions")) {
+                    if("quick_actions".equals(prefCurrent.getString("filename", "0"))) {
                         SharedPreferences prefSaved = listener.getPrefQuickActions();
                         for(int i = 0; i < numOfFiles; i++) {
                             if(profileList[0][i].equals(prefSaved.getString("original_filename", "0")))
@@ -273,22 +280,42 @@ public final class ProfileListFragment extends Fragment {
 
                     // Set helper text based on whether or not a profile is active
                     TextView helper = listener.getHelperText();
-                    if(prefCurrent.getString("filename", "0").equals("0")) {
-                        helper.setText(R.string.profile_helper_text);
-                        helper.setBackgroundColor(getResources().getColor(R.color.accent));
+                    if("0".equals(prefCurrent.getString("filename", "0"))) {
+                        if(listener.isDebugModeEnabled(false)) {
+                            helper.setText(R.string.profile_helper_text_debug);
+                            helper.setBackgroundColor(Color.RED);
+                        } else {
+                            helper.setText(R.string.profile_helper_text);
+                            helper.setBackgroundColor(getResources().getColor(R.color.accent));
+                        }
                     } else {
-                        if(prefCurrent.getString("filename", "0").equals("quick_actions")) {
+                        if("quick_actions".equals(prefCurrent.getString("filename", "0"))) {
                             SharedPreferences prefSaved = listener.getPrefQuickActions();
-                            if(prefSaved.getString("original_filename", "0").equals("0")) {
-                                helper.setText(R.string.profile_helper_text);
-                                helper.setBackgroundColor(getResources().getColor(R.color.accent));
+                            if("0".equals(prefSaved.getString("original_filename", "0"))) {
+                                if(listener.isDebugModeEnabled(false)) {
+                                    helper.setText(R.string.profile_helper_text_debug);
+                                    helper.setBackgroundColor(Color.RED);
+                                } else {
+                                    helper.setText(R.string.profile_helper_text);
+                                    helper.setBackgroundColor(getResources().getColor(R.color.accent));
+                                }
+                            } else {
+                                if(listener.isDebugModeEnabled(false)) {
+                                    helper.setText(R.string.profile_helper_text_debug);
+                                    helper.setBackgroundColor(Color.RED);
+                                } else {
+                                    helper.setText(R.string.profile_helper_text_alt);
+                                    helper.setBackgroundColor(getResources().getColor(R.color.accent));
+                                }
+                            }
+                        } else {
+                            if(listener.isDebugModeEnabled(false)) {
+                                helper.setText(R.string.profile_helper_text_debug);
+                                helper.setBackgroundColor(Color.RED);
                             } else {
                                 helper.setText(R.string.profile_helper_text_alt);
                                 helper.setBackgroundColor(getResources().getColor(R.color.accent));
                             }
-                        } else {
-                            helper.setText(R.string.profile_helper_text_alt);
-                            helper.setBackgroundColor(getResources().getColor(R.color.accent));
                         }
                     }
                 }
@@ -304,7 +331,7 @@ public final class ProfileListFragment extends Fragment {
 
                     // Update status of indicated item
                     SharedPreferences prefCurrent = listener.getPrefCurrent();
-                    if(prefCurrent.getString("filename", "0").equals("quick_actions")) {
+                    if("quick_actions".equals(prefCurrent.getString("filename", "0"))) {
                         SharedPreferences prefSaved = listener.getPrefQuickActions();
                         for(int i = 0; i < numOfFiles; i++) {
                             if(profileList[0][i].equals(prefSaved.getString("original_filename", "0")))
@@ -323,22 +350,42 @@ public final class ProfileListFragment extends Fragment {
 
                     // Set helper text based on whether or not a profile is active
                     TextView helper = listener.getHelperText();
-                    if(prefCurrent.getString("filename", "0").equals("0")) {
-                        helper.setText(R.string.profile_helper_text);
-                        helper.setBackgroundColor(getResources().getColor(R.color.accent));
+                    if("0".equals(prefCurrent.getString("filename", "0"))) {
+                        if(listener.isDebugModeEnabled(false)) {
+                            helper.setText(R.string.profile_helper_text_debug);
+                            helper.setBackgroundColor(Color.RED);
+                        } else {
+                            helper.setText(R.string.profile_helper_text);
+                            helper.setBackgroundColor(getResources().getColor(R.color.accent));
+                        }
                     } else {
-                        if(prefCurrent.getString("filename", "0").equals("quick_actions")) {
+                        if("quick_actions".equals(prefCurrent.getString("filename", "0"))) {
                             SharedPreferences prefSaved = listener.getPrefQuickActions();
-                            if(prefSaved.getString("original_filename", "0").equals("0")) {
-                                helper.setText(R.string.profile_helper_text);
-                                helper.setBackgroundColor(getResources().getColor(R.color.accent));
+                            if("0".equals(prefSaved.getString("original_filename", "0"))) {
+                                if(listener.isDebugModeEnabled(false)) {
+                                    helper.setText(R.string.profile_helper_text_debug);
+                                    helper.setBackgroundColor(Color.RED);
+                                } else {
+                                    helper.setText(R.string.profile_helper_text);
+                                    helper.setBackgroundColor(getResources().getColor(R.color.accent));
+                                }
+                            } else {
+                                if(listener.isDebugModeEnabled(false)) {
+                                    helper.setText(R.string.profile_helper_text_debug);
+                                    helper.setBackgroundColor(Color.RED);
+                                } else {
+                                    helper.setText(R.string.profile_helper_text_alt);
+                                    helper.setBackgroundColor(getResources().getColor(R.color.accent));
+                                }
+                            }
+                        } else {
+                            if(listener.isDebugModeEnabled(false)) {
+                                helper.setText(R.string.profile_helper_text_debug);
+                                helper.setBackgroundColor(Color.RED);
                             } else {
                                 helper.setText(R.string.profile_helper_text_alt);
                                 helper.setBackgroundColor(getResources().getColor(R.color.accent));
                             }
-                        } else {
-                            helper.setText(R.string.profile_helper_text_alt);
-                            helper.setBackgroundColor(getResources().getColor(R.color.accent));
                         }
                     }
 
@@ -351,7 +398,7 @@ public final class ProfileListFragment extends Fragment {
             listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
             SharedPreferences prefCurrent = listener.getPrefCurrent();
-            if(prefCurrent.getString("filename", "0").equals("quick_actions")) {
+            if("quick_actions".equals(prefCurrent.getString("filename", "0"))) {
                 SharedPreferences prefSaved = listener.getPrefQuickActions();
                 for(int i = 0; i < numOfFiles; i++) {
                     if(profileList[0][i].equals(prefSaved.getString("original_filename", "0")))
@@ -375,24 +422,79 @@ public final class ProfileListFragment extends Fragment {
             }
 
             // Set helper text based on whether or not a profile is active
-            if(prefCurrent.getString("filename", "0").equals("0")) {
-                helper.setText(R.string.profile_helper_text);
-                helper.setBackgroundColor(getResources().getColor(R.color.accent));
+            if("0".equals(prefCurrent.getString("filename", "0"))) {
+                if(listener.isDebugModeEnabled(false)) {
+                    helper.setText(R.string.profile_helper_text_debug);
+                    helper.setBackgroundColor(Color.RED);
+                } else {
+                    helper.setText(R.string.profile_helper_text);
+                    helper.setBackgroundColor(getResources().getColor(R.color.accent));
+                }
             } else {
-                if(prefCurrent.getString("filename", "0").equals("quick_actions")) {
+                if("quick_actions".equals(prefCurrent.getString("filename", "0"))) {
                     SharedPreferences prefSaved = listener.getPrefQuickActions();
-                    if(prefSaved.getString("original_filename", "0").equals("0")) {
-                        helper.setText(R.string.profile_helper_text);
-                        helper.setBackgroundColor(getResources().getColor(R.color.accent));
+                    if("0".equals(prefSaved.getString("original_filename", "0"))) {
+                        if(listener.isDebugModeEnabled(false)) {
+                            helper.setText(R.string.profile_helper_text_debug);
+                            helper.setBackgroundColor(Color.RED);
+                        } else {
+                            helper.setText(R.string.profile_helper_text);
+                            helper.setBackgroundColor(getResources().getColor(R.color.accent));
+                        }
+                    } else {
+                        if(listener.isDebugModeEnabled(false)) {
+                            helper.setText(R.string.profile_helper_text_debug);
+                            helper.setBackgroundColor(Color.RED);
+                        } else {
+                            helper.setText(R.string.profile_helper_text_alt);
+                            helper.setBackgroundColor(getResources().getColor(R.color.accent));
+                        }
+                    }
+                } else {
+                    if(listener.isDebugModeEnabled(false)) {
+                        helper.setText(R.string.profile_helper_text_debug);
+                        helper.setBackgroundColor(Color.RED);
                     } else {
                         helper.setText(R.string.profile_helper_text_alt);
                         helper.setBackgroundColor(getResources().getColor(R.color.accent));
                     }
-                } else {
-                    helper.setText(R.string.profile_helper_text_alt);
-                    helper.setBackgroundColor(getResources().getColor(R.color.accent));
                 }
             }
         }
+
+        // Allow clicking on helper text to enable debug mode / show debug menu
+        helper.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(listener.isDebugModeEnabled(true)) {
+                    if(profileList == null)
+                        helper.setText(R.string.debug_mode_enabled);
+                    else
+                        helper.setText(R.string.profile_helper_text_debug);
+
+                    helper.setBackgroundColor(Color.RED);
+                } else {
+                    if(profileList == null) {
+                        helper.setText(" ");
+                        helper.setBackgroundColor(Color.WHITE);
+                    } else {
+                        helper.setText(R.string.profile_helper_text);
+                        helper.setBackgroundColor(getResources().getColor(R.color.accent));
+                    }
+                }
+            }
+        });
+
+        helper.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                if(listener.isDebugModeEnabled(false)) {
+                    Intent intent = new Intent(getActivity(), DebugModeActivity.class);
+                    startActivity(intent);
+                }
+
+                return false;
+            }
+        });
     }
 }

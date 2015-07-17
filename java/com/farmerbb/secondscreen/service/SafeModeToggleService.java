@@ -21,8 +21,6 @@ import android.content.SharedPreferences;
 
 import com.farmerbb.secondscreen.util.U;
 
-import eu.chainfire.libsuperuser.Shell;
-
 // This service is launched whenever the safe mode option has been changed in the app settings,
 // and a user-created profile is currently active.
 public final class SafeModeToggleService extends IntentService {
@@ -51,20 +49,20 @@ public final class SafeModeToggleService extends IntentService {
             SharedPreferences prefCurrent = U.getPrefCurrent(this);
 
             String density = prefCurrent.getString("density", "reset");
-            if(density.equals("reset"))
+            if("reset".equals(density))
                 su[safeModeDensityCommand] = U.safeModeDensityCommand + "null";
             else
                 su[safeModeDensityCommand] = U.safeModeDensityCommand + density;
 
             String size = prefCurrent.getString("size", "reset");
-            if(size.equals("reset"))
+            if("reset".equals(size))
                 su[safeModeSizeCommand] = U.safeModeSizeCommand + "null";
             else
                 su[safeModeSizeCommand] = U.safeModeSizeCommand + size.replace('x', ',');
         }
 
         // Run superuser commands
-        Shell.SU.run(su);
+        U.runCommands(this, su);
     }
 }
 

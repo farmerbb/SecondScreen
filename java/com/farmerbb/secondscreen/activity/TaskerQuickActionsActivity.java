@@ -39,6 +39,8 @@ import com.farmerbb.secondscreen.service.LockDeviceService;
 import com.farmerbb.secondscreen.util.PluginBundleManagerQuickActions;
 import com.farmerbb.secondscreen.util.U;
 
+import java.util.Scanner;
+
 // This is the Quick Actions dialog, accessible by pressing the Quick Actions item in the action
 // bar in MainActivity, the Quick Actions button in the notification bar, or by choosing the
 // "SecondScreen - Quick Actions" plugin in Tasker.
@@ -143,12 +145,16 @@ SharedPreferences.OnSharedPreferenceChangeListener {
                 getPreferenceScreen().findPreference("temp_immersive").setEnabled(false);
 
             try {
-                getPackageManager().getPackageInfo("com.chrome.beta", 0);
+                getPackageManager().getPackageInfo("com.chrome.dev", 0);
             } catch (NameNotFoundException e) {
                 try {
-                    getPackageManager().getPackageInfo("com.android.chrome", 0);
+                    getPackageManager().getPackageInfo("com.chrome.beta", 0);
                 } catch (NameNotFoundException e1) {
-                    getPreferenceScreen().findPreference("temp_chrome").setEnabled(false);
+                    try {
+                        getPackageManager().getPackageInfo("com.android.chrome", 0);
+                    } catch (NameNotFoundException e2) {
+                        getPreferenceScreen().findPreference("temp_chrome").setEnabled(false);
+                    }
                 }
             }
 
@@ -159,16 +165,16 @@ SharedPreferences.OnSharedPreferenceChangeListener {
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
+        super.onResume();
 
         // Register listener to check for changed preferences
         PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
+    protected void onPause() {
+        super.onPause();
 
         // Unregister listener
         PreferenceManager.getDefaultSharedPreferences(this).unregisterOnSharedPreferenceChangeListener(this);
@@ -177,7 +183,7 @@ SharedPreferences.OnSharedPreferenceChangeListener {
         SharedPreferences prefNew = U.getPrefNew(this);
         SharedPreferences.Editor prefNewEditor = prefNew.edit();
 
-        prefNewEditor.putString("temp_immersive", "Null");
+        prefNewEditor.putString("temp_immersive_new", "Null");
         prefNewEditor.putString("temp_overscan", "Null");
         prefNewEditor.putString("temp_chrome", "Null");
         prefNewEditor.putString("temp_backlight_off", "Null");
@@ -218,7 +224,7 @@ SharedPreferences.OnSharedPreferenceChangeListener {
         final ResolveInfo mInfo = pm.resolveActivity(i, 0);
 
         try {
-            if(getCallingPackage().equals(mInfo.activityInfo.applicationInfo.packageName))
+            if(mInfo.activityInfo.applicationInfo.packageName.equals(getCallingPackage()))
                 doLauncherStuff(key, value);
             else
                 doTaskerStuff(key, value);
@@ -275,7 +281,7 @@ SharedPreferences.OnSharedPreferenceChangeListener {
     private void runQuickAction(String key, String value) {
             SharedPreferences prefSaved = U.getPrefQuickActions(this);
             SharedPreferences prefCurrent = U.getPrefCurrent(this);
-            SharedPreferences prefMain = U.getPrefMain(this);
+        SharedPreferences prefMain = U.getPrefMain(this);
 
             SharedPreferences.Editor editor = prefSaved.edit();
             SharedPreferences.Editor editorCurrent = prefCurrent.edit();
@@ -288,11 +294,11 @@ SharedPreferences.OnSharedPreferenceChangeListener {
 
             // Convert String preferences back to booleans if necessary, and save preferences to "quick_actions" XML file
             if(value.equals("Toggle")) {
-                if(prefSaved.getString("toggle", "null").equals(key.replace("temp_", "")))
+                if(key.replace("temp_", "").equals(prefSaved.getString("toggle", "null")))
                     reset = true;
-                else if(prefSaved.getString("toggle", "null").equals("null")) {
+                else if("null".equals(prefSaved.getString("toggle", "null"))) {
                     if(prefCurrent.getBoolean("not_active", true)
-                            || !prefCurrent.getString("filename", "0").equals("quick_actions"))
+                            || !"quick_actions".equals(prefCurrent.getString("filename", "0")))
                         editor.putString("toggle", key.replace("temp_", ""));
                 } else
                     editor.remove("toggle");
@@ -302,7 +308,7 @@ SharedPreferences.OnSharedPreferenceChangeListener {
                     editorCurrent.apply();
                 }
             } else {
-                if(!prefSaved.getString("toggle", "null").equals("null"))
+                if(!"null".equals(prefSaved.getString("toggle", "null")))
                     editor.remove("toggle");
 
                 switch(key) {
@@ -361,12 +367,15 @@ SharedPreferences.OnSharedPreferenceChangeListener {
                     case "temp_immersive":
                         switch(value) {
                             case "On":
-                                editor.putBoolean("immersive", true);
+                                editor.putString("immersive_new", "immersive-mode");
                                 break;
                             case "Off":
-                                editor.putBoolean("immersive", false);
+                                editor.putString("immersive_new", "do-nothing");
                                 break;
                         }
+                        break;
+                    case "temp_immersive_new":
+                        editor.putString("immersive_new", value);
                         break;
                     case "temp_backlight_off":
                         switch(value) {
@@ -399,6 +408,7 @@ SharedPreferences.OnSharedPreferenceChangeListener {
                         String requestedDpi = " ";
                         int currentHeight = 0;
                         int currentWidth = 0;
+                        int currentDpi;
 
                         switch(key) {
                             case "temp_size":
@@ -411,18 +421,48 @@ SharedPreferences.OnSharedPreferenceChangeListener {
                                 break;
                         }
 
-                        if((getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT && !prefMain.getBoolean("landscape", false))
-                                || (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE && prefMain.getBoolean("landscape", false))) {
-                            currentHeight = metrics.heightPixels;
-                            currentWidth = metrics.widthPixels;
-                        } else if((getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE && !prefMain.getBoolean("landscape", false))
-                                || (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT && prefMain.getBoolean("landscape", false))) {
-                            currentHeight = metrics.widthPixels;
-                            currentWidth = metrics.heightPixels;
+                        if(prefMain.getBoolean("debug_mode", false)) {
+                            String size = prefCurrent.getString("size", "reset");
+                            String density = prefCurrent.getString("density", "reset");
+
+                            if("reset".equals(size)) {
+                                currentHeight = prefMain.getInt("height", 0);
+                                currentWidth = prefMain.getInt("width", 0);
+                            } else {
+                                Scanner scanner = new Scanner(size);
+                                scanner.useDelimiter("x");
+
+                                if(prefMain.getBoolean("landscape", false)) {
+                                    currentHeight = scanner.nextInt();
+                                    currentWidth = scanner.nextInt();
+                                } else {
+                                    currentWidth = scanner.nextInt();
+                                    currentHeight = scanner.nextInt();
+                                }
+
+                                scanner.close();
+                            }
+
+                            if("reset".equals(density))
+                                currentDpi = prefMain.getInt("density", 0);
+                            else
+                                currentDpi = Integer.parseInt(density);
+                        } else {
+                            if((getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT && !prefMain.getBoolean("landscape", false))
+                                    || (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE && prefMain.getBoolean("landscape", false))) {
+                                currentHeight = metrics.heightPixels;
+                                currentWidth = metrics.widthPixels;
+                            } else if((getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE && !prefMain.getBoolean("landscape", false))
+                                    || (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT && prefMain.getBoolean("landscape", false))) {
+                                currentHeight = metrics.widthPixels;
+                                currentWidth = metrics.heightPixels;
+                            }
+
+                            currentDpi = metrics.densityDpi;
                         }
 
                         // Check to see if the user is trying to set a blacklisted resolution/DPI combo
-                        blacklisted = U.isBlacklisted(requestedRes, requestedDpi, currentHeight, currentWidth, metrics.densityDpi, prefMain.getBoolean("landscape", false));
+                        blacklisted = U.isBlacklisted(requestedRes, requestedDpi, currentHeight, currentWidth, currentDpi, prefMain.getBoolean("landscape", false));
 
                         if(blacklisted && !prefMain.getBoolean("expert_mode", false))
                             U.showToastLong(this, R.string.blacklisted);
@@ -430,7 +470,7 @@ SharedPreferences.OnSharedPreferenceChangeListener {
                             switch(key) {
                                 case "temp_size":
                                     editor.putString("size", value);
-                                    if(prefSaved.getString("original_filename", "0").equals("0")) {
+                                    if("0".equals(prefSaved.getString("original_filename", "0"))) {
                                         editor.putString("ui_refresh", "system-ui");
                                         editorCurrent.putBoolean("force_safe_mode", true);
                                         editorCurrent.apply();
@@ -438,7 +478,7 @@ SharedPreferences.OnSharedPreferenceChangeListener {
                                     break;
                                 case "temp_density":
                                     editor.putString("density", value);
-                                    if(prefSaved.getString("original_filename", "0").equals("0")) {
+                                    if("0".equals(prefSaved.getString("original_filename", "0"))) {
                                         editor.putString("ui_refresh", "system-ui");
                                         editorCurrent.putBoolean("force_safe_mode", true);
                                         editorCurrent.apply();
@@ -456,7 +496,7 @@ SharedPreferences.OnSharedPreferenceChangeListener {
                 if(!prefSaved.getBoolean("quick_actions_active", false))
                     editor.putBoolean("quick_actions_active", true);
 
-                if(prefSaved.getString("original_filename", "0").equals("0"))
+                if("0".equals(prefSaved.getString("original_filename", "0")))
                     editor.putString("profile_name", getResources().getString(R.string.bullet) + " " + U.generateBlurb(this, key, value, true) + " " + getResources().getString(R.string.bullet));
             }
 
@@ -527,15 +567,20 @@ SharedPreferences.OnSharedPreferenceChangeListener {
             editor.apply();
         } else {
             // If there already is a profile active (non-Quick Actions), copy that profile's xml file to quick_actions.xml.
-            if(!prefCurrent.getString("filename", "0").equals("quick_actions")) {
+            if(!"quick_actions".equals(prefCurrent.getString("filename", "0"))) {
                 SharedPreferences prefActive = getSharedPreferences(prefCurrent.getString("filename", "0"), Context.MODE_PRIVATE);
 
                 editor.putString("original_filename", prefCurrent.getString("filename", "0"));
 
-                if(prefActive.getString("rotation_lock_new", "fallback").equals("fallback") && prefActive.getBoolean("rotation_lock", false))
+                if("fallback".equals(prefActive.getString("rotation_lock_new", "fallback")) && prefActive.getBoolean("rotation_lock", false))
                     editor.putString("rotation_lock_new", "landscape");
                 else
                     editor.putString("rotation_lock_new", prefActive.getString("rotation_lock_new", "do-nothing"));
+
+                if("fallback".equals(prefActive.getString("immersive_new", "fallback")) && prefActive.getBoolean("immersive", false))
+                    editor.putString("immersive_new", "immersive-mode");
+                else
+                    editor.putString("immersive_new", prefActive.getString("immersive_new", "do-nothing"));
 
                 if(prefActive.getBoolean("overscan", false)) {
                     editor.putBoolean("overscan", true);
@@ -564,7 +609,6 @@ SharedPreferences.OnSharedPreferenceChangeListener {
                 editor.putString("ui_refresh", prefActive.getString("ui_refresh", "do-nothing"));
                 editor.putBoolean("navbar", prefActive.getBoolean("navbar", false));
                 editor.putString("screen_timeout", prefActive.getString("screen_timeout", "do-nothing"));
-                editor.putBoolean("immersive", prefActive.getBoolean("immersive", false));
                 editor.apply();
             }
         }

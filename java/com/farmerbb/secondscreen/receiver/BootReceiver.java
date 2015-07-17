@@ -44,15 +44,15 @@ public final class BootReceiver extends BroadcastReceiver {
         }
 
         if(!prefCurrent.getBoolean("not_active", true)) {
-            if(prefMain.getBoolean("safe_mode", false) && !prefCurrent.getString("ui_refresh", "do-nothing").equals("activity-manager")) {
+            if(prefMain.getBoolean("safe_mode", false) && !"activity_manager".equals(prefCurrent.getString("ui_refresh", "do-nothing"))) {
                 SharedPreferences.Editor editor = prefCurrent.edit();
                 editor.putString("ui_refresh", "do-nothing");
                 editor.apply();
 
                 U.turnOffProfile(context);
-            } else if(prefCurrent.getString("filename", "0").equals("quick_actions")) {
+            } else if("quick_actions".equals(prefCurrent.getString("filename", "0"))) {
                 SharedPreferences prefSaved = U.getPrefQuickActions(context);
-                if(prefSaved.getString("original_filename", "0").equals("0")) {
+                if("0".equals(prefSaved.getString("original_filename", "0"))) {
                     SharedPreferences.Editor editor = prefCurrent.edit();
                     editor.putString("ui_refresh", "do-nothing");
                     editor.apply();

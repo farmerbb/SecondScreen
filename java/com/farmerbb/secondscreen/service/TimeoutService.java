@@ -21,8 +21,6 @@ import android.content.SharedPreferences;
 
 import com.farmerbb.secondscreen.util.U;
 
-import eu.chainfire.libsuperuser.Shell;
-
 // This service is run after LockDeviceService, to restore the user's previous screen lock timeout
 // preference which is set to 0 in order to lock the device immediately.
 public final class TimeoutService extends IntentService {
@@ -45,7 +43,7 @@ public final class TimeoutService extends IntentService {
             editor.remove("timeout");
             editor.apply();
 
-            Shell.SU.run(U.timeoutCommand + Integer.toString(timeout));
+            U.runCommand(this, U.timeoutCommand + Integer.toString(timeout));
         }
     }
 }

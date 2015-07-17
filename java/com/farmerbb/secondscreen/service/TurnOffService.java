@@ -36,8 +36,6 @@ import com.farmerbb.secondscreen.util.U;
 import java.io.File;
 import java.util.Arrays;
 
-import eu.chainfire.libsuperuser.Shell;
-
 // This service is run whenever the user requests the currently running profile to be turned off.
 // The TurnOffService runs in a similar manner as the ProfileLoadService. It reads current.xml
 // (generated previously by ProfileLoadService) to determine which actions were previously run by
@@ -61,7 +59,7 @@ public final class TurnOffService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         SharedPreferences prefCurrent = U.getPrefCurrent(this);
 
-        if(Shell.SU.available())
+        if(U.hasRoot(this))
             turnOffProfile(prefCurrent);
         else {
             SharedPreferences.Editor editor = prefCurrent.edit();
@@ -77,8 +75,6 @@ public final class TurnOffService extends IntentService {
     }
 
     private void turnOffProfile(SharedPreferences prefCurrent) {
-        // Load preferences
-        SharedPreferences prefMain = U.getPrefMain(this);
         SharedPreferences.Editor editor = prefCurrent.edit();
 
         // Show brief "Turning off profile" notification
@@ -128,8 +124,8 @@ public final class TurnOffService extends IntentService {
 
         // Resolution and density
         if(U.runSizeCommand(this, "reset")) {
-            if(prefCurrent.getString("ui_refresh", "do-nothing").equals("activity-manager")
-                    || prefCurrent.getString("ui_refresh", "do-nothing").equals("activity-manager-safe-mode"))
+            if("activity-manager".equals(prefCurrent.getString("ui_refresh", "do-nothing"))
+                    || "activity-manager-safe-mode".equals(prefCurrent.getString("ui_refresh", "do-nothing")))
                 // Run a different command if we are restarting the ActivityManager
                 su[sizeCommand] = U.safeModeSizeCommand + "null";
             else
@@ -137,8 +133,8 @@ public final class TurnOffService extends IntentService {
         }
 
         if(U.runDensityCommand(this, "reset")) {
-            if(prefCurrent.getString("ui_refresh", "do-nothing").equals("activity-manager")
-                    || prefCurrent.getString("ui_refresh", "do-nothing").equals("activity-manager-safe-mode"))
+            if("activity-manager".equals(prefCurrent.getString("ui_refresh", "do-nothing"))
+                    || "activity-manager-safe-mode".equals(prefCurrent.getString("ui_refresh", "do-nothing")))
                 // Run a different command if we are restarting the ActivityManager
                 su[densityCommand] = U.safeModeDensityCommand + "null";
             else {
@@ -188,20 +184,27 @@ public final class TurnOffService extends IntentService {
         }
 
         // Chrome
-        boolean isChromeBeta = false;
+        int channel = 0;
+
+        // If multiple versions of Chrome are installed on the device,
+        // assume that the user is running the newest version.
         try {
-            getPackageManager().getPackageInfo("com.chrome.beta", 0);
-            isChromeBeta = true;
+            getPackageManager().getPackageInfo("com.chrome.dev", 0);
+            channel = 2;
         } catch (PackageManager.NameNotFoundException e) {
             try {
-                getPackageManager().getPackageInfo("com.android.chrome", 0);
-                isChromeBeta = false;
-            } catch (PackageManager.NameNotFoundException e1) {}
+                getPackageManager().getPackageInfo("com.chrome.beta", 0);
+                channel = 1;
+            } catch (PackageManager.NameNotFoundException e1) {
+                try {
+                    getPackageManager().getPackageInfo("com.android.chrome", 0);
+                } catch (PackageManager.NameNotFoundException e2) {}
+            }
         }
 
         if(prefCurrent.getBoolean("chrome", true)) {
             su[chromeCommand] = U.chromeCommandRemove;
-            su[chromeCommand2] = U.chromeCommand2(isChromeBeta);
+            su[chromeCommand2] = U.chromeCommand2(channel);
         }
 
         // Daydreams
@@ -258,8 +261,8 @@ public final class TurnOffService extends IntentService {
         }
 
         // Immersive mode
-        if(prefCurrent.getBoolean("immersive", true))
-            su[immersiveCommand] = U.immersiveCommand(false);
+        if(!"do-nothing".equals(prefCurrent.getString("immersive_new", "do-nothing")))
+            su[immersiveCommand] = U.immersiveCommand("do-nothing");
 
         // UI refresh
         switch(prefCurrent.getString("ui_refresh", "do-nothing")) {
@@ -303,7 +306,7 @@ public final class TurnOffService extends IntentService {
         // Run superuser commands
         for(String command : su) {
             if(!command.equals("")) {
-                Shell.SU.run(su);
+                U.runCommands(this, su);
                 break;
             }
         }

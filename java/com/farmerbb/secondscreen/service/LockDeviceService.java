@@ -89,7 +89,7 @@ public final class LockDeviceService extends IntentService {
             editor.putInt("timeout", Settings.Secure.getInt(getContentResolver(), "lock_screen_lock_after_timeout", 5000));
             editor.apply();
 
-            Shell.SU.run(U.timeoutCommand + "1");
+            U.runCommand(this, U.timeoutCommand + "1");
         }
 
         // Schedule TimeoutService to reset lock screen timeout to original value
@@ -112,6 +112,6 @@ public final class LockDeviceService extends IntentService {
             startActivity(lockIntent);
         } else
             // Otherwise, send a power button keystroke to lock the device normally
-            Shell.SU.run("input keyevent 26");
+            U.runCommand(this, "input keyevent 26");
     }
 }

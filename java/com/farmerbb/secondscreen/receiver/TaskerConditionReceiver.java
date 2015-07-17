@@ -38,9 +38,9 @@ public final class TaskerConditionReceiver extends BroadcastReceiver {
             String filename = bundle.getString(PluginBundleManager.BUNDLE_EXTRA_STRING_MESSAGE);
             SharedPreferences prefCurrent = context.getSharedPreferences("current", Context.MODE_MULTI_PROCESS);
 
-            if(prefCurrent.getString("filename", "0").equals("quick_actions")) {
+            if("quick_actions".equals(prefCurrent.getString("filename", "0"))) {
                 SharedPreferences prefSaved = context.getSharedPreferences("quick_actions", Context.MODE_MULTI_PROCESS);
-                if(prefSaved.getString("original_filename", "0").equals("0"))
+                if("0".equals(prefSaved.getString("original_filename", "0")))
                     setResultCode(com.twofortyfouram.locale.Intent.RESULT_CONDITION_UNSATISFIED);
                 else {
                     if(filename.equals("any_profile"))
@@ -53,7 +53,7 @@ public final class TaskerConditionReceiver extends BroadcastReceiver {
                     }
                 }
             } else {
-                if(prefCurrent.getString("filename", "0").equals("0"))
+                if("0".equals(prefCurrent.getString("filename", "0")))
                     setResultCode(com.twofortyfouram.locale.Intent.RESULT_CONDITION_UNSATISFIED);
                 else {
                     if(filename.equals("any_profile"))

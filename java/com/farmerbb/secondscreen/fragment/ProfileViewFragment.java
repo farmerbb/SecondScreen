@@ -52,10 +52,10 @@ public final class ProfileViewFragment extends Fragment {
     /* The activity that creates an instance of this fragment must
      * implement this interface in order to receive event call backs. */
     public interface Listener {
-        public void showDeleteDialog();
-        public void onLoadProfileButtonClick(String filename);
-        public void onTurnOffProfileButtonClick();
-        public String generateBlurb(String key, String value);
+        void showDeleteDialog();
+        void onLoadProfileButtonClick(String filename);
+        void onTurnOffProfileButtonClick();
+        String generateBlurb(String key, String value);
     }
 
     // Use this instance of the interface to deliver action events
@@ -127,7 +127,7 @@ public final class ProfileViewFragment extends Fragment {
             button.getBackground().setColorFilter(getResources().getColor(R.color.pl_selected), PorterDuff.Mode.SRC);
 
         // Set listeners for Load/Turn Off button
-        if(prefCurrent.getString("filename", "0").equals("quick_actions")) {
+        if("quick_actions".equals(prefCurrent.getString("filename", "0"))) {
             SharedPreferences prefQuick = U.getPrefQuickActions(getActivity());
             if(filename.equals(prefQuick.getString("original_filename", "0"))) {
                 button.setText(getResources().getStringArray(R.array.pref_notification_action_list)[0] + " " + getArguments().getString("title"));
@@ -177,7 +177,6 @@ public final class ProfileViewFragment extends Fragment {
         generateProfileSettings(prefSaved.getBoolean("bluetooth_on", false), R.string.profile_view_bluetooth_on);
         generateProfileSettings(prefSaved.getBoolean("chrome", false), R.string.quick_chrome);
         generateProfileSettings(prefSaved.getBoolean("daydreams_on", false), R.string.profile_view_daydreams_on);
-        generateProfileSettings(prefSaved.getBoolean("immersive", false), R.string.pref_title_immersive);
         generateProfileSettings(prefSaved.getBoolean("navbar", false), R.string.profile_view_navbar);
         generateProfileSettings(prefSaved.getBoolean("overscan", false), R.string.quick_overscan);
 
@@ -204,6 +203,19 @@ public final class ProfileViewFragment extends Fragment {
         }
 
         generateProfileSettings(prefSaved.getBoolean("show_touches", false), R.string.pref_title_show_touches);
+
+        switch(prefSaved.getString("immersive_new", "fallback")) {
+            case "fallback":
+                if(prefSaved.getBoolean("immersive", false))
+                    generateProfileSettings(true, R.string.pref_title_immersive);
+                break;
+            case "status-only":
+                generateProfileSettings(true, R.string.pref_title_immersive);
+                break;
+            case "immersive-mode":
+                generateProfileSettings(true, R.string.pref_title_immersive);
+                break;
+        }
 
         switch(prefSaved.getString("ui_refresh", "do-nothing")) {
             case "system-ui":
@@ -263,7 +275,7 @@ public final class ProfileViewFragment extends Fragment {
             case R.id.action_delete_2:
                 // Show toast if this is the currently active profile
                 SharedPreferences prefCurrent = U.getPrefCurrent(getActivity());
-                if(prefCurrent.getString("filename", "0").equals("quick_actions")) {
+                if("quick_actions".equals(prefCurrent.getString("filename", "0"))) {
                     SharedPreferences prefSaved = U.getPrefQuickActions(getActivity());
                     if(filename.equals(prefSaved.getString("original_filename", "0")))
                         U.showToast(getActivity(), R.string.deleting_current_profile);

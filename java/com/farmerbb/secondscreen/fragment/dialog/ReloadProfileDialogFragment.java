@@ -33,8 +33,8 @@ public final class ReloadProfileDialogFragment extends DialogFragment {
      * implement this interface in order to receive event call backs.
      * Each method passes the DialogFragment in case the host needs to query it. */
     public interface Listener {
-        public void onReloadDialogPositiveClick(String filename, boolean isEdit, boolean returnToList);
-        public void onReloadDialogNegativeClick(String filename, boolean isEdit, boolean returnToList);
+        void onReloadDialogPositiveClick(String filename, boolean isEdit, boolean returnToList);
+        void onReloadDialogNegativeClick(String filename, boolean isEdit, boolean returnToList);
     }
 
     // Use this instance of the interface to deliver action events

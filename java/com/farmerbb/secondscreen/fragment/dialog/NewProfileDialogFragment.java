@@ -47,7 +47,7 @@ public final class NewProfileDialogFragment extends DialogFragment implements Ad
      * implement this interface in order to receive event call backs.
      * Each method passes the DialogFragment in case the host needs to query it. */
     public interface Listener {
-        public void onNewProfilePositiveClick(String name, int pos);
+        void onNewProfilePositiveClick(String name, int pos);
     }
 
     // Use this instance of the interface to deliver action events

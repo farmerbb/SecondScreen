@@ -66,7 +66,7 @@ public final class HdmiActivity extends Activity {
         SharedPreferences prefMain = U.getPrefMain(this);
         filename = prefMain.getString("hdmi_load_profile", "show_list");
 
-        if(filename.equals("show_list")) {
+        if("show_list".equals(filename)) {
             if(prefMain.getBoolean("inactive", true))
                 showMenu();
             else

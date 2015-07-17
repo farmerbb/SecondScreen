@@ -30,6 +30,7 @@
     <string name="action_save_only">Sauvegarder uniquement</string>
     <string name="action_ok">OK</string>
     <string name="action_settings">Paramètres</string>
+    <string name="action_turn_off">Désactiver</string>
     <string name="action_uninstall">Uninstall</string>
     <string name="am_restart_warning">This option is not recommended when mirroring to wireless displays</string>
     <string name="any_profile">N\'importe quel profile?</string>
@@ -157,10 +158,18 @@
     <string name="not_compatible">Not compatible with this device</string>
     <string name="desktop">Desktop</string>
     <string name="pref_title_notification_action_2">Bouton notification d\'action</string>
-    <string name="pref_title_immersive">Immersive mode</string>
-    <string name="pref_description_immersive">Force immersive mode system-wide (Lollipop only)</string>
+    <string name="pref_title_immersive">Status/navigation bars</string>
+    <string name="pref_title_immersive_alt">Status/Navigation Bars</string>
     <string name="immersive">Immersive</string>
     <string name="quick_immersive">Immersive Mode</string>
     <string name="quick_rotation">Rotation de l\'écran</string>
+    <string name="debug_mode_enabling">You are now %1$s steps away from enabling debug mode.</string>
+    <string name="debug_mode_enabled">Debug mode enabled</string>
+    <string name="debug_mode_disabled">Debug mode disabled</string>
+    <string name="profile_helper_text_debug">Debug mode enabled\nTap to disable debug mode</string>
+    <string name="debug_show_simulated_size_density">Show simulated size/density</string>
+    <string name="debug_simulate_reboot">Simulate reboot</string>
+    <string name="debug_simulate_app_upgrade">Simulate application upgrade</string>
+    <string name="debug_dump_app_state">Dump current application state</string>
 
 </resources>

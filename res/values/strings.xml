@@ -30,6 +30,7 @@
     <string name="action_save_only">Save only</string>
     <string name="action_ok">OK</string>
     <string name="action_settings">Settings</string>
+    <string name="action_turn_off">Turn Off</string>
     <string name="action_uninstall">Uninstall</string>
     <string name="am_restart_warning">This method is not recommended when mirroring to wireless displays</string>
     <string name="any_profile">Any profile</string>
@@ -60,7 +61,7 @@
     <string name="enter_profile_name">Enter profile name</string>
     <string name="error_loading_list">Error loading list of profiles!</string>
     <string name="error_loading_profile">Error loading profile!</string>
-    <string name="expert_mode">Enable expert mode</string>
+    <string name="expert_mode">Expert mode</string>
     <string name="expert_mode_dialog">Expert mode overrides SecondScreen\'s internal blacklist of unsafe resolution and density combinations. Only use this option if you know exactly what you are doing. Safe mode is strongly recommended when using this option.\n\nReally enable expert mode?</string>
     <string name="expert_mode_summary">Allow any user-defined value to be set for resolution and density</string>
     <string name="failed_to_save">Error: Failed to save profile!</string>
@@ -77,11 +78,11 @@
     <string name="no_profiles_found">No profiles found</string>
     <string name="no_superuser">Unable to obtain superuser permissions!</string>
     <string name="pref_description_safe_mode">Profiles will not stay active after a reboot</string>
-    <string name="pref_title_hdmi">Enable auto-start</string>
+    <string name="pref_title_hdmi">Auto-start</string>
     <string name="pref_title_hdmi_select_profile">Auto-start action</string>
     <string name="pref_title_hide_notification">Hide notification icon</string>
     <string name="pref_title_notification_action">Secondary action button</string>
-    <string name="pref_title_safe_mode">Enable safe mode</string>
+    <string name="pref_title_safe_mode">Safe mode (recommended)</string>
     <string name="profile_deleted">Profile deleted</string>
     <string name="profile_saved">Profile saved</string>
     <string name="profile_settings">Profile Settings</string>
@@ -89,7 +90,7 @@
     <string name="profile_helper_text_alt">The highlighted profile below is currently active.\nTap its name to view its settings or turn it off.</string>
     <string name="profile_view_bluetooth_on">Bluetooth on</string>
     <string name="profile_view_daydreams_on">Daydreams on</string>
-    <string name="profile_view_navbar">Navigation bar</string>
+    <string name="profile_view_navbar">Force navbar</string>
     <string name="profile_view_screen_timeout_always_on">Timeout (always on)</string>
     <string name="profile_view_screen_timeout_always_on_charging">Timeout (charging)</string>
     <string name="profile_view_rotation_autorotate">Rotation (auto-rotate)</string>
@@ -134,8 +135,8 @@
     <string name="pref_title_chrome">Desktop mode in Chrome</string>
     <string name="pref_description_chrome">Always show desktop sites in Chrome browser for a more PC-like experience</string>
     <string name="pref_title_ui_refresh">UI refresh method</string>
-    <string name="pref_title_navbar">Show navigation bar</string>
-    <string name="pref_description_navbar">Shows the navigation bar at the bottom of the screen (only works on CyanogenMod ROMs)</string>
+    <string name="pref_title_navbar">Force show navigation bar</string>
+    <string name="pref_description_navbar">Shows the navigation bar for devices with physical buttons (only works on CyanogenMod ROMs)</string>
     <string name="pref_title_screen_timeout">Screen timeout</string>
     <string name="pref_overscan_values">Overscan values</string>
     <string name="top">Top</string>
@@ -157,10 +158,18 @@
     <string name="not_compatible">Not compatible with this device</string>
     <string name="desktop">Desktop</string>
     <string name="pref_title_notification_action_2">Primary action button</string>
-    <string name="pref_title_immersive">Immersive mode</string>
-    <string name="pref_description_immersive">Force immersive mode system-wide (Lollipop only)</string>
+    <string name="pref_title_immersive">Status/navigation bars</string>
+    <string name="pref_title_immersive_alt">Status/Navigation Bars</string>
     <string name="immersive">Immersive</string>
     <string name="quick_immersive">Immersive Mode</string>
     <string name="quick_rotation">Screen Rotation</string>
+    <string name="debug_mode_enabling">You are now %1$s steps away from enabling debug mode.</string>
+    <string name="debug_mode_enabled">Debug mode enabled</string>
+    <string name="debug_mode_disabled">Debug mode disabled</string>
+    <string name="profile_helper_text_debug">Debug mode enabled\nTap to disable debug mode</string>
+    <string name="debug_show_simulated_size_density">Show simulated size/density</string>
+    <string name="debug_simulate_reboot">Simulate reboot</string>
+    <string name="debug_simulate_app_upgrade">Simulate application upgrade</string>
+    <string name="debug_dump_app_state">Dump current application state</string>
 
 </resources>

@@ -37,6 +37,14 @@
 
         <ListPreference
             android:defaultValue="do-nothing"
+            android:entries="@array/pref_immersive_list"
+            android:entryValues="@array/pref_immersive_list_values"
+            android:key="immersive_new"
+            android:negativeButtonText="@null"
+            android:positiveButtonText="@null"
+            android:title="@string/pref_title_immersive" />
+        <ListPreference
+            android:defaultValue="do-nothing"
             android:entries="@array/pref_rotation_list"
             android:entryValues="@array/pref_rotation_list_values"
             android:key="rotation_lock_new"

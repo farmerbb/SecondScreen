@@ -33,8 +33,8 @@ public final class KeepOverscanDialogFragment extends DialogFragment {
      * implement this interface in order to receive event call backs.
      * Each method passes the DialogFragment in case the host needs to query it. */
     public interface Listener {
-        public void onKeepOverscanDialogPositiveClick();
-        public void onKeepOverscanDialogNegativeClick();
+        void onKeepOverscanDialogPositiveClick();
+        void onKeepOverscanDialogNegativeClick();
     }
 
     // Use this instance of the interface to deliver action events

@@ -45,9 +45,9 @@ public final class OverscanFragment extends PreferenceFragment implements
     /* The activity that creates an instance of this fragment must
      * implement this interface in order to receive event call backs. */
     public interface Listener {
-        public void showKeepOverscanDialog();
-        public void dismissKeepOverscanDialog();
-        public String getFilename();
+        void showKeepOverscanDialog();
+        void dismissKeepOverscanDialog();
+        String getFilename();
     }
 
     // Use this instance of the interface to deliver action events
@@ -88,7 +88,7 @@ public final class OverscanFragment extends PreferenceFragment implements
         // Determine if we are editing the currently active profile
         String filename = listener.getFilename();
         SharedPreferences prefCurrent = U.getPrefCurrent(getActivity());
-        if(prefCurrent.getString("filename", "0").equals("quick_actions")) {
+        if("quick_actions".equals(prefCurrent.getString("filename", "0"))) {
             SharedPreferences prefSaved = U.getPrefQuickActions(getActivity());
             if(filename.equals(prefSaved.getString("original_filename", "0")))
                 currentProfile = true;

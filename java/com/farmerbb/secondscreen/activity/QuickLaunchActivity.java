@@ -78,9 +78,9 @@ public final class QuickLaunchActivity extends Activity {
                 currentFilename = prefCurrent.getString("filename", "null");
 
             File fileToLaunch = new File(getFilesDir() + File.separator + filename);
-            if(fileToLaunch.exists() && !currentFilename.equals(filename))
+            if(fileToLaunch.exists() && !filename.equals(currentFilename))
                 U.loadProfile(this, filename);
-            else if(filename.equals("turn_off") || currentFilename.equals(filename)) {
+            else if(filename.equals("turn_off") || filename.equals(currentFilename)) {
                 if(!prefCurrent.getBoolean("not_active", true))
                     U.turnOffProfile(this);
             } else
@@ -123,7 +123,7 @@ public final class QuickLaunchActivity extends Activity {
                         final ResolveInfo mInfo = pm.resolveActivity(i, 0);
 
                         try {
-                            if(getCallingPackage().equals(mInfo.activityInfo.applicationInfo.packageName))
+                            if(mInfo.activityInfo.applicationInfo.packageName.equals(getCallingPackage()))
                                 quickLaunchProfile(profileList[0][position]);
                             else {
                                 try {

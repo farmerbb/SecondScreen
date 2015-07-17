@@ -90,5 +90,16 @@
         <item>Vždy zapnutá</item>
         <item>Zapnutá pri nabíjaní</item>
     </string-array>
+    <string-array name="pref_immersive_list">
+        <item>Device default</item>
+        <item>Show status bar only</item>
+        <item>Hide status and navigation bars (immersive mode)</item>
+    </string-array>
+    <string-array name="pref_immersive_list_alt">
+        <item>Device default</item>
+        <item>Show status bar only</item>
+        <item>Hide status and navigation bars (immersive mode)</item>
+        <item>Prepnúť režim na celú obrazovku</item>
+    </string-array>
 
 </resources>

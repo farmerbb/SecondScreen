@@ -25,8 +25,6 @@ import com.farmerbb.secondscreen.util.U;
 import java.io.File;
 import java.util.Arrays;
 
-import eu.chainfire.libsuperuser.Shell;
-
 // Service launched by BootReceiver.  Certain profile options (backlight off, vibration off, etc)
 // do not stick after a device reboot; this service takes care of re-running any needed commands.
 public final class BootService extends IntentService {
@@ -58,7 +56,7 @@ public final class BootService extends IntentService {
         String[] su = new String[backlightCommand + 1];
         Arrays.fill(su, "");
 
-        if(prefCurrent.getString("rotation_lock_new", "do-nothing").equals("auto-rotate")) {
+        if("auto-rotate".equals(prefCurrent.getString("rotation_lock_new", "do-nothing"))) {
             su[rotationCommand] = U.rotationCommand + Integer.toString(Intent.EXTRA_DOCK_STATE_DESK);
             if(Settings.Secure.getInt(getContentResolver(), "screensaver_enabled", 0) == 1
                     && Settings.Secure.getInt(getContentResolver(), "screensaver_activate_on_dock", 0) == 1) {
@@ -93,9 +91,9 @@ public final class BootService extends IntentService {
             }
         }
 
-        if(prefMain.getBoolean("safe_mode", false) && prefCurrent.getString("ui_refresh", "do-nothing").equals("activity-manager")) {
+        if(prefMain.getBoolean("safe_mode", false) && "activity-manager".equals(prefCurrent.getString("ui_refresh", "do-nothing"))) {
             su[safeModeSizeCommand] = U.safeModeSizeCommand + "null";
-            su[safeModeDensityCommand] = U.safeModeDensityCommand + "null" + "null";
+            su[safeModeDensityCommand] = U.safeModeDensityCommand + "null";
 
             SharedPreferences.Editor editor = prefCurrent.edit();
             editor.putString("ui_refresh", "activity-manager-safe-mode");
@@ -105,7 +103,7 @@ public final class BootService extends IntentService {
         // Run superuser commands
         for(String command : su) {
             if(!command.equals("")) {
-                Shell.SU.run(su);
+                U.runCommands(this, su);
                 break;
             }
         }

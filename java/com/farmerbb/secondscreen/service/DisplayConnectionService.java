@@ -68,7 +68,7 @@ public final class DisplayConnectionService extends Service {
                 if(displays[displays.length - 1].getDisplayId() == Display.DEFAULT_DISPLAY
                         && !prefCurrent.getBoolean("not_active", true)) {
                     SharedPreferences prefMain = U.getPrefMain(DisplayConnectionService.this);
-                    if(prefCurrent.getString("filename", "0").equals("quick_actions")) {
+                    if("quick_actions".equals(prefCurrent.getString("filename", "0"))) {
                         SharedPreferences prefSaved = U.getPrefQuickActions(DisplayConnectionService.this);
                         if(prefMain.getString("hdmi_load_profile", "show_list").equals(prefSaved.getString("original_filename", "0")))
                             U.turnOffProfile(DisplayConnectionService.this);

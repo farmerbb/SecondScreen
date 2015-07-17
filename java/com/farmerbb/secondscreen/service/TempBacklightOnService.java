@@ -24,8 +24,6 @@ import com.farmerbb.secondscreen.util.U;
 
 import java.io.File;
 
-import eu.chainfire.libsuperuser.Shell;
-
 // The TempBacklightOnService is responsible for turning the backlight off again if the user happens
 // to turn their device off and back on.  It will turn the backlight off once the user has unlocked
 // their device.
@@ -55,7 +53,7 @@ public final class TempBacklightOnService extends IntentService {
                 // Manually update the sysfs value to guarantee that the backlight will restore
                 for(File backlightOff : U.backlightOff) {
                     if(backlightOff.exists()) {
-                        Shell.SU.run("echo " + Integer.toString(prefCurrent.getInt("backlight_value", -1)) + " > " + backlightOff.getAbsolutePath());
+                        U.runCommand(this, "echo " + Integer.toString(prefCurrent.getInt("backlight_value", -1)) + " > " + backlightOff.getAbsolutePath());
                         break;
                     }
                 }

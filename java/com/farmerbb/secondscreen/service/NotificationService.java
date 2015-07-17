@@ -265,10 +265,14 @@ public final class NotificationService extends Service {
                     customString = getResources().getString(R.string.desktop) + onOffString;
                     break;
                 case "temp_immersive":
-                    if(prefCurrent.getBoolean("immersive", false))
-                        onOffString = " " + getResources().getStringArray(R.array.pref_quick_actions)[1];
-                    else
-                        onOffString = " " + getResources().getStringArray(R.array.pref_quick_actions)[0];
+                    switch(prefCurrent.getString("immersive_new", "fallback")) {
+                        case "immersive-mode":
+                            onOffString = " " + getResources().getStringArray(R.array.pref_quick_actions)[1];
+                            break;
+                        default:
+                            onOffString = " " + getResources().getStringArray(R.array.pref_quick_actions)[0];
+                            break;
+                    }
 
                     customIcon = R.drawable.ic_action_immersive;
                     customString = getResources().getString(R.string.immersive) + onOffString;

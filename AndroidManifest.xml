@@ -17,8 +17,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.farmerbb.secondscreen"
     android:installLocation="internalOnly"
-    android:versionCode="108"
-    android:versionName="2.4.1" >
+    android:versionCode="109"
+    android:versionName="2.4.2" >
 
     <uses-sdk
         android:minSdkVersion="17"
@@ -48,6 +48,11 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/Theme.Secondscreen.2" >
+        <activity
+            android:name="com.farmerbb.secondscreen.activity.DebugModeActivity"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Secondscreen.Dialog" >
+        </activity>
         <activity
             android:name="com.farmerbb.secondscreen.activity.FragmentContainerActivity"
             android:label="@string/app_name" >
@@ -150,6 +155,7 @@
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="com.farmerbb.secondscreen.SIMULATE_REBOOT" />
             </intent-filter>
         </receiver>
         <receiver
@@ -158,6 +164,7 @@
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+                <action android:name="com.farmerbb.secondscreen.SIMULATE_APP_UPGRADE" />
             </intent-filter>
         </receiver>
         <receiver
