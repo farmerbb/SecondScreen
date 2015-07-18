@@ -44,7 +44,7 @@ public final class BootReceiver extends BroadcastReceiver {
         }
 
         if(!prefCurrent.getBoolean("not_active", true)) {
-            if(prefMain.getBoolean("safe_mode", false) && !"activity_manager".equals(prefCurrent.getString("ui_refresh", "do-nothing"))) {
+            if(prefMain.getBoolean("safe_mode", false) && !"activity-manager".equals(prefCurrent.getString("ui_refresh", "do-nothing"))) {
                 SharedPreferences.Editor editor = prefCurrent.edit();
                 editor.putString("ui_refresh", "do-nothing");
                 editor.apply();

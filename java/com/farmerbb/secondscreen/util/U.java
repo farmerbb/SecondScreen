@@ -19,7 +19,6 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Notification;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -37,7 +36,6 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.farmerbb.secondscreen.R;
-import com.farmerbb.secondscreen.activity.DebugModeActivity;
 import com.farmerbb.secondscreen.activity.MainActivity;
 import com.farmerbb.secondscreen.activity.TaskerQuickActionsActivity;
 import com.farmerbb.secondscreen.service.ProfileLoadService;
@@ -532,13 +530,7 @@ public final class U {
                     dump = dump + context.getResources().getString(R.string.bullet) + " " + command + "\n";
             }
 
-            // Intent to launch DebugModeActivity when notification is clicked
-            Intent intent = new Intent(context, DebugModeActivity.class);
-            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-            // Build the notification
             Notification notification = new Notification.Builder(context)
-                    .setContentIntent(pendingIntent)
                     .setSmallIcon(R.drawable.ic_action_settings)
                     .setContentTitle(context.getResources().getString(R.string.debug_mode_enabled))
                     .setContentText(dump)
