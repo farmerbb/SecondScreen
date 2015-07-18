@@ -215,10 +215,7 @@ public final class U {
 
         if(restartActivityManager) {
             // Kill surfaceflinger if on a Jelly Bean device; run "am restart" if on KitKat or later
-            if(Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1
-                    || "MNC".equals(Build.VERSION.CODENAME))
-                return "sleep 1 && pkill /system/bin/surfaceflinger";
-            else if(Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+            if(Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
                 for(ActivityManager.RunningAppProcessInfo process : pids) {
                     if(process.processName.equalsIgnoreCase("/system/bin/surfaceflinger"))
                         processid = process.pid;
@@ -228,6 +225,7 @@ public final class U {
             } else
                 return "sleep 1 && am restart";
         } else {
+            // Use "pkill" on Android M to kill SystemUI, and the standard "kill" command on earlier versions
             if(Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1
                     || "MNC".equals(Build.VERSION.CODENAME))
                 return "sleep 2 && pkill com.android.systemui";
