@@ -281,7 +281,7 @@ SharedPreferences.OnSharedPreferenceChangeListener {
     private void runQuickAction(String key, String value) {
             SharedPreferences prefSaved = U.getPrefQuickActions(this);
             SharedPreferences prefCurrent = U.getPrefCurrent(this);
-        SharedPreferences prefMain = U.getPrefMain(this);
+            SharedPreferences prefMain = U.getPrefMain(this);
 
             SharedPreferences.Editor editor = prefSaved.edit();
             SharedPreferences.Editor editorCurrent = prefCurrent.edit();
@@ -294,19 +294,19 @@ SharedPreferences.OnSharedPreferenceChangeListener {
 
             // Convert String preferences back to booleans if necessary, and save preferences to "quick_actions" XML file
             if(value.equals("Toggle")) {
-                if(key.replace("temp_", "").equals(prefSaved.getString("toggle", "null")))
+                if(key.replace("temp_", "").equals(prefCurrent.getString("toggle", "null")))
                     reset = true;
-                else if("null".equals(prefSaved.getString("toggle", "null"))) {
+                else if("null".equals(prefCurrent.getString("toggle", "null"))) {
                     if(prefCurrent.getBoolean("not_active", true)
                             || !"quick_actions".equals(prefCurrent.getString("filename", "0")))
-                        editor.putString("toggle", key.replace("temp_", ""));
+                        editorCurrent.putString("toggle", key.replace("temp_", ""));
                 } else
-                    editor.remove("toggle");
+                    editorCurrent.remove("toggle");
 
-                if(!reset) {
+                if(!reset)
                     editorCurrent.putString("toggle", key.replace("temp_", ""));
-                    editorCurrent.apply();
-                }
+
+                editorCurrent.apply();
             } else {
                 if(!"null".equals(prefSaved.getString("toggle", "null")))
                     editor.remove("toggle");
@@ -502,19 +502,19 @@ SharedPreferences.OnSharedPreferenceChangeListener {
 
             editor.apply();
 
-        if(reset)
-            runResetSettings();
-        else {
-            // Start quick actions profile
-            if(prefMain.getBoolean("first-run", false)
-                    && !(blacklisted && !prefMain.getBoolean("expert_mode", false)))
-                U.loadProfile(this, "quick_actions");
+            if(reset)
+                runResetSettings();
+            else {
+                // Start quick actions profile
+                if(prefMain.getBoolean("first-run", false)
+                        && !(blacklisted && !prefMain.getBoolean("expert_mode", false)))
+                    U.loadProfile(this, "quick_actions");
 
-            // Set active state of "Reset settings" button
-            if(launchedFromApp)
-                resetSettingsButton();
+                // Set active state of "Reset settings" button
+                if(launchedFromApp)
+                    resetSettingsButton();
 
-            finish();
+                finish();
         }
     }
 
@@ -584,16 +584,16 @@ SharedPreferences.OnSharedPreferenceChangeListener {
 
                 if(prefActive.getBoolean("overscan", false)) {
                     editor.putBoolean("overscan", true);
-                    editor.putInt("overscan_left", prefActive.getInt("overscan_left", 0));
-                    editor.putInt("overscan_right", prefActive.getInt("overscan_right", 0));
-                    editor.putInt("overscan_top", prefActive.getInt("overscan_top", 0));
-                    editor.putInt("overscan_bottom", prefActive.getInt("overscan_bottom", 0));
+                    editor.putInt("overscan_left", prefActive.getInt("overscan_left", 20));
+                    editor.putInt("overscan_right", prefActive.getInt("overscan_right", 20));
+                    editor.putInt("overscan_top", prefActive.getInt("overscan_top", 20));
+                    editor.putInt("overscan_bottom", prefActive.getInt("overscan_bottom", 20));
                 } else {
                     editor.putBoolean("overscan", false);
-                    editor.putInt("overscan_left", 0);
-                    editor.putInt("overscan_right", 0);
-                    editor.putInt("overscan_top", 0);
-                    editor.putInt("overscan_bottom", 0);
+                    editor.putInt("overscan_left", 20);
+                    editor.putInt("overscan_right", 20);
+                    editor.putInt("overscan_top", 20);
+                    editor.putInt("overscan_bottom", 20);
                 }
 
                 editor.putString("profile_name", prefActive.getString("profile_name", getResources().getString(R.string.action_new)));

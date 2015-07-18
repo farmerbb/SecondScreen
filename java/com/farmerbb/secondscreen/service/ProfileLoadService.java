@@ -104,10 +104,13 @@ public final class ProfileLoadService extends IntentService {
         // Handle toggling of certain values
         String toggle = prefCurrent.getString("toggle", "null");
         if(!"null".equals(toggle) && filename.equals("quick_actions")) {
-            if("immersive_new".equals(toggle))
-                toggle = "immersive";
-
             SharedPreferences.Editor editorSaved = prefSaved.edit();
+
+            if("immersive_new".equals(toggle)) {
+                toggle = "immersive";
+                editorSaved.remove("immersive_new");
+            }
+
             editorSaved.putBoolean(toggle, !prefSaved.getBoolean(toggle, false));
             editorSaved.commit();
 

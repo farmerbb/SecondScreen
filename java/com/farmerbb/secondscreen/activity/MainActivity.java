@@ -19,11 +19,13 @@ import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.net.Uri;
@@ -184,33 +186,29 @@ ProfileViewFragment.Listener {
             setTitle(" " + getResources().getString(R.string.app_name));
 
         // Handle cases where both the free and (formerly) paid versions may be installed at the same time
-        SharedPreferences prefMain = U.getPrefMain(this);
-        boolean stopAppLaunch = false;
+        PackageInfo paidPackage;
+        PackageInfo freePackage;
 
-        if((getPackageName().equals("com.farmerbb.secondscreen.free")
-               && isActivityAvailable("com.farmerbb.secondscreen", MainActivity.class.getName()))
-            || (getPackageName().equals("com.farmerbb.secondscreen")
-            && isActivityAvailable("com.farmerbb.secondscreen.free", MainActivity.class.getName()))) {
-            stopAppLaunch = true;
+        try {
+            paidPackage = getPackageManager().getPackageInfo("com.farmerbb.secondscreen", 0);
+            freePackage = getPackageManager().getPackageInfo("com.farmerbb.secondscreen.free", 0);
 
             Bundle bundle = new Bundle();
-            // If the first-run preference is false, then assume that this is the duplicate package.
-            // If true, then this package has already been run, so determine the duplicate package name.
-            if(!prefMain.getBoolean("first-run", false))
-                bundle.putString("package", getPackageName());
-            else if(getPackageName().equals("com.farmerbb.secondscreen"))
-                bundle.putString("package", "com.farmerbb.secondscreen.free");
+            if(paidPackage.firstInstallTime > freePackage.firstInstallTime)
+                bundle.putString("package", paidPackage.packageName);
             else
-                bundle.putString("package", "com.farmerbb.secondscreen");
+                bundle.putString("package", freePackage.packageName);
 
             if(getFragmentManager().findFragmentByTag("multiple-versions-fragment") == null) {
                 DialogFragment multiple = new MultipleVersionsDialogFragment();
                 multiple.setArguments(bundle);
                 multiple.show(getFragmentManager(), "multiple-versions-fragment");
             }
-        }
+        } catch (PackageManager.NameNotFoundException e) {
+            // Hooray!  Only one version of the app is installed, so proceed with app launch.
 
-        if(!stopAppLaunch) {
+            SharedPreferences prefMain = U.getPrefMain(this);
+
             // Ensure that all receivers are enabled and stay enabled, so that critical functionality
             // associated with these receivers can always run when needed
             initializeComponents(BootReceiver.class.getName());
@@ -1048,11 +1046,13 @@ ProfileViewFragment.Listener {
         } else if((Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1
                 || "MNC".equals(Build.VERSION.CODENAME))
                 && getFragmentManager().findFragmentByTag("upgrade-fragment") == null
-                && showUpgradeDialog
-                && !isDebugModeEnabled(false)) {
-            DialogFragment upgradeFragment = new AndroidUpgradeDialogFragment();
-            upgradeFragment.show(getFragmentManager(), "upgrade-fragment");
+                && showUpgradeDialog) {
             showUpgradeDialog = false;
+
+            if(!isDebugModeEnabled(false)) {
+                DialogFragment upgradeFragment = new AndroidUpgradeDialogFragment();
+                upgradeFragment.show(getFragmentManager(), "upgrade-fragment");
+            }
         }
     }
 
@@ -1085,7 +1085,11 @@ ProfileViewFragment.Listener {
                     debugToast = Toast.makeText(this, R.string.debug_mode_disabled, Toast.LENGTH_SHORT);
                     debugToast.show();
 
-                    // Clean up leftover log files
+                    // Clean up leftover notifications
+                    NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                    nm.cancelAll();
+
+                    // Clean up leftover dump files
                     File file = new File(getExternalFilesDir(null), "prefCurrent");
                     File file2 = new File(getExternalFilesDir(null), "prefSaved");
                     File file3 = new File(getExternalFilesDir(null), "prefMain");
