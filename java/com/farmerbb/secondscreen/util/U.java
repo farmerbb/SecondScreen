@@ -210,12 +210,15 @@ public final class U {
 
     public static String uiRefreshCommand(Context context, boolean restartActivityManager) {
         ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-        List<ActivityManager.RunningAppProcessInfo> pids = am.getRunningAppProcesses(); // broken in M Preview
+        List<ActivityManager.RunningAppProcessInfo> pids = am.getRunningAppProcesses();
         int processid = 0;
 
         if(restartActivityManager) {
             // Kill surfaceflinger if on a Jelly Bean device; run "am restart" if on KitKat or later
-            if(Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+            if(Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1
+                    || "MNC".equals(Build.VERSION.CODENAME))
+                return "sleep 1 && pkill /system/bin/surfaceflinger";
+            else if(Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
                 for(ActivityManager.RunningAppProcessInfo process : pids) {
                     if(process.processName.equalsIgnoreCase("/system/bin/surfaceflinger"))
                         processid = process.pid;
@@ -225,13 +228,18 @@ public final class U {
             } else
                 return "sleep 1 && am restart";
         } else {
-            // Get SystemUI pid
-            for(ActivityManager.RunningAppProcessInfo process : pids) {
-                if(process.processName.equalsIgnoreCase("com.android.systemui"))
-                    processid = process.pid;
-            }
+            if(Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1
+                    || "MNC".equals(Build.VERSION.CODENAME))
+                return "sleep 2 && pkill com.android.systemui";
+            else {
+                // Get SystemUI pid
+                for(ActivityManager.RunningAppProcessInfo process : pids) {
+                    if(process.processName.equalsIgnoreCase("com.android.systemui"))
+                        processid = process.pid;
+                }
 
-            return "sleep 2 && kill " + Integer.toString(processid);
+                return "sleep 2 && kill " + Integer.toString(processid);
+            }
         }
     }
 
