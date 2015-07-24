@@ -283,7 +283,7 @@ SharedPreferences.OnSharedPreferenceChangeListener {
             getPreferenceScreen().findPreference("overscan_settings").setEnabled(false);
 
         if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
-            disablePreference(prefNew, "immersive_new");
+            getPreferenceScreen().findPreference("immersive_new").setEnabled(false);
 
         try {
             getActivity().getPackageManager().getPackageInfo("com.chrome.dev", 0);

@@ -142,7 +142,7 @@ SharedPreferences.OnSharedPreferenceChangeListener {
                 getPreferenceScreen().findPreference("temp_overscan").setEnabled(false);
 
             if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
-                getPreferenceScreen().findPreference("temp_immersive").setEnabled(false);
+                getPreferenceScreen().findPreference("temp_immersive_new").setEnabled(false);
 
             try {
                 getPackageManager().getPackageInfo("com.chrome.dev", 0);
