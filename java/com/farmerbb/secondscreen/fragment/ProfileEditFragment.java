@@ -212,6 +212,13 @@ SharedPreferences.OnSharedPreferenceChangeListener {
                     editor.putString("density", prefSaved.getString("density", "reset"));
             }
 
+            if(getActivity().getPackageManager().hasSystemFeature("com.cyanogenmod.android")
+                    && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1
+                    && prefSaved.getString("ui_refresh", "do-nothing").equals("system-ui")) {
+                editor.putString("ui_refresh", "activity-manager");
+            } else
+                editor.putString("ui_refresh", prefSaved.getString("ui_refresh", "do-nothing"));
+
             editor.putString("profile_name", prefSaved.getString("profile_name", getResources().getString(R.string.action_new)));
             editor.putBoolean("bluetooth_on", prefSaved.getBoolean("bluetooth_on", false));
             editor.putBoolean("wifi_on", prefSaved.getBoolean("wifi_on", false));
@@ -220,7 +227,6 @@ SharedPreferences.OnSharedPreferenceChangeListener {
             editor.putBoolean("backlight_off", prefSaved.getBoolean("backlight_off", false));
             editor.putBoolean("vibration_off", prefSaved.getBoolean("vibration_off", false));
             editor.putBoolean("chrome", prefSaved.getBoolean("chrome", false));
-            editor.putString("ui_refresh", prefSaved.getString("ui_refresh", "do-nothing"));
             editor.putBoolean("navbar", prefSaved.getBoolean("navbar", false));
             editor.putString("screen_timeout", prefSaved.getString("screen_timeout", "do-nothing"));
             editor.apply();
@@ -235,14 +241,23 @@ SharedPreferences.OnSharedPreferenceChangeListener {
 
         if(prefMain.getBoolean("expert_mode", false))
             addPreferencesFromResource(R.xml.display_settings_expert);
-        else {
-            if(prefMain.getBoolean("landscape", false))
-                addPreferencesFromResource(R.xml.display_settings_landscape);
-            else
-                addPreferencesFromResource(R.xml.display_settings);
-        }
+        else
+            addPreferencesFromResource(R.xml.display_settings);
 
         addPreferencesFromResource(R.xml.additional_settings);
+
+        // Modifications for certain scenarios
+        if(!prefMain.getBoolean("expert_mode", false) && prefMain.getBoolean("landscape", false)) {
+            ListPreference size = (ListPreference) findPreference("size");
+            size.setEntryValues(R.array.pref_resolution_list_values_landscape);
+        }
+
+        if(getActivity().getPackageManager().hasSystemFeature("com.cyanogenmod.android")
+                && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+            ListPreference uiRefresh = (ListPreference) findPreference("ui_refresh");
+            uiRefresh.setEntries(R.array.pref_ui_refresh_list_alt);
+            uiRefresh.setEntryValues(R.array.pref_ui_refresh_list_values_alt);
+        }
 
         // Set OnClickListeners for certain preferences
         findPreference("backlight_off").setOnPreferenceClickListener(this);

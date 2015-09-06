@@ -219,7 +219,11 @@ public final class ProfileViewFragment extends Fragment {
 
         switch(prefSaved.getString("ui_refresh", "do-nothing")) {
             case "system-ui":
-                generateProfileSettings(true, R.string.profile_view_ui_refresh_systemui);
+                if(getActivity().getPackageManager().hasSystemFeature("com.cyanogenmod.android")
+                        && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1)
+                    generateProfileSettings(true, R.string.profile_view_ui_refresh_soft_reboot);
+                else
+                    generateProfileSettings(true, R.string.profile_view_ui_refresh_systemui);
                 break;
             case "activity-manager":
                 generateProfileSettings(true, R.string.profile_view_ui_refresh_soft_reboot);

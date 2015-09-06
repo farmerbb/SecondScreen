@@ -56,6 +56,10 @@
         <item>Reštartovať System UI a ukončiť aplikácie na pozadí</item>
         <item>Reštartovať ActivityManager (soft. reštart)</item>
     </string-array>
+    <string-array name="pref_ui_refresh_list_alt">
+        <item>Neurobiť nič</item>
+        <item>Reštartovať ActivityManager (soft. reštart)</item>
+    </string-array>
     <string-array name="pref_rotation_list">
         <item>Použiť nastavenia systému</item>
         <item>Vynútiť automatické otáčanie</item>

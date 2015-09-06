@@ -16,6 +16,7 @@
 package com.farmerbb.secondscreen.activity;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
@@ -47,6 +48,7 @@ import com.farmerbb.secondscreen.fragment.ProfileListFragment;
 import com.farmerbb.secondscreen.fragment.ProfileViewFragment;
 import com.farmerbb.secondscreen.fragment.WelcomeFragment;
 import com.farmerbb.secondscreen.fragment.dialog.AndroidUpgradeDialogFragment;
+import com.farmerbb.secondscreen.fragment.dialog.BusyboxDialogFragment;
 import com.farmerbb.secondscreen.fragment.dialog.DeleteDialogFragment;
 import com.farmerbb.secondscreen.fragment.dialog.ExpertModeSizeDialogFragment;
 import com.farmerbb.secondscreen.fragment.dialog.FirstLoadDialogFragment;
@@ -96,6 +98,7 @@ NewDeviceDialogFragment.Listener,
 UiRefreshDialogFragment.Listener,
 MultipleVersionsDialogFragment.Listener,
 SwiftkeyDialogFragment.Listener,
+BusyboxDialogFragment.Listener,
 ProfileListFragment.Listener,
 ProfileEditFragment.Listener,
 ProfileViewFragment.Listener {
@@ -126,11 +129,16 @@ ProfileViewFragment.Listener {
             Arrays.fill(su, "");
 
             su[chromeCommand] = U.chromeCommandRemove;
-            su[densityCommand] = U.densityCommand("reset");
             su[sizeCommand] = U.sizeCommand("reset");
 
-            // We run the density command twice, for reliability
-            su[densityCommand2] = su[densityCommand];
+            if(!(getPackageManager().hasSystemFeature("com.cyanogenmod.android")
+                    && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1)) {
+                su[densityCommand] = U.densityCommand("reset");
+
+                // We run the density command twice, for reliability
+                su[densityCommand2] = su[densityCommand];
+            }
+
 
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2)
                 su[overscanCommand] = U.overscanCommand + "reset";
@@ -160,6 +168,7 @@ ProfileViewFragment.Listener {
         }
     }
 
+    boolean showBusyboxDialog = true;
     boolean showUpgradeDialog = true;
     int clicks = 0;
     Toast debugToast = null;
@@ -169,8 +178,10 @@ ProfileViewFragment.Listener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if(savedInstanceState != null)
+        if(savedInstanceState != null) {
+            showBusyboxDialog = savedInstanceState.getBoolean("show-busybox-dialog");
             showUpgradeDialog = savedInstanceState.getBoolean("show-upgrade-dialog");
+        }
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             // Remove margins from layout on Lollipop devices
@@ -294,6 +305,7 @@ ProfileViewFragment.Listener {
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putBoolean("show-busybox-dialog", showBusyboxDialog);
         savedInstanceState.putBoolean("show-upgrade-dialog", showUpgradeDialog);
         super.onSaveInstanceState(savedInstanceState);
     }
@@ -1030,7 +1042,7 @@ ProfileViewFragment.Listener {
                 newDeviceFragment.show(getFragmentManager(), "new-device-fragment");
             }
 
-            // Show dialog if SwiftKey is installed
+        // Show dialog if SwiftKey is installed
         } else if(swiftKey
                 && !prefMain.getBoolean("swiftkey", false)
                 && getFragmentManager().findFragmentByTag("swiftkey-fragment") == null) {
@@ -1053,6 +1065,40 @@ ProfileViewFragment.Listener {
                 DialogFragment upgradeFragment = new AndroidUpgradeDialogFragment();
                 upgradeFragment.show(getFragmentManager(), "upgrade-fragment");
             }
+
+        // Starting with 5.1.1 LMY48I, RunningAppProcessInfo no longer returns valid data,
+        // which means we won't be able to use the "kill" command with the pid of SystemUI.
+        // On Marshmallow, this isn't an issue, as we have the "pkill" command available as part
+        // of toybox.  Users on recent builds of 5.1.1, however, will need to have busybox
+        // installed to run "pkill".
+        //
+        // Thus, if the SystemUI pid gets returned as 0, we need to check for either busybox or
+        // toybox on the device, and inform the user if either of these are missing.
+        } else if(getFragmentManager().findFragmentByTag("busybox-fragment") == null
+                && showBusyboxDialog) {
+            showBusyboxDialog = false;
+
+            ActivityManager am = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+            List<ActivityManager.RunningAppProcessInfo> pids = am.getRunningAppProcesses();
+            int processid = 0;
+
+            // Get SystemUI pid
+            for(ActivityManager.RunningAppProcessInfo process : pids) {
+                if(process.processName.equalsIgnoreCase("com.android.systemui"))
+                    processid = process.pid;
+            }
+
+            if(processid == 0) {
+                File toybox = new File("/system/bin", "toybox");
+                File busybox = new File("/system/xbin", "busybox");
+                File busybox2 = new File("/system/bin", "busybox");
+
+                if(!(toybox.exists() || busybox.exists() || busybox2.exists())
+                        && !prefMain.getBoolean("ignore_busybox_dialog", false)) {
+                    DialogFragment busyboxFragment = new BusyboxDialogFragment();
+                    busyboxFragment.show(getFragmentManager(), "busybox-fragment");
+                }
+            }
         }
     }
 
@@ -1060,6 +1106,11 @@ ProfileViewFragment.Listener {
     public void onSwiftkeyDialogPositiveClick(DialogFragment dialog) {
         dialog.dismiss();
         showDialogs();
+    }
+
+    @Override
+    public void onBusyboxDialogNegativeClick() {
+        U.getPrefMain(this).edit().putBoolean("ignore_busybox_dialog", true).apply();
     }
 
     // Enables and disables debug mode.  Debug mode can be enabled by tapping on the helper text

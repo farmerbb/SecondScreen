@@ -123,18 +123,31 @@ public final class TurnOffService extends IntentService {
         }
 
         // Resolution and density
-        if(U.runSizeCommand(this, "reset")) {
-            if("activity-manager".equals(prefCurrent.getString("ui_refresh", "do-nothing"))
-                    || "activity-manager-safe-mode".equals(prefCurrent.getString("ui_refresh", "do-nothing")))
+        String uiRefresh = prefCurrent.getString("ui_refresh", "do-nothing");
+        boolean runSizeCommand = U.runSizeCommand(this, "reset");
+        boolean runDensityCommand = U.runDensityCommand(this, "reset");
+        boolean cmWorkaround = false;
+
+        // Determine if CyanogenMod workaround is needed
+        if(runDensityCommand
+                && getPackageManager().hasSystemFeature("com.cyanogenmod.android")
+                && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1)
+            cmWorkaround = true;
+
+        if(runSizeCommand) {
+            if(uiRefresh.equals("activity-manager")
+                    || uiRefresh.equals("activity-manager-safe-mode")
+                    || cmWorkaround)
                 // Run a different command if we are restarting the ActivityManager
                 su[sizeCommand] = U.safeModeSizeCommand + "null";
             else
                 su[sizeCommand] = U.sizeCommand("reset");
         }
 
-        if(U.runDensityCommand(this, "reset")) {
-            if("activity-manager".equals(prefCurrent.getString("ui_refresh", "do-nothing"))
-                    || "activity-manager-safe-mode".equals(prefCurrent.getString("ui_refresh", "do-nothing")))
+        if(runDensityCommand) {
+            if((uiRefresh.equals("activity-manager")
+                    || uiRefresh.equals("activity-manager-safe-mode"))
+                    && !cmWorkaround)
                 // Run a different command if we are restarting the ActivityManager
                 su[densityCommand] = U.safeModeDensityCommand + "null";
             else {
@@ -144,6 +157,11 @@ public final class TurnOffService extends IntentService {
                 su[densityCommand2] = su[densityCommand];
             }
         }
+
+        // Recent builds of CyanogenMod require the "Restart ActivityManager" UI refresh method
+        // to be set, to work around the automatic reboot when the DPI is changed.
+        if(cmWorkaround)
+            uiRefresh = "activity-manager";
 
         // Overscan
         if((Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR1) && prefCurrent.getBoolean("overscan", true))
@@ -265,7 +283,7 @@ public final class TurnOffService extends IntentService {
             su[immersiveCommand] = U.immersiveCommand("do-nothing");
 
         // UI refresh
-        switch(prefCurrent.getString("ui_refresh", "do-nothing")) {
+        switch(uiRefresh) {
             case "system-ui":
                 su[uiRefreshCommand] = U.uiRefreshCommand(this, false);
                 su[uiRefreshCommand2] = U.uiRefreshCommand2(this);
@@ -277,19 +295,35 @@ public final class TurnOffService extends IntentService {
                 // We run the superuser commands in a different order if this option is selected,
                 // so re-create the command array.
                 // Remaining commands will be handled by the BootService
-                su = new String[]{
-                        su[densityCommand],
-                        su[sizeCommand],
-                        su[overscanCommand],
-                        su[chromeCommand],
-                        su[chromeCommand2],
-                        su[immersiveCommand],
-                        su[navbarCommand],
-                        su[daydreamsCommand],
-                        su[daydreamsChargingCommand],
-                        su[stayOnCommand],
-                        su[showTouchesCommand],
-                        su[uiRefreshCommand]};
+                if(cmWorkaround) {
+                    su[uiRefreshCommand] = su[uiRefreshCommand].replace('1', '5');
+                    su = new String[]{
+                            su[sizeCommand],
+                            su[overscanCommand],
+                            su[chromeCommand],
+                            su[chromeCommand2],
+                            su[immersiveCommand],
+                            su[navbarCommand],
+                            su[daydreamsCommand],
+                            su[daydreamsChargingCommand],
+                            su[stayOnCommand],
+                            su[showTouchesCommand],
+                            su[densityCommand],
+                            su[uiRefreshCommand]};
+                } else
+                    su = new String[]{
+                            su[densityCommand],
+                            su[sizeCommand],
+                            su[overscanCommand],
+                            su[chromeCommand],
+                            su[chromeCommand2],
+                            su[immersiveCommand],
+                            su[navbarCommand],
+                            su[daydreamsCommand],
+                            su[daydreamsChargingCommand],
+                            su[stayOnCommand],
+                            su[showTouchesCommand],
+                            su[uiRefreshCommand]};
                 break;
         }
 

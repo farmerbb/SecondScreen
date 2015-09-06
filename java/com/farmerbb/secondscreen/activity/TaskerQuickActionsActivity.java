@@ -25,6 +25,7 @@ import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
@@ -119,10 +120,13 @@ SharedPreferences.OnSharedPreferenceChangeListener {
             }
 
             // Add preferences
-            if(prefMain.getBoolean("landscape", false))
-                addPreferencesFromResource(R.xml.quick_actions_preferences_landscape);
-            else
-                addPreferencesFromResource(R.xml.quick_actions_preferences);
+            addPreferencesFromResource(R.xml.quick_actions_preferences);
+
+            // Modifications for certain scenarios
+            if(prefMain.getBoolean("landscape", false)) {
+                ListPreference size = (ListPreference) findPreference("temp_size");
+                size.setEntryValues(R.array.pref_resolution_list_values_landscape);
+            }
 
             // Set title and OnClickListener for "Lock Device"
             findPreference("lock_device").setTitle(getResources().getStringArray(R.array.pref_notification_action_list)[2]);

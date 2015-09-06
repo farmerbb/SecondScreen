@@ -223,19 +223,20 @@ public final class U {
             } else
                 return "sleep 1 && am restart";
         } else {
-            // Use "pkill" on Android M to kill SystemUI, and the standard "kill" command on earlier versions
-            if(Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1
-                    || "MNC".equals(Build.VERSION.CODENAME))
-                return "sleep 2 && pkill com.android.systemui";
-            else {
-                // Get SystemUI pid
-                for(ActivityManager.RunningAppProcessInfo process : pids) {
-                    if(process.processName.equalsIgnoreCase("com.android.systemui"))
-                        processid = process.pid;
-                }
-
-                return "sleep 2 && kill " + Integer.toString(processid);
+            // Get SystemUI pid
+            for(ActivityManager.RunningAppProcessInfo process : pids) {
+                if(process.processName.equalsIgnoreCase("com.android.systemui"))
+                    processid = process.pid;
             }
+
+            // Starting with 5.1.1 LMY48I, RunningAppProcessInfo no longer returns valid data,
+            // which means we won't be able to use the "kill" command with the pid of SystemUI.
+            // Thus, if the SystemUI pid gets returned as 0, we need to use the "pkill" command
+            // instead, and hope that the user has that command available on their device.
+            if(processid == 0)
+                return "sleep 2 && pkill com.android.systemui";
+            else
+                return "sleep 2 && kill " + Integer.toString(processid);
         }
     }
 

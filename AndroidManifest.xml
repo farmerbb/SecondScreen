@@ -17,12 +17,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.farmerbb.secondscreen"
     android:installLocation="internalOnly"
-    android:versionCode="114"
-    android:versionName="2.4.2" >
+    android:versionCode="115"
+    android:versionName="2.4.3" >
 
     <uses-sdk
         android:minSdkVersion="17"
-        android:targetSdkVersion="22" />
+        android:targetSdkVersion="23" />
 
     <uses-feature
         android:name="android.hardware.touchscreen"

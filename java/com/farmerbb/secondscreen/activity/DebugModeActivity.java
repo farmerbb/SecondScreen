@@ -36,6 +36,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+// The top secret debugging menu, which can be accessed by enabling debug mode (10 taps right below
+// the action bar in the ProfileListFragment), then long-pressing on the red area that appears
+// when debug mode is enabled.
 public class DebugModeActivity extends PreferenceActivity implements OnPreferenceClickListener {
 
     @SuppressWarnings("deprecation")

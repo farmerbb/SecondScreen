@@ -193,12 +193,20 @@ public final class ProfileLoadService extends IntentService {
         }
 
         // Resolution and density
+        String uiRefresh = prefSaved.getString("ui_refresh", "do-nothing");
         boolean runSizeCommand = U.runSizeCommand(this, prefSaved.getString("size", "reset"));
         boolean runDensityCommand = U.runDensityCommand(this, prefSaved.getString("density", "reset"));
+        boolean cmWorkaround = false;
+
+        // Determine if CyanogenMod workaround is needed
+        if(runDensityCommand
+                && getPackageManager().hasSystemFeature("com.cyanogenmod.android")
+                && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1)
+            cmWorkaround = true;
 
         if(runSizeCommand) {
             String size = prefSaved.getString("size", "reset");
-            if("activity-manager".equals(prefSaved.getString("ui_refresh", "do-nothing"))) {
+            if(uiRefresh.equals("activity-manager") || cmWorkaround) {
                 // Run a different command if we are restarting the ActivityManager
                 if("reset".equals(size))
                     su[sizeCommand] = U.safeModeSizeCommand + "null";
@@ -210,7 +218,7 @@ public final class ProfileLoadService extends IntentService {
 
         if(runDensityCommand) {
             String density = prefSaved.getString("density", "reset");
-            if("activity-manager".equals(prefSaved.getString("ui_refresh", "do-nothing"))) {
+            if(uiRefresh.equals("activity-manager") && !cmWorkaround) {
                 // Run a different command if we are restarting the ActivityManager
                 if("reset".equals(density))
                     su[densityCommand] = U.safeModeDensityCommand + "null";
@@ -223,6 +231,11 @@ public final class ProfileLoadService extends IntentService {
                 su[densityCommand2] = su[densityCommand];
             }
         }
+
+        // Recent builds of CyanogenMod require the "Restart ActivityManager" UI refresh method
+        // to be set, to work around the automatic reboot when the DPI is changed.
+        if(cmWorkaround)
+            uiRefresh = "activity-manager";
 
         // Overscan
         if(Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR1) {
@@ -530,7 +543,7 @@ public final class ProfileLoadService extends IntentService {
                     editor.putInt("backlight_value", Settings.System.getInt(getContentResolver(), Settings.System.SCREEN_BRIGHTNESS));
             } catch (SettingNotFoundException e1) {}
 
-            if(!"activity-manager".equals(prefSaved.getString("ui_refresh", "do-nothing"))) {
+            if(!uiRefresh.equals("activity-manager")) {
                 // Check to see if Chromecast screen mirroring is active.
                 // If it is, and user has "Restart SystemUI" as their UI refresh method,
                 // then don't immediately dim the screen.
@@ -543,7 +556,7 @@ public final class ProfileLoadService extends IntentService {
 
                 if(displays[displays.length - 1].getDisplayId() != Display.DEFAULT_DISPLAY) {
                     if(U.castScreenActive(this)
-                        && "system-ui".equals(prefSaved.getString("ui_refresh", "do-nothing"))
+                        && uiRefresh.equals("system-ui")
                         && ((runSizeCommand || runDensityCommand)
                         || prefCurrent.getBoolean("not_active", true)
                         || prefCurrent.getBoolean("force_ui_refresh", false))) {
@@ -711,14 +724,17 @@ public final class ProfileLoadService extends IntentService {
         }
 
         // UI refresh
-        String uiRefresh = prefSaved.getString("ui_refresh", "do-nothing");
 
         // If a UI refresh command was run on the current profile, and we are loading a different
         // profile without a UI refresh command, run the previous one to restore things back to normal
         if(!prefCurrent.getBoolean("not_active", true)
                 && !"do-nothing".equals(prefCurrent.getString("ui_refresh", "do-nothing"))
-                && "do-nothing".equals(uiRefresh))
-            uiRefresh = prefCurrent.getString("ui_refresh", "do-nothing");
+                && "do-nothing".equals(uiRefresh)) {
+            if(prefCurrent.getString("ui_refresh", "do-nothing").equals("activity-manager-safe-mode"))
+                uiRefresh = "activity-manager";
+            else
+                uiRefresh = prefCurrent.getString("ui_refresh", "do-nothing");
+        }
 
         // Only refresh the UI if any of these conditions are met:
         // * Size and density commands need to be run
@@ -755,26 +771,42 @@ public final class ProfileLoadService extends IntentService {
                     // We run the superuser commands in a different order if this option is selected,
                     // so re-create the command array.
                     // Remaining commands will be handled by the BootService
-                    su = new String[]{
-                            su[densityCommand],
-                            su[sizeCommand],
-                            su[overscanCommand],
-                            su[chromeCommand],
-                            su[chromeCommand2],
-                            su[immersiveCommand],
-                            su[navbarCommand],
-                            su[daydreamsCommand],
-                            su[daydreamsChargingCommand],
-                            su[stayOnCommand],
-                            su[showTouchesCommand],
-                            su[uiRefreshCommand]};
+                    if(cmWorkaround) {
+                        su[uiRefreshCommand] = su[uiRefreshCommand].replace('1', '5');
+                        su = new String[]{
+                                su[sizeCommand],
+                                su[overscanCommand],
+                                su[chromeCommand],
+                                su[chromeCommand2],
+                                su[immersiveCommand],
+                                su[navbarCommand],
+                                su[daydreamsCommand],
+                                su[daydreamsChargingCommand],
+                                su[stayOnCommand],
+                                su[showTouchesCommand],
+                                su[densityCommand],
+                                su[uiRefreshCommand]};
+                    } else
+                        su = new String[]{
+                                su[densityCommand],
+                                su[sizeCommand],
+                                su[overscanCommand],
+                                su[chromeCommand],
+                                su[chromeCommand2],
+                                su[immersiveCommand],
+                                su[navbarCommand],
+                                su[daydreamsCommand],
+                                su[daydreamsChargingCommand],
+                                su[stayOnCommand],
+                                su[showTouchesCommand],
+                                su[uiRefreshCommand]};
                     break;
             }
         }
 
         // Handle backlight command delay
         if(prefSaved.getBoolean("backlight_off", false)
-                && !"activity-manager".equals(prefSaved.getString("ui_refresh", "do-nothing"))
+                && !"activity-manager".equals(uiRefresh)
                 && su[uiRefreshCommand].equals("")
                 && !su[backlightCommand].equals(""))
             su[backlightCommand] = "sleep 2 && " + su[backlightCommand];
@@ -783,7 +815,7 @@ public final class ProfileLoadService extends IntentService {
         if(prefCurrent.getBoolean("force_safe_mode", false)) {
             editor.remove("force_safe_mode");
 
-            if(!"activity-manager".equals(prefSaved.getString("ui_refresh", "do-nothing"))) {
+            if(!"activity-manager".equals(uiRefresh)) {
                 su[safeModeSizeCommand] = U.safeModeSizeCommand + "null";
                 su[safeModeDensityCommand] = U.safeModeDensityCommand + "null";
             }
@@ -796,7 +828,7 @@ public final class ProfileLoadService extends IntentService {
         editor.putString("profile_name", prefSaved.getString("profile_name", getResources().getString(R.string.action_new)));
         editor.putString("size", prefSaved.getString("size", "reset"));
         editor.putString("density", prefSaved.getString("density", "reset"));
-        editor.putString("ui_refresh", prefSaved.getString("ui_refresh", "do-nothing"));
+        editor.putString("ui_refresh", uiRefresh);
         editor.putString("screen_timeout", prefSaved.getString("screen_timeout", "do-nothing"));
         editor.putBoolean("vibration_off", prefSaved.getBoolean("vibration_off", false));
         editor.putBoolean("backlight_off", prefSaved.getBoolean("backlight_off", false));
