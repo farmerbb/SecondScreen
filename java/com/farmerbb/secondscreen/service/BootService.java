@@ -18,7 +18,9 @@ package com.farmerbb.secondscreen.service;
 import android.app.IntentService;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.hardware.display.DisplayManager;
 import android.provider.Settings;
+import android.view.Display;
 
 import com.farmerbb.secondscreen.util.U;
 
@@ -75,7 +77,11 @@ public final class BootService extends IntentService {
             }
         }
 
-        if(prefCurrent.getBoolean("backlight_off", false)) {
+        DisplayManager dm = (DisplayManager) getSystemService(DISPLAY_SERVICE);
+        Display[] displays = dm.getDisplays();
+
+        if(prefCurrent.getBoolean("backlight_off", false)
+                && displays[displays.length - 1].getDisplayId() != Display.DEFAULT_DISPLAY) {
             // Turn auto-brightness off so it doesn't mess with things
             Settings.System.putInt(getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE, Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL);
 
