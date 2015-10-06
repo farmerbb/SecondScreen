@@ -26,6 +26,7 @@ limitations under the License.
         android:layout_height="wrap_content"
         android:padding="16dp"
         android:text="@null"
+        android:textSize="16sp"
         android:textColor="@color/text_color_primary" />
 
     <LinearLayout
@@ -41,14 +42,14 @@ limitations under the License.
             android:gravity="end"
             android:orientation="horizontal" >
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:text="@string/action_close"
-            android:gravity="bottom|end"
-            android:textColor="@color/close_button"
-            android:id="@+id/turnOffButtonSecondary" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:text="@string/action_close"
+                android:gravity="bottom|end"
+                android:textColor="@color/close_button"
+                android:id="@+id/turnOffButtonSecondary" />
 
             <Button
                 android:layout_width="wrap_content"

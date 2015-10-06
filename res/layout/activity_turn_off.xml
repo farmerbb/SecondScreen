@@ -25,6 +25,7 @@ limitations under the License.
         android:layout_height="wrap_content"
         android:padding="16dp"
         android:text="@null"
+        android:textSize="16sp"
         android:textColor="@color/text_color_primary" />
 
     <LinearLayout

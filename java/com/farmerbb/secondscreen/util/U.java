@@ -15,6 +15,7 @@
 
 package com.farmerbb.secondscreen.util;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Notification;
@@ -30,6 +31,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.preference.Preference;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
@@ -38,6 +40,7 @@ import android.widget.Toast;
 import com.farmerbb.secondscreen.R;
 import com.farmerbb.secondscreen.activity.MainActivity;
 import com.farmerbb.secondscreen.activity.TaskerQuickActionsActivity;
+import com.farmerbb.secondscreen.activity.WriteSettingsPermissionActivity;
 import com.farmerbb.secondscreen.service.ProfileLoadService;
 import com.farmerbb.secondscreen.service.TurnOffService;
 import com.jrummyapps.android.os.SystemProperties;
@@ -519,6 +522,21 @@ public final class U {
         return Shell.SU.available() || getPrefMain(context).getBoolean("debug_mode", false);
     }
 
+    // Checks to see if the WRITE_SETTINGS permission is granted on Marshmallow devices.
+    public static boolean hasWriteSettingsPermission(Context context) {
+        boolean permission = true;
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            try {
+                Settings.System.putInt(context.getContentResolver(), "test", 0);
+            } catch (SecurityException e) {
+                permission = false;
+            } catch (Exception e) {}
+        }
+
+        return permission;
+    }
+
     // Executes multiple superuser commands.
     // If debug mode is enabled, the command is not actually run; instead, this will show a
     // notification containing the command that would have been run instead.
@@ -555,31 +573,44 @@ public final class U {
 
     // Loads a profile with the given filename
     public static void loadProfile(Context context, String filename) {
-        // Set filename in current.xml
-        SharedPreferences prefCurrent = getPrefCurrent(context);
-        SharedPreferences.Editor editor = prefCurrent.edit();
-        editor.putString("filename", filename);
-        editor.apply();
+        if(hasWriteSettingsPermission(context)) {
+            // Set filename in current.xml
+            SharedPreferences prefCurrent = getPrefCurrent(context);
+            SharedPreferences.Editor editor = prefCurrent.edit();
+            editor.putString("filename", filename);
+            editor.apply();
 
-        // Start ProfileLoadService
-        Intent intent = new Intent(context, ProfileLoadService.class);
-        // Get filename of selected profile
-        intent.putExtra(NAME, filename);
-        context.startService(intent);
+            // Start ProfileLoadService
+            Intent intent = new Intent(context, ProfileLoadService.class);
+            // Get filename of selected profile
+            intent.putExtra(NAME, filename);
+            context.startService(intent);
+        } else {
+            Intent intent = new Intent(context, WriteSettingsPermissionActivity.class);
+            intent.putExtra("action", "load-profile");
+            intent.putExtra("filename", filename);
+            context.startActivity(intent);
+        }
     }
 
     // Turns off the currently active profile
     public static void turnOffProfile(Context context) {
-        // Set filename in current.xml
-        SharedPreferences prefCurrent = getPrefCurrent(context);
-        SharedPreferences.Editor editor = prefCurrent.edit();
-        editor.putString("filename_backup", prefCurrent.getString("filename", "0"));
-        editor.putString("filename", "0");
-        editor.apply();
+        if(hasWriteSettingsPermission(context)) {
+            // Set filename in current.xml
+            SharedPreferences prefCurrent = getPrefCurrent(context);
+            SharedPreferences.Editor editor = prefCurrent.edit();
+            editor.putString("filename_backup", prefCurrent.getString("filename", "0"));
+            editor.putString("filename", "0");
+            editor.apply();
 
-        // Start TurnOffService
-        Intent intent = new Intent(context, TurnOffService.class);
-        context.startService(intent);
+            // Start TurnOffService
+            Intent intent = new Intent(context, TurnOffService.class);
+            context.startService(intent);
+        } else {
+            Intent intent = new Intent(context, WriteSettingsPermissionActivity.class);
+            intent.putExtra("action", "turn-off-profile");
+            context.startActivity(intent);
+        }
     }
 
     // Shows toast notifications

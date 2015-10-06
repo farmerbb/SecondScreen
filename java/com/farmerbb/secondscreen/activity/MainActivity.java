@@ -1005,8 +1005,7 @@ ProfileViewFragment.Listener {
 
     @Override
     public void uninstallPackage(String packageName) {
-        Uri packageURI = Uri.parse("package:" + packageName);
-        Intent uninstallIntent = new Intent(Intent.ACTION_DELETE, packageURI);
+        Intent uninstallIntent = new Intent(Intent.ACTION_DELETE, Uri.parse("package:" + packageName));
         startActivity(uninstallIntent);
         finish();
     }
@@ -1053,10 +1052,9 @@ ProfileViewFragment.Listener {
             DialogFragment swiftkeyFragment = new SwiftkeyDialogFragment();
             swiftkeyFragment.show(getFragmentManager(), "swiftkey-fragment");
 
-        // Show dialog if device is newer than API 22 (Lollipop MR1).
+        // Show dialog if device is newer than API 23 (Marshmallow).
         // If debug mode is enabled, the dialog is never shown.
-        } else if((Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1
-                || "MNC".equals(Build.VERSION.CODENAME))
+        } else if(Build.VERSION.SDK_INT > Build.VERSION_CODES.M
                 && getFragmentManager().findFragmentByTag("upgrade-fragment") == null
                 && showUpgradeDialog) {
             showUpgradeDialog = false;

@@ -174,5 +174,8 @@
     <string name="busybox_required">Busybox Required</string>
     <string name="action_ignore">Ignore</string>
     <string name="busybox_message">Due to limitations in this version of Android, Busybox needs to be installed in order for SecondScreen to properly refresh the UI.\n\nIt is strongly recommended to either install Busybox or upgrade to a newer version of Android.</string>
+    <string name="no_write_settings_permission">SecondScreen requires permission to modify system settings before it can continue.\n\nPlease press \'\'Grant Permission\'\' and ensure that SecondScreen is set to \'\'Allow modify system settings\'\'</string>
+    <string name="permission_needed">Permission needed</string>
+    <string name="grant_permission">Grant Permission</string>
 
 </resources>
