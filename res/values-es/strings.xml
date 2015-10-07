@@ -68,9 +68,9 @@
     <string name="first_run">¡Esta aplicación REQUIERE acceso de root para funcionar y es sólo para dispositivos con AOSP o acciones ROMs Android! No se garantiza que funcione correctamente en otros dispositivos.\n\nUsted es el ÚNICO RESPONSABLE de la forma en que utilice esta aplicación, del tipo de dispositivo que se utiliza, y así como de los métodos que utilice para lograr el acceso root en su dispositivo.</string>
     <string name="hdmi_checkbox">Inicie SecondScreen cuando el Chromecast/HDMI este conectado</string>
     <string name="hdmi_connected">Chromecast/HDMI conectado</string>
-    <string name="label_load_profile">SecondScreen - Cargar Perfiles</string>
-    <string name="label_profile_active">SecondScreen - Prefil Activo</string>
-    <string name="label_quick_actions">SecondScreen - Aciones Rapidas</string>
+    <string name="label_load_profile">Cargar Perfiles</string>
+    <string name="label_profile_active">Prefil Activo</string>
+    <string name="label_quick_actions">Aciones Rapidas</string>
     <string name="loading_profile">Cargando SecondScreen&#8230;</string>
     <string name="notification">SecondScreen está activo</string>
     <string name="notification_settings">Configuración de notificaciones</string>

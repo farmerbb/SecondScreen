@@ -27,8 +27,8 @@ import android.widget.TextView;
 import com.farmerbb.secondscreen.R;
 import com.farmerbb.secondscreen.util.U;
 
-// This activity is responsible for showing the permission grant dialog for WRITE_SETTINGS
-// on Marshmallow devices.
+// This activity is responsible for informing the user of, and having them grant, permission for
+// SecondScreen to modify system settings on Marshmallow devices.
 public final class WriteSettingsPermissionActivity extends Activity {
 
     @Override

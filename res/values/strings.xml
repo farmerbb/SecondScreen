@@ -68,7 +68,7 @@
     <string name="first_run">This app REQUIRES root access to operate and is ONLY for devices with AOSP or stock (Google) Android ROMs! It is not guaranteed to function properly on devices with manufacturer-skinned ROMs.\n\nYou are SOLELY held responsible for how you use this app, for the type of device you use it on, and for the methods of obtaining root access on your device.</string>
     <string name="hdmi_checkbox">Start SecondScreen when connecting a display</string>
     <string name="hdmi_connected">Display connected</string>
-    <string name="label_load_profile"> Load Profile</string>
+    <string name="label_load_profile">Load Profile</string>
     <string name="label_profile_active">Profile Active</string>
     <string name="label_quick_actions">Quick Actions</string>
     <string name="loading_profile">Loading SecondScreen&#8230;</string>

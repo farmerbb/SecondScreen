@@ -68,9 +68,9 @@
     <string name="first_run">Cette application NECESSITE l\'accès root pour fonctionner et est SEULEMENT destinée aux appareils sous ASOP ou la rom stock Android (Google)! Il n\'est pas garanti que cela fonctionne correctement sur d\'autres appareils.\n\nVous êtes SEUL responsable de votre manière d\'utiliser cette application, du type d\'appareils sur lequel vous l\'utilisez, et de la manière d\'obtenir l\'accès root pour votre appareil.</string>
     <string name="hdmi_checkbox">Lancer SecondScreen lors de la connexion d\'un écran</string>
     <string name="hdmi_connected">Ecran connecté</string>
-    <string name="label_load_profile">SecondScreen - Charger le Profile</string>
-    <string name="label_profile_active">SecondScreen - Profile Actif</string>
-    <string name="label_quick_actions">SecondScreen - Actions Rapides</string>
+    <string name="label_load_profile">Charger le Profile</string>
+    <string name="label_profile_active">Profile Actif</string>
+    <string name="label_quick_actions">Actions Rapides</string>
     <string name="loading_profile">Chargement de SecondScreen&#8230;</string>
     <string name="notification">SecondScreen est actif</string>
     <string name="notification_settings">Notification settings</string>

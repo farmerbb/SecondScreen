@@ -68,9 +68,9 @@
     <string name="first_run">Táto aplikácia VYŽADUJE root prístup a je IBA pre zariadenia s AOSP alebo stock Android ROM! Funkčnosť na iných zariadeniach nie je zaručená.\n\nSte VÝHRADNE zodpovedný za to, ako používate túto aplikáciu a na akom zariadení ju používate.</string>
     <string name="hdmi_checkbox">Spustiť SecondScreen po pripojení HDMI</string>
     <string name="hdmi_connected">HDMI pripojené</string>
-    <string name="label_load_profile">SecondScreen - Načítať profil</string>
-    <string name="label_profile_active">SecondScreen - Profil aktívny</string>
-    <string name="label_quick_actions">SecondScreen - Rýchle akcie</string>
+    <string name="label_load_profile">Načítať profil</string>
+    <string name="label_profile_active">Profil aktívny</string>
+    <string name="label_quick_actions">Rýchle akcie</string>
     <string name="loading_profile">Načítavanie SecondScreen&#8230;</string>
     <string name="notification">SecondScreen je aktívny</string>
     <string name="notification_settings">Nastavenia oznámení</string>
