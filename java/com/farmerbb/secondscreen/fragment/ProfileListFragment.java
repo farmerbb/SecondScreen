@@ -478,7 +478,20 @@ public final class ProfileListFragment extends Fragment {
                         helper.setText(" ");
                         helper.setBackgroundColor(Color.WHITE);
                     } else {
-                        helper.setText(R.string.profile_helper_text);
+                        SharedPreferences prefCurrent = listener.getPrefCurrent();
+                        if("0".equals(prefCurrent.getString("filename", "0")))
+                            helper.setText(R.string.profile_helper_text);
+                        else {
+                            if("quick_actions".equals(prefCurrent.getString("filename", "0"))) {
+                                SharedPreferences prefSaved = listener.getPrefQuickActions();
+                                if("0".equals(prefSaved.getString("original_filename", "0")))
+                                    helper.setText(R.string.profile_helper_text);
+                                else
+                                    helper.setText(R.string.profile_helper_text_alt);
+                            } else
+                                helper.setText(R.string.profile_helper_text_alt);
+                        }
+
                         helper.setBackgroundColor(getResources().getColor(R.color.accent));
                     }
                 }

@@ -16,6 +16,8 @@
 
 <resources>
 
-    <style name="Theme.Secondscreen.2" parent="@style/Theme.Secondscreen" />
+    <style name="Theme.Secondscreen.2" parent="@style/Theme.Secondscreen">
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
 
 </resources>

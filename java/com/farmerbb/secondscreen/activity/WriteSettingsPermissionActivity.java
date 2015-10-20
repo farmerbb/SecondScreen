@@ -37,9 +37,9 @@ public final class WriteSettingsPermissionActivity extends Activity {
 
         // WriteSettingsPermissionActivity requires a bundle extra "action" to be passed to it,
         // so that the activity knows what to do after permission is granted.
-        if(!getIntent().hasExtra("action")) {
+        if(!getIntent().hasExtra("action"))
             finish();
-        } else {
+        else {
             setContentView(R.layout.activity_turn_off);
             setTitle(R.string.permission_needed);
 
