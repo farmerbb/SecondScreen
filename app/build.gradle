@@ -1,0 +1,51 @@
+apply plugin: 'android-sdk-manager'
+apply plugin: 'com.android.application'
+
+ext {
+    SUPPORT_LIBRARY_VERSION = "24.0.0"
+}
+
+android {
+    compileSdkVersion 24
+    buildToolsVersion "24.0.0"
+
+    defaultConfig {
+        applicationId "com.farmerbb.secondscreen"
+        minSdkVersion 17
+        targetSdkVersion 24
+
+        versionCode 120
+        versionName "2.5"
+
+        resConfigs "en", "es", "fr", "sk"
+        vectorDrawables.useSupportLibrary = true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android.txt')
+        }
+    }
+
+    productFlavors {
+        paid {
+            applicationId "com.farmerbb.secondscreen"
+        }
+
+        free {
+            applicationId "com.farmerbb.secondscreen.free"
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    compile "com.android.support:appcompat-v7:${SUPPORT_LIBRARY_VERSION}"
+    compile "com.android.support:design:${SUPPORT_LIBRARY_VERSION}"
+    compile 'org.apache.commons:commons-lang3:3.4'
+    compile 'eu.chainfire:libsuperuser:1.0.0+'
+    compile group:'com.twofortyfouram', name:'android-plugin-api-for-locale', version:'[1.0.2,2.0['
+}

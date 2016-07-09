@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Braden Farmer
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<resources>
+
+    <string name="bullet" translatable="false">&#183;</string>
+    <string name="dpi" translatable="false">dpi</string>
+    <string name="twofortyfouram_locale_breadcrumb_format" translatable="false">%1$s%2$s%3$s</string>
+    <string name="twofortyfouram_locale_breadcrumb_separator" translatable="false">\u0020&gt;\u0020</string>
+    <string name="x" translatable="false">&#215;</string>
+
+    <string-array name="pref_resolution_list_values">
+        <item>reset</item>
+        <item>1080x1920</item>
+        <item>720x1280</item>
+        <item>480x854</item>
+        <item>1600x2560</item>
+        <item>1440x2560</item>
+        <item>1536x2048</item>
+        <item>1200x1920</item>
+        <item>800x1280</item>
+        <item>768x1280</item>
+        <item>768x1024</item>
+        <item>600x960</item>
+        <item>600x800</item>
+        <item>480x800</item>
+    </string-array>
+    <string-array name="pref_resolution_list_values_landscape">
+        <item>reset</item>
+        <item>1920x1080</item>
+        <item>1280x720</item>
+        <item>854x480</item>
+        <item>2560x1600</item>
+        <item>2560x1440</item>
+        <item>2048x1536</item>
+        <item>1920x1200</item>
+        <item>1280x800</item>
+        <item>1280x768</item>
+        <item>1024x768</item>
+        <item>960x600</item>
+        <item>800x600</item>
+        <item>800x480</item>
+    </string-array>
+    <string-array name="pref_dpi_list_values">
+        <item>reset</item>
+        <item>120</item>
+        <item>160</item>
+        <item>213</item>
+        <item>240</item>
+        <item>280</item>
+        <item>320</item>
+        <item>400</item>
+        <item>480</item>
+        <item>560</item>
+        <item>640</item>
+    </string-array>
+    <string-array name="pref_ui_refresh_list_values">
+        <item>do-nothing</item>
+        <item>system-ui</item>
+        <item>activity-manager</item>
+    </string-array>
+    <string-array name="pref_ui_refresh_list_values_alt">
+        <item>do-nothing</item>
+        <item>activity-manager</item>
+    </string-array>
+    <string-array name="pref_rotation_list_values">
+        <item>do-nothing</item>
+        <item>auto-rotate</item>
+        <item>landscape</item>
+    </string-array>
+    <string-array name="pref_quick_actions_values">
+        <item>On</item>
+        <item>Off</item>
+        <item>Toggle</item>
+    </string-array>
+    <string-array name="pref_quick_actions_overscan_values">
+        <item>Off</item>
+        <item>20%</item>
+        <item>40%</item>
+        <item>60%</item>
+        <item>80%</item>
+        <item>100%</item>
+        <item>Toggle</item>
+    </string-array>
+    <string-array name="pref_notification_action_list_values">
+        <item>turn-off</item>
+        <item>quick-actions</item>
+        <item>lock-device</item>
+        <item>temp_backlight_off</item>
+        <item>temp_chrome</item>
+        <item>temp_immersive</item>
+        <item>temp_overscan</item>
+        <item>temp_vibration_off</item>
+    </string-array>
+    <string-array name="pref_screen_timeout_list_values">
+        <item>do-nothing</item>
+        <item>always-on</item>
+        <item>always-on-charging</item>
+    </string-array>
+    <string-array name="pref_immersive_list_values">
+        <item>do-nothing</item>
+        <item>status-only</item>
+        <item>immersive-mode</item>
+    </string-array>
+    <string-array name="pref_immersive_list_values_alt">
+        <item>do-nothing</item>
+        <item>status-only</item>
+        <item>immersive-mode</item>
+        <item>Toggle</item>
+    </string-array>
+    <string-array name="pref_hdmi_rotation_list_values">
+        <item>landscape</item>
+        <item>portrait</item>
+    </string-array>
+
+</resources>

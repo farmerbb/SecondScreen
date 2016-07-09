@@ -1,0 +1,10 @@
+*.iml
+.gradle
+/local.properties
+/.idea
+.DS_Store
+/build
+/captures
+/app/build
+/app/app-free-release.apk
+/app/app-paid-release.apk
