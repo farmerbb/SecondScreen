@@ -512,6 +512,8 @@ public final class U {
                 }
             }
 
+            if(fakeEntry) listOfProfilesByName[0] = fakeEntryValue;
+
             return new String[][] {listOfProfilesByName, listOfTitlesByName};
         }
     }

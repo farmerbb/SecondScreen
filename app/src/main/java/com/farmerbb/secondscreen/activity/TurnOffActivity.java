@@ -15,7 +15,6 @@
 
 package com.farmerbb.secondscreen.activity;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -24,6 +23,7 @@ import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -39,7 +39,7 @@ import java.io.IOException;
 //
 // The activity invokes the TurnOffService immediately if run via the notification action button;
 // it will show a confirmation dialog first if run when a display is disconnected.
-public final class TurnOffActivity extends Activity {
+public final class TurnOffActivity extends AppCompatActivity {
 
     public final class FinishReceiver extends BroadcastReceiver {
         @Override
@@ -80,11 +80,7 @@ public final class TurnOffActivity extends Activity {
             buttonPrimary.setText(getResources().getString(R.string.action_turn_off).toUpperCase());
             buttonSecondary.setText(getResources().getString(R.string.action_close).toUpperCase());
 
-            TextView header = (TextView) findViewById(R.id.turn_off_header);
-            header.setText(getString(R.string.display_disconnected));
-
             if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-                header.setTypeface(Typeface.DEFAULT);
                 buttonPrimary.setTextSize(14);
                 buttonSecondary.setTextSize(14);
             }

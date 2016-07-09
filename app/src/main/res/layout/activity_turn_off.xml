@@ -21,18 +21,6 @@ limitations under the License.
     android:padding="8dp" >
 
     <TextView
-        android:id="@+id/turn_off_header"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="16dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:fontFamily="sans-serif-light"
-        android:textColor="@color/text_color_primary" />
-
-    <TextView
         android:id="@+id/turnOffTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

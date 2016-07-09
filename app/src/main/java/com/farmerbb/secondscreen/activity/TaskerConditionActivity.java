@@ -15,9 +15,9 @@
 
 package com.farmerbb.secondscreen.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -34,7 +34,7 @@ import java.util.Arrays;
 // This activity is responsible for displaying a list of profiles for the "SecondScreen - Profile
 // Active" state plugin in Tasker.
 // The profile list generation code behaves similarly to the ProfileListFragment.
-public final class TaskerConditionActivity extends Activity {
+public final class TaskerConditionActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {

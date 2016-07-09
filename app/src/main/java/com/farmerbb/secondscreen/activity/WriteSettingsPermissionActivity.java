@@ -15,11 +15,11 @@
 
 package com.farmerbb.secondscreen.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -29,7 +29,7 @@ import com.farmerbb.secondscreen.util.U;
 
 // This activity is responsible for informing the user of, and having them grant, permission for
 // SecondScreen to modify system settings on Marshmallow devices.
-public final class WriteSettingsPermissionActivity extends Activity {
+public final class WriteSettingsPermissionActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +42,6 @@ public final class WriteSettingsPermissionActivity extends Activity {
         else {
             setContentView(R.layout.activity_turn_off);
             setTitle(R.string.permission_needed);
-
-            TextView header = (TextView) findViewById(R.id.turn_off_header);
-            header.setText(getString(R.string.permission_needed));
 
             TextView textView = (TextView) findViewById(R.id.turnOffTextView);
             textView.setText(R.string.no_write_settings_permission);
