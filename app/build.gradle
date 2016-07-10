@@ -14,7 +14,7 @@ android {
         minSdkVersion 17
         targetSdkVersion 24
 
-        versionCode 120
+        versionCode 121
         versionName "2.5"
 
         resConfigs "en", "es", "fr", "sk"
