@@ -174,20 +174,20 @@
     <string name="debug_mode_enabled">Režim ladenia povolený</string>
     <string name="debug_mode_disabled">Režim ladenia zakázaný</string>
     <string name="profile_helper_text_debug">Režim ladenia je povolený\nKliknite pre zakázanie režimu ladenia</string>
-    <string name="debug_show_simulated_size_density">Show simulated size/density</string>
-    <string name="debug_simulate_reboot">Simulate reboot</string>
-    <string name="debug_simulate_app_upgrade">Simulate application upgrade</string>
-    <string name="debug_dump_app_state">Dump current application state</string>
+    <string name="debug_show_simulated_size_density">Zobraziť simulovaný rozmer/hustotu</string>
+    <string name="debug_simulate_reboot">Simulovať reštart</string>
+    <string name="debug_simulate_app_upgrade">Simulovať aktualizáciu aplikácie</string>
+    <string name="debug_dump_app_state">Vypísať súčasný stav aplikácie</string>
     <string name="busybox_required">Busybox je vyžadovaný</string>
     <string name="action_ignore">Ignorovať</string>
-    <string name="busybox_message">Due to limitations in this version of Android, Busybox needs to be installed in order for SecondScreen to properly refresh the UI.\n\nIt is strongly recommended to either install Busybox or upgrade to a newer version of Android.</string>
+    <string name="busybox_message">Kvôli obmedzeniam v tejto verzii Androidu, Busybox musí byť nainštalovaný aby SecondScreen mohol obnoviť UI.\n\nDôrazne odporúčame nainnštalovať Busybox alebo aktualizovať na najnovšiu verziu Androidu.</string>
     <string name="no_write_settings_permission">SecondScreen requires permission to modify system settings before it can continue.\n\nPlease press \'\'Grant Permission\'\' and ensure that SecondScreen is set to \'\'Allow modify system settings\'\'</string>
     <string name="permission_needed">Vyžadované povolenie</string>
     <string name="grant_permission">Udeliť povolenie</string>
     <string name="freeform_message">Freeform mode requires a UI refresh method to be selected</string>
-    <string name="pref_title_taskbar">Enable Taskbar</string>
-    <string name="pref_description_taskbar">Show an overlay with recent apps and start menu (requires additional download)</string>
-    <string name="quick_taskbar">Taskbar</string>
-    <string name="system_alert_permission_dialog_message">SecondScreen needs optional permission to \'\'draw over other apps\'\' in order to force other installed apps to run in landscape mode.\n\nIf you don\'t grant permission, SecondScreen can still lock the device\'s orientation to landscape, but some apps will still run in portrait mode.</string>
+    <string name="pref_title_taskbar">Povoliť hlavný panel</string>
+    <string name="pref_description_taskbar">Zobrazí prekrytie s nedávnymi aplikáciami a menu (vyžaduje dodatočné stiahnutie)</string>
+    <string name="quick_taskbar">Hlavný panel</string>
+    <string name="system_alert_permission_dialog_message">SecondScreen vyžaduje povolenie \'\'Vykresliť cez ďalšie aplikácie\'\' pre vynútenie zobrazenia iných aplikácii v režime na šírku.\n\nAk neudelíte toto povolenie, SecondScreen stále bude môcť zamknúť orientáciu v režime na šírku, ale niektoré aplikácie budú aj tak spustené v režime na výšku.</string>
 
 </resources>
