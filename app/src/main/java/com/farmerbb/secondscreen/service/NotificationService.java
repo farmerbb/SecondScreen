@@ -25,11 +25,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
+import android.graphics.PixelFormat;
 import android.hardware.display.DisplayManager;
 import android.os.Build;
 import android.os.IBinder;
+import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
 import android.view.Display;
+import android.view.View;
+import android.view.WindowManager;
 
 import com.farmerbb.secondscreen.R;
 import com.farmerbb.secondscreen.activity.MainActivity;
@@ -47,6 +52,8 @@ import com.farmerbb.secondscreen.util.U;
 public final class NotificationService extends Service {
 
     NotificationCompat.Builder mBuilder;
+    WindowManager windowManager;
+    View view;
 
     BroadcastReceiver screenOnReceiver = new BroadcastReceiver() {
         @Override
@@ -179,6 +186,24 @@ public final class NotificationService extends Service {
 
         // Start NotificationService
         startForeground(1, mBuilder.build());
+
+        // Draw system overlay, if needed
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+                && Settings.canDrawOverlays(this)
+                && prefCurrent.getString("rotation_lock_new", "fallback").equals("landscape")) {
+            windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
+            WindowManager.LayoutParams params = new WindowManager.LayoutParams(
+                    WindowManager.LayoutParams.WRAP_CONTENT,
+                    WindowManager.LayoutParams.WRAP_CONTENT,
+                    WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY,
+                    WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+                    PixelFormat.TRANSLUCENT);
+
+            params.screenOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
+
+            view = new View(this);
+            windowManager.addView(view, params);
+        }
     }
 
     @Override
@@ -193,6 +218,9 @@ public final class NotificationService extends Service {
 
         DisplayManager manager = (DisplayManager) getSystemService(DISPLAY_SERVICE);
         manager.unregisterDisplayListener(listener);
+
+        if(windowManager != null && view != null)
+            windowManager.removeView(view);
     }
 
     @Override

@@ -185,5 +185,9 @@
     <string name="permission_needed">Permission needed</string>
     <string name="grant_permission">Grant Permission</string>
     <string name="freeform_message">Freeform mode requires a UI refresh method to be selected</string>
+    <string name="pref_title_taskbar">Enable Taskbar</string>
+    <string name="pref_description_taskbar">Show an overlay with recent apps and start menu (requires additional download)</string>
+    <string name="quick_taskbar">Taskbar</string>
+    <string name="system_alert_permission_dialog_message">SecondScreen needs optional permission to \'\'draw over other apps\'\' in order to force other installed apps to run in landscape mode.\n\nIf you don\'t grant permission, SecondScreen can still lock the device\'s orientation to landscape, but some apps will still run in portrait mode.</string>
 
 </resources>

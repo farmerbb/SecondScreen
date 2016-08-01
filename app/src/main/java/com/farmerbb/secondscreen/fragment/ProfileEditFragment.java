@@ -17,13 +17,16 @@ package com.farmerbb.secondscreen.fragment;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
@@ -32,6 +35,7 @@ import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -40,6 +44,8 @@ import android.widget.LinearLayout;
 
 import com.farmerbb.secondscreen.R;
 import com.farmerbb.secondscreen.activity.FragmentContainerActivity;
+import com.farmerbb.secondscreen.fragment.dialog.FirstLoadDialogFragment;
+import com.farmerbb.secondscreen.fragment.dialog.SystemAlertPermissionDialogFragment;
 import com.farmerbb.secondscreen.util.U;
 import com.jrummyapps.android.os.SystemProperties;
 
@@ -232,6 +238,7 @@ SharedPreferences.OnSharedPreferenceChangeListener {
             editor.putBoolean("freeform", prefSaved.getBoolean("freeform", false));
             editor.putString("screen_timeout", prefSaved.getString("screen_timeout", "do-nothing"));
             editor.putString("hdmi_rotation", prefSaved.getString("hdmi_rotation", "landscape"));
+            editor.putBoolean("taskbar", prefSaved.getBoolean("taskbar", false));
             editor.apply();
 
             name = prefSaved.getString("profile_name", getResources().getString(R.string.action_new));
@@ -267,6 +274,7 @@ SharedPreferences.OnSharedPreferenceChangeListener {
         findPreference("daydreams_on").setOnPreferenceClickListener(this);
         findPreference("overscan_settings").setOnPreferenceClickListener(this);
         findPreference("freeform").setOnPreferenceClickListener(this);
+        findPreference("taskbar").setOnPreferenceClickListener(this);
 
         if(prefMain.getBoolean("expert_mode", false))
             findPreference("size").setOnPreferenceClickListener(this);
@@ -302,8 +310,10 @@ SharedPreferences.OnSharedPreferenceChangeListener {
         if(Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2)
             getPreferenceScreen().findPreference("overscan_settings").setEnabled(false);
 
-        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
+        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             getPreferenceScreen().findPreference("immersive_new").setEnabled(false);
+            getPreferenceScreen().findPreference("taskbar").setEnabled(false);
+        }
 
         if(Build.VERSION.SDK_INT < Build.VERSION_CODES.N)
             getPreferenceScreen().findPreference("freeform").setEnabled(false);
@@ -419,6 +429,15 @@ SharedPreferences.OnSharedPreferenceChangeListener {
                         getActivity().setTitle(" " + sharedPreferences.getString(key, getResources().getString(R.string.action_new)));
                 }
                 break;
+            case "rotation_lock_new":
+                if("landscape".equals(sharedPreferences.getString(key, "fallback"))
+                        && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+                        && !Settings.canDrawOverlays(getActivity())
+                        && !U.getPrefMain(getActivity()).getBoolean("dont_show_system_alert_dialog", false)) {
+                    DialogFragment fragment = new SystemAlertPermissionDialogFragment();
+                    fragment.show(getFragmentManager(), "SystemAlertPermissionDialogFragment");
+                }
+                break;
         }
     }
 
@@ -497,6 +516,7 @@ SharedPreferences.OnSharedPreferenceChangeListener {
         editor.putString("immersive_new", prefNew.getString("immersive_new", "do-nothing"));
         editor.putBoolean("freeform", prefNew.getBoolean("freeform", false));
         editor.putString("hdmi_rotation", prefNew.getString("hdmi_rotation", "landscape"));
+        editor.putBoolean("taskbar", prefNew.getBoolean("taskbar", false));
 
         if(prefMain.getBoolean("expert_mode", false)) {
             if(prefNew.getBoolean("size-reset", false))
@@ -591,6 +611,22 @@ SharedPreferences.OnSharedPreferenceChangeListener {
             case "freeform":
                 if(prefNew.getBoolean("freeform", true) && "do-nothing".equals(prefNew.getString("ui_refresh", "do-nothing")))
                     U.showToastLong(getActivity(), R.string.freeform_message);
+                break;
+            case "taskbar":
+                // Check if Taskbar is installed, if not, then direct user to Play Store and uncheck preference
+                boolean taskbarInstalled = false;
+                try {
+                    PackageInfo pInfo = getActivity().getPackageManager().getPackageInfo("com.farmerbb.taskbar", 0);
+                    if(pInfo.versionCode >= 21) taskbarInstalled = true;
+                } catch (PackageManager.NameNotFoundException e) {}
+
+                if(!taskbarInstalled) {
+                    ((CheckBoxPreference) p).setChecked(false);
+                    Intent taskbarIntent = new Intent(Intent.ACTION_VIEW);
+                    taskbarIntent.setData(Uri.parse("https://play.google.com/store/apps/details?id=com.farmerbb.taskbar"));
+                    taskbarIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(taskbarIntent);
+                }
                 break;
         }
 

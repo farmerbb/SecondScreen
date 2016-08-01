@@ -226,6 +226,8 @@ public final class ProfileViewFragment extends Fragment {
                 break;
         }
 
+        generateProfileSettings(prefSaved.getBoolean("taskbar", false), R.string.quick_taskbar);
+
         switch(prefSaved.getString("ui_refresh", "do-nothing")) {
             case "system-ui":
                 if(getActivity().getPackageManager().hasSystemFeature("com.cyanogenmod.android")

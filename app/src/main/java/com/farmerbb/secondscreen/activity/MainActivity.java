@@ -15,6 +15,7 @@
 
 package com.farmerbb.secondscreen.activity;
 
+import android.annotation.TargetApi;
 import android.app.ActivityManager;
 import android.app.DialogFragment;
 import android.app.Fragment;
@@ -59,6 +60,7 @@ import com.farmerbb.secondscreen.fragment.dialog.NewDeviceDialogFragment;
 import com.farmerbb.secondscreen.fragment.dialog.NewProfileDialogFragment;
 import com.farmerbb.secondscreen.fragment.dialog.ReloadProfileDialogFragment;
 import com.farmerbb.secondscreen.fragment.dialog.SwiftkeyDialogFragment;
+import com.farmerbb.secondscreen.fragment.dialog.SystemAlertPermissionDialogFragment;
 import com.farmerbb.secondscreen.fragment.dialog.UiRefreshDialogFragment;
 import com.farmerbb.secondscreen.receiver.BootReceiver;
 import com.farmerbb.secondscreen.receiver.PackageUpgradeReceiver;
@@ -103,7 +105,8 @@ BusyboxDialogFragment.Listener,
 ProfileListFragment.Listener,
 ProfileEditFragment.Listener,
 ProfileViewFragment.Listener,
-AboutDialogFragment.Listener {
+AboutDialogFragment.Listener,
+SystemAlertPermissionDialogFragment.Listener {
     private final class RunSafeguard extends AsyncTask<Void, Void, Void> {
         private ProgressDialog dialog;
 
@@ -178,6 +181,9 @@ AboutDialogFragment.Listener {
     boolean showUpgradeDialog = true;
     int clicks = 0;
     Toast debugToast = null;
+
+    boolean returningFromGrantingSystemAlertPermission = false;
+    String savedFilename;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -284,6 +290,18 @@ AboutDialogFragment.Listener {
                 // This is our first time running SecondScreen.
                 // Run the safeguard commands before doing anything else
                 (new RunSafeguard()).execute();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if(returningFromGrantingSystemAlertPermission) {
+            returningFromGrantingSystemAlertPermission = false;
+            String filename = savedFilename;
+            savedFilename = null;
+            onFirstLoadPositiveClick(null, filename, false);
         }
     }
 
@@ -420,17 +438,28 @@ AboutDialogFragment.Listener {
 
     @Override
     public void onFirstLoadPositiveClick(DialogFragment dialog, String filename, boolean isChecked) {
-            // Set checkbox preference
-            if(isChecked) {
-                SharedPreferences prefMain = U.getPrefMain(this);
-                SharedPreferences.Editor firstLoadEditor = prefMain.edit();
-                firstLoadEditor.putBoolean("first-load", true);
-                firstLoadEditor.apply();
-            }
+        SharedPreferences prefMain = U.getPrefMain(this);
 
-            // Dismiss dialog
-            dialog.dismiss();
+        // Set checkbox preference
+        if(isChecked) {
+            SharedPreferences.Editor firstLoadEditor = prefMain.edit();
+            firstLoadEditor.putBoolean("first-load", true);
+            firstLoadEditor.apply();
+        }
 
+        // Dismiss dialog
+        if(dialog != null) dialog.dismiss();
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+                && !Settings.canDrawOverlays(this)
+                && "landscape".equals(U.getPrefSaved(this, filename).getString("rotation_lock_new", "fallback"))
+                && !prefMain.getBoolean("dont_show_system_alert_dialog", false)) {
+            returningFromGrantingSystemAlertPermission = true;
+            savedFilename = filename;
+
+            DialogFragment fragment = new SystemAlertPermissionDialogFragment();
+            fragment.show(getFragmentManager(), "SystemAlertPermissionDialogFragment");
+        } else {
             U.loadProfile(this, filename);
 
             // Add ProfileListFragment or WelcomeFragment
@@ -438,7 +467,6 @@ AboutDialogFragment.Listener {
             if(findViewById(R.id.layoutMain).getTag().equals("main-layout-normal"))
                 fragment = new ProfileListFragment();
             else {
-                SharedPreferences prefMain = U.getPrefMain(this);
                 Bundle bundle = new Bundle();
                 bundle.putBoolean("show-welcome-message", prefMain.getBoolean("show-welcome-message", false));
 
@@ -447,10 +475,11 @@ AboutDialogFragment.Listener {
             }
 
             getFragmentManager()
-                .beginTransaction()
-                .replace(R.id.profileViewEdit, fragment, "ProfileListFragment")
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
-                .commit();
+                    .beginTransaction()
+                    .replace(R.id.profileViewEdit, fragment, "ProfileListFragment")
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+                    .commit();
+        }
     }
 
     @Override
@@ -491,28 +520,38 @@ AboutDialogFragment.Listener {
     }
 
     public void onLoadProfileButtonClick(String filename) {
-        // User touched the dialog's positive button
             SharedPreferences prefMain = U.getPrefMain(this);
             if(prefMain.getBoolean("first-load", false)) {
-                U.loadProfile(this, filename);
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+                        && !Settings.canDrawOverlays(this)
+                        && "landscape".equals(U.getPrefSaved(this, filename).getString("rotation_lock_new", "fallback"))
+                        && !prefMain.getBoolean("dont_show_system_alert_dialog", false)) {
+                    returningFromGrantingSystemAlertPermission = true;
+                    savedFilename = filename;
 
-                // Add ProfileListFragment or WelcomeFragment
-                Fragment fragment;
-                if(findViewById(R.id.layoutMain).getTag().equals("main-layout-normal"))
-                    fragment = new ProfileListFragment();
-                else {
-                    Bundle bundle = new Bundle();
-                    bundle.putBoolean("show-welcome-message", prefMain.getBoolean("show-welcome-message", false));
+                    DialogFragment fragment = new SystemAlertPermissionDialogFragment();
+                    fragment.show(getFragmentManager(), "SystemAlertPermissionDialogFragment");
+                } else {
+                    U.loadProfile(this, filename);
 
-                    fragment = new WelcomeFragment();
-                    fragment.setArguments(bundle);
+                    // Add ProfileListFragment or WelcomeFragment
+                    Fragment fragment;
+                    if(findViewById(R.id.layoutMain).getTag().equals("main-layout-normal"))
+                        fragment = new ProfileListFragment();
+                    else {
+                        Bundle bundle = new Bundle();
+                        bundle.putBoolean("show-welcome-message", prefMain.getBoolean("show-welcome-message", false));
+
+                        fragment = new WelcomeFragment();
+                        fragment.setArguments(bundle);
+                    }
+
+                    getFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.profileViewEdit, fragment, "ProfileListFragment")
+                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
+                            .commit();
                 }
-
-                getFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.profileViewEdit, fragment, "ProfileListFragment")
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
-                        .commit();
             } else {
                 Bundle bundle = new Bundle();
                 bundle.putString("filename", filename);
@@ -1163,5 +1202,23 @@ AboutDialogFragment.Listener {
     public void onAboutDialogNegativeClick(DialogFragment dialog) {
         dialog.dismiss();
         U.checkForUpdates(this);
+    }
+
+    @TargetApi(Build.VERSION_CODES.M)
+    @Override
+    public void onSystemAlertPermissionDialogPositiveClick() {
+        startActivity(new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION));
+    }
+
+    @Override
+    public void onSystemAlertPermissionDialogNegativeClick() {
+        U.getPrefMain(this).edit().putBoolean("dont_show_system_alert_dialog", true).apply();
+
+        if(returningFromGrantingSystemAlertPermission) {
+            returningFromGrantingSystemAlertPermission = false;
+            String filename = savedFilename;
+            savedFilename = null;
+            onFirstLoadPositiveClick(null, filename, false);
+        }
     }
 }

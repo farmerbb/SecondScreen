@@ -341,6 +341,12 @@ public final class TurnOffService extends IntentService {
                 break;
         }
 
+        // Determine if we need to stop Taskbar
+        boolean shouldStopTaskbar = false;
+
+        if(prefCurrent.getBoolean("taskbar", false))
+            shouldStopTaskbar = true;
+
         // Clear preferences and commit (for reliability)
         editor.clear();
         editor.commit();
@@ -367,6 +373,10 @@ public final class TurnOffService extends IntentService {
                 .putExtra(com.twofortyfouram.locale.api.Intent.EXTRA_STRING_ACTIVITY_CLASS_NAME, TaskerConditionActivity.class.getName());
 
         sendBroadcast(query);
+
+        // Send broadcast to stop Taskbar
+        if(shouldStopTaskbar)
+            sendBroadcast(new Intent("com.farmerbb.taskbar.QUIT"));
 
         // Stop NotificationService
         Intent serviceIntent = new Intent(this, NotificationService.class);

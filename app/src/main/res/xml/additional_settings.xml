@@ -53,6 +53,11 @@
             android:title="@string/pref_title_vibration_off" />
         <CheckBoxPreference
             android:defaultValue="false"
+            android:key="taskbar"
+            android:summary="@string/pref_description_taskbar"
+            android:title="@string/pref_title_taskbar" />
+        <CheckBoxPreference
+            android:defaultValue="false"
             android:key="freeform"
             android:summary="@string/pref_description_freeform"
             android:title="@string/pref_title_freeform" />

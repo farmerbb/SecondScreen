@@ -873,6 +873,16 @@ public final class ProfileLoadService extends IntentService {
         if(prefCurrent.getBoolean("force_ui_refresh", false))
             editor.remove("force_ui_refresh");
 
+        // Determine if we need to start or stop Taskbar
+        boolean shouldStartTaskbar = false;
+        boolean shouldStopTaskbar = false;
+
+        if(!prefCurrent.getBoolean("taskbar", false) && prefSaved.getBoolean("taskbar", false))
+            shouldStartTaskbar = true;
+
+        if(prefCurrent.getBoolean("taskbar", false) && !prefSaved.getBoolean("taskbar", false))
+            shouldStopTaskbar = true;
+
         // Save preferences for future use
         editor.putString("profile_name", prefSaved.getString("profile_name", getResources().getString(R.string.action_new)));
         editor.putString("size", prefSaved.getString("size", "reset"));
@@ -890,6 +900,7 @@ public final class ProfileLoadService extends IntentService {
         editor.putBoolean("bluetooth_on", prefSaved.getBoolean("bluetooth_on", false));
         editor.putBoolean("navbar", prefSaved.getBoolean("navbar", false));
         editor.putBoolean("freeform", prefSaved.getBoolean("freeform", false));
+        editor.putBoolean("taskbar", prefSaved.getBoolean("taskbar", false));
         editor.putInt("overscan_left", prefSaved.getInt("overscan_left", 20));
         editor.putInt("overscan_right", prefSaved.getInt("overscan_right", 20));
         editor.putInt("overscan_top", prefSaved.getInt("overscan_top", 20));
@@ -926,6 +937,13 @@ public final class ProfileLoadService extends IntentService {
                 .putExtra(com.twofortyfouram.locale.api.Intent.EXTRA_STRING_ACTIVITY_CLASS_NAME, TaskerConditionActivity.class.getName());
 
         sendBroadcast(query);
+
+        // Send broadcast to start or stop Taskbar
+        if(shouldStartTaskbar)
+            sendBroadcast(new Intent("com.farmerbb.taskbar.START"));
+
+        if(shouldStopTaskbar)
+            sendBroadcast(new Intent("com.farmerbb.taskbar.QUIT"));
 
         // Start (or restart) NotificationService
         Intent serviceIntent = new Intent(this, NotificationService.class);
