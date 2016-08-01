@@ -312,11 +312,11 @@ SharedPreferences.OnSharedPreferenceChangeListener {
 
         if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             getPreferenceScreen().findPreference("immersive_new").setEnabled(false);
-            getPreferenceScreen().findPreference("taskbar").setEnabled(false);
+            disablePreference(prefNew, "taskbar");
         }
 
         if(Build.VERSION.SDK_INT < Build.VERSION_CODES.N)
-            getPreferenceScreen().findPreference("freeform").setEnabled(false);
+            disablePreference(prefNew, "freeform");
 
         try {
             getActivity().getPackageManager().getPackageInfo("com.chrome.dev", 0);

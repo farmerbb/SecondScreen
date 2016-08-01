@@ -36,6 +36,7 @@
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="com.farmerbb.taskbar.START_STOP_TASKBAR" />
 
     <uses-permission-sdk-23 android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
