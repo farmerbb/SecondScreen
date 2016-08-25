@@ -1089,9 +1089,9 @@ SystemAlertPermissionDialogFragment.Listener {
             DialogFragment swiftkeyFragment = new SwiftkeyDialogFragment();
             swiftkeyFragment.show(getFragmentManager(), "swiftkey-fragment");
 
-        // Show dialog if device is newer than API 23 (Marshmallow).
+        // Show dialog if device is newer than API 24 (Nougat).
         // If debug mode is enabled, the dialog is never shown.
-        } else if(Build.VERSION.SDK_INT > Build.VERSION_CODES.M
+        } else if(Build.VERSION.SDK_INT > Build.VERSION_CODES.N
                 && getFragmentManager().findFragmentByTag("upgrade-fragment") == null
                 && showUpgradeDialog) {
             showUpgradeDialog = false;

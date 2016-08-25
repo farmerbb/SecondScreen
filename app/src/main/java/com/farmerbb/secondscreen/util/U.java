@@ -249,7 +249,10 @@ public final class U {
             // which means we won't be able to use the "kill" command with the pid of SystemUI.
             // Thus, if the SystemUI pid gets returned as 0, we need to use the "pkill" command
             // instead, and hope that the user has that command available on their device.
-            if(processid == 0)
+            // Starting with 7.0, pkill doesn't work, so use "kill" and "pidof" instead.
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                return "sleep 2 && kill `pidof com.android.systemui`";
+            else if(processid == 0)
                 return "sleep 2 && pkill com.android.systemui";
             else
                 return "sleep 2 && kill " + Integer.toString(processid);

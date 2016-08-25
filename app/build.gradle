@@ -2,19 +2,19 @@ apply plugin: 'android-sdk-manager'
 apply plugin: 'com.android.application'
 
 ext {
-    SUPPORT_LIBRARY_VERSION = "24.1.1"
+    SUPPORT_LIBRARY_VERSION = "24.2.0"
 }
 
 android {
     compileSdkVersion 24
-    buildToolsVersion "24.0.1"
+    buildToolsVersion "24.0.2"
 
     defaultConfig {
         applicationId "com.farmerbb.secondscreen"
         minSdkVersion 17
         targetSdkVersion 24
 
-        versionCode 122
+        versionCode 123
         versionName "2.5.1"
 
         resConfigs "en", "es", "fr", "sk"
