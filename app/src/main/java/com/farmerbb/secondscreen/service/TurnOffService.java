@@ -375,10 +375,8 @@ public final class TurnOffService extends IntentService {
         sendBroadcast(query);
 
         // Send broadcast to stop Taskbar
-        if(shouldStopTaskbar) {
+        if(shouldStopTaskbar)
             sendBroadcast(new Intent("com.farmerbb.taskbar.QUIT"));
-            sendBroadcast(new Intent("com.farmerbb.taskbar.paid.QUIT"));
-        }
 
         // Stop NotificationService
         Intent serviceIntent = new Intent(this, NotificationService.class);

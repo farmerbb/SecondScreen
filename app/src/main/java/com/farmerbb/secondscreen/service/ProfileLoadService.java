@@ -939,15 +939,11 @@ public final class ProfileLoadService extends IntentService {
         sendBroadcast(query);
 
         // Send broadcast to start or stop Taskbar
-        if(shouldStartTaskbar) {
+        if(shouldStartTaskbar)
             sendBroadcast(new Intent("com.farmerbb.taskbar.START"));
-            sendBroadcast(new Intent("com.farmerbb.taskbar.paid.START"));
-        }
 
-        if(shouldStopTaskbar) {
+        if(shouldStopTaskbar)
             sendBroadcast(new Intent("com.farmerbb.taskbar.QUIT"));
-            sendBroadcast(new Intent("com.farmerbb.taskbar.paid.QUIT"));
-        }
 
         // Start (or restart) NotificationService
         Intent serviceIntent = new Intent(this, NotificationService.class);
