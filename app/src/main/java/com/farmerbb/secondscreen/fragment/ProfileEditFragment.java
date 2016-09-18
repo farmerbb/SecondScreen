@@ -618,7 +618,12 @@ SharedPreferences.OnSharedPreferenceChangeListener {
                 try {
                     PackageInfo pInfo = getActivity().getPackageManager().getPackageInfo("com.farmerbb.taskbar", 0);
                     if(pInfo.versionCode >= 21) taskbarInstalled = true;
-                } catch (PackageManager.NameNotFoundException e) {}
+                } catch (PackageManager.NameNotFoundException e) {
+                    try {
+                        PackageInfo pInfo = getActivity().getPackageManager().getPackageInfo("com.farmerbb.taskbar.paid", 0);
+                        if(pInfo.versionCode >= 21) taskbarInstalled = true;
+                    } catch (PackageManager.NameNotFoundException e2) {}
+                }
 
                 if(!taskbarInstalled) {
                     ((CheckBoxPreference) p).setChecked(false);

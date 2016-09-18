@@ -115,7 +115,8 @@ public final class BootService extends IntentService {
         }
 
         // Send broadcast to start Taskbar
-        if(prefCurrent.getBoolean("taskbar", false))
+        if(prefCurrent.getBoolean("taskbar", false)) {
             sendBroadcast(new Intent("com.farmerbb.taskbar.START"));
-    }
+            sendBroadcast(new Intent("com.farmerbb.taskbar.paid.START"));
+        }
 }
