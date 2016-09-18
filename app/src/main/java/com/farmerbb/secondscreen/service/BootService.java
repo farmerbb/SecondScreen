@@ -119,4 +119,5 @@ public final class BootService extends IntentService {
             sendBroadcast(new Intent("com.farmerbb.taskbar.START"));
             sendBroadcast(new Intent("com.farmerbb.taskbar.paid.START"));
         }
+    }
 }
