@@ -191,7 +191,7 @@ public final class ProfileListFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         // Inflate action bar menu
         if(getId() == R.id.profileViewEdit)
-            inflater.inflate(R.menu.main, menu);
+            inflater.inflate(U.isInNonRootMode(getActivity()) ? R.menu.main_no_root : R.menu.main, menu);
     }
 
     @Override

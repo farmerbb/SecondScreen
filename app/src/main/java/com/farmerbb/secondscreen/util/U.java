@@ -15,6 +15,7 @@
 
 package com.farmerbb.secondscreen.util;
 
+import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -41,6 +42,7 @@ import android.widget.Toast;
 
 import com.farmerbb.secondscreen.R;
 import com.farmerbb.secondscreen.activity.MainActivity;
+import com.farmerbb.secondscreen.activity.RebootRequiredActivity;
 import com.farmerbb.secondscreen.activity.TaskerQuickActionsActivity;
 import com.farmerbb.secondscreen.activity.WriteSettingsPermissionActivity;
 import com.farmerbb.secondscreen.service.ProfileLoadService;
@@ -64,6 +66,8 @@ import eu.chainfire.libsuperuser.Shell;
 
 // Utility class to store common methods and objects shared between multiple classes
 public final class U {
+
+    private U() {}
 
     // Intents and extras
     // NOTE: these intents are only sent in certain scenarios and should not be relied upon by third-party apps
@@ -161,12 +165,24 @@ public final class U {
     public static final String chromeCommandRemove = "rm /data/local/chrome-command-line";
     public static final String rotationCommand = "am broadcast -a android.intent.action.DOCK_EVENT --ei android.intent.extra.DOCK_STATE ";
     public static final String rotationPrePostCommands = "settings put secure screensaver_activate_on_dock ";
-    public static final String safeModeSizeCommand = "settings put global display_size_forced ";
-    public static final String safeModeDensityCommand = "settings put global display_density_forced ";
     public static final String overscanCommand = "wm overscan ";
     public static final String stayOnCommand = "settings put global stay_on_while_plugged_in ";
     public static final String timeoutCommand = "settings put secure lock_screen_lock_after_timeout ";
     public static final String hdmiRotationCommand = "setprop persist.demo.hdmirotation ";
+
+    public static String safeModeSizeCommand(String args) {
+        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.N)
+            return "settings put global display_size_forced " + args;
+        else
+            return "settings put secure display_size_forced " + args;
+    }
+
+    public static String safeModeDensityCommand(String args) {
+        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.N)
+            return "settings put global display_density_forced " + args;
+        else
+            return "settings put secure display_density_forced " + args;
+    }
 
     public static String sizeCommand(String args) {
         if(Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -534,7 +550,15 @@ public final class U {
     // If debug mode is enabled, the app acts as if superuser access is always available,
     // even on non-rooted devices.
     public static boolean hasRoot(Context context) {
-        return Shell.SU.available() || getPrefMain(context).getBoolean("debug_mode", false);
+        return Shell.SU.available()
+                || hasWriteSecureSettingsPermission(context)
+                || getPrefMain(context).getBoolean("debug_mode", false);
+    }
+
+    // Checks if SecondScreen is running in non-root mode.
+    public static boolean isInNonRootMode(Context context) {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+                && !(Shell.SU.available() || getPrefMain(context).getBoolean("debug_mode", false));
     }
 
     // Checks to see if the WRITE_SETTINGS permission is granted on Marshmallow devices.
@@ -543,10 +567,78 @@ public final class U {
         return Build.VERSION.SDK_INT < Build.VERSION_CODES.M || Settings.System.canWrite(context);
     }
 
+    // Checks to see if the WRITE_SECURE_SETTINGS permission is granted on Marshmallow devices.
+    private static boolean hasWriteSecureSettingsPermission(Context context) {
+        return Build.VERSION.SDK_INT > Build.VERSION_CODES.M
+                && context.checkSelfPermission(Manifest.permission.WRITE_SECURE_SETTINGS) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    // Executes multiple commands, either by calling superuser
+    // or by writing to the settings database directly.
+    public static void runCommands(Context context, String[] commands, boolean mayRequireReboot) {
+        if(getPrefMain(context).getBoolean("debug_mode", false)
+                || Shell.SU.available()) {
+            for(String command : commands) {
+                if(!command.equals("")) {
+                    U.runSuCommands(context, commands);
+                    break;
+                }
+            }
+        } else if(hasWriteSecureSettingsPermission(context)) {
+            boolean rebootRequired = false;
+
+            for(String command : commands) {
+                if(command.startsWith("settings put")) {
+                    String[] commandArgs = command.split(" ");
+
+                    switch(commandArgs[2]) {
+                        case "global":
+                            if(NumberUtils.isNumber(commandArgs[4]))
+                                Settings.Global.putInt(context.getContentResolver(), commandArgs[3], Integer.parseInt(commandArgs[4]));
+                            else
+                                Settings.Global.putString(context.getContentResolver(), commandArgs[3], commandArgs[4]);
+                            break;
+                        case "secure":
+                            if(NumberUtils.isNumber(commandArgs[4]))
+                                Settings.Secure.putInt(context.getContentResolver(), commandArgs[3], Integer.parseInt(commandArgs[4]));
+                            else
+                                Settings.Secure.putString(context.getContentResolver(), commandArgs[3], commandArgs[4]);
+                            break;
+                        case "system":
+                            if(NumberUtils.isNumber(commandArgs[4]))
+                                Settings.System.putInt(context.getContentResolver(), commandArgs[3], Integer.parseInt(commandArgs[4]));
+                            else
+                                Settings.System.putString(context.getContentResolver(), commandArgs[3], commandArgs[4]);
+                            break;
+                    }
+
+                    if(mayRequireReboot) {
+                        switch(commandArgs[3]) {
+                            case "display_size_forced":
+                            case "display_density_forced":
+                            case "enable_freeform_support":
+                                rebootRequired = true;
+                                break;
+                        }
+                    }
+                }
+            }
+
+            if(rebootRequired) {
+                context.startActivity(new Intent(context, RebootRequiredActivity.class));
+            }
+        }
+    }
+
+    // Executes a single command.
+    public static void runCommand(Context context, String command) {
+        runCommands(context, new String[]{command}, false);
+    }
+
     // Executes multiple superuser commands.
     // If debug mode is enabled, the command is not actually run; instead, this will show a
     // notification containing the command that would have been run instead.
-    public static void runCommands(Context context, String[] commands) {
+    private static void runSuCommands(Context context, String[] commands) {
         if(getPrefMain(context).getBoolean("debug_mode", false)) {
             String dump = "";
 
@@ -570,11 +662,6 @@ public final class U {
             System.out.println(dump);
         } else
             Shell.SU.run(commands);
-    }
-
-    // Executes a single superuser command.  Same debug mode behavior applies.
-    public static void runCommand(Context context, String command) {
-        runCommands(context, new String[]{command});
     }
 
     // Loads a profile with the given filename

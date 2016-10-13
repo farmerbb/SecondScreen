@@ -30,8 +30,6 @@ import android.provider.Settings;
 
 import com.farmerbb.secondscreen.util.U;
 
-import eu.chainfire.libsuperuser.Shell;
-
 // Service launched by pressing the "Lock Device" button via either Quick Actions or the notification
 // action button.  It will either turn off the device directly, or start the system Daydream service
 // (if the device is charging and the Daydreams feature is enabled).

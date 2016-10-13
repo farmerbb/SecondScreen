@@ -168,11 +168,16 @@ public final class NotificationService extends Service {
                 .setSmallIcon(R.drawable.ic_action_dock)
                 .setContentTitle(getResources().getString(R.string.notification))
                 .setContentText(prefCurrent.getString("profile_name", getResources().getString(R.string.action_new)))
-                .setOngoing(true);
+                .setOngoing(true)
+                .setShowWhen(false);
 
         // Set action buttons
-        setActionButton(prefMain.getString("notification_action_2", "turn-off"), prefCurrent, 0);
-        setActionButton(prefMain.getString("notification_action", "lock-device"), prefCurrent, 1);
+        if(U.isInNonRootMode(this)) {
+            setActionButton("turn-off", prefCurrent, 0);
+        } else {
+            setActionButton(prefMain.getString("notification_action_2", "turn-off"), prefCurrent, 0);
+            setActionButton(prefMain.getString("notification_action", "lock-device"), prefCurrent, 1);
+        }
 
         // Respect setting to hide notification
         if(prefMain.getBoolean("hide_notification", false))

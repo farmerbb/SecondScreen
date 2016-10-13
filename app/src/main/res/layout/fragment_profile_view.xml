@@ -18,8 +18,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical"
-    android:paddingBottom="16dp">
+    android:orientation="vertical" >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -140,13 +139,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_weight="0.95"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp" >
+        android:layout_weight="@dimen/profile_view_button" >
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp"
             android:text="@null"
             android:id="@+id/pvButton"
             android:layout_gravity="center_vertical"

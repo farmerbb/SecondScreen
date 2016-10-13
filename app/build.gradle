@@ -7,15 +7,15 @@ ext {
 
 android {
     compileSdkVersion 24
-    buildToolsVersion "24.0.2"
+    buildToolsVersion "24.0.3"
 
     defaultConfig {
         applicationId "com.farmerbb.secondscreen"
         minSdkVersion 17
         targetSdkVersion 24
 
-        versionCode 125
-        versionName "2.5.1"
+        versionCode 126
+        versionName "2.5.2"
 
         resConfigs "en", "es", "fr", "sk"
         vectorDrawables.useSupportLibrary = true

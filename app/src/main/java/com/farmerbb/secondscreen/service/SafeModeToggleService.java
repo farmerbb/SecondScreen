@@ -43,26 +43,26 @@ public final class SafeModeToggleService extends IntentService {
         String[] su = new String[safeModeSizeCommand + 1];
 
         if(intent.getBooleanExtra("safe_mode", false)) {
-            su[safeModeDensityCommand] = U.safeModeDensityCommand + "null";
-            su[safeModeSizeCommand] = U.safeModeSizeCommand + "null";
+            su[safeModeDensityCommand] = U.safeModeDensityCommand("null");
+            su[safeModeSizeCommand] = U.safeModeSizeCommand("null");
         } else {
             SharedPreferences prefCurrent = U.getPrefCurrent(this);
 
             String density = prefCurrent.getString("density", "reset");
             if("reset".equals(density))
-                su[safeModeDensityCommand] = U.safeModeDensityCommand + "null";
+                su[safeModeDensityCommand] = U.safeModeDensityCommand("null");
             else
-                su[safeModeDensityCommand] = U.safeModeDensityCommand + density;
+                su[safeModeDensityCommand] = U.safeModeDensityCommand(density);
 
             String size = prefCurrent.getString("size", "reset");
             if("reset".equals(size))
-                su[safeModeSizeCommand] = U.safeModeSizeCommand + "null";
+                su[safeModeSizeCommand] = U.safeModeSizeCommand("null");
             else
-                su[safeModeSizeCommand] = U.safeModeSizeCommand + size.replace('x', ',');
+                su[safeModeSizeCommand] = U.safeModeSizeCommand(size.replace('x', ','));
         }
 
         // Run superuser commands
-        U.runCommands(this, su);
+        U.runCommands(this, su, false);
     }
 }
 

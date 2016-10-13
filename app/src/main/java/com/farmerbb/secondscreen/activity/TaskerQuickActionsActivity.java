@@ -66,108 +66,113 @@ SharedPreferences.OnSharedPreferenceChangeListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Close notification drawer
-        Intent closeDrawer = new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
-        sendBroadcast(closeDrawer);
-
-        String key = "Null";
-        String value = "Null";
-
-        // Handle intents
-        Intent quickLaunchIntent = getIntent();
-        if((quickLaunchIntent.getStringExtra(U.KEY) != null) && (quickLaunchIntent.getStringExtra(U.VALUE) != null)) {
-            key = quickLaunchIntent.getStringExtra(U.KEY);
-            value = quickLaunchIntent.getStringExtra(U.VALUE);
-            launchShortcut = true;
-        }
-
-        if(quickLaunchIntent.getBooleanExtra("launched-from-app", false))
-            launchedFromApp = true;
-
-        SharedPreferences prefMain = U.getPrefMain(this);
-        if(!prefMain.getBoolean("first-run", false))
+        if(U.isInNonRootMode(this)) {
+            U.showToast(this, R.string.quick_actions_unavailable);
             finish();
-        else if(launchShortcut) {
-            if(key.equals("lock_device")) {
-                Intent intent = new Intent(this, LockDeviceService.class);
-                startService(intent);
-                finish();
-            } else if(key.equals("turn_off"))
-                runResetSettings();
-            else if(!key.equals("Null") && !value.equals("Null"))
-                runQuickAction(key, value);
-            else
-                finish();
         } else {
-            setTitle(getResources().getStringArray(R.array.pref_notification_action_list)[1]);
+            // Close notification drawer
+            Intent closeDrawer = new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
+            sendBroadcast(closeDrawer);
 
-            if(launchedFromApp) {
-                // Show dialog on first start
-                if(!prefMain.getBoolean("quick_actions_dialog", false)) {
-                    SharedPreferences.Editor editor = prefMain.edit();
-                    editor.putBoolean("quick_actions_dialog", true);
-                    editor.apply();
+            String key = "Null";
+            String value = "Null";
 
-                    if(getFragmentManager().findFragmentByTag("quick_actions") == null) {
-                        DialogFragment quickActionsFragment = new QuickActionsDialogFragment();
-                        quickActionsFragment.show(getFragmentManager(), "quick_actions");
+            // Handle intents
+            Intent quickLaunchIntent = getIntent();
+            if((quickLaunchIntent.getStringExtra(U.KEY) != null) && (quickLaunchIntent.getStringExtra(U.VALUE) != null)) {
+                key = quickLaunchIntent.getStringExtra(U.KEY);
+                value = quickLaunchIntent.getStringExtra(U.VALUE);
+                launchShortcut = true;
+            }
+
+            if(quickLaunchIntent.getBooleanExtra("launched-from-app", false))
+                launchedFromApp = true;
+
+            SharedPreferences prefMain = U.getPrefMain(this);
+            if(!prefMain.getBoolean("first-run", false))
+                finish();
+            else if(launchShortcut) {
+                if(key.equals("lock_device")) {
+                    Intent intent = new Intent(this, LockDeviceService.class);
+                    startService(intent);
+                    finish();
+                } else if(key.equals("turn_off"))
+                    runResetSettings();
+                else if(!key.equals("Null") && !value.equals("Null"))
+                    runQuickAction(key, value);
+                else
+                    finish();
+            } else {
+                setTitle(getResources().getStringArray(R.array.pref_notification_action_list)[1]);
+
+                if(launchedFromApp) {
+                    // Show dialog on first start
+                    if(!prefMain.getBoolean("quick_actions_dialog", false)) {
+                        SharedPreferences.Editor editor = prefMain.edit();
+                        editor.putBoolean("quick_actions_dialog", true);
+                        editor.apply();
+
+                        if(getFragmentManager().findFragmentByTag("quick_actions") == null) {
+                            DialogFragment quickActionsFragment = new QuickActionsDialogFragment();
+                            quickActionsFragment.show(getFragmentManager(), "quick_actions");
+                        }
                     }
+
+                    SharedPreferences prefSaved = U.getPrefQuickActions(this);
+                    SharedPreferences prefCurrent = U.getPrefCurrent(this);
+                    loadCurrentProfile(prefSaved, prefCurrent);
                 }
 
-                SharedPreferences prefSaved = U.getPrefQuickActions(this);
-                SharedPreferences prefCurrent = U.getPrefCurrent(this);
-                loadCurrentProfile(prefSaved, prefCurrent);
-            }
+                // Add preferences
+                addPreferencesFromResource(R.xml.quick_actions_preferences);
 
-            // Add preferences
-            addPreferencesFromResource(R.xml.quick_actions_preferences);
+                // Modifications for certain scenarios
+                if(prefMain.getBoolean("landscape", false)) {
+                    ListPreference size = (ListPreference) findPreference("temp_size");
+                    size.setEntryValues(R.array.pref_resolution_list_values_landscape);
+                }
 
-            // Modifications for certain scenarios
-            if(prefMain.getBoolean("landscape", false)) {
-                ListPreference size = (ListPreference) findPreference("temp_size");
-                size.setEntryValues(R.array.pref_resolution_list_values_landscape);
-            }
+                // Set title and OnClickListener for "Lock Device"
+                findPreference("lock_device").setTitle(getResources().getStringArray(R.array.pref_notification_action_list)[2]);
+                findPreference("lock_device").setOnPreferenceClickListener(this);
 
-            // Set title and OnClickListener for "Lock Device"
-            findPreference("lock_device").setTitle(getResources().getStringArray(R.array.pref_notification_action_list)[2]);
-            findPreference("lock_device").setOnPreferenceClickListener(this);
+                // Set OnClickListener for "Reset settings"
+                findPreference("turn_off").setOnPreferenceClickListener(this);
 
-            // Set OnClickListener for "Reset settings"
-            findPreference("turn_off").setOnPreferenceClickListener(this);
+                // Disable unsupported preferences
+                if(!U.filesExist(U.backlightOff))
+                    getPreferenceScreen().findPreference("temp_backlight_off").setEnabled(false);
 
-            // Disable unsupported preferences
-            if(!U.filesExist(U.backlightOff))
-                getPreferenceScreen().findPreference("temp_backlight_off").setEnabled(false);
+                if(!U.filesExist(U.vibrationOff))
+                    getPreferenceScreen().findPreference("temp_vibration_off").setEnabled(false);
 
-            if(!U.filesExist(U.vibrationOff))
-                getPreferenceScreen().findPreference("temp_vibration_off").setEnabled(false);
+                if(Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2)
+                    getPreferenceScreen().findPreference("temp_overscan").setEnabled(false);
 
-            if(Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2)
-                getPreferenceScreen().findPreference("temp_overscan").setEnabled(false);
+                if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
+                    getPreferenceScreen().findPreference("temp_immersive_new").setEnabled(false);
 
-            if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
-                getPreferenceScreen().findPreference("temp_immersive_new").setEnabled(false);
+                if(Build.VERSION.SDK_INT < Build.VERSION_CODES.N)
+                    getPreferenceScreen().findPreference("temp_freeform").setEnabled(false);
 
-            if(Build.VERSION.SDK_INT < Build.VERSION_CODES.N)
-                getPreferenceScreen().findPreference("temp_freeform").setEnabled(false);
-
-            try {
-                getPackageManager().getPackageInfo("com.chrome.dev", 0);
-            } catch (NameNotFoundException e) {
                 try {
-                    getPackageManager().getPackageInfo("com.chrome.beta", 0);
-                } catch (NameNotFoundException e1) {
+                    getPackageManager().getPackageInfo("com.chrome.dev", 0);
+                } catch (NameNotFoundException e) {
                     try {
-                        getPackageManager().getPackageInfo("com.android.chrome", 0);
-                    } catch (NameNotFoundException e2) {
-                        getPreferenceScreen().findPreference("temp_chrome").setEnabled(false);
+                        getPackageManager().getPackageInfo("com.chrome.beta", 0);
+                    } catch (NameNotFoundException e1) {
+                        try {
+                            getPackageManager().getPackageInfo("com.android.chrome", 0);
+                        } catch (NameNotFoundException e2) {
+                            getPreferenceScreen().findPreference("temp_chrome").setEnabled(false);
+                        }
                     }
                 }
-            }
 
-            // Set active state of "Reset settings" button
-            if(launchedFromApp)
-                resetSettingsButton();
+                // Set active state of "Reset settings" button
+                if(launchedFromApp)
+                    resetSettingsButton();
+            }
         }
     }
 

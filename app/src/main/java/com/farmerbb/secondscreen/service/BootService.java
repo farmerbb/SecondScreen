@@ -98,8 +98,8 @@ public final class BootService extends IntentService {
         }
 
         if(prefMain.getBoolean("safe_mode", false) && "activity-manager".equals(prefCurrent.getString("ui_refresh", "do-nothing"))) {
-            su[safeModeSizeCommand] = U.safeModeSizeCommand + "null";
-            su[safeModeDensityCommand] = U.safeModeDensityCommand + "null";
+            su[safeModeSizeCommand] = U.safeModeSizeCommand("null");
+            su[safeModeDensityCommand] = U.safeModeDensityCommand("null");
 
             SharedPreferences.Editor editor = prefCurrent.edit();
             editor.putString("ui_refresh", "activity-manager-safe-mode");
@@ -107,12 +107,7 @@ public final class BootService extends IntentService {
         }
 
         // Run superuser commands
-        for(String command : su) {
-            if(!command.equals("")) {
-                U.runCommands(this, su);
-                break;
-            }
-        }
+        U.runCommands(this, su, false);
 
         // Send broadcast to start Taskbar
         if(prefCurrent.getBoolean("taskbar", false))

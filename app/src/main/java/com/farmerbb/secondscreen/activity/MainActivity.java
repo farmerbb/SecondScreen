@@ -156,7 +156,7 @@ SystemAlertPermissionDialogFragment.Listener {
             su[hdmiRotationCommand] = U.hdmiRotationCommand + "landscape";
 
             // Run superuser commands
-            U.runCommands(MainActivity.this, su);
+            U.runCommands(MainActivity.this, su, false);
 
             return null;
         }

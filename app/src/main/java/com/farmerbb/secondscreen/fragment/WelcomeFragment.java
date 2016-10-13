@@ -36,6 +36,7 @@ import com.farmerbb.secondscreen.activity.FragmentContainerActivity;
 import com.farmerbb.secondscreen.activity.TaskerQuickActionsActivity;
 import com.farmerbb.secondscreen.fragment.dialog.AboutDialogFragment;
 import com.farmerbb.secondscreen.fragment.dialog.NewProfileDialogFragment;
+import com.farmerbb.secondscreen.util.U;
 
 // Fragment launched as part of MainActivity.  The WelcomeFragment is shown on all devices when the
 // application is first started.  It guides the user to create a new profile.  Once a profile is
@@ -105,7 +106,7 @@ public final class WelcomeFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.main, menu);
+        inflater.inflate(U.isInNonRootMode(getActivity()) ? R.menu.main_no_root : R.menu.main, menu);
     }
 
     @Override

@@ -65,7 +65,7 @@
     <string name="expert_mode_dialog">Expert mode overrides SecondScreen\'s internal blacklist of unsafe resolution and density combinations. Only use this option if you know exactly what you are doing. Safe mode is strongly recommended when using this option.\n\nReally enable expert mode?</string>
     <string name="expert_mode_summary">Allow any user-defined value to be set for resolution and density</string>
     <string name="failed_to_save">Error: Failed to save profile!</string>
-    <string name="first_run">This app REQUIRES root access to operate and is ONLY for devices with AOSP or stock (Google) Android ROMs! It is not guaranteed to function properly on devices with manufacturer-skinned ROMs.\n\nYou are SOLELY held responsible for how you use this app, for the type of device you use it on, and for the methods of obtaining root access on your device.</string>
+    <string name="first_run">This app REQUIRES elevated permissions (such as root access) to operate and is ONLY for devices with AOSP or stock (Google) Android ROMs! It is not guaranteed to function properly on devices with manufacturer-skinned ROMs.\n\nYou are SOLELY held responsible for how you use this app, for the type of device you use it on, and for the methods of obtaining elevated permissions on your device.</string>
     <string name="hdmi_checkbox">Start SecondScreen when connecting a display</string>
     <string name="hdmi_connected">Display connected</string>
     <string name="label_load_profile">Load Profile</string>
@@ -189,5 +189,12 @@
     <string name="pref_description_taskbar">Show an overlay with recent apps and start menu (requires additional download)</string>
     <string name="quick_taskbar">Taskbar</string>
     <string name="system_alert_permission_dialog_message">SecondScreen needs optional permission to \'\'draw over other apps\'\' in order to force other installed apps to run in landscape mode.\n\nIf you don\'t grant permission, SecondScreen can still lock the device\'s orientation to landscape, but some apps will still run in portrait mode.</string>
+    <string name="reboot_required_title">Reboot required</string>
+    <string name="reboot_required_message">Please reboot your device for SecondScreen to apply settings</string>
+    <string name="action_later">Later</string>
+    <string name="confirm_reboot_later">Press \'\'Later\'\' again to confirm</string>
+    <string name="permission_dialog_title">Unable to start</string>
+    <string name="permission_dialog_message">Unfortunately, SecondScreen cannot start because it could not acquire elevated permissions.\n\nPlease do one of the following, then try again:\n\n&#8226; Root your device.  If your device is already rooted, then ensure that SecondScreen is allowed superuser permissions.\n\n&#8226; Connect your device to a computer with the Android SDK installed, and run the following adb shell command:\n\npm grant %1$s %2$s</string>
+    <string name="quick_actions_unavailable">Quick Actions are unavailable in non-root mode</string>
 
 </resources>

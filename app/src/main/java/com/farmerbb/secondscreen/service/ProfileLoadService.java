@@ -36,6 +36,7 @@ import android.view.Surface;
 import android.widget.Toast;
 
 import com.farmerbb.secondscreen.R;
+import com.farmerbb.secondscreen.activity.UnableToStartActivity;
 import com.farmerbb.secondscreen.activity.TaskerConditionActivity;
 import com.farmerbb.secondscreen.util.ShowToast;
 import com.farmerbb.secondscreen.util.U;
@@ -86,7 +87,13 @@ public final class ProfileLoadService extends IntentService {
             editor.remove("filename");
             editor.commit();
 
-            showToast.post(new ShowToast(this, R.string.no_superuser, Toast.LENGTH_LONG));
+            if(Build.VERSION.SDK_INT < Build.VERSION_CODES.M)
+                showToast.post(new ShowToast(this, R.string.no_superuser, Toast.LENGTH_LONG));
+            else {
+                Intent intent2 = new Intent(this, UnableToStartActivity.class);
+                intent2.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent2);
+            }
 
             // Refresh list of profiles
             U.listProfilesBroadcast(this);
@@ -196,7 +203,10 @@ public final class ProfileLoadService extends IntentService {
         }
 
         // Resolution and density
-        String uiRefresh = prefSaved.getString("ui_refresh", "do-nothing");
+        String uiRefresh = U.isInNonRootMode(this)
+                ? "activity-manager"
+                : prefSaved.getString("ui_refresh", "do-nothing");
+
         boolean runSizeCommand = U.runSizeCommand(this, prefSaved.getString("size", "reset"));
         boolean runDensityCommand = U.runDensityCommand(this, prefSaved.getString("density", "reset"));
         boolean cmWorkaround = false;
@@ -212,9 +222,9 @@ public final class ProfileLoadService extends IntentService {
             if(uiRefresh.equals("activity-manager") || cmWorkaround) {
                 // Run a different command if we are restarting the ActivityManager
                 if("reset".equals(size))
-                    su[sizeCommand] = U.safeModeSizeCommand + "null";
+                    su[sizeCommand] = U.safeModeSizeCommand("null");
                 else
-                    su[sizeCommand] = U.safeModeSizeCommand + size.replace('x', ',');
+                    su[sizeCommand] = U.safeModeSizeCommand(size.replace('x', ','));
             } else
                 su[sizeCommand] = U.sizeCommand(size);
         }
@@ -224,9 +234,9 @@ public final class ProfileLoadService extends IntentService {
             if(uiRefresh.equals("activity-manager") && !cmWorkaround) {
                 // Run a different command if we are restarting the ActivityManager
                 if("reset".equals(density))
-                    su[densityCommand] = U.safeModeDensityCommand + "null";
+                    su[densityCommand] = U.safeModeDensityCommand("null");
                 else
-                    su[densityCommand] = U.safeModeDensityCommand + density;
+                    su[densityCommand] = U.safeModeDensityCommand(density);
             } else {
                 su[densityCommand] = U.densityCommand(density);
 
@@ -792,19 +802,19 @@ public final class ProfileLoadService extends IntentService {
                 case "do-nothing":
                     if(prefMain.getBoolean("safe_mode", false)) {
                         if(runSizeCommand)
-                            su[safeModeSizeCommand] = U.safeModeSizeCommand + "null";
+                            su[safeModeSizeCommand] = U.safeModeSizeCommand("null");
 
                         if(runDensityCommand)
-                            su[safeModeDensityCommand] = U.safeModeDensityCommand + "null";
+                            su[safeModeDensityCommand] = U.safeModeDensityCommand("null");
                     }
                     break;
                 case "system-ui":
                     if(prefMain.getBoolean("safe_mode", false)) {
                         if(runSizeCommand)
-                            su[safeModeSizeCommand] = U.safeModeSizeCommand + "null";
+                            su[safeModeSizeCommand] = U.safeModeSizeCommand("null");
 
                         if(runDensityCommand)
-                            su[safeModeDensityCommand] = U.safeModeDensityCommand + "null";
+                            su[safeModeDensityCommand] = U.safeModeDensityCommand("null");
                     }
 
                     su[uiRefreshCommand] = U.uiRefreshCommand(this, false);
@@ -865,8 +875,8 @@ public final class ProfileLoadService extends IntentService {
             editor.remove("force_safe_mode");
 
             if(!"activity-manager".equals(uiRefresh)) {
-                su[safeModeSizeCommand] = U.safeModeSizeCommand + "null";
-                su[safeModeDensityCommand] = U.safeModeDensityCommand + "null";
+                su[safeModeSizeCommand] = U.safeModeSizeCommand("null");
+                su[safeModeDensityCommand] = U.safeModeDensityCommand("null");
             }
         }
 
@@ -922,12 +932,7 @@ public final class ProfileLoadService extends IntentService {
         }
 
         // Run superuser commands
-        for(String command : su) {
-            if(!command.equals("")) {
-                U.runCommands(this, su);
-                break;
-            }
-        }
+        U.runCommands(this, su, true);
 
         // Refresh list of profiles
         U.listProfilesBroadcast(this);

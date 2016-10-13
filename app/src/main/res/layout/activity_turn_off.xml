@@ -20,14 +20,21 @@ limitations under the License.
     android:orientation="vertical"
     android:padding="8dp" >
 
-    <TextView
-        android:id="@+id/turnOffTextView"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:text="@null"
-        android:textSize="16sp"
-        android:textColor="@color/text_color_primary" />
+        android:layout_height="0dp"
+        android:layout_weight="1" >
+
+        <TextView
+            android:id="@+id/turnOffTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="@null"
+            android:textSize="16sp"
+            android:textColor="@color/text_color_primary" />
+
+    </ScrollView>
 
     <LinearLayout
         android:layout_width="match_parent"

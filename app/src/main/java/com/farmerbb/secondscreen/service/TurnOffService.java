@@ -29,6 +29,7 @@ import android.view.Surface;
 import android.widget.Toast;
 
 import com.farmerbb.secondscreen.R;
+import com.farmerbb.secondscreen.activity.UnableToStartActivity;
 import com.farmerbb.secondscreen.activity.TaskerConditionActivity;
 import com.farmerbb.secondscreen.util.ShowToast;
 import com.farmerbb.secondscreen.util.U;
@@ -67,7 +68,13 @@ public final class TurnOffService extends IntentService {
             editor.remove("filename_backup");
             editor.commit();
 
-            showToast.post(new ShowToast(this, R.string.no_superuser, Toast.LENGTH_LONG));
+            if(Build.VERSION.SDK_INT < Build.VERSION_CODES.M)
+                showToast.post(new ShowToast(this, R.string.no_superuser, Toast.LENGTH_LONG));
+            else {
+                Intent intent2 = new Intent(this, UnableToStartActivity.class);
+                intent2.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent2);
+            }
 
             // Refresh list of profiles
             U.listProfilesBroadcast(this);
@@ -125,7 +132,10 @@ public final class TurnOffService extends IntentService {
         }
 
         // Resolution and density
-        String uiRefresh = prefCurrent.getString("ui_refresh", "do-nothing");
+        String uiRefresh = U.isInNonRootMode(this)
+                ? "activity-manager"
+                : prefCurrent.getString("ui_refresh", "do-nothing");
+
         boolean runSizeCommand = U.runSizeCommand(this, "reset");
         boolean runDensityCommand = U.runDensityCommand(this, "reset");
         boolean cmWorkaround = false;
@@ -141,7 +151,7 @@ public final class TurnOffService extends IntentService {
                     || uiRefresh.equals("activity-manager-safe-mode")
                     || cmWorkaround)
                 // Run a different command if we are restarting the ActivityManager
-                su[sizeCommand] = U.safeModeSizeCommand + "null";
+                su[sizeCommand] = U.safeModeSizeCommand("null");
             else
                 su[sizeCommand] = U.sizeCommand("reset");
         }
@@ -151,7 +161,7 @@ public final class TurnOffService extends IntentService {
                     || uiRefresh.equals("activity-manager-safe-mode"))
                     && !cmWorkaround)
                 // Run a different command if we are restarting the ActivityManager
-                su[densityCommand] = U.safeModeDensityCommand + "null";
+                su[densityCommand] = U.safeModeDensityCommand("null");
             else {
                 su[densityCommand] = U.densityCommand("reset");
 
@@ -358,12 +368,7 @@ public final class TurnOffService extends IntentService {
         prefSavedEditor.commit();
 
         // Run superuser commands
-        for(String command : su) {
-            if(!command.equals("")) {
-                U.runCommands(this, su);
-                break;
-            }
-        }
+        U.runCommands(this, su, true);
 
         // Refresh list of profiles
         U.listProfilesBroadcast(this);

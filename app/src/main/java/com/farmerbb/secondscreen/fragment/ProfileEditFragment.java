@@ -44,7 +44,6 @@ import android.widget.LinearLayout;
 
 import com.farmerbb.secondscreen.R;
 import com.farmerbb.secondscreen.activity.FragmentContainerActivity;
-import com.farmerbb.secondscreen.fragment.dialog.FirstLoadDialogFragment;
 import com.farmerbb.secondscreen.fragment.dialog.SystemAlertPermissionDialogFragment;
 import com.farmerbb.secondscreen.util.U;
 import com.jrummyapps.android.os.SystemProperties;
@@ -293,30 +292,30 @@ SharedPreferences.OnSharedPreferenceChangeListener {
 
         // Disable unsupported preferences
         if(!getActivity().getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH))
-            disablePreference(prefNew, "bluetooth_on");
+            disablePreference(prefNew, "bluetooth_on", true);
 
         if(!getActivity().getPackageManager().hasSystemFeature(PackageManager.FEATURE_WIFI))
-            disablePreference(prefNew, "wifi_on");
+            disablePreference(prefNew, "wifi_on", true);
 
         if(!getActivity().getPackageManager().hasSystemFeature("com.cyanogenmod.android"))
-            disablePreference(prefNew, "navbar");
+            disablePreference(prefNew, "navbar", true);
 
         if(!U.filesExist(U.backlightOff))
-            disablePreference(prefNew, "backlight_off");
+            disablePreference(prefNew, "backlight_off", true);
 
         if(!U.filesExist(U.vibrationOff))
-            disablePreference(prefNew, "vibration_off");
+            disablePreference(prefNew, "vibration_off", true);
 
         if(Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2)
-            getPreferenceScreen().findPreference("overscan_settings").setEnabled(false);
+            disablePreference(prefNew, "overscan_settings", false);
 
         if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            getPreferenceScreen().findPreference("immersive_new").setEnabled(false);
-            disablePreference(prefNew, "taskbar");
+            disablePreference(prefNew, "immersive_new", false);
+            disablePreference(prefNew, "taskbar", true);
         }
 
         if(Build.VERSION.SDK_INT < Build.VERSION_CODES.N)
-            disablePreference(prefNew, "freeform");
+            disablePreference(prefNew, "freeform", true);
 
         try {
             getActivity().getPackageManager().getPackageInfo("com.chrome.dev", 0);
@@ -327,9 +326,18 @@ SharedPreferences.OnSharedPreferenceChangeListener {
                 try {
                     getActivity().getPackageManager().getPackageInfo("com.android.chrome", 0);
                 } catch (NameNotFoundException e2) {
-                    disablePreference(prefNew, "chrome");
+                    disablePreference(prefNew, "chrome", true);
                 }
             }
+        }
+
+        if(U.isInNonRootMode(getActivity())) {
+            disablePreference(prefNew, "overscan_settings", false);
+            disablePreference(prefNew, "ui_refresh", false);
+            disablePreference(prefNew, "hdmi_rotation", false);
+            disablePreference(prefNew, "chrome", false);
+            disablePreference(prefNew, "backlight_off", false);
+            disablePreference(prefNew, "vibration_off", false);
         }
 
         uiRefreshWarning = true;
@@ -609,7 +617,9 @@ SharedPreferences.OnSharedPreferenceChangeListener {
                     listener.showExpertModeDialog();
                 break;
             case "freeform":
-                if(prefNew.getBoolean("freeform", true) && "do-nothing".equals(prefNew.getString("ui_refresh", "do-nothing")))
+                if(prefNew.getBoolean("freeform", true)
+                        && !U.isInNonRootMode(getActivity())
+                        && "do-nothing".equals(prefNew.getString("ui_refresh", "do-nothing")))
                     U.showToastLong(getActivity(), R.string.freeform_message);
                 break;
             case "taskbar":
@@ -840,15 +850,17 @@ SharedPreferences.OnSharedPreferenceChangeListener {
         }
     }
 
-    private void disablePreference(SharedPreferences prefNew, String preference) {
-        if(prefNew.getBoolean(preference, false)) {
+    private void disablePreference(SharedPreferences prefNew, String preferenceName, boolean shouldClear) {
+        if(shouldClear && prefNew.getBoolean(preferenceName, false)) {
             SharedPreferences.Editor editor = prefNew.edit();
-            editor.putBoolean(preference, false);
+            editor.putBoolean(preferenceName, false);
             editor.apply();
         }
 
-        CheckBoxPreference checkBoxPreference = (CheckBoxPreference) getPreferenceScreen().findPreference(preference);
-        checkBoxPreference.setChecked(false);
-        checkBoxPreference.setEnabled(false);
+        Preference preference = getPreferenceScreen().findPreference(preferenceName);
+        preference.setEnabled(false);
+
+        if(preference instanceof CheckBoxPreference)
+            ((CheckBoxPreference) preference).setChecked(false);
     }
 }

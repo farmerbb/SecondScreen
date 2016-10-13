@@ -61,6 +61,11 @@ public final class NotificationSettingsActivity extends PreferenceActivity imple
         // to reflect the new value, per the Android Design guidelines.
         U.bindPreferenceSummaryToValue(findPreference("notification_action"), opcl);
         U.bindPreferenceSummaryToValue(findPreference("notification_action_2"), opcl);
+
+        if(U.isInNonRootMode(this)) {
+            getPreferenceScreen().findPreference("notification_action").setEnabled(false);
+            getPreferenceScreen().findPreference("notification_action_2").setEnabled(false);
+        }
     }
 
     @Override
