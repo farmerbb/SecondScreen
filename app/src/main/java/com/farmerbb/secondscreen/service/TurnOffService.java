@@ -85,7 +85,8 @@ public final class TurnOffService extends IntentService {
         SharedPreferences.Editor editor = prefCurrent.edit();
 
         // Show brief "Turning off profile" notification
-        showToast.post(new ShowToast(this, R.string.turning_off_profile, Toast.LENGTH_SHORT));
+        if(!U.isInNonRootMode(this))
+            showToast.post(new ShowToast(this, R.string.turning_off_profile, Toast.LENGTH_SHORT));
 
         // Build commands to pass to su
 
@@ -146,8 +147,11 @@ public final class TurnOffService extends IntentService {
                 ? "activity-manager"
                 : prefCurrent.getString("ui_refresh", "do-nothing");
 
-        boolean runSizeCommand = uiRefresh.contains("activity-manager") || U.runSizeCommand(this, "reset");
-        boolean runDensityCommand = uiRefresh.contains("activity-manager") || U.runDensityCommand(this, "reset");
+        boolean shouldRunSizeCommand = U.runSizeCommand(this, "reset");
+        boolean shouldRunDensityCommand = U.runDensityCommand(this, "reset");
+
+        boolean runSizeCommand = uiRefresh.contains("activity-manager") || shouldRunSizeCommand;
+        boolean runDensityCommand = uiRefresh.contains("activity-manager") || shouldRunDensityCommand;
 
         if(runSizeCommand) {
             if(uiRefresh.equals("activity-manager")
@@ -293,8 +297,12 @@ public final class TurnOffService extends IntentService {
             su[immersiveCommand] = U.immersiveCommand("do-nothing");
 
         // Freeform windows
-        if(prefCurrent.getBoolean("freeform", true))
+        boolean rebootRequired = shouldRunSizeCommand || shouldRunDensityCommand;
+
+        if(prefCurrent.getBoolean("freeform", true)) {
             su[freeformCommand] = U.freeformCommand(prefCurrent.getBoolean("freeform_system", false));
+            rebootRequired = true;
+        }
 
         // HDMI rotation
         if(prefCurrent.getString("hdmi_rotation", "landscape").equals("portrait"))
@@ -366,7 +374,7 @@ public final class TurnOffService extends IntentService {
         prefSavedEditor.commit();
 
         // Run superuser commands
-        U.runCommands(this, su, true);
+        U.runCommands(this, su, rebootRequired);
 
         // Refresh list of profiles
         U.listProfilesBroadcast(this);

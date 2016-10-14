@@ -569,13 +569,13 @@ public final class U {
 
     // Checks to see if the WRITE_SECURE_SETTINGS permission is granted on Marshmallow devices.
     private static boolean hasWriteSecureSettingsPermission(Context context) {
-        return Build.VERSION.SDK_INT > Build.VERSION_CODES.M
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
                 && context.checkSelfPermission(Manifest.permission.WRITE_SECURE_SETTINGS) == PackageManager.PERMISSION_GRANTED;
     }
 
     // Executes multiple commands, either by calling superuser
     // or by writing to the settings database directly.
-    public static void runCommands(Context context, String[] commands, boolean mayRequireReboot) {
+    public static void runCommands(Context context, String[] commands, boolean rebootRequired) {
         if(getPrefMain(context).getBoolean("debug_mode", false)
                 || Shell.SU.available()) {
             for(String command : commands) {
@@ -585,8 +585,6 @@ public final class U {
                 }
             }
         } else if(hasWriteSecureSettingsPermission(context)) {
-            boolean rebootRequired = false;
-
             for(String command : commands) {
                 if(command.startsWith("settings put")) {
                     String[] commandArgs = command.split(" ");
@@ -611,21 +609,13 @@ public final class U {
                                 Settings.System.putString(context.getContentResolver(), commandArgs[3], commandArgs[4]);
                             break;
                     }
-
-                    if(mayRequireReboot) {
-                        switch(commandArgs[3]) {
-                            case "display_size_forced":
-                            case "display_density_forced":
-                            case "enable_freeform_support":
-                                rebootRequired = true;
-                                break;
-                        }
-                    }
                 }
             }
 
             if(rebootRequired) {
-                context.startActivity(new Intent(context, RebootRequiredActivity.class));
+                Intent intent = new Intent(context, RebootRequiredActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
             }
         }
     }

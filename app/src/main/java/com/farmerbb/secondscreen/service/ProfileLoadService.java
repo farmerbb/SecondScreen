@@ -107,7 +107,8 @@ public final class ProfileLoadService extends IntentService {
         SharedPreferences.Editor editor = prefCurrent.edit();
 
         // Show brief "Loading profile" notification
-        showToast.post(new ShowToast(this, R.string.loading_profile, Toast.LENGTH_SHORT));
+        if(!U.isInNonRootMode(this))
+            showToast.post(new ShowToast(this, R.string.loading_profile, Toast.LENGTH_SHORT));
 
         // Handle toggling of certain values
         String toggle = prefCurrent.getString("toggle", "null");
@@ -217,8 +218,11 @@ public final class ProfileLoadService extends IntentService {
                 ? "activity-manager"
                 : prefSaved.getString("ui_refresh", "do-nothing");
 
-        boolean runSizeCommand = uiRefresh.contains("activity-manager") || U.runSizeCommand(this, prefSaved.getString("size", "reset"));
-        boolean runDensityCommand = uiRefresh.contains("activity-manager") || U.runDensityCommand(this, prefSaved.getString("density", "reset"));
+        boolean shouldRunSizeCommand = U.runSizeCommand(this, prefSaved.getString("size", "reset"));
+        boolean shouldRunDensityCommand = U.runDensityCommand(this, prefSaved.getString("density", "reset"));
+
+        boolean runSizeCommand = uiRefresh.contains("activity-manager") || shouldRunSizeCommand;
+        boolean runDensityCommand = uiRefresh.contains("activity-manager") || shouldRunDensityCommand;
 
         if(runSizeCommand) {
             String size = prefSaved.getString("size", "reset");
@@ -735,6 +739,8 @@ public final class ProfileLoadService extends IntentService {
         }
         
         // Freeform windows
+        boolean rebootRequired = shouldRunSizeCommand || shouldRunDensityCommand;
+
         if(prefCurrent.getBoolean("not_active", true)) {
             if(Settings.Global.getInt(getContentResolver(), "enable_freeform_support", 0) == 1)
                 editor.putBoolean("freeform_system", true);
@@ -743,16 +749,22 @@ public final class ProfileLoadService extends IntentService {
         }
 
         if(prefSaved.getBoolean("freeform", false)) {
-            if(prefCurrent.getBoolean("not_active", true))
+            if(prefCurrent.getBoolean("not_active", true)) {
                 su[freeformCommand] = U.freeformCommand(true);
+                rebootRequired = true;
+            }
             else {
-                if(!prefCurrent.getBoolean("freeform", false))
+                if(!prefCurrent.getBoolean("freeform", false)) {
                     su[freeformCommand] = U.freeformCommand(true);
+                    rebootRequired = true;
+                }
             }
         } else {
             if(!prefCurrent.getBoolean("not_active", true))
-                if(prefCurrent.getBoolean("freeform", false))
+                if(prefCurrent.getBoolean("freeform", false)) {
                     su[freeformCommand] = U.freeformCommand(prefCurrent.getBoolean("freeform_system", false));
+                    rebootRequired = true;
+                }
         }
 
         // HDMI rotation
@@ -930,7 +942,7 @@ public final class ProfileLoadService extends IntentService {
         }
 
         // Run superuser commands
-        U.runCommands(this, su, true);
+        U.runCommands(this, su, rebootRequired);
 
         // Refresh list of profiles
         U.listProfilesBroadcast(this);
