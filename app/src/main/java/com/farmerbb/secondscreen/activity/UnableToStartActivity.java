@@ -18,7 +18,6 @@ package com.farmerbb.secondscreen.activity;
 import android.Manifest;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -39,7 +38,6 @@ public final class UnableToStartActivity extends AppCompatActivity {
 
         TextView textView = (TextView) findViewById(R.id.turnOffTextView);
         textView.setText(getString(R.string.permission_dialog_message, BuildConfig.APPLICATION_ID, Manifest.permission.WRITE_SECURE_SETTINGS));
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
 
         Button button1 = (Button) findViewById(R.id.turnOffButtonPrimary);
         Button button2 = (Button) findViewById(R.id.turnOffButtonSecondary);
