@@ -220,6 +220,7 @@ SharedPreferences.OnSharedPreferenceChangeListener {
 
             if(getActivity().getPackageManager().hasSystemFeature("com.cyanogenmod.android")
                     && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1
+                    && Build.VERSION.SDK_INT < Build.VERSION_CODES.N
                     && prefSaved.getString("ui_refresh", "do-nothing").equals("system-ui")) {
                 editor.putString("ui_refresh", "activity-manager");
             } else
@@ -262,7 +263,8 @@ SharedPreferences.OnSharedPreferenceChangeListener {
         }
 
         if(getActivity().getPackageManager().hasSystemFeature("com.cyanogenmod.android")
-                && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+                && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1
+                && Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
             ListPreference uiRefresh = (ListPreference) findPreference("ui_refresh");
             uiRefresh.setEntries(R.array.pref_ui_refresh_list_alt);
             uiRefresh.setEntryValues(R.array.pref_ui_refresh_list_values_alt);
@@ -338,6 +340,7 @@ SharedPreferences.OnSharedPreferenceChangeListener {
             disablePreference(prefNew, "chrome", false);
             disablePreference(prefNew, "backlight_off", false);
             disablePreference(prefNew, "vibration_off", false);
+            disablePreference(prefNew, "show_touches", false);
         }
 
         uiRefreshWarning = true;

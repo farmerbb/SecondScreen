@@ -170,7 +170,7 @@
     <string name="quick_rotation">Otočenie obrazovky</string>
     <string name="quick_freeform">Voľné okná</string>
     <string name="quick_hdmi_rotation">Rotácia HDMI výstupu</string>
-    <string name="debug_mode_enabling">You are now %1$s steps away from enabling debug mode.</string>
+    <string name="debug_mode_enabling">You are now %1$d steps away from enabling debug mode.</string>
     <string name="debug_mode_enabled">Režim ladenia povolený</string>
     <string name="debug_mode_disabled">Režim ladenia zakázaný</string>
     <string name="profile_helper_text_debug">Režim ladenia je povolený\nKliknite pre zakázanie režimu ladenia</string>

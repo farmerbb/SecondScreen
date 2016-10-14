@@ -170,7 +170,7 @@
     <string name="quick_rotation">Screen Rotation</string>
     <string name="quick_freeform">Freeform Windows</string>
     <string name="quick_hdmi_rotation">HDMI Output Rotation</string>
-    <string name="debug_mode_enabling">You are now %1$s steps away from enabling debug mode.</string>
+    <string name="debug_mode_enabling">You are now %1$d steps away from enabling debug mode.</string>
     <string name="debug_mode_enabled">Debug mode enabled</string>
     <string name="debug_mode_disabled">Debug mode disabled</string>
     <string name="profile_helper_text_debug">Debug mode enabled\nTap to disable debug mode</string>

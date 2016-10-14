@@ -139,7 +139,8 @@ SystemAlertPermissionDialogFragment.Listener {
             su[sizeCommand] = U.sizeCommand("reset");
 
             if(!(getPackageManager().hasSystemFeature("com.cyanogenmod.android")
-                    && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1)) {
+                    && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1
+                    && Build.VERSION.SDK_INT < Build.VERSION_CODES.N)) {
                 su[densityCommand] = U.densityCommand("reset");
 
                 // We run the density command twice, for reliability

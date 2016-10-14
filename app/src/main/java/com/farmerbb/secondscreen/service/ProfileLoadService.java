@@ -203,19 +203,22 @@ public final class ProfileLoadService extends IntentService {
         }
 
         // Resolution and density
-        String uiRefresh = U.isInNonRootMode(this)
+
+        // Determine if CyanogenMod workaround is needed
+        // Recent builds of CyanogenMod require the "Restart ActivityManager" UI refresh method
+        // to be set, to work around the automatic reboot when the DPI is changed.
+        boolean cmWorkaround = false;
+        if(getPackageManager().hasSystemFeature("com.cyanogenmod.android")
+                && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1
+                && Build.VERSION.SDK_INT < Build.VERSION_CODES.N)
+            cmWorkaround = true;
+
+        String uiRefresh = U.isInNonRootMode(this) || cmWorkaround
                 ? "activity-manager"
                 : prefSaved.getString("ui_refresh", "do-nothing");
 
-        boolean runSizeCommand = U.runSizeCommand(this, prefSaved.getString("size", "reset"));
-        boolean runDensityCommand = U.runDensityCommand(this, prefSaved.getString("density", "reset"));
-        boolean cmWorkaround = false;
-
-        // Determine if CyanogenMod workaround is needed
-        if(runDensityCommand
-                && getPackageManager().hasSystemFeature("com.cyanogenmod.android")
-                && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1)
-            cmWorkaround = true;
+        boolean runSizeCommand = uiRefresh.contains("activity-manager") || U.runSizeCommand(this, prefSaved.getString("size", "reset"));
+        boolean runDensityCommand = uiRefresh.contains("activity-manager") || U.runDensityCommand(this, prefSaved.getString("density", "reset"));
 
         if(runSizeCommand) {
             String size = prefSaved.getString("size", "reset");
@@ -244,11 +247,6 @@ public final class ProfileLoadService extends IntentService {
                 su[densityCommand2] = su[densityCommand];
             }
         }
-
-        // Recent builds of CyanogenMod require the "Restart ActivityManager" UI refresh method
-        // to be set, to work around the automatic reboot when the DPI is changed.
-        if(cmWorkaround)
-            uiRefresh = "activity-manager";
 
         // Overscan
         if(Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR1) {
