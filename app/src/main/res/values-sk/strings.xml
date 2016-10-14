@@ -189,12 +189,12 @@
     <string name="pref_description_taskbar">Zobrazí prekrytie s nedávnymi aplikáciami a menu (vyžaduje dodatočné stiahnutie)</string>
     <string name="quick_taskbar">Hlavný panel</string>
     <string name="system_alert_permission_dialog_message">SecondScreen vyžaduje povolenie \'\'Vykresliť cez ďalšie aplikácie\'\' pre vynútenie zobrazenia iných aplikácii v režime na šírku.\n\nAk neudelíte toto povolenie, SecondScreen stále bude môcť zamknúť orientáciu v režime na šírku, ale niektoré aplikácie budú aj tak spustené v režime na výšku.</string>
-    <string name="reboot_required_title">Reboot required</string>
-    <string name="reboot_required_message">Please reboot your device for SecondScreen to apply settings</string>
-    <string name="action_later">Later</string>
-    <string name="confirm_reboot_later">Press \'\'Later\'\' again to confirm</string>
-    <string name="permission_dialog_title">Unable to start</string>
-    <string name="permission_dialog_message">Unfortunately, SecondScreen cannot start because it could not acquire elevated permissions.\n\nPlease do one of the following, then try again:\n\n&#8226; Root your device.  If your device is already rooted, then ensure that SecondScreen is allowed superuser permissions.\n\n&#8226; Connect your device to a computer with the Android SDK installed, and run the following adb shell command:\n\npm grant %1$s %2$s</string>
-    <string name="quick_actions_unavailable">Quick Actions are unavailable in non-root mode</string>
+    <string name="reboot_required_title">Vyžaduje sa reštart</string>
+    <string name="reboot_required_message">Prosím, reštartujte zariadenie pre aplikovanie nastavení pre SecondScreen</string>
+    <string name="action_later">Neskôr</string>
+    <string name="confirm_reboot_later">Kliknite na \'\'Neskôr\'\' znova pre potvrdenie</string>
+    <string name="permission_dialog_title">Nie je možné spustiť</string>
+    <string name="permission_dialog_message">Nanešťastie, SecondScreen sa nepodarilo spustiť, pretože sa nepodarilo získať potrebné povolenia.\n\nProsím, vyskúšajte nasledovné, potom skúste znova:\n\n&#8226; Rootnite vaše zariadenie.  Ak už vaše zariadenie má root, uistite sa, že SecondScreen má povolené superuser práva.\n\n&#8226; Pripojte vaše zariadenie k PC s nainštalovaným Android SDK a použite nasledujúci adb shell príkaz:\n\npm grant %1$s %2$s</string>
+    <string name="quick_actions_unavailable">Rýchle akcie nie sú dostupné v režime bez root</string>
 
 </resources>
