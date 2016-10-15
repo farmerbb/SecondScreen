@@ -21,6 +21,7 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -34,12 +35,14 @@ import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.NotificationCompat;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.farmerbb.secondscreen.BuildConfig;
 import com.farmerbb.secondscreen.R;
 import com.farmerbb.secondscreen.activity.MainActivity;
 import com.farmerbb.secondscreen.activity.RebootRequiredActivity;
@@ -283,7 +286,10 @@ public final class U {
         homeIntent.addCategory(Intent.CATEGORY_HOME);
         homeIntent.addCategory(Intent.CATEGORY_DEFAULT);
         homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(homeIntent);
+
+        try {
+            context.startActivity(homeIntent);
+        } catch (ActivityNotFoundException e) { /* Gracefully fail */ }
 
         // Kill all background processes, in order to fully refresh UI
         PackageManager pm = context.getPackageManager();
@@ -1075,6 +1081,20 @@ public final class U {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(url));
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
+
+        try {
+            context.startActivity(intent);
+        } catch (ActivityNotFoundException e) { /* Gracefully fail */ }
+    }
+
+    // Shows an error dialog when permissions cannot be granted
+    public static void showErrorDialog(final Context context, String appopCmd) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle(R.string.error_dialog_title)
+                .setMessage(context.getString(R.string.error_dialog_message, BuildConfig.APPLICATION_ID, appopCmd))
+                .setPositiveButton(R.string.action_ok, null);
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }

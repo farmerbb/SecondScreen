@@ -15,6 +15,7 @@
 
 package com.farmerbb.secondscreen.activity;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -54,7 +55,12 @@ public final class WriteSettingsPermissionActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS, Uri.parse("package:" + getPackageName()));
-                    startActivity(intent);
+
+                    try {
+                        startActivity(intent);
+                    } catch (ActivityNotFoundException e) {
+                        U.showErrorDialog(WriteSettingsPermissionActivity.this, "WRITE_SETTINGS");
+                    }
                 }
             });
 

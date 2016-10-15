@@ -20,6 +20,7 @@ import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -643,7 +644,10 @@ SharedPreferences.OnSharedPreferenceChangeListener {
                     Intent taskbarIntent = new Intent(Intent.ACTION_VIEW);
                     taskbarIntent.setData(Uri.parse("https://play.google.com/store/apps/details?id=com.farmerbb.taskbar"));
                     taskbarIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(taskbarIntent);
+
+                    try {
+                        startActivity(taskbarIntent);
+                    } catch (ActivityNotFoundException e) { /* Gracefully fail */ }
                 }
                 break;
         }

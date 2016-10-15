@@ -196,5 +196,7 @@
     <string name="permission_dialog_title">Unable to start</string>
     <string name="permission_dialog_message">Unfortunately, SecondScreen cannot start because it could not acquire elevated permissions.\n\nPlease do one of the following, then try again:\n\n&#8226; Root your device.  If your device is already rooted, then ensure that SecondScreen is allowed superuser permissions.\n\n&#8226; Connect your device to a computer with the Android SDK installed, and run the following adb shell command:\n\npm grant %1$s %2$s</string>
     <string name="quick_actions_unavailable">Quick Actions are unavailable in non-root mode</string>
+    <string name="error_dialog_title">Error</string>
+    <string name="error_dialog_message">Unfortunately, due to OEM restrictions, this feature can\'t be enabled on your device.\n\nYou may still be able to enable it by using this adb shell command:\n\nappops set %1$s %2$s allow</string>
 
 </resources>

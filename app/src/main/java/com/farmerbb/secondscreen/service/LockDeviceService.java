@@ -19,6 +19,7 @@ import android.app.AlarmManager;
 import android.app.IntentService;
 import android.app.PendingIntent;
 import android.app.UiModeManager;
+import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -107,7 +108,10 @@ public final class LockDeviceService extends IntentService {
             Intent lockIntent = new Intent(Intent.ACTION_MAIN);
             lockIntent.setComponent(ComponentName.unflattenFromString("com.android.systemui/.Somnambulator"));
             lockIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(lockIntent);
+
+            try {
+                startActivity(lockIntent);
+            } catch (ActivityNotFoundException e) { /* Gracefully fail */ }
         } else
             // Otherwise, send a power button keystroke to lock the device normally
             U.runCommand(this, "input keyevent 26");

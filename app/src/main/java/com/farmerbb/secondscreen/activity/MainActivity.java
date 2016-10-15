@@ -22,6 +22,7 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.NotificationManager;
 import android.app.ProgressDialog;
+import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -1044,7 +1045,11 @@ SystemAlertPermissionDialogFragment.Listener {
     @Override
     public void uninstallPackage(String packageName) {
         Intent uninstallIntent = new Intent(Intent.ACTION_DELETE, Uri.parse("package:" + packageName));
-        startActivity(uninstallIntent);
+
+        try {
+            startActivity(uninstallIntent);
+        } catch (ActivityNotFoundException e) { /* Gracefully fail */ }
+
         finish();
     }
 
@@ -1208,7 +1213,11 @@ SystemAlertPermissionDialogFragment.Listener {
     @TargetApi(Build.VERSION_CODES.M)
     @Override
     public void onSystemAlertPermissionDialogPositiveClick() {
-        startActivity(new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION));
+        try {
+            startActivity(new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION));
+        } catch (ActivityNotFoundException e) {
+            U.showErrorDialog(this, "SYSTEM_ALERT_WINDOW");
+        }
     }
 
     @Override
