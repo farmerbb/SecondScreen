@@ -315,16 +315,9 @@ public final class U {
 
         SharedPreferences prefMain = getPrefMain(context);
         String currentRes = " ";
-        String nativeRes;
-
-        if(prefMain.getBoolean("landscape", false))
-            nativeRes = Integer.toString(prefMain.getInt("height", 0))
-                    + "x"
-                    + Integer.toString(prefMain.getInt("width", 0));
-        else
-            nativeRes = Integer.toString(prefMain.getInt("width", 0))
-                    + "x"
-                    + Integer.toString(prefMain.getInt("height", 0));
+        String nativeRes = Integer.toString(prefMain.getInt("width", 0))
+                + "x"
+                + Integer.toString(prefMain.getInt("height", 0));
 
         if(prefMain.getBoolean("debug_mode", false)) {
             SharedPreferences prefCurrent = getPrefCurrent(context);

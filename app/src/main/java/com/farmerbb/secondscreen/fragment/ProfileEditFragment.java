@@ -169,14 +169,9 @@ SharedPreferences.OnSharedPreferenceChangeListener {
 
             if(prefMain.getBoolean("expert_mode", false)) {
                 if("reset".equals(prefSaved.getString("size", "reset"))) {
-                    if(prefMain.getBoolean("landscape", false))
-                        editor.putString("size", Integer.toString(prefMain.getInt("height", 0))
-                                + "x"
-                                + Integer.toString(prefMain.getInt("width", 0)));
-                    else
-                        editor.putString("size", Integer.toString(prefMain.getInt("width", 0))
-                                + "x"
-                                + Integer.toString(prefMain.getInt("height", 0)));
+                    editor.putString("size", Integer.toString(prefMain.getInt("width", 0))
+                            + "x"
+                            + Integer.toString(prefMain.getInt("height", 0)));
 
                     editor.putBoolean("size-reset", true);
                 } else
@@ -191,15 +186,9 @@ SharedPreferences.OnSharedPreferenceChangeListener {
                 if(prefSaved.getBoolean("size-reset", false)) {
                     editor.remove("size-reset");
 
-                    String nativeRes;
-                    if(prefMain.getBoolean("landscape", false))
-                        nativeRes = Integer.toString(prefMain.getInt("height", 0))
-                                + "x"
-                                + Integer.toString(prefMain.getInt("width", 0));
-                    else
-                        nativeRes = Integer.toString(prefMain.getInt("width", 0))
-                                + "x"
-                                + Integer.toString(prefMain.getInt("height", 0));
+                    String nativeRes = Integer.toString(prefMain.getInt("width", 0))
+                            + "x"
+                            + Integer.toString(prefMain.getInt("height", 0));
 
                     if(nativeRes.equals(prefSaved.getString("size", "reset")))
                         editor.putString("size", "reset");
