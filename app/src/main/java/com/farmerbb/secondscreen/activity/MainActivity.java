@@ -30,7 +30,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.ShortcutInfo;
+import android.content.pm.ShortcutManager;
 import android.content.res.Configuration;
+import android.graphics.drawable.Icon;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -45,6 +48,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.farmerbb.secondscreen.BuildConfig;
 import com.farmerbb.secondscreen.R;
 import com.farmerbb.secondscreen.fragment.ProfileEditFragment;
 import com.farmerbb.secondscreen.fragment.ProfileListFragment;
@@ -76,6 +80,7 @@ import com.jrummyapps.android.os.SystemProperties;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
@@ -287,6 +292,9 @@ SystemAlertPermissionDialogFragment.Listener {
                 if(isDebugModeEnabled(false))
                     clicks = 10;
 
+                // Set launcher shortcuts on API 25+
+                setLauncherShortcuts();
+
                 // Finally, create fragments
                 createFragments();
             } else if(getFragmentManager().findFragmentByTag("firstrunfragment") == null)
@@ -335,6 +343,27 @@ SystemAlertPermissionDialogFragment.Listener {
         savedInstanceState.putBoolean("show-busybox-dialog", showBusyboxDialog);
         savedInstanceState.putBoolean("show-upgrade-dialog", showUpgradeDialog);
         super.onSaveInstanceState(savedInstanceState);
+    }
+
+    private void setLauncherShortcuts() {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
+            ShortcutManager shortcutManager = getSystemService(ShortcutManager.class);
+
+            if(shortcutManager.getDynamicShortcuts().size() == 0) {
+                Intent intent = new Intent(Intent.ACTION_MAIN);
+                intent.setClassName(BuildConfig.APPLICATION_ID, TaskerQuickActionsActivity.class.getName());
+                intent.putExtra("launched-from-app", true);
+
+                ShortcutInfo shortcut = new ShortcutInfo.Builder(this, "quick_actions")
+                        .setShortLabel(getString(R.string.label_quick_actions))
+                        .setLongLabel(getString(R.string.quick_actions_long))
+                        .setIcon(Icon.createWithResource(this, R.drawable.shortcut_icon))
+                        .setIntent(intent)
+                        .build();
+
+                shortcutManager.setDynamicShortcuts(Collections.singletonList(shortcut));
+            }
+        }
     }
 
     private void createFragments() {
@@ -506,6 +535,9 @@ SystemAlertPermissionDialogFragment.Listener {
 
             // Determine if we need to show any dialogs before we create the fragments
             showDialogs();
+
+            // Set launcher shortcuts on API 25+
+            setLauncherShortcuts();
 
             // Finally, create fragments
             createFragments();
