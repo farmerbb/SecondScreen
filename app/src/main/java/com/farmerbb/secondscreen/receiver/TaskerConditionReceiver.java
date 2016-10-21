@@ -27,6 +27,7 @@ import com.farmerbb.secondscreen.util.PluginBundleManager;
 // Receiver run by Tasker periodically to check the state of currently active profiles, whenever
 // a SecondScreen state is included as a condition in a Tasker profile.
 public final class TaskerConditionReceiver extends BroadcastReceiver {
+    @SuppressWarnings("deprecation")
     @Override
     public void onReceive(Context context, Intent intent) {
         BundleScrubber.scrub(intent);
@@ -43,10 +44,10 @@ public final class TaskerConditionReceiver extends BroadcastReceiver {
                 if("0".equals(prefSaved.getString("original_filename", "0")))
                     setResultCode(com.twofortyfouram.locale.api.Intent.RESULT_CONDITION_UNSATISFIED);
                 else {
-                    if(filename.equals("any_profile"))
+                    if("any_profile".equals(filename))
                         setResultCode(com.twofortyfouram.locale.api.Intent.RESULT_CONDITION_SATISFIED);
                     else {
-                        if(filename.equals(prefSaved.getString("original_filename", "0")))
+                        if(prefSaved.getString("original_filename", "0").equals(filename))
                             setResultCode(com.twofortyfouram.locale.api.Intent.RESULT_CONDITION_SATISFIED);
                         else
                             setResultCode(com.twofortyfouram.locale.api.Intent.RESULT_CONDITION_UNSATISFIED);
@@ -56,10 +57,10 @@ public final class TaskerConditionReceiver extends BroadcastReceiver {
                 if("0".equals(prefCurrent.getString("filename", "0")))
                     setResultCode(com.twofortyfouram.locale.api.Intent.RESULT_CONDITION_UNSATISFIED);
                 else {
-                    if(filename.equals("any_profile"))
+                    if("any_profile".equals(filename))
                         setResultCode(com.twofortyfouram.locale.api.Intent.RESULT_CONDITION_SATISFIED);
                     else {
-                        if(filename.equals(prefCurrent.getString("filename", "0")))
+                        if(prefCurrent.getString("filename", "0").equals(filename))
                             setResultCode(com.twofortyfouram.locale.api.Intent.RESULT_CONDITION_SATISFIED);
                         else
                             setResultCode(com.twofortyfouram.locale.api.Intent.RESULT_CONDITION_UNSATISFIED);

@@ -38,6 +38,7 @@ public final class DeleteDialogFragment extends DialogFragment {
     Listener listener;
 
     // Override the Fragment.onAttach() method to instantiate the Listener
+    @SuppressWarnings("deprecation")
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);

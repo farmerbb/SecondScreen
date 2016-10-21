@@ -15,6 +15,7 @@
 
 package com.farmerbb.secondscreen.activity;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.ActivityManager;
 import android.app.DialogFragment;
@@ -175,7 +176,7 @@ SystemAlertPermissionDialogFragment.Listener {
                 }
             } catch (IllegalStateException e) {
                 finish();
-            } catch (IllegalArgumentException e) {}
+            } catch (IllegalArgumentException e) { /* Gracefully fail */ }
         }
     }
 
@@ -415,17 +416,6 @@ SystemAlertPermissionDialogFragment.Listener {
                 PackageManager.DONT_KILL_APP);
     }
 
-    private boolean isActivityAvailable(String packageName, String className) {
-        final PackageManager packageManager = getPackageManager();
-        final Intent intent = new Intent();
-        intent.setClassName(packageName, className);
-
-        @SuppressWarnings("rawtypes")
-        List list = packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
-
-        return list.size() > 0;
-    }
-
     @Override
     public void onBackPressed() {
         if(getFragmentManager().findFragmentById(R.id.profileViewEdit) instanceof ProfileEditFragment) {
@@ -489,6 +479,7 @@ SystemAlertPermissionDialogFragment.Listener {
         uninstallPackage(getPackageName());
     }
 
+    @SuppressLint("HardwareIds")
     @Override
     public void onFirstRunDialogPositiveClick() {
         SharedPreferences prefMain = U.getPrefMain(this);
@@ -590,7 +581,7 @@ SystemAlertPermissionDialogFragment.Listener {
                     .replace(R.id.profileViewEdit, fragment, "ProfileListFragment")
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)
                     .commit();
-        } catch (NullPointerException e) {}
+        } catch (NullPointerException e) { /* Gracefully fail */ }
     }
 
     @Override
@@ -674,7 +665,7 @@ SystemAlertPermissionDialogFragment.Listener {
 
             try {
                 bundle.putString("title", U.getProfileTitle(this, filename));
-            } catch (IOException e) {}
+            } catch (IOException e) { /* Gracefully fail */ }
 
             fragment.setArguments(bundle);
 
@@ -805,18 +796,23 @@ SystemAlertPermissionDialogFragment.Listener {
                     editor.putString("ui_refresh", "system-ui");
 
                 try {
-                    getPackageManager().getPackageInfo("com.chrome.dev", 0);
+                    getPackageManager().getPackageInfo("com.chrome.canary", 0);
                     editor.putBoolean("chrome", true);
                 } catch (PackageManager.NameNotFoundException e) {
                     try {
-                        getPackageManager().getPackageInfo("com.chrome.beta", 0);
+                        getPackageManager().getPackageInfo("com.chrome.dev", 0);
                         editor.putBoolean("chrome", true);
                     } catch (PackageManager.NameNotFoundException e1) {
                         try {
-                            getPackageManager().getPackageInfo("com.android.chrome", 0);
+                            getPackageManager().getPackageInfo("com.chrome.beta", 0);
                             editor.putBoolean("chrome", true);
                         } catch (PackageManager.NameNotFoundException e2) {
-                            editor.putBoolean("chrome", false);
+                            try {
+                                getPackageManager().getPackageInfo("com.android.chrome", 0);
+                                editor.putBoolean("chrome", true);
+                            } catch (PackageManager.NameNotFoundException e3) {
+                                editor.putBoolean("chrome", false);
+                            }
                         }
                     }
                 }
@@ -837,18 +833,23 @@ SystemAlertPermissionDialogFragment.Listener {
                     editor.putString("ui_refresh", "system-ui");
 
                 try {
-                    getPackageManager().getPackageInfo("com.chrome.dev", 0);
+                    getPackageManager().getPackageInfo("com.chrome.canary", 0);
                     editor.putBoolean("chrome", true);
                 } catch (PackageManager.NameNotFoundException e) {
                     try {
-                        getPackageManager().getPackageInfo("com.chrome.beta", 0);
+                        getPackageManager().getPackageInfo("com.chrome.dev", 0);
                         editor.putBoolean("chrome", true);
                     } catch (PackageManager.NameNotFoundException e1) {
                         try {
-                            getPackageManager().getPackageInfo("com.android.chrome", 0);
+                            getPackageManager().getPackageInfo("com.chrome.beta", 0);
                             editor.putBoolean("chrome", true);
                         } catch (PackageManager.NameNotFoundException e2) {
-                            editor.putBoolean("chrome", false);
+                            try {
+                                getPackageManager().getPackageInfo("com.android.chrome", 0);
+                                editor.putBoolean("chrome", true);
+                            } catch (PackageManager.NameNotFoundException e3) {
+                                editor.putBoolean("chrome", false);
+                            }
                         }
                     }
                 }
@@ -869,18 +870,23 @@ SystemAlertPermissionDialogFragment.Listener {
                     editor.putString("ui_refresh", "system-ui");
 
                 try {
-                    getPackageManager().getPackageInfo("com.chrome.dev", 0);
+                    getPackageManager().getPackageInfo("com.chrome.canary", 0);
                     editor.putBoolean("chrome", true);
                 } catch (PackageManager.NameNotFoundException e) {
                     try {
-                        getPackageManager().getPackageInfo("com.chrome.beta", 0);
+                        getPackageManager().getPackageInfo("com.chrome.dev", 0);
                         editor.putBoolean("chrome", true);
                     } catch (PackageManager.NameNotFoundException e1) {
                         try {
-                            getPackageManager().getPackageInfo("com.android.chrome", 0);
+                            getPackageManager().getPackageInfo("com.chrome.beta", 0);
                             editor.putBoolean("chrome", true);
                         } catch (PackageManager.NameNotFoundException e2) {
-                            editor.putBoolean("chrome", false);
+                            try {
+                                getPackageManager().getPackageInfo("com.android.chrome", 0);
+                                editor.putBoolean("chrome", true);
+                            } catch (PackageManager.NameNotFoundException e3) {
+                                editor.putBoolean("chrome", false);
+                            }
                         }
                     }
                 }
@@ -1053,6 +1059,7 @@ SystemAlertPermissionDialogFragment.Listener {
         finish();
     }
 
+    @SuppressLint("HardwareIds")
     private void showDialogs() {
         SharedPreferences prefMain = U.getPrefMain(this);
         boolean swiftKey = true;
@@ -1095,9 +1102,9 @@ SystemAlertPermissionDialogFragment.Listener {
             DialogFragment swiftkeyFragment = new SwiftkeyDialogFragment();
             swiftkeyFragment.show(getFragmentManager(), "swiftkey-fragment");
 
-        // Show dialog if device is newer than API 24 (Nougat).
+        // Show dialog if device is newer than API 25 (Nougat MR1).
         // If debug mode is enabled, the dialog is never shown.
-        } else if(Build.VERSION.SDK_INT > Build.VERSION_CODES.N
+        } else if(Build.VERSION.SDK_INT > Build.VERSION_CODES.N_MR1
                 && getFragmentManager().findFragmentByTag("upgrade-fragment") == null
                 && showUpgradeDialog) {
             showUpgradeDialog = false;

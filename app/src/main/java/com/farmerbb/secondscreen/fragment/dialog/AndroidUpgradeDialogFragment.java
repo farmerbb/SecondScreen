@@ -16,11 +16,11 @@
 package com.farmerbb.secondscreen.fragment.dialog;
 
 import android.app.Activity;
-import android.support.v7.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 
 import com.farmerbb.secondscreen.R;
 
@@ -40,6 +40,7 @@ public final class AndroidUpgradeDialogFragment extends DialogFragment {
     Listener listener;
 
     // Override the Fragment.onAttach() method to instantiate the Listener
+    @SuppressWarnings("deprecation")
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);

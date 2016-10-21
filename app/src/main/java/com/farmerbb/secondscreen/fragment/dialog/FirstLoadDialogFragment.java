@@ -16,12 +16,11 @@
 package com.farmerbb.secondscreen.fragment.dialog;
 
 import android.app.Activity;
-import android.support.v7.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
-import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
@@ -47,6 +46,7 @@ public final class FirstLoadDialogFragment extends DialogFragment {
     Listener listener;
 
     // Override the Fragment.onAttach() method to instantiate the Listener
+    @SuppressWarnings("deprecation")
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);

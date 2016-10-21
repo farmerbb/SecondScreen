@@ -34,7 +34,6 @@ import android.os.Build;
 import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.NotificationCompat;
 import android.util.DisplayMetrics;
@@ -217,6 +216,9 @@ public final class U {
                 break;
             case 2:
                 returnCommand = returnCommand + "com.chrome.dev";
+                break;
+            case 3:
+                returnCommand = returnCommand + "com.chrome.canary";
                 break;
         }
 
@@ -1026,12 +1028,6 @@ public final class U {
         }
 
         return blacklisted;
-    }
-
-    // Hides the floating action button
-    public static void hideFab(Activity a, int id) {
-        FloatingActionButton floatingActionButton = (FloatingActionButton) a.findViewById(id);
-        floatingActionButton.hide();
     }
 
     // Detects if we are currently casting the screen using Chromecast

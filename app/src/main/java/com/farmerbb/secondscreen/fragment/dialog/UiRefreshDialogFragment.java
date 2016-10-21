@@ -40,6 +40,7 @@ public final class UiRefreshDialogFragment extends DialogFragment {
     Listener listener;
 
     // Override the Fragment.onAttach() method to instantiate the Listener
+    @SuppressWarnings("deprecation")
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);

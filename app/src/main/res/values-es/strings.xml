@@ -44,7 +44,7 @@
     <string name="checking_for_superuser">Checking for superuser access&#8230; please wait.</string>
     <string name="decline">No acepto</string>
     <string name="deleting_current_profile">No se puede eliminar el perfil activo</string>
-    <string name="dialog_about_message">SecondScreen: Optimiza tu Android para las grandes pantallas\n\n&#169; 2016 Braden Farmer\n\nEsta aplicación utiliza el código de los siguientes proyectos de código abierto, todos registrados bajo <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2.0</a>:\n\n&#8226; <a href="http://github.com/farmerbb/Notepad">Notepad</a>\n\n&#8226; <a href="http://jgilfelt.github.io/android-actionbarstylegenerator/">Android Action Bar Style Generator</a>\n\n&#8226; <a href="http://github.com/Chainfire/libsuperuser">libsuperuser</a>\n\n&#8226; <a href="http://www.twofortyfouram.com/developer.html">Locale Developer API</a>\n\n&#8226; <a href="http://stackoverflow.com/a/28402378">SystemProperties</a>\n\nEsta aplicación utiliza código derivado del proyecto <a href="https://github.com/makovkastar/FloatingActionButton">FloatingActionButton</a>, licenciado bajo la licencia MIT.\n\nEsta aplicación utiliza elementos gráficos de las siguientes fuentes, autorizadas bajo <a href="http://creativecommons.org/licenses/by/3.0/">CC-BY-3.0</a>:\n\n&#8226; <a href="http://developer.android.com/distribute/tools/promote/brand.html">Android robot (Google)</a>\n\n&#8226; <a href="http://shreyasachar.github.io/AndroidAssetStudio/">Android Asset Studio for Material Design"</a></string>
+    <string name="dialog_about_message">SecondScreen: Optimiza tu Android para las grandes pantallas\n\n&#169; 2016 Braden Farmer\n\nEsta aplicación utiliza el código de los siguientes proyectos de código abierto, todos registrados bajo <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2.0</a>:\n\n&#8226; <a href="http://github.com/Chainfire/libsuperuser">libsuperuser</a>\n\n&#8226; <a href="http://www.twofortyfouram.com/developer.html">Locale Developer API</a>\n\n&#8226; <a href="http://stackoverflow.com/a/28402378">SystemProperties</a>\n\nEsta aplicación utiliza elementos gráficos de las siguientes fuentes, autorizadas bajo <a href="http://creativecommons.org/licenses/by/3.0/">CC-BY-3.0</a>:\n\n&#8226; <a href="http://developer.android.com/distribute/tools/promote/brand.html">Android robot (Google)</a></string>
     <string name="dialog_about_title">Acerca SecondScreen</string>
     <string name="dialog_are_you_sure">¿Estás seguro?</string>
     <string name="dialog_delete_button_title">Eliminar perfil</string>
@@ -98,7 +98,7 @@
     <string name="profile_view_ui_refresh_systemui">Refrescar UI (Reiniciar Sistema)</string>
     <string name="profile_view_ui_refresh_soft_reboot">Refrescar UI (Reiniciar software)</string>
     <string name="profile_view_wifi_on">Activar Wi-Fi</string>
-    <string name="profile_view_freeform">Freeform windows</string>
+    <string name="profile_view_freeform">Freeform mode</string>
     <string name="profile_view_hdmi_output">HDMI (Portrait)</string>
     <string name="quick_actions_message">Utilice acciones rápidas para acceder a la funcionalidad SecondScreen sin crear un nuevo perfil o modificar temporalmente un perfil de ejecución existente sin modificarlo.</string>
     <string name="recreate_shortcut">¡Perfil No encontrado!\n\nPor favor, vuelva a crear o eliminar este acceso directo.</string>
@@ -140,7 +140,7 @@
     <string name="pref_title_navbar">Mostrar barra de navegación</string>
     <string name="pref_description_navbar">Muestra la barra de navegación en la parte inferior de la pantalla (sólo funciona en ROM CyanogenMod)</string>
     <string name="pref_title_screen_timeout">Tiempo de espera</string>
-    <string name="pref_title_freeform">Enable freeform windows</string>
+    <string name="pref_title_freeform">Enable freeform mode</string>
     <string name="pref_description_freeform">Allows showing apps in a workspace with floating, resizeable windows</string>
     <string name="pref_title_hdmi_rotation">HDMI output rotation</string>
     <string name="pref_overscan_values">Valores de Bordes</string>
@@ -168,7 +168,7 @@
     <string name="immersive">Immersive</string>
     <string name="quick_immersive">Immersive Mode</string>
     <string name="quick_rotation">Rotación pantalla</string>
-    <string name="quick_freeform">Freeform Windows</string>
+    <string name="quick_freeform">Freeform Mode</string>
     <string name="quick_hdmi_rotation">HDMI Output Rotation</string>
     <string name="debug_mode_enabling">You are now %1$d steps away from enabling debug mode.</string>
     <string name="debug_mode_enabled">Debug mode enabled</string>
@@ -198,5 +198,6 @@
     <string name="quick_actions_unavailable">Quick Actions are unavailable in non-root mode</string>
     <string name="error_dialog_title">Error</string>
     <string name="error_dialog_message">Unfortunately, due to OEM restrictions, this feature can\'t be enabled on your device.\n\nYou may still be able to enable it by using this adb shell command:\n\nappops set %1$s %2$s allow</string>
+    <string name="quick_actions_long">Quickly access SecondScreen functionality</string>
 
 </resources>

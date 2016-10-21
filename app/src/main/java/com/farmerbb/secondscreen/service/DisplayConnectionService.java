@@ -48,7 +48,7 @@ public final class DisplayConnectionService extends Service {
                     hdmiIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(hdmiIntent);
                 }
-            } catch (ArrayIndexOutOfBoundsException e) {}
+            } catch (ArrayIndexOutOfBoundsException e) { /* Gracefully fail */ }
         }
 
         @Override
@@ -85,7 +85,7 @@ public final class DisplayConnectionService extends Service {
                         startActivity(turnOffIntent);
                     }
                 }
-            } catch (ArrayIndexOutOfBoundsException e) {}
+            } catch (ArrayIndexOutOfBoundsException e) { /* Gracefully fail */ }
         }
     };
 

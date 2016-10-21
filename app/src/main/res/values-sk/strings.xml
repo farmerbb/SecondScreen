@@ -44,7 +44,7 @@
     <string name="checking_for_superuser">Kontroluje sa root prístup&#8230;, prosím, počkajte.</string>
     <string name="decline">Nesúhlasím</string>
     <string name="deleting_current_profile">Aktívny profil nie je možné vymazať</string>
-    <string name="dialog_about_message">SecondScreen: lepšie zrkadlenie obrazovky pre zariadenia s root\n\n&#169; 2016 Braden Farmer\n\nTáto aplikácia používa kód z nasledujúcich open source projektov, všetky licencované pod <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2.0</a>:\n\n&#8226; <a href="http://github.com/farmerbb/Notepad">Notepad</a>\n\n&#8226; <a href="http://jgilfelt.github.io/android-actionbarstylegenerator/">Android Action Bar Style Generator</a>\n\n&#8226; <a href="http://github.com/Chainfire/libsuperuser">libsuperuser</a>\n\n&#8226; <a href="http://www.twofortyfouram.com/developer.html">Locale Developer API</a>\n\n&#8226; <a href="http://stackoverflow.com/a/28402378">SystemProperties</a>\n\nTáto aplikácia používa kód odvodený od projektu <a href="https://github.com/makovkastar/FloatingActionButton">FloatingActionButton</a>, ktorý je licencovaný pod MIT licenciou.\n\nTáto aplikácia používa grafické prvky z nasledujúcich zdrojov, ktoré sú licencované pod <a href="http://creativecommons.org/licenses/by/3.0/">CC-BY-3.0</a>:\n\n&#8226; <a href="http://developer.android.com/distribute/tools/promote/brand.html">Android robot (Google)</a>\n\n&#8226; <a href="http://shreyasachar.github.io/AndroidAssetStudio/">Android Asset Studio for Material Design"</a></string>
+    <string name="dialog_about_message">SecondScreen: lepšie zrkadlenie obrazovky pre zariadenia s root\n\n&#169; 2016 Braden Farmer\n\nTáto aplikácia používa kód z nasledujúcich open source projektov, všetky licencované pod <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2.0</a>:\n\n&#8226; <a href="http://github.com/Chainfire/libsuperuser">libsuperuser</a>\n\n&#8226; <a href="http://www.twofortyfouram.com/developer.html">Locale Developer API</a>\n\n&#8226; <a href="http://stackoverflow.com/a/28402378">SystemProperties</a>\n\nTáto aplikácia používa grafické prvky z nasledujúcich zdrojov, ktoré sú licencované pod <a href="http://creativecommons.org/licenses/by/3.0/">CC-BY-3.0</a>:\n\n&#8226; <a href="http://developer.android.com/distribute/tools/promote/brand.html">Android robot (Google)</a></string>
     <string name="dialog_about_title">O aplikácii SecondScreen</string>
     <string name="dialog_are_you_sure">Ste si istý?</string>
     <string name="dialog_delete_button_title">Vymazať profil</string>
@@ -198,5 +198,6 @@
     <string name="quick_actions_unavailable">Rýchle akcie nie sú dostupné v režime bez root</string>
     <string name="error_dialog_title">Error</string>
     <string name="error_dialog_message">Unfortunately, due to OEM restrictions, this feature can\'t be enabled on your device.\n\nYou may still be able to enable it by using this adb shell command:\n\nappops set %1$s %2$s allow</string>
+    <string name="quick_actions_long">Quickly access SecondScreen functionality</string>
 
 </resources>

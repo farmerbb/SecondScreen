@@ -122,6 +122,6 @@ public class DebugModeActivity extends PreferenceActivity implements OnPreferenc
                 is.close();
                 os.close();
             }
-        } catch (IOException e) {}
+        } catch (IOException e) { /* Gracefully fail */ }
     }
 }

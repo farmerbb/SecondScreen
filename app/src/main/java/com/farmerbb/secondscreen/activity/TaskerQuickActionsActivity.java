@@ -156,15 +156,19 @@ SharedPreferences.OnSharedPreferenceChangeListener {
                     getPreferenceScreen().findPreference("temp_freeform").setEnabled(false);
 
                 try {
-                    getPackageManager().getPackageInfo("com.chrome.dev", 0);
+                    getPackageManager().getPackageInfo("com.chrome.canary", 0);
                 } catch (NameNotFoundException e) {
                     try {
-                        getPackageManager().getPackageInfo("com.chrome.beta", 0);
+                        getPackageManager().getPackageInfo("com.chrome.dev", 0);
                     } catch (NameNotFoundException e1) {
                         try {
-                            getPackageManager().getPackageInfo("com.android.chrome", 0);
+                            getPackageManager().getPackageInfo("com.chrome.beta", 0);
                         } catch (NameNotFoundException e2) {
-                            getPreferenceScreen().findPreference("temp_chrome").setEnabled(false);
+                            try {
+                                getPackageManager().getPackageInfo("com.android.chrome", 0);
+                            } catch (NameNotFoundException e3) {
+                                getPreferenceScreen().findPreference("temp_chrome").setEnabled(false);
+                            }
                         }
                     }
                 }

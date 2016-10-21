@@ -24,6 +24,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -63,6 +64,7 @@ public final class ProfileViewFragment extends Fragment {
     Listener listener;
 
     // Override the Fragment.onAttach() method to instantiate the Listener
+    @SuppressWarnings("deprecation")
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -125,7 +127,7 @@ public final class ProfileViewFragment extends Fragment {
         if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
             button.setBackground(getResources().getDrawable(R.drawable.pl_button));
         else
-            button.getBackground().setColorFilter(getResources().getColor(R.color.pl_selected), PorterDuff.Mode.SRC);
+            button.getBackground().setColorFilter(ContextCompat.getColor(getActivity(), R.color.pl_selected), PorterDuff.Mode.SRC);
 
         // Set listeners for Load/Turn Off button
         if("quick_actions".equals(prefCurrent.getString("filename", "0"))) {

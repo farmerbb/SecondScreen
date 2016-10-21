@@ -15,6 +15,7 @@
 
 package com.farmerbb.secondscreen.service;
 
+import android.annotation.SuppressLint;
 import android.app.IntentService;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
@@ -56,6 +57,7 @@ public final class TurnOffService extends IntentService {
         showToast = new Handler();
     }
 
+    @SuppressLint("CommitPrefEdits")
     @Override
     protected void onHandleIntent(Intent intent) {
         SharedPreferences prefCurrent = U.getPrefCurrent(this);
@@ -81,6 +83,7 @@ public final class TurnOffService extends IntentService {
         }
     }
 
+    @SuppressLint("CommitPrefEdits")
     private void turnOffProfile(SharedPreferences prefCurrent) {
         SharedPreferences.Editor editor = prefCurrent.edit();
 
@@ -221,16 +224,21 @@ public final class TurnOffService extends IntentService {
         // If multiple versions of Chrome are installed on the device,
         // assume that the user is running the newest version.
         try {
-            getPackageManager().getPackageInfo("com.chrome.dev", 0);
-            channel = 2;
+            getPackageManager().getPackageInfo("com.chrome.canary", 0);
+            channel = 3;
         } catch (PackageManager.NameNotFoundException e) {
             try {
-                getPackageManager().getPackageInfo("com.chrome.beta", 0);
-                channel = 1;
+                getPackageManager().getPackageInfo("com.chrome.dev", 0);
+                channel = 2;
             } catch (PackageManager.NameNotFoundException e1) {
                 try {
-                    getPackageManager().getPackageInfo("com.android.chrome", 0);
-                } catch (PackageManager.NameNotFoundException e2) {}
+                    getPackageManager().getPackageInfo("com.chrome.beta", 0);
+                    channel = 1;
+                } catch (PackageManager.NameNotFoundException e2) {
+                    try {
+                        getPackageManager().getPackageInfo("com.android.chrome", 0);
+                    } catch (PackageManager.NameNotFoundException e3) { /* Gracefully fail */ }
+                }
             }
         }
 

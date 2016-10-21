@@ -55,6 +55,7 @@ public final class OverscanFragment extends PreferenceFragment implements
     Listener listener;
 
     // Override the Fragment.onAttach() method to instantiate the Listener
+    @SuppressWarnings("deprecation")
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);

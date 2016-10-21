@@ -32,6 +32,7 @@ import android.os.Build;
 import android.os.IBinder;
 import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.ContextCompat;
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
@@ -185,7 +186,7 @@ public final class NotificationService extends Service {
 
         // Set notification color on Lollipop
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            mBuilder.setColor(getResources().getColor(R.color.primary_dark))
+            mBuilder.setColor(ContextCompat.getColor(this, R.color.primary_dark))
                     .setVisibility(Notification.VISIBILITY_PUBLIC);
         }
 

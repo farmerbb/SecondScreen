@@ -157,15 +157,19 @@ public final class NotificationSettingsActivity extends PreferenceActivity imple
                     break;
                 case "temp_chrome":
                     try {
-                        getPackageManager().getPackageInfo("com.chrome.dev", 0);
-                    } catch(PackageManager.NameNotFoundException e) {
+                        getPackageManager().getPackageInfo("com.chrome.canary", 0);
+                    } catch (PackageManager.NameNotFoundException e) {
                         try {
-                            getPackageManager().getPackageInfo("com.chrome.beta", 0);
+                            getPackageManager().getPackageInfo("com.chrome.dev", 0);
                         } catch (PackageManager.NameNotFoundException e1) {
                             try {
-                                getPackageManager().getPackageInfo("com.android.chrome", 0);
+                                getPackageManager().getPackageInfo("com.chrome.beta", 0);
                             } catch (PackageManager.NameNotFoundException e2) {
-                                unsupported = true;
+                                try {
+                                    getPackageManager().getPackageInfo("com.android.chrome", 0);
+                                } catch (PackageManager.NameNotFoundException e3) {
+                                    unsupported = true;
+                                }
                             }
                         }
                     }

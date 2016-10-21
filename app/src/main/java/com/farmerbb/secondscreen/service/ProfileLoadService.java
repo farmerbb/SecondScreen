@@ -15,6 +15,7 @@
 
 package com.farmerbb.secondscreen.service;
 
+import android.annotation.SuppressLint;
 import android.app.IntentService;
 import android.app.UiModeManager;
 import android.bluetooth.BluetoothAdapter;
@@ -72,6 +73,7 @@ public final class ProfileLoadService extends IntentService {
         showToast = new Handler();
     }
 
+    @SuppressLint("CommitPrefEdits")
     @Override
     protected void onHandleIntent(Intent intent) {
         if(intent.getStringExtra(U.NAME) != null)
@@ -100,6 +102,7 @@ public final class ProfileLoadService extends IntentService {
         }
     }
 
+    @SuppressLint("CommitPrefEdits")
     private void loadProfile(SharedPreferences prefCurrent) {
         // Load preferences
         SharedPreferences prefMain = U.getPrefMain(this);
@@ -293,7 +296,7 @@ public final class ProfileLoadService extends IntentService {
                 editor.putInt("user_rotation", Settings.System.getInt(getContentResolver(), Settings.System.USER_ROTATION));
                 editor.putInt("rotation_setting", Settings.System.getInt(getContentResolver(), Settings.System.ACCELEROMETER_ROTATION));
             }
-        } catch (SettingNotFoundException e) {}
+        } catch (SettingNotFoundException e) { /* Gracefully fail */ }
 
         int dockMode;
         if(prefCurrent.getBoolean("not_active", true)) {
@@ -415,19 +418,25 @@ public final class ProfileLoadService extends IntentService {
         // If multiple versions of Chrome are installed on the device,
         // assume that the user is running the newest version.
         try {
-            pInfo = getPackageManager().getPackageInfo("com.chrome.dev", 0);
+            pInfo = getPackageManager().getPackageInfo("com.chrome.canary", 0);
             chromeVersion = pInfo.versionName;
-            channel = 2;
+            channel = 3;
         } catch (NameNotFoundException e) {
             try {
-                pInfo = getPackageManager().getPackageInfo("com.chrome.beta", 0);
+                pInfo = getPackageManager().getPackageInfo("com.chrome.dev", 0);
                 chromeVersion = pInfo.versionName;
-                channel = 1;
+                channel = 2;
             } catch (NameNotFoundException e1) {
                 try {
-                    pInfo = getPackageManager().getPackageInfo("com.android.chrome", 0);
+                    pInfo = getPackageManager().getPackageInfo("com.chrome.beta", 0);
                     chromeVersion = pInfo.versionName;
-                } catch (NameNotFoundException e2) {}
+                    channel = 1;
+                } catch (NameNotFoundException e2) {
+                    try {
+                        pInfo = getPackageManager().getPackageInfo("com.android.chrome", 0);
+                        chromeVersion = pInfo.versionName;
+                    } catch (NameNotFoundException e3) { /* Gracefully fail */ }
+                }
             }
         }
 
@@ -517,7 +526,7 @@ public final class ProfileLoadService extends IntentService {
                                 su[vibrationCommand] = "echo 0 > " + vibrationOff.getAbsolutePath();
                         }
                     }
-                } catch (IOException e1) {}
+                } catch (IOException e1) { /* Gracefully fail */ }
             }
 
             // Save the current vibration value for future use, if NOT 0 (vibration already off) or -1 (unsupported device).
@@ -550,13 +559,13 @@ public final class ProfileLoadService extends IntentService {
             try {
                 if(!prefCurrent.getBoolean("backlight_off", false))
                     editor.putInt("auto_brightness", Settings.System.getInt(getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE));
-            } catch (SettingNotFoundException e) {}
+            } catch (SettingNotFoundException e) { /* Gracefully fail */ }
 
             // Save current backlight value for future use, if the current state of "backlight off" is false
             try {
                 if(!prefCurrent.getBoolean("backlight_off", false))
                     editor.putInt("backlight_value", Settings.System.getInt(getContentResolver(), Settings.System.SCREEN_BRIGHTNESS));
-            } catch (SettingNotFoundException e1) {}
+            } catch (SettingNotFoundException e1) { /* Gracefully fail */ }
 
             if(!uiRefresh.equals("activity-manager")) {
                 // Check to see if Chromecast screen mirroring is active.

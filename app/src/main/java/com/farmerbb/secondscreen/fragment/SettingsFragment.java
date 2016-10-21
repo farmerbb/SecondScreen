@@ -16,7 +16,6 @@
 package com.farmerbb.secondscreen.fragment;
 
 import android.app.Activity;
-import android.app.DialogFragment;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -31,7 +30,6 @@ import android.view.MenuItem;
 import com.farmerbb.secondscreen.R;
 import com.farmerbb.secondscreen.activity.HdmiProfileSelectActivity;
 import com.farmerbb.secondscreen.activity.NotificationSettingsActivity;
-import com.farmerbb.secondscreen.fragment.dialog.AboutDialogFragment;
 import com.farmerbb.secondscreen.service.DisplayConnectionService;
 import com.farmerbb.secondscreen.service.SafeModeToggleService;
 import com.farmerbb.secondscreen.util.U;
@@ -59,6 +57,7 @@ public final class SettingsFragment extends PreferenceFragment implements OnPref
     Listener listener;
 
     // Override the Fragment.onAttach() method to instantiate the Listener
+    @SuppressWarnings("deprecation")
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -141,7 +140,7 @@ public final class SettingsFragment extends PreferenceFragment implements OnPref
             if(file.exists()) {
                 try {
                     findPreference("hdmi_select_profile").setSummary(getResources().getString(R.string.action_load) + " " + U.getProfileTitle(getActivity(), prefMain.getString("hdmi_load_profile", "show_list")));
-                } catch (IOException e) {}
+                } catch (IOException e) { /* Gracefully fail */ }
             } else
                 findPreference("hdmi_select_profile").setSummary(getResources().getString(R.string.show_list));
         }
@@ -255,6 +254,6 @@ public final class SettingsFragment extends PreferenceFragment implements OnPref
             SharedPreferences.Editor editor = prefNew.edit();
             editor.putBoolean("expert_mode", true);
             editor.apply();
-        } catch (NullPointerException e) {}
+        } catch (NullPointerException e) { /* Gracefully fail */ }
     }
 }

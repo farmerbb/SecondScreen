@@ -20,7 +20,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -124,7 +123,7 @@ public final class TurnOffActivity extends AppCompatActivity {
                         SharedPreferences prefCurrent = U.getPrefCurrent(TurnOffActivity.this);
                         if(!prefCurrent.getBoolean("not_active", true))
                             U.turnOffProfile(TurnOffActivity.this);
-                    } catch (NullPointerException e) {}
+                    } catch (NullPointerException e) { /* Gracefully fail */ }
 
                     finish();
                 }

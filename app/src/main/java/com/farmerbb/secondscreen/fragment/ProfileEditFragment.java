@@ -87,6 +87,7 @@ SharedPreferences.OnSharedPreferenceChangeListener {
     static Listener listener;
 
     // Override the Fragment.onAttach() method to instantiate the Listener
+    @SuppressWarnings("deprecation")
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -310,15 +311,19 @@ SharedPreferences.OnSharedPreferenceChangeListener {
             disablePreference(prefNew, "freeform", true);
 
         try {
-            getActivity().getPackageManager().getPackageInfo("com.chrome.dev", 0);
-        } catch(NameNotFoundException e) {
+            getActivity().getPackageManager().getPackageInfo("com.chrome.canary", 0);
+        } catch (NameNotFoundException e) {
             try {
-                getActivity().getPackageManager().getPackageInfo("com.chrome.beta", 0);
+                getActivity().getPackageManager().getPackageInfo("com.chrome.dev", 0);
             } catch (NameNotFoundException e1) {
                 try {
-                    getActivity().getPackageManager().getPackageInfo("com.android.chrome", 0);
+                    getActivity().getPackageManager().getPackageInfo("com.chrome.beta", 0);
                 } catch (NameNotFoundException e2) {
-                    disablePreference(prefNew, "chrome", true);
+                    try {
+                        getActivity().getPackageManager().getPackageInfo("com.android.chrome", 0);
+                    } catch (NameNotFoundException e3) {
+                        disablePreference(prefNew, "chrome", true);
+                    }
                 }
             }
         }
@@ -625,7 +630,7 @@ SharedPreferences.OnSharedPreferenceChangeListener {
                     try {
                         PackageInfo pInfo = getActivity().getPackageManager().getPackageInfo("com.farmerbb.taskbar.paid", 0);
                         if(pInfo.versionCode >= 21) taskbarInstalled = true;
-                    } catch (PackageManager.NameNotFoundException e2) {}
+                    } catch (PackageManager.NameNotFoundException e2) { /* Gracefully fail */ }
                 }
 
                 if(!taskbarInstalled) {
@@ -650,8 +655,10 @@ SharedPreferences.OnSharedPreferenceChangeListener {
         SharedPreferences prefSaved = U.getPrefSaved(getActivity(), prefCurrent.getString("filename", "0"));
         SharedPreferences.Editor editor = prefCurrent.edit();
 
-        if(!prefNew.getString("ui_refresh", "do-nothing").equals(prefSaved.getString("ui_refresh", "do-nothing")))
+        if(!prefNew.getString("ui_refresh", "do-nothing").equals(prefSaved.getString("ui_refresh", "do-nothing"))) {
             editor.putBoolean("force_ui_refresh", true);
+            editor.apply();
+        }
 
         try {
             saveProfile();
@@ -778,7 +785,7 @@ SharedPreferences.OnSharedPreferenceChangeListener {
             } else {
                 try {
                     bundle.putString("title", listener.getProfileTitle(filename));
-                } catch (IOException e) {}
+                } catch (IOException e) { /* Gracefully fail */ }
 
                 fragment = new ProfileViewFragment();
                 fragment.setArguments(bundle);
