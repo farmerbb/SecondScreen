@@ -1149,7 +1149,7 @@ SystemAlertPermissionDialogFragment.Listener {
             swiftkeyFragment.show(getFragmentManager(), "swiftkey-fragment");
 
         // Show dialog if device is newer than API 25 (Nougat MR1)
-        } else if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1
+        } else if(Build.VERSION.SDK_INT > Build.VERSION_CODES.N_MR1
                 && getFragmentManager().findFragmentByTag("upgrade-fragment") == null
                 && showUpgradeDialog) {
             showUpgradeDialog = false;
