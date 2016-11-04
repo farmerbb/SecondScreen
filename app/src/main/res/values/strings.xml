@@ -198,6 +198,5 @@
     <string name="quick_actions_unavailable">Quick Actions are unavailable in non-root mode</string>
     <string name="error_dialog_title">Error</string>
     <string name="error_dialog_message">Unfortunately, due to OEM restrictions, this feature can\'t be enabled on your device.\n\nYou may still be able to enable it by using this adb shell command:\n\nappops set %1$s %2$s allow</string>
-    <string name="quick_actions_long">Quickly access SecondScreen functionality</string>
 
 </resources>

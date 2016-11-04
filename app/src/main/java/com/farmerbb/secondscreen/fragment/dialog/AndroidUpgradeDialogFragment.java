@@ -33,6 +33,7 @@ public final class AndroidUpgradeDialogFragment extends DialogFragment {
  * implement this interface in order to receive event call backs.
  * Each method passes the DialogFragment in case the host needs to query it. */
     public interface Listener {
+        void onUpgradeDialogPositiveClick(DialogFragment dialog);
         void onUpgradeDialogNegativeClick(DialogFragment dialog);
     }
 
@@ -63,7 +64,9 @@ public final class AndroidUpgradeDialogFragment extends DialogFragment {
         builder.setMessage(R.string.dialog_upgrade_message)
         .setTitle(R.string.safeguard_title)
         .setPositiveButton(R.string.action_ok, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {}
+            public void onClick(DialogInterface dialog, int id) {
+                listener.onUpgradeDialogPositiveClick(AndroidUpgradeDialogFragment.this);
+            }
         })
         .setNegativeButton(R.string.check_for_update, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {

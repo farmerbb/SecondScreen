@@ -356,7 +356,6 @@ SystemAlertPermissionDialogFragment.Listener {
 
                 ShortcutInfo shortcut = new ShortcutInfo.Builder(this, "quick_actions")
                         .setShortLabel(getString(R.string.label_quick_actions))
-                        .setLongLabel(getString(R.string.quick_actions_long))
                         .setIcon(Icon.createWithResource(this, R.drawable.shortcut_icon))
                         .setIntent(intent)
                         .build();
@@ -1049,9 +1048,24 @@ SystemAlertPermissionDialogFragment.Listener {
     }
 
     @Override
+    public void onUpgradeDialogPositiveClick(DialogFragment dialog) {
+        dialog.dismiss();
+
+        SharedPreferences prefMain = U.getPrefMain(this);
+        SharedPreferences.Editor editor = prefMain.edit();
+        editor.putInt("current_api_version", Build.VERSION.SDK_INT);
+        editor.apply();
+    }
+
+    @Override
     public void onUpgradeDialogNegativeClick(DialogFragment dialog) {
         dialog.dismiss();
         U.checkForUpdates(this);
+
+        SharedPreferences prefMain = U.getPrefMain(this);
+        SharedPreferences.Editor editor = prefMain.edit();
+        editor.putInt("current_api_version", Build.VERSION.SDK_INT);
+        editor.apply();
     }
 
     @Override
@@ -1134,14 +1148,13 @@ SystemAlertPermissionDialogFragment.Listener {
             DialogFragment swiftkeyFragment = new SwiftkeyDialogFragment();
             swiftkeyFragment.show(getFragmentManager(), "swiftkey-fragment");
 
-        // Show dialog if device is newer than API 25 (Nougat MR1).
-        // If debug mode is enabled, the dialog is never shown.
-        } else if(Build.VERSION.SDK_INT > Build.VERSION_CODES.N_MR1
+        // Show dialog if device is newer than API 25 (Nougat MR1)
+        } else if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1
                 && getFragmentManager().findFragmentByTag("upgrade-fragment") == null
                 && showUpgradeDialog) {
             showUpgradeDialog = false;
 
-            if(!isDebugModeEnabled(false)) {
+            if(prefMain.getInt("current_api_version", Build.VERSION.SDK_INT - 1) < Build.VERSION.SDK_INT) {
                 DialogFragment upgradeFragment = new AndroidUpgradeDialogFragment();
                 upgradeFragment.show(getFragmentManager(), "upgrade-fragment");
             }
