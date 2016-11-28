@@ -1266,7 +1266,8 @@ SystemAlertPermissionDialogFragment.Listener {
     @Override
     public void onSystemAlertPermissionDialogPositiveClick() {
         try {
-            startActivity(new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION));
+            startActivity(new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+                    Uri.parse("package:" + BuildConfig.APPLICATION_ID)));
         } catch (ActivityNotFoundException e) {
             U.showErrorDialog(this, "SYSTEM_ALERT_WINDOW");
         }

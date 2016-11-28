@@ -22,6 +22,7 @@ import android.app.ActivityManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.ActivityNotFoundException;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -34,6 +35,7 @@ import android.os.Build;
 import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.NotificationCompat;
 import android.util.DisplayMetrics;
@@ -43,6 +45,7 @@ import android.widget.Toast;
 
 import com.farmerbb.secondscreen.BuildConfig;
 import com.farmerbb.secondscreen.R;
+import com.farmerbb.secondscreen.activity.DummyLauncherActivity;
 import com.farmerbb.secondscreen.activity.MainActivity;
 import com.farmerbb.secondscreen.activity.RebootRequiredActivity;
 import com.farmerbb.secondscreen.activity.TaskerQuickActionsActivity;
@@ -280,7 +283,7 @@ public final class U {
         }
     }
 
-    public static String uiRefreshCommand2(Context context) {
+    public static String uiRefreshCommand2(Context context, boolean shouldClearHome) {
         ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
 
         // For better reliability, we execute the UI refresh while on the home screen
@@ -289,9 +292,11 @@ public final class U {
         homeIntent.addCategory(Intent.CATEGORY_DEFAULT);
         homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-        try {
-            context.startActivity(homeIntent);
-        } catch (ActivityNotFoundException e) { /* Gracefully fail */ }
+        if(!shouldClearHome) {
+            try {
+                context.startActivity(homeIntent);
+            } catch (ActivityNotFoundException e) { /* Gracefully fail */ }
+        }
 
         // Kill all background processes, in order to fully refresh UI
         PackageManager pm = context.getPackageManager();
@@ -542,7 +547,7 @@ public final class U {
     public static void listProfilesBroadcast(Context context) {
         Intent listProfilesIntent = new Intent();
         listProfilesIntent.setAction(U.LIST_PROFILES);
-        context.sendBroadcast(listProfilesIntent);
+        LocalBroadcastManager.getInstance(context).sendBroadcast(listProfilesIntent);
     }
 
     // Miscellaneous utility methods
@@ -1085,5 +1090,20 @@ public final class U {
 
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    // Clears the default home screen
+    public static void clearDefaultHome(Context context) {
+        PackageManager packageManager = context.getPackageManager();
+        ComponentName componentName = new ComponentName(context, DummyLauncherActivity.class.getName());
+        packageManager.setComponentEnabledSetting(componentName, PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
+
+        Intent homeIntent = new Intent(Intent.ACTION_MAIN);
+        homeIntent.addCategory(Intent.CATEGORY_HOME);
+        homeIntent.addCategory(Intent.CATEGORY_DEFAULT);
+        homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(homeIntent);
+
+        packageManager.setComponentEnabledSetting(componentName, PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
     }
 }

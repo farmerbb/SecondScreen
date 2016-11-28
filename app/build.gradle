@@ -2,20 +2,20 @@ apply plugin: 'android-sdk-manager'
 apply plugin: 'com.android.application'
 
 ext {
-    SUPPORT_LIBRARY_VERSION = "25.0.0"
+    SUPPORT_LIBRARY_VERSION = "25.0.1"
 }
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.0"
+    buildToolsVersion "25.0.1"
 
     defaultConfig {
         applicationId "com.farmerbb.secondscreen"
         minSdkVersion 17
         targetSdkVersion 25
 
-        versionCode 136
-        versionName "2.5.3"
+        versionCode 137
+        versionName "2.5.4"
 
         resConfigs "en", "es", "fr", "sk"
         vectorDrawables.useSupportLibrary = true

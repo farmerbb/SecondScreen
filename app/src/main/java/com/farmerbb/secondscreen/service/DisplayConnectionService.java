@@ -20,6 +20,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.hardware.display.DisplayManager;
 import android.os.IBinder;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.Display;
 
 import com.farmerbb.secondscreen.activity.HdmiActivity;
@@ -58,7 +59,7 @@ public final class DisplayConnectionService extends Service {
         public void onDisplayRemoved(int displayId) {
             Intent intent = new Intent();
             intent.setAction(U.SCREEN_DISCONNECT);
-            sendBroadcast(intent);
+            LocalBroadcastManager.getInstance(DisplayConnectionService.this).sendBroadcast(intent);
 
             SharedPreferences prefCurrent = U.getPrefCurrent(DisplayConnectionService.this);
             DisplayManager dm = (DisplayManager) getSystemService(DISPLAY_SERVICE);

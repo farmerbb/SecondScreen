@@ -230,6 +230,7 @@ SharedPreferences.OnSharedPreferenceChangeListener {
             editor.putString("screen_timeout", prefSaved.getString("screen_timeout", "do-nothing"));
             editor.putString("hdmi_rotation", prefSaved.getString("hdmi_rotation", "landscape"));
             editor.putBoolean("taskbar", prefSaved.getBoolean("taskbar", false));
+            editor.putBoolean("clear_home", prefSaved.getBoolean("clear_home", false));
             editor.apply();
 
             name = prefSaved.getString("profile_name", getResources().getString(R.string.action_new));
@@ -523,6 +524,7 @@ SharedPreferences.OnSharedPreferenceChangeListener {
         editor.putBoolean("freeform", prefNew.getBoolean("freeform", false));
         editor.putString("hdmi_rotation", prefNew.getString("hdmi_rotation", "landscape"));
         editor.putBoolean("taskbar", prefNew.getBoolean("taskbar", false));
+        editor.putBoolean("clear_home", prefNew.getBoolean("clear_home", false));
 
         if(prefMain.getBoolean("expert_mode", false)) {
             if(prefNew.getBoolean("size-reset", false))

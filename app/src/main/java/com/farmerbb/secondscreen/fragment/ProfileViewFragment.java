@@ -179,6 +179,7 @@ public final class ProfileViewFragment extends Fragment {
         generateProfileSettings(prefSaved.getBoolean("backlight_off", false), R.string.pref_title_backlight_off);
         generateProfileSettings(prefSaved.getBoolean("bluetooth_on", false), R.string.profile_view_bluetooth_on);
         generateProfileSettings(prefSaved.getBoolean("chrome", false), R.string.quick_chrome);
+        generateProfileSettings(prefSaved.getBoolean("clear_home", false), R.string.quick_clear_home);
         generateProfileSettings(prefSaved.getBoolean("daydreams_on", false), R.string.profile_view_daydreams_on);
         generateProfileSettings(prefSaved.getBoolean("navbar", false), R.string.profile_view_navbar);
         generateProfileSettings(prefSaved.getBoolean("freeform", false), R.string.profile_view_freeform);

@@ -33,19 +33,62 @@
         android:textColor="@color/text_color_primary" />
 
     <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:textStyle="bold"
+        android:textSize="12sp"
+        android:text="@string/pref_title_resolution"/>
+
+    <TextView
         android:id="@+id/hdmiTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
         android:gravity="center"
         android:paddingTop="10dp"
         android:text="@null"
         android:textSize="20sp"
         android:textStyle="bold" />
 
+    <!-- List of profiles -->
+
+    <View
+        android:layout_height="1dp"
+        android:background="@color/light_gray"
+        android:layout_width="match_parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:textStyle="bold"
+        android:textSize="12sp"
+        android:text="@string/select_profile_alt"/>
+
+    <ListView
+        android:id="@+id/listView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp" />
+
+    <View
+        android:layout_height="1dp"
+        android:background="@color/light_gray"
+        android:layout_width="match_parent"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="8dp"/>
+
     <LinearLayout
         android:id="@+id/hdmiCheckBoxLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:gravity="center" >
 
         <CheckBox
@@ -58,18 +101,5 @@
             android:textSize="12sp" />
 
     </LinearLayout>
-
-    <!-- List of profiles -->
-
-    <View
-        android:layout_height="1dp"
-        android:background="?android:attr/dividerVertical"
-        android:layout_width="match_parent"/>
-
-    <ListView
-        android:id="@+id/listView3"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginStart="8dp" />
 
 </LinearLayout>

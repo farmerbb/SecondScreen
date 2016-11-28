@@ -33,6 +33,7 @@ import android.os.IBinder;
 import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
@@ -97,15 +98,17 @@ public final class NotificationService extends Service {
         public void onDisplayAdded(int displayId) {
             Intent intent = new Intent();
             intent.setAction(U.SCREEN_CONNECT);
-            sendBroadcast(intent);
+            LocalBroadcastManager.getInstance(NotificationService.this).sendBroadcast(intent);
 
             DisplayManager dm = (DisplayManager) getSystemService(DISPLAY_SERVICE);
             Display[] displays = dm.getDisplays();
 
-            if(displays[displays.length - 2].getDisplayId() == Display.DEFAULT_DISPLAY) {
-                Intent serviceIntent = new Intent(NotificationService.this, ScreenOnService.class);
-                startService(serviceIntent);
-            }
+            try {
+                if(displays[displays.length - 2].getDisplayId() == Display.DEFAULT_DISPLAY) {
+                    Intent serviceIntent = new Intent(NotificationService.this, ScreenOnService.class);
+                    startService(serviceIntent);
+                }
+            } catch (ArrayIndexOutOfBoundsException e) { /* Gracefully fail */ }
         }
 
         @Override
@@ -116,25 +119,27 @@ public final class NotificationService extends Service {
             DisplayManager dm = (DisplayManager) getSystemService(DISPLAY_SERVICE);
             Display[] displays = dm.getDisplays();
 
-            if(displays[displays.length - 1].getDisplayId() == Display.DEFAULT_DISPLAY) {
-                Intent serviceIntent = new Intent(NotificationService.this, TempBacklightOnService.class);
-                startService(serviceIntent);
+            try {
+                if(displays[displays.length - 1].getDisplayId() == Display.DEFAULT_DISPLAY) {
+                    Intent serviceIntent = new Intent(NotificationService.this, TempBacklightOnService.class);
+                    startService(serviceIntent);
 
-                SharedPreferences prefMain = U.getPrefMain(NotificationService.this);
-                ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-                boolean displayConnectionServiceRunning = false;
+                    SharedPreferences prefMain = U.getPrefMain(NotificationService.this);
+                    ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+                    boolean displayConnectionServiceRunning = false;
 
-                for(ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-                    if(DisplayConnectionService.class.getName().equals(service.service.getClassName()))
-                        displayConnectionServiceRunning = true;
+                    for(ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+                        if(DisplayConnectionService.class.getName().equals(service.service.getClassName()))
+                            displayConnectionServiceRunning = true;
+                    }
+
+                    if(prefMain.getBoolean("inactive", true) && !displayConnectionServiceRunning) {
+                        Intent turnOffIntent = new Intent(NotificationService.this, TurnOffActivity.class);
+                        turnOffIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(turnOffIntent);
+                    }
                 }
-
-                if(prefMain.getBoolean("inactive", true) && !displayConnectionServiceRunning) {
-                    Intent turnOffIntent = new Intent(NotificationService.this, TurnOffActivity.class);
-                    turnOffIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(turnOffIntent);
-                }
-            }
+            } catch (ArrayIndexOutOfBoundsException e) { /* Gracefully fail */ }
         }
     };
 

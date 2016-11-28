@@ -206,6 +206,18 @@ public final class ProfileLoadService extends IntentService {
             }
         }
 
+        // Clear default home
+        boolean shouldClearHome = false;
+
+        if(!prefCurrent.getBoolean("clear_home", false) && prefSaved.getBoolean("clear_home", false))
+            shouldClearHome = true;
+
+        if(prefCurrent.getBoolean("clear_home", false) && !prefSaved.getBoolean("clear_home", false))
+            shouldClearHome = true;
+
+        if(shouldClearHome)
+            U.clearDefaultHome(this);
+
         // Resolution and density
 
         // Determine if CyanogenMod workaround is needed
@@ -837,7 +849,7 @@ public final class ProfileLoadService extends IntentService {
                     }
 
                     su[uiRefreshCommand] = U.uiRefreshCommand(this, false);
-                    su[uiRefreshCommand2] = U.uiRefreshCommand2(this);
+                    su[uiRefreshCommand2] = U.uiRefreshCommand2(this, shouldClearHome);
                     break;
                 case "activity-manager":
                     su[uiRefreshCommand] = U.uiRefreshCommand(this, true);
@@ -930,6 +942,7 @@ public final class ProfileLoadService extends IntentService {
         editor.putBoolean("navbar", prefSaved.getBoolean("navbar", false));
         editor.putBoolean("freeform", prefSaved.getBoolean("freeform", false));
         editor.putBoolean("taskbar", prefSaved.getBoolean("taskbar", false));
+        editor.putBoolean("clear_home", prefSaved.getBoolean("clear_home", false));
         editor.putInt("overscan_left", prefSaved.getInt("overscan_left", 20));
         editor.putInt("overscan_right", prefSaved.getInt("overscan_right", 20));
         editor.putInt("overscan_top", prefSaved.getInt("overscan_top", 20));

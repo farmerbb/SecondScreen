@@ -25,6 +25,7 @@ import android.graphics.Typeface;
 import android.hardware.display.DisplayManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.View;
@@ -92,7 +93,7 @@ public final class HdmiActivity extends Activity {
         super.onStart();
 
         if(menu)
-            registerReceiver(receiver, filter);
+            LocalBroadcastManager.getInstance(this).registerReceiver(receiver, filter);
     }
 
     @Override
@@ -100,7 +101,7 @@ public final class HdmiActivity extends Activity {
         super.onStop();
 
         if(menu) {
-            unregisterReceiver(receiver);
+            LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
 
             // Set checkbox preference
             CheckBox checkbox = (CheckBox) findViewById(R.id.hdmiCheckBox);

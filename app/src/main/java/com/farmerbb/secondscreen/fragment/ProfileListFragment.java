@@ -28,6 +28,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -162,7 +163,7 @@ public final class ProfileListFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        getActivity().registerReceiver(receiver, filter);
+        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(receiver, filter);
 
         // Floating action button
         FloatingActionButton floatingActionButton = (FloatingActionButton) getActivity().findViewById(R.id.button_floating_action);
@@ -186,7 +187,7 @@ public final class ProfileListFragment extends Fragment {
     public void onStop() {
         super.onStop();
 
-        getActivity().unregisterReceiver(receiver);
+        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(receiver);
     }
 
     @Override

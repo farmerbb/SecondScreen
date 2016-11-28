@@ -135,6 +135,15 @@ public final class TurnOffService extends IntentService {
             wifi.setWifiEnabled(prefCurrent.getBoolean("wifi_on_system", false));
         }
 
+        // Clear default home
+        boolean shouldClearHome = false;
+
+        if(prefCurrent.getBoolean("clear_home", false))
+            shouldClearHome = true;
+
+        if(shouldClearHome)
+            U.clearDefaultHome(this);
+
         // Resolution and density
 
         // Determine if CyanogenMod workaround is needed
@@ -320,7 +329,7 @@ public final class TurnOffService extends IntentService {
         switch(uiRefresh) {
             case "system-ui":
                 su[uiRefreshCommand] = U.uiRefreshCommand(this, false);
-                su[uiRefreshCommand2] = U.uiRefreshCommand2(this);
+                su[uiRefreshCommand2] = U.uiRefreshCommand2(this, shouldClearHome);
                 break;
             case "activity-manager":
             case "activity-manager-safe-mode":

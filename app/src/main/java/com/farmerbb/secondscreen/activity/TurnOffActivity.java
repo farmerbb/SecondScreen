@@ -22,6 +22,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -136,7 +137,7 @@ public final class TurnOffActivity extends AppCompatActivity {
         super.onStart();
 
         if(dialog)
-            registerReceiver(receiver, filter);
+            LocalBroadcastManager.getInstance(this).registerReceiver(receiver, filter);
     }
 
     @Override
@@ -144,6 +145,6 @@ public final class TurnOffActivity extends AppCompatActivity {
         super.onStop();
 
         if(dialog)
-            unregisterReceiver(receiver);
+            LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
     }
 }
