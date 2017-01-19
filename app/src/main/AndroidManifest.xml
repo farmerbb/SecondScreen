@@ -37,20 +37,22 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="com.farmerbb.taskbar.START_STOP_TASKBAR" />
+    <uses-permission android:name="com.farmerbb.taskbar.ENABLE_DISABLE_HOME" />
     <uses-permission android:name="com.farmerbb.taskbar.paid.START_STOP_TASKBAR" />
+    <uses-permission android:name="com.farmerbb.taskbar.paid.ENABLE_DISABLE_HOME" />
 
     <uses-permission-sdk-23 android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission-sdk-23 android:name="android.permission.WRITE_SECURE_SETTINGS"/>
 
     <application
-        android:allowBackup="false"
+        android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="${appName}"
         android:theme="@style/Theme.Secondscreen.2" >
         <activity
             android:name="com.farmerbb.secondscreen.activity.DebugModeActivity"
             android:excludeFromRecents="true"
-            android:label="@string/app_name"
+            android:label="${appName}"
             android:theme="@style/Theme.Secondscreen.Dialog"
             android:documentLaunchMode="always" >
         </activity>
@@ -66,24 +68,24 @@
         </activity>
         <activity
             android:name="com.farmerbb.secondscreen.activity.FragmentContainerActivity"
-            android:label="@string/app_name" >
+            android:label="${appName}" >
         </activity>
         <activity
             android:name="com.farmerbb.secondscreen.activity.HdmiActivity"
             android:excludeFromRecents="true"
-            android:label="@string/app_name"
+            android:label="${appName}"
             android:launchMode="singleInstance"
             android:documentLaunchMode="always"
             android:theme="@style/Theme.Secondscreen.Dialog" >
         </activity>
         <activity
             android:name="com.farmerbb.secondscreen.activity.HdmiProfileSelectActivity"
-            android:label="@string/app_name"
+            android:label="${appName}"
             android:theme="@style/Theme.Secondscreen.Dialog" >
         </activity>
         <activity
             android:name="com.farmerbb.secondscreen.activity.MainActivity"
-            android:label="@string/app_name"
+            android:label="${appName}"
             android:launchMode="singleTask"
             android:windowSoftInputMode="adjustPan" >
             <intent-filter>
@@ -96,7 +98,7 @@
         <activity
             android:name="com.farmerbb.secondscreen.activity.NotificationSettingsActivity"
             android:excludeFromRecents="true"
-            android:label="@string/app_name"
+            android:label="${appName}"
             android:theme="@style/Theme.Secondscreen.Dialog"
             android:documentLaunchMode="always" >
             <intent-filter>
@@ -125,7 +127,7 @@
         <activity
             android:name="com.farmerbb.secondscreen.activity.RebootRequiredActivity"
             android:excludeFromRecents="true"
-            android:label="@string/app_name"
+            android:label="${appName}"
             android:launchMode="singleInstance"
             android:documentLaunchMode="always"
             android:theme="@style/Theme.Secondscreen.Dialog"
@@ -162,7 +164,7 @@
         <activity
             android:name="com.farmerbb.secondscreen.activity.TurnOffActivity"
             android:excludeFromRecents="true"
-            android:label="@string/app_name"
+            android:label="${appName}"
             android:launchMode="singleInstance"
             android:documentLaunchMode="always"
             android:theme="@style/Theme.Secondscreen.Dialog"
@@ -171,7 +173,7 @@
         <activity
             android:name="com.farmerbb.secondscreen.activity.UnableToStartActivity"
             android:excludeFromRecents="true"
-            android:label="@string/app_name"
+            android:label="${appName}"
             android:launchMode="singleInstance"
             android:documentLaunchMode="always"
             android:theme="@style/Theme.Secondscreen.Dialog"
@@ -180,7 +182,7 @@
         <activity
             android:name="com.farmerbb.secondscreen.activity.WriteSettingsPermissionActivity"
             android:excludeFromRecents="true"
-            android:label="@string/app_name"
+            android:label="${appName}"
             android:launchMode="singleInstance"
             android:documentLaunchMode="always"
             android:theme="@style/Theme.Secondscreen.Dialog"

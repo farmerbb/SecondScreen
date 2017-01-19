@@ -35,6 +35,7 @@
     <string name="am_restart_warning">This method is not recommended when mirroring to wireless displays</string>
     <string name="any_profile">Any profile</string>
     <string name="app_name">SecondScreen</string>
+    <string name="app_name_debug">SecondScreen (Debug)</string>
     <string name="available_actions">Available Actions</string>
     <string name="backlight_off_message">NOTE: Some custom kernels may prevent the backlight from turning off completely with the Backlight Off option.</string>
     <string name="backlight_off_message_samsung">NOTE: On Samsung devices, the backlight may not turn off completely with the Backlight Off option.</string>
@@ -44,7 +45,7 @@
     <string name="checking_for_superuser">Checking for superuser access&#8230; please wait.</string>
     <string name="decline">I Decline</string>
     <string name="deleting_current_profile">Cannot delete the currently active profile</string>
-    <string name="dialog_about_message">SecondScreen: better screen mirroring for rooted devices\n\n&#169; 2016 Braden Farmer\n\nThis app\'s <a href="http://github.com/farmerbb/SecondScreen">source code</a> is licensed under <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2.0</a> (except as otherwise noted), and uses Apache-licensed code from the following projects:\n\n&#8226; <a href="http://github.com/Chainfire/libsuperuser">libsuperuser</a>\n\n&#8226; <a href="http://www.twofortyfouram.com/developer.html">Locale Developer API</a>\n\n&#8226; <a href="http://stackoverflow.com/a/28402378">SystemProperties</a>\n\nThis app uses graphical assets from the following sources, licensed under <a href="http://creativecommons.org/licenses/by/3.0/">CC-BY-3.0</a>:\n\n&#8226; <a href="http://developer.android.com/distribute/tools/promote/brand.html">Android robot (Google)</a></string>
+    <string name="dialog_about_message">SecondScreen: better screen mirroring for rooted devices\n\n&#169; 2017 Braden Farmer\n\nThis app\'s <a href="http://github.com/farmerbb/SecondScreen">source code</a> is licensed under <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2.0</a> (except as otherwise noted), and uses Apache-licensed code from the following projects:\n\n&#8226; <a href="http://github.com/Chainfire/libsuperuser">libsuperuser</a>\n\n&#8226; <a href="http://www.twofortyfouram.com/developer.html">Locale Developer API</a>\n\n&#8226; <a href="http://stackoverflow.com/a/28402378">SystemProperties</a>\n\nThis app uses graphical assets from the following sources, licensed under <a href="http://creativecommons.org/licenses/by/3.0/">CC-BY-3.0</a>:\n\n&#8226; <a href="http://developer.android.com/distribute/tools/promote/brand.html">Android robot (Google)</a></string>
     <string name="dialog_about_title">About SecondScreen</string>
     <string name="dialog_are_you_sure">Are you sure?</string>
     <string name="dialog_delete_button_title">Delete profile</string>
@@ -201,5 +202,6 @@
     <string name="pref_title_clear_home">Clear default launcher</string>
     <string name="pref_description_clear_home">Select this if you want to use a different launcher while SecondScreen is active</string>
     <string name="quick_clear_home">Clear launcher</string>
+    <string name="hdmi_output_toast">Please unplug and replug your HDMI cable for this setting to take effect</string>
 
 </resources>

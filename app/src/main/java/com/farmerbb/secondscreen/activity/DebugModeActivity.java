@@ -22,7 +22,6 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
-import android.widget.Toast;
 
 import com.farmerbb.secondscreen.R;
 import com.farmerbb.secondscreen.service.DisplayConnectionService;
@@ -35,6 +34,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+
+import moe.banana.support.ToastCompat;
 
 // The top secret debugging menu, which can be accessed by enabling debug mode (10 taps right below
 // the action bar in the ProfileListFragment), then long-pressing on the red area that appears
@@ -73,9 +74,9 @@ public class DebugModeActivity extends PreferenceActivity implements OnPreferenc
         switch(p.getKey()) {
             case "show_simulated_size_density":
                 SharedPreferences prefCurrent = U.getPrefCurrent(this);
-                Toast toast = Toast.makeText(
+                ToastCompat toast = ToastCompat.makeText(
                         this, getResources().getString(R.string.pref_title_resolution) + ": " + prefCurrent.getString("size", "reset") + "\n"
-                        + getResources().getString(R.string.pref_title_dpi) + ": " + prefCurrent.getString("density", "reset"), Toast.LENGTH_LONG);
+                        + getResources().getString(R.string.pref_title_dpi) + ": " + prefCurrent.getString("density", "reset"), ToastCompat.LENGTH_LONG);
                 toast.show();
                 break;
             case "simulate_reboot":

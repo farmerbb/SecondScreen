@@ -35,6 +35,7 @@
     <string name="am_restart_warning">Este método no se recomienda con el mirroring, pantalla inalámbrica</string>
     <string name="any_profile">Cualquier perfil</string>
     <string name="app_name">SecondScreen</string>
+    <string name="app_name_debug">SecondScreen (Debug)</string>
     <string name="available_actions">Acciones Disponibles</string>
     <string name="backlight_off_message">Algunos núcleos pueden evitar que la retroiluminación se apague por completo.</string>
     <string name="backlight_off_message_samsung">Algunos núcleos pueden evitar que la retroiluminación se apague por completo.</string>
@@ -44,7 +45,7 @@
     <string name="checking_for_superuser">Checking for superuser access&#8230; please wait.</string>
     <string name="decline">No acepto</string>
     <string name="deleting_current_profile">No se puede eliminar el perfil activo</string>
-    <string name="dialog_about_message">SecondScreen: Optimiza tu Android para las grandes pantallas\n\n&#169; 2016 Braden Farmer\n\nEsta aplicación utiliza el código de los siguientes proyectos de código abierto, todos registrados bajo <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2.0</a>:\n\n&#8226; <a href="http://github.com/Chainfire/libsuperuser">libsuperuser</a>\n\n&#8226; <a href="http://www.twofortyfouram.com/developer.html">Locale Developer API</a>\n\n&#8226; <a href="http://stackoverflow.com/a/28402378">SystemProperties</a>\n\nEsta aplicación utiliza elementos gráficos de las siguientes fuentes, autorizadas bajo <a href="http://creativecommons.org/licenses/by/3.0/">CC-BY-3.0</a>:\n\n&#8226; <a href="http://developer.android.com/distribute/tools/promote/brand.html">Android robot (Google)</a></string>
+    <string name="dialog_about_message">SecondScreen: Optimiza tu Android para las grandes pantallas\n\n&#169; 2017 Braden Farmer\n\nEsta aplicación utiliza el código de los siguientes proyectos de código abierto, todos registrados bajo <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2.0</a>:\n\n&#8226; <a href="http://github.com/Chainfire/libsuperuser">libsuperuser</a>\n\n&#8226; <a href="http://www.twofortyfouram.com/developer.html">Locale Developer API</a>\n\n&#8226; <a href="http://stackoverflow.com/a/28402378">SystemProperties</a>\n\nEsta aplicación utiliza elementos gráficos de las siguientes fuentes, autorizadas bajo <a href="http://creativecommons.org/licenses/by/3.0/">CC-BY-3.0</a>:\n\n&#8226; <a href="http://developer.android.com/distribute/tools/promote/brand.html">Android robot (Google)</a></string>
     <string name="dialog_about_title">Acerca SecondScreen</string>
     <string name="dialog_are_you_sure">¿Estás seguro?</string>
     <string name="dialog_delete_button_title">Eliminar perfil</string>
@@ -201,5 +202,6 @@
     <string name="pref_title_clear_home">Clear default launcher</string>
     <string name="pref_description_clear_home">Select this if you want to use a different launcher while SecondScreen is active</string>
     <string name="quick_clear_home">Clear launcher</string>
+    <string name="hdmi_output_toast">Please unplug and replug your HDMI cable for this setting to take effect</string>
 
 </resources>

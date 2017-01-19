@@ -134,7 +134,7 @@ public final class HdmiActivity extends Activity {
         Intent closeDrawer = new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
         sendBroadcast(closeDrawer);
 
-        DisplayManager dm = (DisplayManager) getSystemService(DISPLAY_SERVICE);
+        DisplayManager dm = (DisplayManager) getApplicationContext().getSystemService(DISPLAY_SERVICE);
         DisplayMetrics metrics = new DisplayMetrics();
 
         Display[] displays = dm.getDisplays();

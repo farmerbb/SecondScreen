@@ -41,7 +41,6 @@ import android.support.v7.app.NotificationCompat;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import com.farmerbb.secondscreen.BuildConfig;
 import com.farmerbb.secondscreen.R;
@@ -68,6 +67,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 import eu.chainfire.libsuperuser.Shell;
+import moe.banana.support.ToastCompat;
 
 // Utility class to store common methods and objects shared between multiple classes
 public final class U {
@@ -167,7 +167,7 @@ public final class U {
 
     // Non-boolean commands.  Most of these take a variable value either as an argument to the method,
     // or by tacking the argument onto the end of the string.
-    public static final String chromeCommandRemove = "rm /data/local/chrome-command-line";
+    public static final String chromeCommandRemove = "rm /data/local/tmp/chrome-command-line";
     public static final String rotationCommand = "am broadcast -a android.intent.action.DOCK_EVENT --ei android.intent.extra.DOCK_STATE ";
     public static final String rotationPrePostCommands = "settings put secure screensaver_activate_on_dock ";
     public static final String overscanCommand = "wm overscan ";
@@ -204,7 +204,7 @@ public final class U {
     }
 
     public static String chromeCommand(String chromeVersion) {
-        return "echo 'chrome --user-agent=\"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/" + chromeVersion + " Safari/537.36\"' > /data/local/chrome-command-line && chmod 644 /data/local/chrome-command-line";
+        return "echo 'chrome --user-agent=\"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/" + chromeVersion + " Safari/537.36\"' > /data/local/tmp/chrome-command-line && chmod 644 /data/local/tmp/chrome-command-line";
     }
 
     public static String chromeCommand2(int channel) {
@@ -704,12 +704,12 @@ public final class U {
 
     // Shows toast notifications
     public static void showToast(Context context, int message){
-        Toast toast = Toast.makeText(context, context.getResources().getString(message), Toast.LENGTH_SHORT);
+        ToastCompat toast = ToastCompat.makeText(context, context.getResources().getString(message), ToastCompat.LENGTH_SHORT);
         toast.show();
     }
 
     public static void showToastLong(Context context, int message){
-        Toast toast = Toast.makeText(context, context.getResources().getString(message), Toast.LENGTH_LONG);
+        ToastCompat toast = ToastCompat.makeText(context, context.getResources().getString(message), ToastCompat.LENGTH_LONG);
         toast.show();
     }
 

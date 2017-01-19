@@ -46,7 +46,6 @@ import android.view.Surface;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.farmerbb.secondscreen.BuildConfig;
 import com.farmerbb.secondscreen.R;
@@ -83,6 +82,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
+
+import moe.banana.support.ToastCompat;
 
 // This is the main activity of the application.  This is the activity that is launched when
 // SecondScreen is selected in the user's application launcher.
@@ -188,7 +189,7 @@ SystemAlertPermissionDialogFragment.Listener {
     boolean showBusyboxDialog = true;
     boolean showUpgradeDialog = true;
     int clicks = 0;
-    Toast debugToast = null;
+    ToastCompat debugToast = null;
 
     boolean returningFromGrantingSystemAlertPermission = false;
     String savedFilename;
@@ -1220,13 +1221,13 @@ SystemAlertPermissionDialogFragment.Listener {
 
             if(clicks > 5 && clicks < 10) {
                 String message = String.format(getResources().getString(R.string.debug_mode_enabling), 10 - clicks);
-                debugToast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
+                debugToast = ToastCompat.makeText(this, message, ToastCompat.LENGTH_SHORT);
                 debugToast.show();
             } else if(clicks >= 10) {
                 SharedPreferences.Editor editor = prefMain.edit();
                 if(prefMain.getBoolean("debug_mode", false)) {
                     editor.putBoolean("debug_mode", false);
-                    debugToast = Toast.makeText(this, R.string.debug_mode_disabled, Toast.LENGTH_SHORT);
+                    debugToast = ToastCompat.makeText(this, R.string.debug_mode_disabled, ToastCompat.LENGTH_SHORT);
                     debugToast.show();
 
                     // Clean up leftover notifications
@@ -1244,7 +1245,7 @@ SystemAlertPermissionDialogFragment.Listener {
                     file4.delete();
                 } else {
                     editor.putBoolean("debug_mode", true);
-                    debugToast = Toast.makeText(this, R.string.debug_mode_enabled, Toast.LENGTH_SHORT);
+                    debugToast = ToastCompat.makeText(this, R.string.debug_mode_enabled, ToastCompat.LENGTH_SHORT);
                     debugToast.show();
                 }
 

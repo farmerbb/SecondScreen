@@ -2,30 +2,42 @@ apply plugin: 'android-sdk-manager'
 apply plugin: 'com.android.application'
 
 ext {
-    SUPPORT_LIBRARY_VERSION = "25.0.1"
+    SUPPORT_LIBRARY_VERSION = "25.1.0"
+}
+
+repositories {
+    maven {
+        url "https://jitpack.io"
+    }
 }
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.1"
+    buildToolsVersion "25.0.2"
 
     defaultConfig {
         applicationId "com.farmerbb.secondscreen"
         minSdkVersion 17
         targetSdkVersion 25
 
-        versionCode 137
-        versionName "2.5.4"
+        versionCode 138
+        versionName "2.5.5"
 
         resConfigs "en", "es", "fr", "sk"
         vectorDrawables.useSupportLibrary = true
     }
 
     buildTypes {
+        debug {
+            applicationIdSuffix ".debug"
+            manifestPlaceholders = [appName: "@string/app_name_debug"]
+        }
+
         release {
             minifyEnabled true
             shrinkResources true
             proguardFiles 'proguard-android.txt'
+            manifestPlaceholders = [appName: "@string/app_name"]
         }
     }
 
@@ -47,5 +59,6 @@ dependencies {
     compile "com.android.support:design:${SUPPORT_LIBRARY_VERSION}"
     compile 'org.apache.commons:commons-lang3:3.4'
     compile 'eu.chainfire:libsuperuser:1.0.0+'
+    compile 'moe.banana:toast-compat:1.0.5'
     compile group:'com.twofortyfouram', name:'android-plugin-api-for-locale', version:'[1.0.2,2.0['
 }
