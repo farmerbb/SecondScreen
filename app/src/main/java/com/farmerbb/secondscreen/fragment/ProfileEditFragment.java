@@ -446,7 +446,7 @@ SharedPreferences.OnSharedPreferenceChangeListener {
                 }
                 break;
             case "hdmi_rotation":
-                U.showToast(getActivity(), R.string.hdmi_output_toast);
+                U.showToastLong(getActivity(), R.string.hdmi_output_toast);
                 break;
         }
     }
