@@ -289,7 +289,6 @@ public final class U {
         // For better reliability, we execute the UI refresh while on the home screen
         Intent homeIntent = new Intent(Intent.ACTION_MAIN);
         homeIntent.addCategory(Intent.CATEGORY_HOME);
-        homeIntent.addCategory(Intent.CATEGORY_DEFAULT);
         homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         if(!shouldClearHome) {
@@ -1100,7 +1099,6 @@ public final class U {
 
         Intent homeIntent = new Intent(Intent.ACTION_MAIN);
         homeIntent.addCategory(Intent.CATEGORY_HOME);
-        homeIntent.addCategory(Intent.CATEGORY_DEFAULT);
         homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(homeIntent);
 
