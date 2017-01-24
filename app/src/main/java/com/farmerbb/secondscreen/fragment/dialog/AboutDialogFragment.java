@@ -27,6 +27,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.farmerbb.secondscreen.BuildConfig;
 import com.farmerbb.secondscreen.R;
 
 // DialogFragment shown when "About SecondScreen" is clicked from the SettingsFragment
@@ -77,12 +78,15 @@ public final class AboutDialogFragment extends DialogFragment {
         .setTitle(R.string.dialog_about_title)
         .setPositiveButton(R.string.action_close, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {}
-        })
-        .setNegativeButton(R.string.check_for_update, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                listener.onAboutDialogNegativeClick(AboutDialogFragment.this);
-            }
         });
+
+        if(!BuildConfig.DEBUG) {
+            builder.setNegativeButton(R.string.check_for_update, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    listener.onAboutDialogNegativeClick(AboutDialogFragment.this);
+                }
+            });
+        }
 
         textView = (TextView) view.findViewById(R.id.dialogMessage);
         textView.setText(R.string.dialog_about_message);
