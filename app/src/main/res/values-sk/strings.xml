@@ -182,7 +182,7 @@
     <string name="busybox_required">Busybox je vyžadovaný</string>
     <string name="action_ignore">Ignorovať</string>
     <string name="busybox_message">Kvôli obmedzeniam v tejto verzii Androidu, Busybox musí byť nainštalovaný aby SecondScreen mohol obnoviť UI.\n\nDôrazne odporúčame nainnštalovať Busybox alebo aktualizovať na najnovšiu verziu Androidu.</string>
-    <string name="no_write_settings_permission">SecondScreen requires permission to modify system settings before it can continue.\n\nPlease press \"Grant Permission\" and ensure that SecondScreen is set to \"Allow modify system settings\"</string>
+    <string name="no_write_settings_permission">SecondScreen vyžaduje povolenie pre úpravu nastavení systému.\n\nProsím, kliknite na \"Udeliť povolenie\" a uistite sa, že SecondScreen má povolenie pre \"Úpravy nastavení systému\"</string>
     <string name="permission_needed">Vyžadované povolenie</string>
     <string name="grant_permission">Udeliť povolenie</string>
     <string name="freeform_message">Freeform mode requires a UI refresh method to be selected</string>
