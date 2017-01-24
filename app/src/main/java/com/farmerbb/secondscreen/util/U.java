@@ -95,6 +95,11 @@ public final class U {
     public static final String KEY = "com.farmerbb.secondscreen.KEY";
     public static final String VALUE = "com.farmerbb.secondscreen.VALUE";
 
+    // Path to the Chrome command line file
+    private static final String CHROME_COMMAND_LINE = "eng".equals(Build.TYPE) || "userdebug".equals(Build.TYPE)
+            ? "/data/local/tmp/chrome-command-line"
+            : "/data/local/chrome-command-line";
+
     // Arrays of sysfs files that turn the backlight or vibration off.
     // Add new files to the end of the respective array to add backlight/vibration off support to a device
 
@@ -167,7 +172,7 @@ public final class U {
 
     // Non-boolean commands.  Most of these take a variable value either as an argument to the method,
     // or by tacking the argument onto the end of the string.
-    public static final String chromeCommandRemove = "rm /data/local/tmp/chrome-command-line";
+    public static final String chromeCommandRemove = "rm " + CHROME_COMMAND_LINE;
     public static final String rotationCommand = "am broadcast -a android.intent.action.DOCK_EVENT --ei android.intent.extra.DOCK_STATE ";
     public static final String rotationPrePostCommands = "settings put secure screensaver_activate_on_dock ";
     public static final String overscanCommand = "wm overscan ";
@@ -204,7 +209,7 @@ public final class U {
     }
 
     public static String chromeCommand(String chromeVersion) {
-        return "echo 'chrome --user-agent=\"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/" + chromeVersion + " Safari/537.36\"' > /data/local/tmp/chrome-command-line && chmod 644 /data/local/tmp/chrome-command-line";
+        return "echo 'chrome --user-agent=\"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/" + chromeVersion + " Safari/537.36\"' > " + CHROME_COMMAND_LINE + " && chmod 644 " + CHROME_COMMAND_LINE;
     }
 
     public static String chromeCommand2(int channel) {
