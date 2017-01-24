@@ -24,8 +24,9 @@ SecondScreen is an application designed for power users that frequently connect 
 * Homescreen shortcuts - launch a profile with one tap, without entering the app
 
 ## Download
-* Google Play (http://goo.gl/Jj1wkE)
-* xda-developers (http://goo.gl/XjDsR7)
+* Google Play (https://goo.gl/Jj1wkE)
+* APKMirror (https://goo.gl/KOuOfV)
+* xda-developers (https://goo.gl/XjDsR7)
 
 ## Explanation of permissions
 * root access required to change resolution/DPI, disable backlight/vibration, enable desktop-only mode in Chrome
