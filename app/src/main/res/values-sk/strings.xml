@@ -203,7 +203,7 @@
     <string name="pref_description_clear_home">Použite ak chcete použiť iný launcher keď je SecondScreen aktívny</string>
     <string name="quick_clear_home">Prečistiť launcher</string>
     <string name="hdmi_output_toast">Prosím, odpojte a znovu pripojte HDMI kábel pre aplikovanie týchto nastavení</string>
-    <string name="disable_keyboard_title">Disable soft keyboard</string>
-    <string name="disable_keyboard_message">By selecting this input method, SecondScreen can disable your soft keyboard, if it still shows up while a hardware keyboard is attached.\n\nNote that the input method picker may not appear in the navigation bar while this keyboard is selected.  If this is the case, you will have to come back to this settings page to disable the input method.</string>
+    <string name="disable_keyboard_title">Zakázať softvérovú klávesnicu</string>
+    <string name="disable_keyboard_message">Povolením, SecondScreen môže zakázať softvérovú klávesnicu, ak sa stále zobrazuje pri pripojení fyzickej klávesnici.\n\nIkona pre výber vstupnej metódy sa nemusí zobraziť na navigačnej lište. Ak sa vám to stane, vráťte sa späť na toto nastavenie a zakážte ho.</string>
 
 </resources>
