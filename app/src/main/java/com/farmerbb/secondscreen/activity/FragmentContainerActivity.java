@@ -22,6 +22,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Window;
 
 import com.farmerbb.secondscreen.R;
 import com.farmerbb.secondscreen.fragment.OverscanFragment;
@@ -47,9 +48,14 @@ public final class FragmentContainerActivity extends AppCompatActivity implement
         else {
             setContentView(R.layout.activity_fragment_container);
 
-            // Set action bar elevation
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                // Set action bar elevation
                 getSupportActionBar().setElevation(getResources().getDimensionPixelSize(R.dimen.action_bar_elevation));
+            }
+
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                getWindow().setDecorCaptionShade(Window.DECOR_CAPTION_SHADE_DARK);
+            }
 
             // Begin a new FragmentTransaction
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
