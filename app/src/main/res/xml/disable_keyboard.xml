@@ -1,3 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <input-method xmlns:android="http://schemas.android.com/apk/res/android"
-              android:settingsActivity="com.farmerbb.secondscreen.activity.DisableKeyboardActivity" />
+              android:settingsActivity="com.farmerbb.secondscreen.activity.DisableKeyboardActivity">
+    <subtype android:label="@string/disable_keyboard_title"
+             android:icon="@mipmap/ic_launcher"
+             android:imeSubtypeLocale="en_US"
+             android:imeSubtypeMode="keyboard" />
+</input-method>

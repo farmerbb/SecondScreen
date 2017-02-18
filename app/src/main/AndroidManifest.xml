@@ -237,7 +237,6 @@
         </service>
         <service
             android:name="com.farmerbb.secondscreen.service.DisableKeyboardService"
-            android:label="@string/disable_keyboard_title"
             android:permission="android.permission.BIND_INPUT_METHOD">
             <intent-filter>
                 <action android:name="android.view.InputMethod" />
