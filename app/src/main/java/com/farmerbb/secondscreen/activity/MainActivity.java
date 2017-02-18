@@ -468,7 +468,7 @@ SystemAlertPermissionDialogFragment.Listener {
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
                 && !Settings.canDrawOverlays(this)
-                && "landscape".equals(U.getPrefSaved(this, filename).getString("rotation_lock_new", "fallback"))
+                && !"do-nothing".equals(U.getPrefSaved(this, filename).getString("rotation_lock_new", "fallback"))
                 && !prefMain.getBoolean("dont_show_system_alert_dialog", false)) {
             returningFromGrantingSystemAlertPermission = true;
             savedFilename = filename;

@@ -198,10 +198,12 @@ public final class NotificationService extends Service {
         // Start NotificationService
         startForeground(1, mBuilder.build());
 
+        String rotationLockPref = prefCurrent.getString("rotation_lock_new", "fallback");
+
         // Draw system overlay, if needed
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
                 && Settings.canDrawOverlays(this)
-                && prefCurrent.getString("rotation_lock_new", "fallback").equals("landscape")) {
+                && !rotationLockPref.equals("do-nothing")) {
             windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
             WindowManager.LayoutParams params = new WindowManager.LayoutParams(
                     WindowManager.LayoutParams.WRAP_CONTENT,
@@ -210,7 +212,15 @@ public final class NotificationService extends Service {
                     WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
                     PixelFormat.TRANSLUCENT);
 
-            params.screenOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
+            switch(rotationLockPref) {
+                case "landscape":
+                case "fallback":
+                    params.screenOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
+                    break;
+                case "auto-rotate":
+                    params.screenOrientation = ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR;
+                    break;
+            }
 
             view = new View(this);
             windowManager.addView(view, params);
