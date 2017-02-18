@@ -55,6 +55,15 @@
             android:documentLaunchMode="always" >
         </activity>
         <activity
+            android:name="com.farmerbb.secondscreen.activity.DisableKeyboardActivity"
+            android:excludeFromRecents="true"
+            android:label="${appName}"
+            android:launchMode="singleInstance"
+            android:documentLaunchMode="always"
+            android:theme="@style/Theme.Secondscreen.Dialog"
+            android:configChanges="orientation|screenSize" >
+        </activity>
+        <activity
             android:name="com.farmerbb.secondscreen.activity.DummyLauncherActivity"
             android:enabled="false" >
             <intent-filter>
@@ -225,6 +234,17 @@
         <service
             android:name="com.farmerbb.secondscreen.service.BootService"
             android:exported="true" >
+        </service>
+        <service
+            android:name="com.farmerbb.secondscreen.service.DisableKeyboardService"
+            android:label="@string/disable_keyboard_title"
+            android:permission="android.permission.BIND_INPUT_METHOD">
+            <intent-filter>
+                <action android:name="android.view.InputMethod" />
+            </intent-filter>
+            <meta-data
+                android:name="android.view.im"
+                android:resource="@xml/disable_keyboard" />
         </service>
         <service
             android:name="com.farmerbb.secondscreen.service.DisplayConnectionService"

@@ -2,7 +2,7 @@ apply plugin: 'android-sdk-manager'
 apply plugin: 'com.android.application'
 
 ext {
-    SUPPORT_LIBRARY_VERSION = "25.1.0"
+    SUPPORT_LIBRARY_VERSION = "25.1.1"
 }
 
 repositories {
@@ -20,8 +20,8 @@ android {
         minSdkVersion 17
         targetSdkVersion 25
 
-        versionCode 142
-        versionName "2.5.5"
+        versionCode 143
+        versionName "2.5.6"
 
         resConfigs "en", "es", "fr", "sk"
         vectorDrawables.useSupportLibrary = true

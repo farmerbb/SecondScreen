@@ -43,8 +43,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.Surface;
+import android.view.Window;
 import android.view.WindowManager;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -204,17 +204,13 @@ SystemAlertPermissionDialogFragment.Listener {
         }
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            // Remove margins from layout on Lollipop devices
-            LinearLayout layout = (LinearLayout) findViewById(R.id.profileViewEdit);
-            LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) layout.getLayoutParams();
-            params.setMargins(0, 0, 0, 0);
-            layout.setLayoutParams(params);
-
             // Set action bar elevation
             getSupportActionBar().setElevation(getResources().getDimensionPixelSize(R.dimen.action_bar_elevation));
-        } else
-            // Change window title on pre-Lollipop devices
-            setTitle(" " + getResources().getString(R.string.app_name));
+        }
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            getWindow().setDecorCaptionShade(Window.DECOR_CAPTION_SHADE_DARK);
+        }
 
         // Handle cases where both the free and (formerly) paid versions may be installed at the same time
         PackageInfo paidPackage;
@@ -1214,6 +1210,8 @@ SystemAlertPermissionDialogFragment.Listener {
 
         if(isClick && U.getPrefCurrent(this).getBoolean("not_active", true)) {
             clicks++;
+
+            U.cancelToast();
 
             if(debugToast != null)
                 debugToast.cancel();

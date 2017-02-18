@@ -188,7 +188,7 @@ public final class ProfileLoadService extends IntentService {
 
         // Wi-Fi
         if(getPackageManager().hasSystemFeature(PackageManager.FEATURE_WIFI)) {
-            WifiManager wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+            WifiManager wifi = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
             if(prefCurrent.getBoolean("not_active", true))
                 editor.putBoolean("wifi_on_system", wifi.isWifiEnabled());
 

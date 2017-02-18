@@ -65,7 +65,7 @@ public final class ProfileListFragment extends Fragment {
     private final class ListNotesReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
-            listProfiles();
+            if(getActivity() != null) listProfiles();
         }
     }
 

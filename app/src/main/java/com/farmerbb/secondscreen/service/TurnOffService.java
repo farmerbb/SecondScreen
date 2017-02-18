@@ -131,7 +131,7 @@ public final class TurnOffService extends IntentService {
 
         // Wi-Fi
         if(prefCurrent.getBoolean("wifi_on", true)) {
-            WifiManager wifi = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+            WifiManager wifi = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
             wifi.setWifiEnabled(prefCurrent.getBoolean("wifi_on_system", false));
         }
 

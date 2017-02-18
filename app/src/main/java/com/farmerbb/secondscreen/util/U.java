@@ -41,6 +41,7 @@ import android.support.v7.app.NotificationCompat;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.farmerbb.secondscreen.BuildConfig;
 import com.farmerbb.secondscreen.R;
@@ -707,14 +708,26 @@ public final class U {
     }
 
     // Shows toast notifications
-    public static void showToast(Context context, int message){
-        ToastCompat toast = ToastCompat.makeText(context, context.getResources().getString(message), ToastCompat.LENGTH_SHORT);
-        toast.show();
+    public static void showToast(Context context, int message) {
+        showToast(context, context.getString(message), Toast.LENGTH_SHORT);
     }
 
-    public static void showToastLong(Context context, int message){
-        ToastCompat toast = ToastCompat.makeText(context, context.getResources().getString(message), ToastCompat.LENGTH_LONG);
+    public static void showToastLong(Context context, int message) {
+        showToast(context, context.getString(message), Toast.LENGTH_LONG);
+    }
+
+    public static void showToast(Context context, String message, int length) {
+        cancelToast();
+
+        ToastCompat toast = ToastCompat.makeText(context.getApplicationContext(), message, length);
         toast.show();
+
+        ToastHelper.getInstance().setLastToast(toast);
+    }
+
+    public static void cancelToast() {
+        ToastCompat toast = ToastHelper.getInstance().getLastToast();
+        if(toast != null) toast.cancel();
     }
 
     // Generates blurb text for profile options, used in various places in the UI
