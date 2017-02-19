@@ -45,6 +45,7 @@ import android.view.Display;
 import android.view.Surface;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -204,6 +205,12 @@ SystemAlertPermissionDialogFragment.Listener {
         }
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            // Remove margins from layout on Lollipop devices
+            LinearLayout layout = (LinearLayout) findViewById(R.id.profileViewEdit);
+            LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) layout.getLayoutParams();
+            params.setMargins(0, 0, 0, 0);
+            layout.setLayoutParams(params);
+
             // Set action bar elevation
             getSupportActionBar().setElevation(getResources().getDimensionPixelSize(R.dimen.action_bar_elevation));
         }

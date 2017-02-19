@@ -31,7 +31,6 @@ public final class DisableKeyboardActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_turn_off);
         setTitle(R.string.disable_keyboard_title);
-        setFinishOnTouchOutside(false);
 
         TextView textView = (TextView) findViewById(R.id.turnOffTextView);
         textView.setText(R.string.disable_keyboard_message);
@@ -49,8 +48,4 @@ public final class DisableKeyboardActivity extends AppCompatActivity {
 
         button2.setVisibility(View.GONE);
     }
-
-    // Disable the back button
-    @Override
-    public void onBackPressed() {}
 }
