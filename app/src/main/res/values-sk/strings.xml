@@ -203,10 +203,10 @@
     <string name="hdmi_output_toast">Prosím, odpojte a znovu pripojte HDMI kábel pre aplikovanie týchto nastavení</string>
     <string name="disable_keyboard_title">Zakázať softvérovú klávesnicu</string>
     <string name="disable_keyboard_message">Povolením, SecondScreen môže zakázať softvérovú klávesnicu, ak sa stále zobrazuje pri pripojení fyzickej klávesnici.\n\nIkona pre výber vstupnej metódy sa nemusí zobraziť na navigačnej lište. Ak sa vám to stane, vráťte sa späť na toto nastavenie a zakážte ho.</string>
-    <string name="force_backlight_off">Force backlight off</string>
-    <string name="force_backlight_off_description">Allow the backlight to turn off without a display connected</string>
-    <string name="system_notification_settings">System notification settings</string>
-    <string name="disabling_soft_keyboard">Disabling soft keyboard</string>
-    <string name="tap_to_change_keyboards">Tap to change keyboards</string>
+    <string name="force_backlight_off">Vynútiť vypnutie podsvietenia</string>
+    <string name="force_backlight_off_description">Umožní vypnutie podsvietenia bez pripojeného monitora</string>
+    <string name="system_notification_settings">Nastavenia systémových upozornení</string>
+    <string name="disabling_soft_keyboard">Softvérová klávesnica je zakázaná</string>
+    <string name="tap_to_change_keyboards">Kliknite pre zmenu klávesnice</string>
 
 </resources>
