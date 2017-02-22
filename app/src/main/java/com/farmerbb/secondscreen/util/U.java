@@ -338,13 +338,13 @@ public final class U {
             if("reset".equals(currentRes))
                 currentRes = nativeRes;
         } else {
-            if((context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT && !prefMain.getBoolean("landscape", false))
-                    || (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE && prefMain.getBoolean("landscape", false))) {
+            if((context.getApplicationContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT && !prefMain.getBoolean("landscape", false))
+                    || (context.getApplicationContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE && prefMain.getBoolean("landscape", false))) {
                 currentRes = Integer.toString(metrics.widthPixels)
                         + "x"
                         + Integer.toString(metrics.heightPixels);
-            } else if((context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE && !prefMain.getBoolean("landscape", false))
-                    || (context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT && prefMain.getBoolean("landscape", false))) {
+            } else if((context.getApplicationContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE && !prefMain.getBoolean("landscape", false))
+                    || (context.getApplicationContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT && prefMain.getBoolean("landscape", false))) {
                 currentRes = Integer.toString(metrics.heightPixels)
                         + "x"
                         + Integer.toString(metrics.widthPixels);

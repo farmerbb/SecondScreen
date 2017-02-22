@@ -102,6 +102,7 @@ public final class SettingsFragment extends PreferenceFragment implements OnPref
         editor.putBoolean("safe_mode", prefMain.getBoolean("safe_mode", false));
         editor.putBoolean("hdmi", prefMain.getBoolean("hdmi", true));
         editor.putBoolean("expert_mode", prefMain.getBoolean("expert_mode", false));
+        editor.putBoolean("force_backlight_off", prefMain.getBoolean("force_backlight_off", false));
         editor.apply();
 
         if(addPrefs) {
@@ -195,6 +196,7 @@ public final class SettingsFragment extends PreferenceFragment implements OnPref
         editor.putBoolean("safe_mode", prefNew.getBoolean("safe_mode", false));
         editor.putBoolean("hdmi", prefNew.getBoolean("hdmi", true));
         editor.putBoolean("expert_mode", prefNew.getBoolean("expert_mode", false));
+        editor.putBoolean("force_backlight_off", prefNew.getBoolean("force_backlight_off", false));
         editor.apply();
 
         // Cleanup
@@ -202,6 +204,7 @@ public final class SettingsFragment extends PreferenceFragment implements OnPref
         prefNewEditor.remove("safe_mode");
         prefNewEditor.remove("hdmi");
         prefNewEditor.remove("expert_mode");
+        prefNewEditor.remove("force_backlight_off");
         prefNewEditor.apply();
     }
 

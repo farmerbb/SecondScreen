@@ -140,9 +140,6 @@ SharedPreferences.OnSharedPreferenceChangeListener {
                 findPreference("turn_off").setOnPreferenceClickListener(this);
 
                 // Disable unsupported preferences
-                if(!U.filesExist(U.backlightOff))
-                    getPreferenceScreen().findPreference("temp_backlight_off").setEnabled(false);
-
                 if(!U.filesExist(U.vibrationOff))
                     getPreferenceScreen().findPreference("temp_vibration_off").setEnabled(false);
 
@@ -466,12 +463,12 @@ SharedPreferences.OnSharedPreferenceChangeListener {
                             else
                                 currentDpi = Integer.parseInt(density);
                         } else {
-                            if((getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT && !prefMain.getBoolean("landscape", false))
-                                    || (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE && prefMain.getBoolean("landscape", false))) {
+                            if((getApplicationContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT && !prefMain.getBoolean("landscape", false))
+                                    || (getApplicationContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE && prefMain.getBoolean("landscape", false))) {
                                 currentHeight = metrics.heightPixels;
                                 currentWidth = metrics.widthPixels;
-                            } else if((getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE && !prefMain.getBoolean("landscape", false))
-                                    || (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT && prefMain.getBoolean("landscape", false))) {
+                            } else if((getApplicationContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE && !prefMain.getBoolean("landscape", false))
+                                    || (getApplicationContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT && prefMain.getBoolean("landscape", false))) {
                                 currentHeight = metrics.widthPixels;
                                 currentWidth = metrics.heightPixels;
                             }

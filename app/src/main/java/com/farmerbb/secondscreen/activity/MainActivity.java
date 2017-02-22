@@ -413,7 +413,7 @@ SystemAlertPermissionDialogFragment.Listener {
 
         editor.putInt("density", SystemProperties.getInt("ro.sf.lcd_density", metrics.densityDpi));
 
-        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+        if(getApplicationContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             if(wm.getDefaultDisplay().getRotation() == Surface.ROTATION_90
                || wm.getDefaultDisplay().getRotation() == Surface.ROTATION_270) {
                 editor.putBoolean("landscape", true);
@@ -424,7 +424,7 @@ SystemAlertPermissionDialogFragment.Listener {
                 editor.putInt("height", metrics.heightPixels);
                 editor.putInt("width", metrics.widthPixels);
             }
-        } else if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+        } else if(getApplicationContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             if(wm.getDefaultDisplay().getRotation() == Surface.ROTATION_0
                || wm.getDefaultDisplay().getRotation() == Surface.ROTATION_180) {
                 editor.putBoolean("landscape", true);
@@ -932,14 +932,7 @@ SystemAlertPermissionDialogFragment.Listener {
                 if(getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH))
                     editor.putBoolean("bluetooth_on", true);
 
-                if(U.filesExist(U.backlightOff)) {
-                    editor.putBoolean("backlight_off", true);
-
-                    if(Build.MANUFACTURER.equalsIgnoreCase("Samsung"))
-                        U.showToastLong(this, R.string.backlight_off_message_samsung);
-                    else
-                        U.showToastLong(this, R.string.backlight_off_message);
-                }
+                editor.putBoolean("backlight_off", true);
 
                 if(U.filesExist(U.vibrationOff))
                     editor.putBoolean("vibration_off", true);

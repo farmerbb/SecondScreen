@@ -206,6 +206,9 @@
             </intent-filter>
         </receiver>
         <receiver
+            android:name="com.farmerbb.secondscreen.receiver.KeyboardChangeReceiver"
+            android:exported="true" />
+        <receiver
             android:name="com.farmerbb.secondscreen.receiver.PackageUpgradeReceiver"
             android:enabled="true"
             android:exported="true" >

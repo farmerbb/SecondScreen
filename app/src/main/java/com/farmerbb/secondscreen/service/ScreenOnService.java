@@ -44,12 +44,14 @@ public final class ScreenOnService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         // Turn the backlight back off after the device wakes up
         SharedPreferences prefCurrent = U.getPrefCurrent(this);
+        SharedPreferences prefMain = U.getPrefMain(this);
         DisplayManager dm = (DisplayManager) getSystemService(DISPLAY_SERVICE);
         Display[] displays = dm.getDisplays();
 
         if(!prefCurrent.getBoolean("not_active", true)
             && prefCurrent.getBoolean("backlight_off", false)
-            && displays[displays.length - 1].getDisplayId() != Display.DEFAULT_DISPLAY) {
+            && (displays[displays.length - 1].getDisplayId() != Display.DEFAULT_DISPLAY
+            || prefMain.getBoolean("force_backlight_off", false))) {
 
             // Turn auto-brightness off so it doesn't mess with things
             Settings.System.putInt(getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE, Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL);

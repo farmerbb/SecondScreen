@@ -38,4 +38,9 @@
         android:positiveButtonText="@null"
         android:title="@string/pref_title_notification_action" />
 
+    <Preference
+        android:key="system_notification_settings"
+        android:title="@string/system_notification_settings" >
+    </Preference>
+
 </PreferenceScreen>

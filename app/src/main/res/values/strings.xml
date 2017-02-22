@@ -37,8 +37,6 @@
     <string name="app_name">SecondScreen</string>
     <string name="app_name_debug">SecondScreen (Debug)</string>
     <string name="available_actions">Available Actions</string>
-    <string name="backlight_off_message">NOTE: Some custom kernels may prevent the backlight from turning off completely with the Backlight Off option.</string>
-    <string name="backlight_off_message_samsung">NOTE: On Samsung devices, the backlight may not turn off completely with the Backlight Off option.</string>
     <string name="blacklisted">To protect your device, SecondScreen will not allow you to use this resolution and/or density value.</string>
     <string name="both_versions_installed">Multiple versions of SecondScreen are installed on your device. Only one version may be installed at a time.\n\nPress Uninstall to remove the duplicate version, then reload the app.</string>
     <string name="check_for_update">Check For Update</string>
@@ -132,7 +130,7 @@
     <string name="pref_description_show_touches">Show visual feedback for touchscreen events</string>
     <string name="pref_title_rotation">Screen rotation</string>
     <string name="pref_title_backlight_off">Backlight off</string>
-    <string name="pref_description_backlight_off">Disable the device\'s backlight while a display is connected (only works on some devices)</string>
+    <string name="pref_description_backlight_off">Dim the device\'s backlight as much as possible while a display is connected</string>
     <string name="pref_title_vibration_off">Vibration off</string>
     <string name="pref_description_vibration_off">Disable the device\'s vibration motor (only works on some devices)</string>
     <string name="pref_title_chrome">Desktop mode in Chrome</string>
@@ -204,6 +202,11 @@
     <string name="quick_clear_home">Clear launcher</string>
     <string name="hdmi_output_toast">Please unplug and replug your HDMI cable for this setting to take effect</string>
     <string name="disable_keyboard_title">Disable soft keyboard</string>
-    <string name="disable_keyboard_message">By selecting this input method, SecondScreen can disable your soft keyboard, if it still shows up while a hardware keyboard is attached.\n\nNote that the input method picker may not appear in the navigation bar while this keyboard is selected.  If this is the case, you will have to come back to this settings page to disable the input method.</string>
+    <string name="disable_keyboard_message">By selecting this input method, SecondScreen can disable your soft keyboard, if it still shows up while a hardware keyboard is attached.\n\nA notification will appear in the status bar when this input method is active.  Tap it to change back to your previous keyboard.</string>
+    <string name="force_backlight_off">Force backlight off</string>
+    <string name="force_backlight_off_description">Allow the backlight to turn off without a display connected</string>
+    <string name="system_notification_settings">System notification settings</string>
+    <string name="disabling_soft_keyboard">Disabling soft keyboard</string>
+    <string name="tap_to_change_keyboards">Tap to change keyboards</string>
 
 </resources>

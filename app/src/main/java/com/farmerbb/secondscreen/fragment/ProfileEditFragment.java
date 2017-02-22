@@ -263,7 +263,6 @@ SharedPreferences.OnSharedPreferenceChangeListener {
         }
 
         // Set OnClickListeners for certain preferences
-        findPreference("backlight_off").setOnPreferenceClickListener(this);
         findPreference("daydreams_on").setOnPreferenceClickListener(this);
         findPreference("overscan_settings").setOnPreferenceClickListener(this);
         findPreference("freeform").setOnPreferenceClickListener(this);
@@ -293,9 +292,6 @@ SharedPreferences.OnSharedPreferenceChangeListener {
 
         if(!getActivity().getPackageManager().hasSystemFeature("com.cyanogenmod.android"))
             disablePreference(prefNew, "navbar", true);
-
-        if(!U.filesExist(U.backlightOff))
-            disablePreference(prefNew, "backlight_off", true);
 
         if(!U.filesExist(U.vibrationOff))
             disablePreference(prefNew, "vibration_off", true);
@@ -334,7 +330,6 @@ SharedPreferences.OnSharedPreferenceChangeListener {
             disablePreference(prefNew, "ui_refresh", false);
             disablePreference(prefNew, "hdmi_rotation", false);
             disablePreference(prefNew, "chrome", false);
-            disablePreference(prefNew, "backlight_off", false);
             disablePreference(prefNew, "vibration_off", false);
             disablePreference(prefNew, "show_touches", false);
         }
@@ -437,7 +432,7 @@ SharedPreferences.OnSharedPreferenceChangeListener {
                 }
                 break;
             case "rotation_lock_new":
-                if("landscape".equals(sharedPreferences.getString(key, "fallback"))
+                if(!"do-nothing".equals(sharedPreferences.getString(key, "fallback"))
                         && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
                         && !Settings.canDrawOverlays(getActivity())
                         && !U.getPrefMain(getActivity()).getBoolean("dont_show_system_alert_dialog", false)) {
@@ -597,14 +592,6 @@ SharedPreferences.OnSharedPreferenceChangeListener {
         SharedPreferences prefMain = U.getPrefMain(getActivity());
 
         switch(p.getKey()) {
-            case "backlight_off":
-                if(prefNew.getBoolean("backlight_off", true)) {
-                    if(Build.MANUFACTURER.equalsIgnoreCase("Samsung"))
-                        U.showToastLong(getActivity(), R.string.backlight_off_message_samsung);
-                    else
-                        U.showToastLong(getActivity(), R.string.backlight_off_message);
-                }
-                break;
             case "daydreams_on":
                 if(prefNew.getBoolean("daydreams_on", true))
                     U.showToastLong(getActivity(), R.string.configure_daydreams);

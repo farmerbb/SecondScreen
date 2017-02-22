@@ -15,6 +15,8 @@
 
 package com.farmerbb.secondscreen.activity;
 
+import android.app.ActivityManager;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -32,6 +34,8 @@ import com.farmerbb.secondscreen.util.U;
 public final class NotificationSettingsActivity extends PreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
     String lastValue;
     String lastValue2;
+    
+    boolean restartNotificationService = false;
 
     @SuppressWarnings("deprecation")
     @Override
@@ -66,6 +70,28 @@ public final class NotificationSettingsActivity extends PreferenceActivity imple
             getPreferenceScreen().findPreference("notification_action").setEnabled(false);
             getPreferenceScreen().findPreference("notification_action_2").setEnabled(false);
         }
+        
+        Preference systemNotificationSettings = getPreferenceScreen().findPreference("system_notification_settings");
+        
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            systemNotificationSettings.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    Intent intent = new Intent();
+                    intent.setAction("android.settings.APP_NOTIFICATION_SETTINGS");
+                    intent.putExtra("app_package", getPackageName());
+                    intent.putExtra("app_uid", getApplicationInfo().uid);
+
+                    try {
+                        startActivity(intent);
+                        restartNotificationService = true;
+                    } catch (ActivityNotFoundException e) { /* Gracefully fail */ }
+                    
+                    return true;
+                }
+            }); 
+        } else
+            systemNotificationSettings.setEnabled(false);
     }
 
     @Override
@@ -74,6 +100,16 @@ public final class NotificationSettingsActivity extends PreferenceActivity imple
 
         // Register listener to check for changed preferences
         PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
+
+        if(restartNotificationService) {
+            restartNotificationService = false;
+
+            if(isNotificationServiceRunning()) {
+                Intent serviceIntent = new Intent(this, NotificationService.class);
+                stopService(serviceIntent);
+                startService(serviceIntent);
+            }
+        }
     }
 
     @Override
@@ -151,10 +187,6 @@ public final class NotificationSettingsActivity extends PreferenceActivity imple
             String value = sharedPreferences.getString(key, "null");
 
             switch(value) {
-                case "temp_backlight_off":
-                    if(!U.filesExist(U.backlightOff))
-                        unsupported = true;
-                    break;
                 case "temp_chrome":
                     try {
                         getPackageManager().getPackageInfo("com.chrome.canary", 0);
@@ -223,5 +255,15 @@ public final class NotificationSettingsActivity extends PreferenceActivity imple
                 }
             }
         }
+    }
+    
+    private boolean isNotificationServiceRunning() {
+        ActivityManager manager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+        for(ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if(NotificationService.class.getName().equals(service.service.getClassName()))
+                return true;
+        }
+
+        return false;
     }
 }

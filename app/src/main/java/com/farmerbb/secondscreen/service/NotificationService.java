@@ -206,8 +206,8 @@ public final class NotificationService extends Service {
                 && !rotationLockPref.equals("do-nothing")) {
             windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
             WindowManager.LayoutParams params = new WindowManager.LayoutParams(
-                    WindowManager.LayoutParams.WRAP_CONTENT,
-                    WindowManager.LayoutParams.WRAP_CONTENT,
+                    0,
+                    0,
                     WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY,
                     WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
                     PixelFormat.TRANSLUCENT);

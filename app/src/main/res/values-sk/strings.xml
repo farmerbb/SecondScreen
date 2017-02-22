@@ -37,8 +37,6 @@
     <string name="app_name">SecondScreen</string>
     <string name="app_name_debug">SecondScreen (Debug)</string>
     <string name="available_actions">Dostupné akcie</string>
-    <string name="backlight_off_message">Niektoré kernely môžu zabrániť úplnému vypnutiu podsvietenia.</string>
-    <string name="backlight_off_message_samsung">Niektoré kernely môžu zabrániť úplnému vypnutiu podsvietenia.</string>
     <string name="blacklisted">Pre ochranu vášho zariadenia, SecondScreen nedovolí použiť toto rozlíšenie a/alebo hustotou.</string>
     <string name="both_versions_installed">Prosím, odinštalujte túto verziu aplikácie SecondScreen a používajte predtým nainštalovanú verziu.</string>
     <string name="check_for_update">Skontrolovať aktualizácie</string>
@@ -205,5 +203,10 @@
     <string name="hdmi_output_toast">Prosím, odpojte a znovu pripojte HDMI kábel pre aplikovanie týchto nastavení</string>
     <string name="disable_keyboard_title">Zakázať softvérovú klávesnicu</string>
     <string name="disable_keyboard_message">Povolením, SecondScreen môže zakázať softvérovú klávesnicu, ak sa stále zobrazuje pri pripojení fyzickej klávesnici.\n\nIkona pre výber vstupnej metódy sa nemusí zobraziť na navigačnej lište. Ak sa vám to stane, vráťte sa späť na toto nastavenie a zakážte ho.</string>
+    <string name="force_backlight_off">Force backlight off</string>
+    <string name="force_backlight_off_description">Allow the backlight to turn off without a display connected</string>
+    <string name="system_notification_settings">System notification settings</string>
+    <string name="disabling_soft_keyboard">Disabling soft keyboard</string>
+    <string name="tap_to_change_keyboards">Tap to change keyboards</string>
 
 </resources>

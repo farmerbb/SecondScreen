@@ -590,7 +590,8 @@ public final class ProfileLoadService extends IntentService {
                 DisplayManager dm = (DisplayManager) getSystemService(DISPLAY_SERVICE);
                 Display[] displays = dm.getDisplays();
 
-                if(displays[displays.length - 1].getDisplayId() != Display.DEFAULT_DISPLAY) {
+                if((displays[displays.length - 1].getDisplayId() != Display.DEFAULT_DISPLAY
+                        || prefMain.getBoolean("force_backlight_off", false))) {
                     if(U.castScreenActive(this)
                         && uiRefresh.equals("system-ui")
                         && ((runSizeCommand || runDensityCommand)
@@ -640,7 +641,7 @@ public final class ProfileLoadService extends IntentService {
             }
         }
 
-        // If user has NOT set backlight off in profile (or if they are on an unsupported device)
+        // If user has NOT set backlight off in profile
         else {
             // Check to see if a valid backlight value was saved previously (returns -1 if invalid)
             if(prefCurrent.getInt("backlight_value", -1) != -1) {

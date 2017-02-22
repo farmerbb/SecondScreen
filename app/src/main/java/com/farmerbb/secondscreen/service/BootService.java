@@ -81,7 +81,8 @@ public final class BootService extends IntentService {
         Display[] displays = dm.getDisplays();
 
         if(prefCurrent.getBoolean("backlight_off", false)
-                && displays[displays.length - 1].getDisplayId() != Display.DEFAULT_DISPLAY) {
+                && (displays[displays.length - 1].getDisplayId() != Display.DEFAULT_DISPLAY
+                || prefMain.getBoolean("force_backlight_off", false))) {
             // Turn auto-brightness off so it doesn't mess with things
             Settings.System.putInt(getContentResolver(), Settings.System.SCREEN_BRIGHTNESS_MODE, Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL);
 
