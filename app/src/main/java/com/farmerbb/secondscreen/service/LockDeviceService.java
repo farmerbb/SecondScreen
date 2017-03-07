@@ -114,6 +114,6 @@ public final class LockDeviceService extends IntentService {
             } catch (ActivityNotFoundException e) { /* Gracefully fail */ }
         } else
             // Otherwise, send a power button keystroke to lock the device normally
-            U.runCommand(this, "input keyevent 26");
+            U.lockDevice(this);
     }
 }

@@ -180,6 +180,7 @@ public final class NotificationService extends Service {
         // Set action buttons
         if(U.isInNonRootMode(this)) {
             setActionButton("turn-off", prefCurrent, 0);
+            setActionButton("lock-device", prefCurrent, 1);
         } else {
             setActionButton(prefMain.getString("notification_action_2", "turn-off"), prefCurrent, 0);
             setActionButton(prefMain.getString("notification_action", "lock-device"), prefCurrent, 1);

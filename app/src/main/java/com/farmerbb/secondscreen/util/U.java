@@ -21,6 +21,7 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.admin.DevicePolicyManager;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
@@ -46,10 +47,12 @@ import android.widget.Toast;
 import com.farmerbb.secondscreen.BuildConfig;
 import com.farmerbb.secondscreen.R;
 import com.farmerbb.secondscreen.activity.DummyLauncherActivity;
+import com.farmerbb.secondscreen.activity.LockDeviceActivity;
 import com.farmerbb.secondscreen.activity.MainActivity;
 import com.farmerbb.secondscreen.activity.RebootRequiredActivity;
 import com.farmerbb.secondscreen.activity.TaskerQuickActionsActivity;
 import com.farmerbb.secondscreen.activity.WriteSettingsPermissionActivity;
+import com.farmerbb.secondscreen.receiver.LockDeviceReceiver;
 import com.farmerbb.secondscreen.service.ProfileLoadService;
 import com.farmerbb.secondscreen.service.TurnOffService;
 import com.jrummyapps.android.os.SystemProperties;
@@ -1121,5 +1124,24 @@ public final class U {
         context.startActivity(homeIntent);
 
         packageManager.setComponentEnabledSetting(componentName, PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
+    }
+
+    // Locks the screen
+    public static void lockDevice(Context context) {
+        if(isInNonRootMode(context)) {
+            ComponentName component = new ComponentName(context, LockDeviceReceiver.class);
+            context.getPackageManager().setComponentEnabledSetting(component, PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                    PackageManager.DONT_KILL_APP);
+
+            DevicePolicyManager mDevicePolicyManager = (DevicePolicyManager) context.getSystemService(Context.DEVICE_POLICY_SERVICE);
+            if(mDevicePolicyManager.isAdminActive(component))
+                mDevicePolicyManager.lockNow();
+            else {
+                Intent intent = new Intent(context, LockDeviceActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
+            }
+        } else
+            runCommand(context, "input keyevent 26");
     }
 }
