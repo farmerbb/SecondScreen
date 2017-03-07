@@ -35,7 +35,7 @@ android {
         release {
             minifyEnabled true
             shrinkResources true
-            proguardFiles 'proguard-android.txt'
+            proguardFiles getDefaultProguardFile('proguard-android.txt')
             manifestPlaceholders = [appName: "@string/app_name"]
         }
     }
