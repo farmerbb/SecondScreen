@@ -106,7 +106,7 @@ public final class WelcomeFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(U.isInNonRootMode(getActivity()) ? R.menu.main_no_root : R.menu.main, menu);
+        inflater.inflate(R.menu.main, menu);
     }
 
     @Override

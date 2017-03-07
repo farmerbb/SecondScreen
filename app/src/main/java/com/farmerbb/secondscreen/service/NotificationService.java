@@ -178,13 +178,8 @@ public final class NotificationService extends Service {
                 .setShowWhen(false);
 
         // Set action buttons
-        if(U.isInNonRootMode(this)) {
-            setActionButton("turn-off", prefCurrent, 0);
-            setActionButton("lock-device", prefCurrent, 1);
-        } else {
-            setActionButton(prefMain.getString("notification_action_2", "turn-off"), prefCurrent, 0);
-            setActionButton(prefMain.getString("notification_action", "lock-device"), prefCurrent, 1);
-        }
+        setActionButton(prefMain.getString("notification_action_2", "turn-off"), prefCurrent, 0);
+        setActionButton(prefMain.getString("notification_action", "lock-device"), prefCurrent, 1);
 
         // Respect setting to hide notification
         if(prefMain.getBoolean("hide_notification", false))
@@ -275,7 +270,7 @@ public final class NotificationService extends Service {
         } else if(key.startsWith("temp_")) {
             // Toggle
             customIntent = new Intent(this, TaskerQuickActionsActivity.class);
-            customIntent.putExtra(U.KEY, key);
+            customIntent.putExtra(U.KEY, key.equals("temp_immersive") ? "temp_immersive_new" : key);
             customIntent.putExtra(U.VALUE, "Toggle");
             customPendingIntent = PendingIntent.getActivity(this, code, customIntent, PendingIntent.FLAG_UPDATE_CURRENT);
             String onOffString;
@@ -298,6 +293,7 @@ public final class NotificationService extends Service {
                     customString = getResources().getString(R.string.desktop) + onOffString;
                     break;
                 case "temp_immersive":
+                case "temp_immersive_new":
                     switch(prefCurrent.getString("immersive_new", "fallback")) {
                         case "immersive-mode":
                             onOffString = " " + getResources().getStringArray(R.array.pref_quick_actions)[1];

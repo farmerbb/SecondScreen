@@ -52,7 +52,7 @@ public class LockDeviceActivity extends Activity {
             try {
                 startActivity(intent);
             } catch (ActivityNotFoundException e) {
-                U.showToast(this, R.string.lock_device_not_supported);
+                U.showToast(this, R.string.not_compatible);
 
                 finish();
             }

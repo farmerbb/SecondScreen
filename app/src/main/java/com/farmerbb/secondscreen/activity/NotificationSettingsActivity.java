@@ -66,11 +66,6 @@ public final class NotificationSettingsActivity extends PreferenceActivity imple
         U.bindPreferenceSummaryToValue(findPreference("notification_action"), opcl);
         U.bindPreferenceSummaryToValue(findPreference("notification_action_2"), opcl);
 
-        if(U.isInNonRootMode(this)) {
-            getPreferenceScreen().findPreference("notification_action").setEnabled(false);
-            getPreferenceScreen().findPreference("notification_action_2").setEnabled(false);
-        }
-        
         Preference systemNotificationSettings = getPreferenceScreen().findPreference("system_notification_settings");
         
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -188,6 +183,9 @@ public final class NotificationSettingsActivity extends PreferenceActivity imple
 
             switch(value) {
                 case "temp_chrome":
+                    if(U.isInNonRootMode(this))
+                        unsupported = true;
+
                     try {
                         getPackageManager().getPackageInfo("com.chrome.canary", 0);
                     } catch (PackageManager.NameNotFoundException e) {
@@ -211,11 +209,11 @@ public final class NotificationSettingsActivity extends PreferenceActivity imple
                         unsupported = true;
                     break;
                 case "temp_overscan":
-                    if(Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2)
+                    if(Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2 || U.isInNonRootMode(this))
                         unsupported = true;
                     break;
                 case "temp_vibration_off":
-                    if(!U.filesExist(U.vibrationOff))
+                    if(!U.filesExist(U.vibrationOff) || U.isInNonRootMode(this))
                         unsupported = true;
                     break;
             }
