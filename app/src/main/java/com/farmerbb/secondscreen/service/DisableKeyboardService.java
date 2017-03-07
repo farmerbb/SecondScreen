@@ -20,14 +20,16 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.inputmethodservice.InputMethodService;
-import android.support.v7.app.NotificationCompat;
+import android.support.v4.app.NotificationCompat;
 import android.text.InputType;
 import android.view.inputmethod.EditorInfo;
 
 import com.farmerbb.secondscreen.R;
 import com.farmerbb.secondscreen.receiver.KeyboardChangeReceiver;
+import com.farmerbb.secondscreen.util.U;
 
 import java.util.Random;
 
@@ -49,20 +51,23 @@ public class DisableKeyboardService extends InputMethodService {
             Intent keyboardChangeIntent = new Intent(this, KeyboardChangeReceiver.class);
             PendingIntent keyboardChangePendingIntent = PendingIntent.getBroadcast(this, 0, keyboardChangeIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-            Notification notification = new NotificationCompat.Builder(this)
+            NotificationCompat.Builder notification = new NotificationCompat.Builder(this)
                     .setContentIntent(keyboardChangePendingIntent)
                     .setSmallIcon(android.R.drawable.stat_sys_warning)
                     .setContentTitle(getString(R.string.disabling_soft_keyboard))
                     .setContentText(getString(R.string.tap_to_change_keyboards))
-                    .setPriority(Notification.PRIORITY_MIN)
                     .setOngoing(true)
-                    .setShowWhen(false)
-                    .build();
+                    .setShowWhen(false);
+
+            // Respect setting to hide notification
+            SharedPreferences prefMain = U.getPrefMain(this);
+            if(prefMain.getBoolean("hide_notification", false))
+                notification.setPriority(Notification.PRIORITY_MIN);
 
             notificationId = new Random().nextInt();
 
             NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            nm.notify(notificationId, notification);
+            nm.notify(notificationId, notification.build());
         } else if(notificationId != null && !isEditingText) {
             NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             nm.cancel(notificationId);
