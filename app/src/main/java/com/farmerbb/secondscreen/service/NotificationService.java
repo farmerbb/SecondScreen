@@ -93,6 +93,20 @@ public final class NotificationService extends Service {
         }
     };
 
+    BroadcastReceiver userForegroundReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            drawSystemOverlay();
+        }
+    };
+
+    BroadcastReceiver userBackgroundReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            removeSystemOverlay();
+        }
+    };
+
     DisplayManager.DisplayListener listener = new DisplayManager.DisplayListener() {
         @Override
         public void onDisplayAdded(int displayId) {
@@ -153,13 +167,19 @@ public final class NotificationService extends Service {
         // Register broadcast receivers for screen on and user present
         final IntentFilter filter1 = new IntentFilter();
         final IntentFilter filter2 = new IntentFilter();
+        final IntentFilter filter3 = new IntentFilter();
+        final IntentFilter filter4 = new IntentFilter();
 
         filter1.addAction(Intent.ACTION_SCREEN_ON);
         filter1.addAction(Intent.ACTION_DREAMING_STARTED);
         filter2.addAction(Intent.ACTION_USER_PRESENT);
+        filter3.addAction(Intent.ACTION_USER_FOREGROUND);
+        filter4.addAction(Intent.ACTION_USER_BACKGROUND);
 
         registerReceiver(screenOnReceiver, filter1);
         registerReceiver(userPresentReceiver, filter2);
+        registerReceiver(userForegroundReceiver, filter3);
+        registerReceiver(userBackgroundReceiver, filter4);
 
         DisplayManager manager = (DisplayManager) getSystemService(DISPLAY_SERVICE);
         manager.registerDisplayListener(listener, null);
@@ -194,33 +214,7 @@ public final class NotificationService extends Service {
         // Start NotificationService
         startForeground(1, mBuilder.build());
 
-        String rotationLockPref = prefCurrent.getString("rotation_lock_new", "fallback");
-
-        // Draw system overlay, if needed
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
-                && Settings.canDrawOverlays(this)
-                && !rotationLockPref.equals("do-nothing")) {
-            windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
-            WindowManager.LayoutParams params = new WindowManager.LayoutParams(
-                    0,
-                    0,
-                    WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY,
-                    WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
-                    PixelFormat.TRANSLUCENT);
-
-            switch(rotationLockPref) {
-                case "landscape":
-                case "fallback":
-                    params.screenOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
-                    break;
-                case "auto-rotate":
-                    params.screenOrientation = ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR;
-                    break;
-            }
-
-            view = new View(this);
-            windowManager.addView(view, params);
-        }
+        drawSystemOverlay();
     }
 
     @Override
@@ -232,12 +226,13 @@ public final class NotificationService extends Service {
     public void onDestroy() {
         unregisterReceiver(screenOnReceiver);
         unregisterReceiver(userPresentReceiver);
+        unregisterReceiver(userForegroundReceiver);
+        unregisterReceiver(userBackgroundReceiver);
 
         DisplayManager manager = (DisplayManager) getSystemService(DISPLAY_SERVICE);
         manager.unregisterDisplayListener(listener);
 
-        if(windowManager != null && view != null)
-            windowManager.removeView(view);
+        removeSystemOverlay();
     }
 
     @Override
@@ -326,5 +321,41 @@ public final class NotificationService extends Service {
 
         // Add action to notification builder
         mBuilder.addAction(0, customString, customPendingIntent);
+    }
+
+    private void drawSystemOverlay() {
+        SharedPreferences prefCurrent = U.getPrefCurrent(this);
+        String rotationLockPref = prefCurrent.getString("rotation_lock_new", "fallback");
+
+        // Draw system overlay, if needed
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+                && Settings.canDrawOverlays(this)
+                && !rotationLockPref.equals("do-nothing")) {
+            windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
+            WindowManager.LayoutParams params = new WindowManager.LayoutParams(
+                    0,
+                    0,
+                    WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY,
+                    WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+                    PixelFormat.TRANSLUCENT);
+
+            switch(rotationLockPref) {
+                case "landscape":
+                case "fallback":
+                    params.screenOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
+                    break;
+                case "auto-rotate":
+                    params.screenOrientation = ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR;
+                    break;
+            }
+
+            view = new View(this);
+            windowManager.addView(view, params);
+        }
+    }
+
+    private void removeSystemOverlay() {
+        if(windowManager != null && view != null)
+            windowManager.removeView(view);
     }
 }
