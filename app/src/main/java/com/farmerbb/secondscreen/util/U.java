@@ -605,22 +605,13 @@ public final class U {
 
                     switch(commandArgs[2]) {
                         case "global":
-                            if(NumberUtils.isNumber(commandArgs[4]))
-                                Settings.Global.putInt(context.getContentResolver(), commandArgs[3], Integer.parseInt(commandArgs[4]));
-                            else
-                                Settings.Global.putString(context.getContentResolver(), commandArgs[3], commandArgs[4]);
+                            Settings.Global.putString(context.getContentResolver(), commandArgs[3], commandArgs[4]);
                             break;
                         case "secure":
-                            if(NumberUtils.isNumber(commandArgs[4]))
-                                Settings.Secure.putInt(context.getContentResolver(), commandArgs[3], Integer.parseInt(commandArgs[4]));
-                            else
-                                Settings.Secure.putString(context.getContentResolver(), commandArgs[3], commandArgs[4]);
+                            Settings.Secure.putString(context.getContentResolver(), commandArgs[3], commandArgs[4]);
                             break;
                         case "system":
-                            if(NumberUtils.isNumber(commandArgs[4]))
-                                Settings.System.putInt(context.getContentResolver(), commandArgs[3], Integer.parseInt(commandArgs[4]));
-                            else
-                                Settings.System.putString(context.getContentResolver(), commandArgs[3], commandArgs[4]);
+                            Settings.System.putString(context.getContentResolver(), commandArgs[3], commandArgs[4]);
                             break;
                     }
                 }
