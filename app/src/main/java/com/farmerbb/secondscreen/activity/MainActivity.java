@@ -826,7 +826,7 @@ SystemAlertPermissionDialogFragment.Listener {
                 editor.putString("rotation_lock_new", "landscape");
                 editor.putString("density", "240");
 
-                if(Build.VERSION.SDK_INT < Build.VERSION_CODES.N)
+                if(!U.isInNonRootMode(this))
                     editor.putString("ui_refresh", "system-ui");
 
                 try {
@@ -863,7 +863,7 @@ SystemAlertPermissionDialogFragment.Listener {
                 editor.putString("rotation_lock_new", "landscape");
                 editor.putString("density", "160");
 
-                if(Build.VERSION.SDK_INT < Build.VERSION_CODES.N)
+                if(!U.isInNonRootMode(this))
                     editor.putString("ui_refresh", "system-ui");
 
                 try {
@@ -900,7 +900,7 @@ SystemAlertPermissionDialogFragment.Listener {
                 editor.putString("rotation_lock_new", "landscape");
                 editor.putString("density", "160");
 
-                if(Build.VERSION.SDK_INT < Build.VERSION_CODES.N)
+                if(!U.isInNonRootMode(this))
                     editor.putString("ui_refresh", "system-ui");
 
                 try {

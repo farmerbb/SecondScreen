@@ -19,7 +19,7 @@ android {
         minSdkVersion 17
         targetSdkVersion 25
 
-        versionCode 148
+        versionCode 149
         versionName "2.6"
 
         resConfigs "en", "es", "fr", "sk"
