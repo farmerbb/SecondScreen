@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 ext {
-    SUPPORT_LIBRARY_VERSION = "25.2.0"
+    SUPPORT_LIBRARY_VERSION = "25.3.1"
 }
 
 repositories {
@@ -19,11 +19,22 @@ android {
         minSdkVersion 17
         targetSdkVersion 25
 
-        versionCode 149
-        versionName "2.6"
+        versionCode 150
+        versionName "2.6.1"
 
         resConfigs "en", "es", "fr", "sk"
         vectorDrawables.useSupportLibrary = true
+    }
+
+    signingConfigs {
+        release {
+            if(System.getenv("KSTOREFILE") != null)
+                storeFile file(System.getenv("KSTOREFILE"))
+
+            storePassword System.getenv("KSTOREPWD")
+            keyAlias System.getenv("KEYALIAS")
+            keyPassword System.getenv("KEYPWD")
+        }
     }
 
     buildTypes {
@@ -36,6 +47,7 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
             manifestPlaceholders = [appName: "@string/app_name"]
         }
     }

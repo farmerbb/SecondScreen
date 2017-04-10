@@ -15,6 +15,7 @@
 
 package com.farmerbb.secondscreen.service;
 
+import android.app.KeyguardManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -26,6 +27,7 @@ import android.inputmethodservice.InputMethodService;
 import android.support.v4.app.NotificationCompat;
 import android.text.InputType;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 
 import com.farmerbb.secondscreen.R;
 import com.farmerbb.secondscreen.receiver.KeyboardChangeReceiver;
@@ -68,6 +70,12 @@ public class DisableKeyboardService extends InputMethodService {
 
             NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             nm.notify(notificationId, notification.build());
+
+            KeyguardManager keyguardManager = (KeyguardManager) getSystemService(KEYGUARD_SERVICE);
+            if(keyguardManager.inKeyguardRestrictedInputMode()) {
+                InputMethodManager manager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                manager.showInputMethodPicker();
+            }
         } else if(notificationId != null && !isEditingText) {
             NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             nm.cancel(notificationId);

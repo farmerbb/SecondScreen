@@ -925,6 +925,21 @@ SystemAlertPermissionDialogFragment.Listener {
                     }
                 }
 
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    try {
+                        PackageInfo pInfo = getPackageManager().getPackageInfo("com.farmerbb.taskbar", 0);
+                        if(pInfo.versionCode >= 21) editor.putBoolean("taskbar", true);
+                    } catch (PackageManager.NameNotFoundException e) {
+                        try {
+                            PackageInfo pInfo = getPackageManager().getPackageInfo("com.farmerbb.taskbar.paid", 0);
+                            if(pInfo.versionCode >= 21) editor.putBoolean("taskbar", true);
+                        } catch (PackageManager.NameNotFoundException e2) { /* Gracefully fail */ }
+                    }
+                }
+
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                    editor.putBoolean("freeform", true);
+
                 break;
 
             // AppRadio
@@ -1252,7 +1267,6 @@ SystemAlertPermissionDialogFragment.Listener {
 
         return prefMain.getBoolean("debug_mode", false);
     }
-
 
     @Override
     public void onAboutDialogNegativeClick(DialogFragment dialog) {
