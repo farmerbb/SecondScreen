@@ -6,6 +6,10 @@ ext {
 
 repositories {
     maven {
+        url "https://maven.google.com"
+    }
+
+    maven {
         url "https://jitpack.io"
     }
 }
@@ -68,8 +72,8 @@ dependencies {
 
     compile "com.android.support:appcompat-v7:${SUPPORT_LIBRARY_VERSION}"
     compile "com.android.support:design:${SUPPORT_LIBRARY_VERSION}"
-    compile 'org.apache.commons:commons-lang3:3.4'
-    compile 'eu.chainfire:libsuperuser:1.0.0+'
+    compile 'org.apache.commons:commons-lang3:3.5'
+    compile 'eu.chainfire:libsuperuser:1.0.0.201704021214'
     compile 'moe.banana:toast-compat:1.0.5'
     compile group:'com.twofortyfouram', name:'android-plugin-api-for-locale', version:'[1.0.2,2.0['
 }
