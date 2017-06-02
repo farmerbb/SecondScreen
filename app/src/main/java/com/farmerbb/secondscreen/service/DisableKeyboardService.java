@@ -25,6 +25,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.inputmethodservice.InputMethodService;
+import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.text.InputType;
 import android.view.inputmethod.EditorInfo;
@@ -72,11 +73,21 @@ public class DisableKeyboardService extends InputMethodService {
             NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             nm.notify(notificationId, notification.build());
 
-            DevicePolicyManager devicePolicyManager = (DevicePolicyManager) getSystemService(DEVICE_POLICY_SERVICE);
-            KeyguardManager keyguardManager = (KeyguardManager) getSystemService(KEYGUARD_SERVICE);
+            boolean autoShowInputMethodPicker = false;
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                DevicePolicyManager devicePolicyManager = (DevicePolicyManager) getSystemService(DEVICE_POLICY_SERVICE);
+                switch(devicePolicyManager.getStorageEncryptionStatus()) {
+                    case DevicePolicyManager.ENCRYPTION_STATUS_ACTIVE:
+                    case DevicePolicyManager.ENCRYPTION_STATUS_ACTIVE_PER_USER:
+                        break;
+                    default:
+                        autoShowInputMethodPicker = true;
+                        break;
+                }
+            }
 
-            if(devicePolicyManager.getStorageEncryptionStatus() == DevicePolicyManager.ENCRYPTION_STATUS_ACTIVE_DEFAULT_KEY
-                    && keyguardManager.inKeyguardRestrictedInputMode()) {
+            KeyguardManager keyguardManager = (KeyguardManager) getSystemService(KEYGUARD_SERVICE);
+            if(keyguardManager.inKeyguardRestrictedInputMode() && autoShowInputMethodPicker) {
                 InputMethodManager manager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
                 manager.showInputMethodPicker();
             }
