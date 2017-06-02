@@ -135,7 +135,8 @@ public final class TurnOffActivity extends AppCompatActivity {
             // "Don't show again" checkbox
             CheckBox checkBox = (CheckBox) findViewById(R.id.turnOffCheckbox);
             checkBox.setVisibility(View.VISIBLE);
-        }
+        } else
+            finish();
     }
 
     @Override
