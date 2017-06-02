@@ -234,8 +234,7 @@ public final class ProfileViewFragment extends Fragment {
         switch(prefSaved.getString("ui_refresh", "do-nothing")) {
             case "system-ui":
                 if(getActivity().getPackageManager().hasSystemFeature("com.cyanogenmod.android")
-                        && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1
-                        && Build.VERSION.SDK_INT < Build.VERSION_CODES.N)
+                        && Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP_MR1)
                     generateProfileSettings(true, R.string.profile_view_ui_refresh_soft_reboot);
                 else
                     generateProfileSettings(true, R.string.profile_view_ui_refresh_systemui);

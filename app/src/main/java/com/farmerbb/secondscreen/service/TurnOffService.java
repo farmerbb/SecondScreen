@@ -151,8 +151,7 @@ public final class TurnOffService extends IntentService {
         // to be set, to work around the automatic reboot when the DPI is changed.
         boolean cmWorkaround = false;
         if(getPackageManager().hasSystemFeature("com.cyanogenmod.android")
-                && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1
-                && Build.VERSION.SDK_INT < Build.VERSION_CODES.N)
+                && Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP_MR1)
             cmWorkaround = true;
 
         String uiRefresh = U.isInNonRootMode(this) || cmWorkaround
