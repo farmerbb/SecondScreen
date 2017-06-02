@@ -43,6 +43,15 @@ limitations under the License.
         android:padding="16dp"
         android:orientation="vertical" >
 
+        <CheckBox
+            android:id="@+id/turnOffCheckbox"
+            android:layout_width="match_parent"
+            android:checked="false"
+            android:text="@string/dont_show_again"
+            android:textSize="15sp"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

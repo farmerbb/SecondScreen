@@ -26,6 +26,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.farmerbb.secondscreen.R;
@@ -57,6 +58,7 @@ public final class TurnOffActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         // Load preferences
+        SharedPreferences prefMain = U.getPrefMain(this);
         SharedPreferences prefCurrent = U.getPrefCurrent(this);
         String filename = prefCurrent.getString("filename", "0");
 
@@ -69,7 +71,7 @@ public final class TurnOffActivity extends AppCompatActivity {
         if(quickLaunchIntent.getBooleanExtra("notification", false)) {
             U.turnOffProfile(this);
             finish();
-        } else {
+        } else if(prefMain.getBoolean("show_turn_off_dialog", true)) {
             dialog = true;
             String name;
             setTitle(getResources().getString(R.string.display_disconnected));
@@ -129,6 +131,10 @@ public final class TurnOffActivity extends AppCompatActivity {
                     finish();
                 }
             });
+
+            // "Don't show again" checkbox
+            CheckBox checkBox = (CheckBox) findViewById(R.id.turnOffCheckbox);
+            checkBox.setVisibility(View.VISIBLE);
         }
     }
 
@@ -144,7 +150,17 @@ public final class TurnOffActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
 
-        if(dialog)
+        if(dialog) {
             LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
+
+            // Set checkbox preference
+            CheckBox checkbox = (CheckBox) findViewById(R.id.turnOffCheckbox);
+            if(checkbox.isChecked()) {
+                SharedPreferences prefMain = U.getPrefMain(this);
+                SharedPreferences.Editor editor = prefMain.edit();
+                editor.putBoolean("show_turn_off_dialog", false);
+                editor.apply();
+            }
+        }
     }
 }
