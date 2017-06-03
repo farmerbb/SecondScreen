@@ -38,6 +38,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
@@ -188,7 +189,6 @@ SystemAlertPermissionDialogFragment.Listener {
     boolean showBusyboxDialog = true;
     boolean showUpgradeDialog = true;
     int clicks = 0;
-    Toast debugToast = null;
 
     boolean returningFromGrantingSystemAlertPermission = false;
     String savedFilename;
@@ -1227,19 +1227,14 @@ SystemAlertPermissionDialogFragment.Listener {
 
             U.cancelToast();
 
-            if(debugToast != null)
-                debugToast.cancel();
-
             if(clicks > 5 && clicks < 10) {
                 String message = String.format(getResources().getString(R.string.debug_mode_enabling), 10 - clicks);
-                debugToast = Toast.makeText(this, message, Toast.LENGTH_SHORT);
-                debugToast.show();
+                showDebugModeToast(message);
             } else if(clicks >= 10) {
                 SharedPreferences.Editor editor = prefMain.edit();
                 if(prefMain.getBoolean("debug_mode", false)) {
                     editor.putBoolean("debug_mode", false);
-                    debugToast = Toast.makeText(this, R.string.debug_mode_disabled, Toast.LENGTH_SHORT);
-                    debugToast.show();
+                    showDebugModeToast(getString(R.string.debug_mode_disabled));
 
                     // Clean up leftover notifications
                     NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -1256,8 +1251,7 @@ SystemAlertPermissionDialogFragment.Listener {
                     file4.delete();
                 } else {
                     editor.putBoolean("debug_mode", true);
-                    debugToast = Toast.makeText(this, R.string.debug_mode_enabled, Toast.LENGTH_SHORT);
-                    debugToast.show();
+                    showDebugModeToast(getString(R.string.debug_mode_enabled));
                 }
 
                 editor.apply();
@@ -1265,6 +1259,15 @@ SystemAlertPermissionDialogFragment.Listener {
         }
 
         return prefMain.getBoolean("debug_mode", false);
+    }
+
+    private void showDebugModeToast(final String message) {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                U.showToast(MainActivity.this, message, Toast.LENGTH_SHORT);
+            }
+        }, 100);
     }
 
     @Override

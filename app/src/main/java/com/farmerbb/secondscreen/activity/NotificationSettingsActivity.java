@@ -48,14 +48,20 @@ public final class NotificationSettingsActivity extends PreferenceActivity imple
         SharedPreferences.Editor editor = prefNew.edit();
         SharedPreferences prefMain = U.getPrefMain(this);
 
-        editor.putBoolean("hide_notification", prefMain.getBoolean("hide_notification", false));
-        editor.putString("notification_action", prefMain.getString("notification_action", "lock-device"));
-        editor.putString("notification_action_2", prefMain.getString("notification_action_2", "turn-off"));
-        editor.apply();
-
         // Set lastValue variables, for use with onSharedPreferenceChanged()
         lastValue = prefMain.getString("notification_action", "lock-device");
         lastValue2 = prefMain.getString("notification_action_2", "turn-off");
+
+        if(isUnsupported(lastValue))
+            lastValue = "lock-device";
+        
+        if(isUnsupported(lastValue2))
+            lastValue2 = "turn-off";
+
+        editor.putBoolean("hide_notification", prefMain.getBoolean("hide_notification", false));
+        editor.putString("notification_action", lastValue);
+        editor.putString("notification_action_2", lastValue2);
+        editor.apply();
 
         // Add preferences
         addPreferencesFromResource(R.xml.notification_settings);
@@ -178,47 +184,9 @@ public final class NotificationSettingsActivity extends PreferenceActivity imple
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if(key.contains("notification_action")) {
-            boolean unsupported = false;
             String value = sharedPreferences.getString(key, "null");
 
-            switch(value) {
-                case "temp_chrome":
-                    if(U.isInNonRootMode(this))
-                        unsupported = true;
-
-                    try {
-                        getPackageManager().getPackageInfo("com.chrome.canary", 0);
-                    } catch (PackageManager.NameNotFoundException e) {
-                        try {
-                            getPackageManager().getPackageInfo("com.chrome.dev", 0);
-                        } catch (PackageManager.NameNotFoundException e1) {
-                            try {
-                                getPackageManager().getPackageInfo("com.chrome.beta", 0);
-                            } catch (PackageManager.NameNotFoundException e2) {
-                                try {
-                                    getPackageManager().getPackageInfo("com.android.chrome", 0);
-                                } catch (PackageManager.NameNotFoundException e3) {
-                                    unsupported = true;
-                                }
-                            }
-                        }
-                    }
-                    break;
-                case "temp_immersive":
-                    if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
-                        unsupported = true;
-                    break;
-                case "temp_overscan":
-                    if(Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2 || U.isInNonRootMode(this))
-                        unsupported = true;
-                    break;
-                case "temp_vibration_off":
-                    if(!U.filesExist(U.vibrationOff) || U.isInNonRootMode(this))
-                        unsupported = true;
-                    break;
-            }
-
-            if(unsupported) {
+            if(isUnsupported(value)) {
                 switch(key) {
                     case "notification_action":
                         value = lastValue;
@@ -263,5 +231,48 @@ public final class NotificationSettingsActivity extends PreferenceActivity imple
         }
 
         return false;
+    }
+
+    private boolean isUnsupported(String value) {
+        boolean unsupported = false;
+
+        switch(value) {
+            case "temp_chrome":
+                if(U.isInNonRootMode(this))
+                    unsupported = true;
+
+                try {
+                    getPackageManager().getPackageInfo("com.chrome.canary", 0);
+                } catch (PackageManager.NameNotFoundException e) {
+                    try {
+                        getPackageManager().getPackageInfo("com.chrome.dev", 0);
+                    } catch (PackageManager.NameNotFoundException e1) {
+                        try {
+                            getPackageManager().getPackageInfo("com.chrome.beta", 0);
+                        } catch (PackageManager.NameNotFoundException e2) {
+                            try {
+                                getPackageManager().getPackageInfo("com.android.chrome", 0);
+                            } catch (PackageManager.NameNotFoundException e3) {
+                                unsupported = true;
+                            }
+                        }
+                    }
+                }
+                break;
+            case "temp_immersive":
+                if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
+                    unsupported = true;
+                break;
+            case "temp_overscan":
+                if(Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2 || U.isInNonRootMode(this))
+                    unsupported = true;
+                break;
+            case "temp_vibration_off":
+                if(!U.filesExist(U.vibrationOff) || U.isInNonRootMode(this))
+                    unsupported = true;
+                break;
+        }
+
+        return unsupported;
     }
 }
