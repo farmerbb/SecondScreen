@@ -80,8 +80,13 @@ public final class NotificationSettingsActivity extends PreferenceActivity imple
                 public boolean onPreferenceClick(Preference preference) {
                     Intent intent = new Intent();
                     intent.setAction("android.settings.APP_NOTIFICATION_SETTINGS");
-                    intent.putExtra("app_package", getPackageName());
-                    intent.putExtra("app_uid", getApplicationInfo().uid);
+
+                    if(Build.VERSION.SDK_INT > Build.VERSION_CODES.N_MR1)
+                        intent.putExtra("android.provider.extra.APP_PACKAGE", getPackageName());
+                    else {
+                        intent.putExtra("app_package", getPackageName());
+                        intent.putExtra("app_uid", getApplicationInfo().uid);
+                    }
 
                     try {
                         startActivity(intent);

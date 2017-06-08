@@ -74,6 +74,9 @@ public final class AndroidUpgradeDialogFragment extends DialogFragment {
             }
         });
 
+        // Prevent the user from cancelling this particular dialog
+        setCancelable(false);
+
         // Create the AlertDialog object and return it
         return builder.create();
     }
