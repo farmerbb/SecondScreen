@@ -16,14 +16,14 @@ repositories {
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    buildToolsVersion "25.0.3"
 
     defaultConfig {
         applicationId "com.farmerbb.secondscreen"
         minSdkVersion 17
         targetSdkVersion 25
 
-        versionCode 152
+        versionCode 153
         versionName "2.6.2"
 
         resConfigs "en", "es", "fr", "sk"

@@ -28,6 +28,7 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
 import android.hardware.display.DisplayManager;
 import android.net.wifi.WifiManager;
+import android.os.BatteryManager;
 import android.os.Build;
 import android.os.Handler;
 import android.provider.Settings;
@@ -408,7 +409,8 @@ public final class ProfileLoadService extends IntentService {
                 break;
             case "always-on-charging":
                 if(!"always-on-charging".equals(prefCurrent.getString("screen_timeout", "null"))) {
-                    su[stayOnCommand] = U.stayOnCommand + "1";
+                    su[stayOnCommand] = U.stayOnCommand + Integer.toString(BatteryManager.BATTERY_PLUGGED_AC
+                            | BatteryManager.BATTERY_PLUGGED_USB | BatteryManager.BATTERY_PLUGGED_WIRELESS);
                     if(!prefCurrent.getBoolean("not_active", true))
                         Settings.System.putInt(getContentResolver(), Settings.System.SCREEN_OFF_TIMEOUT, prefCurrent.getInt("screen_timeout_system", 60000));
                 }
