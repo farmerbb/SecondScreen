@@ -564,6 +564,35 @@ public final class ProfileLoadService extends IntentService {
             }
         }
 
+        // Freeform windows
+        boolean rebootRequired = shouldRunSizeCommand || shouldRunDensityCommand;
+
+        if(prefCurrent.getBoolean("not_active", true)) {
+            if(Settings.Global.getInt(getContentResolver(), "enable_freeform_support", 0) == 1)
+                editor.putBoolean("freeform_system", true);
+            else if(Settings.Global.getInt(getContentResolver(), "enable_freeform_support", 0) == 0)
+                editor.putBoolean("freeform_system", false);
+        }
+
+        if(prefSaved.getBoolean("freeform", false)) {
+            if(prefCurrent.getBoolean("not_active", true)) {
+                su[freeformCommand] = U.freeformCommand(true);
+                rebootRequired = true;
+            }
+            else {
+                if(!prefCurrent.getBoolean("freeform", false)) {
+                    su[freeformCommand] = U.freeformCommand(true);
+                    rebootRequired = true;
+                }
+            }
+        } else {
+            if(!prefCurrent.getBoolean("not_active", true))
+                if(prefCurrent.getBoolean("freeform", false)) {
+                    su[freeformCommand] = U.freeformCommand(prefCurrent.getBoolean("freeform_system", false));
+                    rebootRequired = true;
+                }
+        }
+
         // Backlight off
 
         // If user has set "backlight off" in profile
@@ -580,7 +609,7 @@ public final class ProfileLoadService extends IntentService {
                     editor.putInt("backlight_value", Settings.System.getInt(getContentResolver(), Settings.System.SCREEN_BRIGHTNESS));
             } catch (SettingNotFoundException e1) { /* Gracefully fail */ }
 
-            if(!uiRefresh.equals("activity-manager")) {
+            if(!uiRefresh.equals("activity-manager") || (U.isInNonRootMode(this) && !rebootRequired)) {
                 // Check to see if Chromecast screen mirroring is active.
                 // If it is, and user has "Restart SystemUI" as their UI refresh method,
                 // then don't immediately dim the screen.
@@ -759,35 +788,6 @@ public final class ProfileLoadService extends IntentService {
                 if(!"do-nothing".equals(prefCurrent.getString("immersive_new", "do-nothing")) && !prefCurrent.getBoolean("not_active", true))
                     su[immersiveCommand] = U.immersiveCommand("do-nothing");
                 break;
-        }
-        
-        // Freeform windows
-        boolean rebootRequired = shouldRunSizeCommand || shouldRunDensityCommand;
-
-        if(prefCurrent.getBoolean("not_active", true)) {
-            if(Settings.Global.getInt(getContentResolver(), "enable_freeform_support", 0) == 1)
-                editor.putBoolean("freeform_system", true);
-            else if(Settings.Global.getInt(getContentResolver(), "enable_freeform_support", 0) == 0)
-                editor.putBoolean("freeform_system", false);
-        }
-
-        if(prefSaved.getBoolean("freeform", false)) {
-            if(prefCurrent.getBoolean("not_active", true)) {
-                su[freeformCommand] = U.freeformCommand(true);
-                rebootRequired = true;
-            }
-            else {
-                if(!prefCurrent.getBoolean("freeform", false)) {
-                    su[freeformCommand] = U.freeformCommand(true);
-                    rebootRequired = true;
-                }
-            }
-        } else {
-            if(!prefCurrent.getBoolean("not_active", true))
-                if(prefCurrent.getBoolean("freeform", false)) {
-                    su[freeformCommand] = U.freeformCommand(prefCurrent.getBoolean("freeform_system", false));
-                    rebootRequired = true;
-                }
         }
 
         // HDMI rotation
