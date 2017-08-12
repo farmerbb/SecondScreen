@@ -24,6 +24,7 @@
 
     <string-array name="pref_resolution_list_values">
         <item>reset</item>
+        <item>2160x3840</item>
         <item>1080x1920</item>
         <item>720x1280</item>
         <item>480x854</item>
@@ -40,6 +41,7 @@
     </string-array>
     <string-array name="pref_resolution_list_values_landscape">
         <item>reset</item>
+        <item>3840x2160</item>
         <item>1920x1080</item>
         <item>1280x720</item>
         <item>854x480</item>

@@ -145,14 +145,17 @@ public final class HdmiActivity extends Activity {
                 + Integer.toString(displays[displays.length - 1].getHeight());
 
         switch(extScreenRes) {
-            case "1920x1080":
+            case "3840x2160":
                 extScreenRes = getResources().getStringArray(R.array.pref_resolution_list)[1];
                 break;
-            case "1280x720":
+            case "1920x1080":
                 extScreenRes = getResources().getStringArray(R.array.pref_resolution_list)[2];
                 break;
-            case "854x480":
+            case "1280x720":
                 extScreenRes = getResources().getStringArray(R.array.pref_resolution_list)[3];
+                break;
+            case "854x480":
+                extScreenRes = getResources().getStringArray(R.array.pref_resolution_list)[4];
                 break;
         }
 

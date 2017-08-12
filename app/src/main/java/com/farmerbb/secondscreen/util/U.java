@@ -878,14 +878,17 @@ public final class U {
                     blurb = a.getResources().getStringArray(R.array.pref_resolution_list)[0];
                 else if(prefMain.getBoolean("landscape", false)) {
                     switch(value) {
-                        case "1920x1080":
+                        case "3840x2160":
                             blurb = a.getResources().getStringArray(R.array.pref_resolution_list)[1];
                             break;
-                        case "1280x720":
+                        case "1920x1080":
                             blurb = a.getResources().getStringArray(R.array.pref_resolution_list)[2];
                             break;
-                        case "854x480":
+                        case "1280x720":
                             blurb = a.getResources().getStringArray(R.array.pref_resolution_list)[3];
+                            break;
+                        case "854x480":
+                            blurb = a.getResources().getStringArray(R.array.pref_resolution_list)[4];
                             break;
                         default:
                             blurb = value;
@@ -893,14 +896,17 @@ public final class U {
                     }
                 } else {
                     switch(value) {
-                        case "1080x1920":
+                        case "2160x3840":
                             blurb = a.getResources().getStringArray(R.array.pref_resolution_list)[1];
                             break;
-                        case "720x1280":
+                        case "1080x1920":
                             blurb = a.getResources().getStringArray(R.array.pref_resolution_list)[2];
                             break;
-                        case "480x854":
+                        case "720x1280":
                             blurb = a.getResources().getStringArray(R.array.pref_resolution_list)[3];
+                            break;
+                        case "480x854":
+                            blurb = a.getResources().getStringArray(R.array.pref_resolution_list)[4];
                             break;
                         default:
                             Scanner scanner = new Scanner(value);
@@ -956,7 +962,10 @@ public final class U {
         boolean blacklisted = false;
 
         if(landscape) {
-            if(((currentDpi >= 480 && requestedDpi.equals("reset"))
+            if(requestedRes.equals("3840x2160")
+                    && currentWidth < 2560 && currentHeight < 1440)
+                blacklisted = true;
+            else if(((currentDpi >= 480 && requestedDpi.equals("reset"))
                     || requestedDpi.equals("480")
                     || requestedDpi.equals("560")
                     || requestedDpi.equals("640"))
@@ -999,7 +1008,10 @@ public final class U {
                     || requestedRes.equals("2560x1600")))
                 blacklisted = true;
         } else {
-            if(((currentDpi >= 480 && requestedDpi.equals("reset"))
+            if(requestedRes.equals("2160x3840")
+                    && currentHeight < 2560 && currentWidth < 1440)
+                blacklisted = true;
+            else if(((currentDpi >= 480 && requestedDpi.equals("reset"))
                     || requestedDpi.equals("480")
                     || requestedDpi.equals("560")
                     || requestedDpi.equals("640"))

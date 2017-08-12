@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 ext {
-    SUPPORT_LIBRARY_VERSION = "25.3.1"
+    SUPPORT_LIBRARY_VERSION = "25.4.0"
 }
 
 repositories {
@@ -23,8 +23,8 @@ android {
         minSdkVersion 17
         targetSdkVersion 25
 
-        versionCode 156
-        versionName "2.6.2"
+        versionCode 157
+        versionName "2.6.3"
 
         resConfigs "en", "es", "fr", "sk"
         vectorDrawables.useSupportLibrary = true
@@ -72,7 +72,7 @@ dependencies {
 
     compile "com.android.support:appcompat-v7:${SUPPORT_LIBRARY_VERSION}"
     compile "com.android.support:design:${SUPPORT_LIBRARY_VERSION}"
-    compile 'org.apache.commons:commons-lang3:3.5'
+    compile 'org.apache.commons:commons-lang3:3.6'
     compile 'eu.chainfire:libsuperuser:1.0.0.201704021214'
     compile 'moe.banana:toast-compat:1.0.5'
     compile group:'com.twofortyfouram', name:'android-plugin-api-for-locale', version:'[1.0.2,2.0['

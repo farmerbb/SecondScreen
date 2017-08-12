@@ -978,11 +978,37 @@ public final class ProfileLoadService extends IntentService {
         sendBroadcast(query);
 
         // Send broadcast to start or stop Taskbar
-        if(shouldStartTaskbar)
-            sendBroadcast(new Intent("com.farmerbb.taskbar.START"));
+        if(shouldStartTaskbar) {
+            Intent taskbarIntent = new Intent("com.farmerbb.taskbar.START");
 
-        if(shouldStopTaskbar)
-            sendBroadcast(new Intent("com.farmerbb.taskbar.QUIT"));
+            try {
+                getPackageManager().getPackageInfo("com.farmerbb.taskbar.paid", 0);
+                taskbarIntent.setPackage("com.farmerbb.taskbar.paid");
+            } catch (PackageManager.NameNotFoundException e) {
+                try {
+                    getPackageManager().getPackageInfo("com.farmerbb.taskbar", 0);
+                    taskbarIntent.setPackage("com.farmerbb.taskbar");
+                } catch (PackageManager.NameNotFoundException e2) { /* Gracefully fail */ }
+            }
+
+            sendBroadcast(taskbarIntent);
+        }
+
+        if(shouldStopTaskbar) {
+            Intent taskbarIntent = new Intent("com.farmerbb.taskbar.QUIT");
+
+            try {
+                getPackageManager().getPackageInfo("com.farmerbb.taskbar.paid", 0);
+                taskbarIntent.setPackage("com.farmerbb.taskbar.paid");
+            } catch (PackageManager.NameNotFoundException e) {
+                try {
+                    getPackageManager().getPackageInfo("com.farmerbb.taskbar", 0);
+                    taskbarIntent.setPackage("com.farmerbb.taskbar");
+                } catch (PackageManager.NameNotFoundException e2) { /* Gracefully fail */ }
+            }
+
+            sendBroadcast(taskbarIntent);
+        }
 
         // Start (or restart) NotificationService
         Intent serviceIntent = new Intent(this, NotificationService.class);

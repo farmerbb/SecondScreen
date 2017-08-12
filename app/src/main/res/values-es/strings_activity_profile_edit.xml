@@ -24,6 +24,7 @@
     </string-array>
     <string-array name="pref_resolution_list">
         <item>Nativa del Dispositivo</item>
+        <item>3840x2160 (4K)</item>
         <item>1920x1080 (1080p)</item>
         <item>1280x720 (720p)</item>
         <item>854x480 (480p)</item>
