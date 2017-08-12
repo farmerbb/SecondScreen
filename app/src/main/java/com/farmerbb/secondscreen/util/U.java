@@ -991,12 +991,21 @@ public final class U {
                     || requestedRes.equals("800x600")
                     || requestedRes.equals("800x480")))
                 blacklisted = true;
+            else if(((currentDpi <= 240 && requestedDpi.equals("reset"))
+                    || requestedDpi.equals("120")
+                    || requestedDpi.equals("160")
+                    || requestedDpi.equals("213")
+                    || requestedDpi.equals("240"))
+                    && ((currentWidth >= 3840 && currentHeight >= 2160 && requestedRes.equals("reset"))
+                    || requestedRes.equals("3840x2160")))
+                blacklisted = true;
             else if(((currentDpi <= 160 && requestedDpi.equals("reset"))
                     || requestedDpi.equals("120")
                     || requestedDpi.equals("160"))
                     && ((currentWidth >= 2560 && currentHeight >= 1440 && requestedRes.equals("reset"))
                     || requestedRes.equals("2560x1440")
-                    || requestedRes.equals("2560x1600")))
+                    || requestedRes.equals("2560x1600")
+                    || requestedRes.equals("3840x2160")))
                 blacklisted = true;
             else if(((currentDpi <= 120 && requestedDpi.equals("reset"))
                     || requestedDpi.equals("120"))
@@ -1005,7 +1014,8 @@ public final class U {
                     || requestedRes.equals("1920x1200")
                     || requestedRes.equals("2048x1536")
                     || requestedRes.equals("2560x1440")
-                    || requestedRes.equals("2560x1600")))
+                    || requestedRes.equals("2560x1600")
+                    || requestedRes.equals("3840x2160")))
                 blacklisted = true;
         } else {
             if(requestedRes.equals("2160x3840")
@@ -1037,12 +1047,21 @@ public final class U {
                     || requestedRes.equals("600x800")
                     || requestedRes.equals("480x800")))
                 blacklisted = true;
+            else if(((currentDpi <= 240 && requestedDpi.equals("reset"))
+                    || requestedDpi.equals("120")
+                    || requestedDpi.equals("160")
+                    || requestedDpi.equals("213")
+                    || requestedDpi.equals("240"))
+                    && ((currentHeight >= 3840 && currentWidth >= 2160 && requestedRes.equals("reset"))
+                    || requestedRes.equals("2160x3840")))
+                blacklisted = true;
             else if(((currentDpi <= 160 && requestedDpi.equals("reset"))
                     || requestedDpi.equals("120")
                     || requestedDpi.equals("160"))
                     && ((currentHeight >= 2560 && currentWidth >= 1440 && requestedRes.equals("reset"))
                     || requestedRes.equals("1440x2560")
-                    || requestedRes.equals("1600x2560")))
+                    || requestedRes.equals("1600x2560")
+                    || requestedRes.equals("2160x3840")))
                 blacklisted = true;
             else if(((currentDpi <= 120 && requestedDpi.equals("reset"))
                     || requestedDpi.equals("120"))
@@ -1051,7 +1070,8 @@ public final class U {
                     || requestedRes.equals("1200x1920")
                     || requestedRes.equals("1536x2048")
                     || requestedRes.equals("1440x2560")
-                    || requestedRes.equals("1600x2560")))
+                    || requestedRes.equals("1600x2560")
+                    || requestedRes.equals("2160x3840")))
                 blacklisted = true;
         }
 
