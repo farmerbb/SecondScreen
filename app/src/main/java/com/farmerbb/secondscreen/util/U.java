@@ -1163,6 +1163,9 @@ public final class U {
                 Intent intent = new Intent(context, LockDeviceActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
+
+                if(context instanceof Activity)
+                    ((Activity) context).overridePendingTransition(0, 0);
             }
         } else
             runCommand(context, "input keyevent 26");

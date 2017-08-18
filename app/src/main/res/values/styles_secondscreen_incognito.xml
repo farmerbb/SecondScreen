@@ -19,7 +19,7 @@
     <style name="Theme.Secondscreen.Incognito" parent="@android:style/Theme.DeviceDefault.Light">
         <item name="android:windowIsFloating">true</item>
         <item name="android:windowNoTitle">true</item>
-        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:backgroundDimAmount">0</item>
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 

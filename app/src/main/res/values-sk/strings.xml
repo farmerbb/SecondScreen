@@ -209,5 +209,7 @@
     <string name="tap_to_change_keyboards">Kliknite pre zmenu klávesnice</string>
     <string name="device_admin_description_short">Umožňuje SecondScreen vypnúť obrazovku zariadenia</string>
     <string name="device_admin_description">Umožňuje SecondScreen vypnúť obrazovku zariadenia.\n\nVyžaduje deaktivovanie SecondScreen ako správcu zariadenia pred odinštalovaním.</string>
+    <string name="device_admin_disclosure">In order to lock your device\'s screen, SecondScreen needs to be activated as a device administrator. This permission is used only to lock the screen, and for no other purpose.\n\nIf you choose to activate this, you will need to deactivate SecondScreen as a device administrator prior to uninstalling.</string>
+    <string name="action_activate">Activate</string>
 
 </resources>
