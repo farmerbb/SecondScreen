@@ -269,7 +269,7 @@ public final class NotificationSettingsActivity extends PreferenceActivity imple
                     unsupported = true;
                 break;
             case "temp_overscan":
-                if(Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2 || U.isInNonRootMode(this))
+                if(Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2)
                     unsupported = true;
                 break;
             case "temp_vibration_off":

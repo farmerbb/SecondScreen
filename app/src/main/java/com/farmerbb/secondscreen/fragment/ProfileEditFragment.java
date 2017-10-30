@@ -260,6 +260,11 @@ SharedPreferences.OnSharedPreferenceChangeListener {
             uiRefresh.setEntryValues(R.array.pref_ui_refresh_list_values_alt);
         }
 
+        if(U.isInNonRootMode(getActivity())) {
+            ListPreference uiRefresh = (ListPreference) findPreference("ui_refresh");
+            uiRefresh.setEntries(R.array.pref_ui_refresh_list_non_root);
+        }
+
         // Set OnClickListeners for certain preferences
         findPreference("daydreams_on").setOnPreferenceClickListener(this);
         findPreference("overscan_settings").setOnPreferenceClickListener(this);
@@ -324,8 +329,6 @@ SharedPreferences.OnSharedPreferenceChangeListener {
         }
 
         if(U.isInNonRootMode(getActivity())) {
-            disablePreference(prefNew, "overscan_settings", false);
-            disablePreference(prefNew, "ui_refresh", false);
             disablePreference(prefNew, "hdmi_rotation", false);
             disablePreference(prefNew, "chrome", false);
             disablePreference(prefNew, "vibration_off", false);

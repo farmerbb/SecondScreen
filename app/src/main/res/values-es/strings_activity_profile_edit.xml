@@ -61,6 +61,11 @@
         <item>No hacer nada</item>
         <item>Reiniciar ActivityManager (reinicio por software)</item>
     </string-array>
+    <string-array name="pref_ui_refresh_list_non_root">
+        <item>No hacer nada</item>
+        <item>Reiniciar System UI y matar aplicaciones en segundo plano</item>
+        <item>Reiniciar ActivityManager (reinicio por software)</item>
+    </string-array>
     <string-array name="pref_rotation_list">
         <item>Usar los ajustes del sistema</item>
         <item>Fuerza auto-rotación</item>

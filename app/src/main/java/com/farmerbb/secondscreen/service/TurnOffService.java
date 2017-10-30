@@ -88,8 +88,7 @@ public final class TurnOffService extends IntentService {
         SharedPreferences.Editor editor = prefCurrent.edit();
 
         // Show brief "Turning off profile" notification
-        if(!U.isInNonRootMode(this))
-            showToast.post(new ShowToast(this, R.string.turning_off_profile, Toast.LENGTH_SHORT));
+        showToast.post(new ShowToast(this, R.string.turning_off_profile, Toast.LENGTH_SHORT));
 
         // Build commands to pass to su
 
@@ -154,7 +153,7 @@ public final class TurnOffService extends IntentService {
                 && Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP_MR1)
             cmWorkaround = true;
 
-        String uiRefresh = U.isInNonRootMode(this) || cmWorkaround
+        String uiRefresh = cmWorkaround
                 ? "activity-manager"
                 : prefCurrent.getString("ui_refresh", "do-nothing");
 
@@ -313,7 +312,8 @@ public final class TurnOffService extends IntentService {
             su[immersiveCommand] = U.immersiveCommand("do-nothing");
 
         // Freeform windows
-        boolean rebootRequired = shouldRunSizeCommand || shouldRunDensityCommand;
+        boolean rebootRequired = uiRefresh.contains("activity-manager")
+                && (shouldRunSizeCommand || shouldRunDensityCommand);
 
         if(prefCurrent.getBoolean("freeform", true)) {
             su[freeformCommand] = U.freeformCommand(prefCurrent.getBoolean("freeform_system", false));

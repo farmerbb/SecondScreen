@@ -167,12 +167,9 @@ SharedPreferences.OnSharedPreferenceChangeListener {
             }
 
             if(U.isInNonRootMode(this)) {
-                getPreferenceScreen().findPreference("temp_overscan").setEnabled(false);
                 getPreferenceScreen().findPreference("temp_hdmi_rotation").setEnabled(false);
                 getPreferenceScreen().findPreference("temp_chrome").setEnabled(false);
                 getPreferenceScreen().findPreference("temp_vibration_off").setEnabled(false);
-                getPreferenceScreen().findPreference("temp_size").setEnabled(false);
-                getPreferenceScreen().findPreference("temp_density").setEnabled(false);
                 getPreferenceScreen().findPreference("temp_freeform").setEnabled(false);
             }
 

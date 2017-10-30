@@ -824,9 +824,7 @@ SystemAlertPermissionDialogFragment.Listener {
 
                 editor.putString("rotation_lock_new", "landscape");
                 editor.putString("density", "240");
-
-                if(!U.isInNonRootMode(this))
-                    editor.putString("ui_refresh", "system-ui");
+                editor.putString("ui_refresh", "system-ui");
 
                 try {
                     getPackageManager().getPackageInfo("com.chrome.canary", 0);
@@ -861,9 +859,7 @@ SystemAlertPermissionDialogFragment.Listener {
 
                 editor.putString("rotation_lock_new", "landscape");
                 editor.putString("density", "160");
-
-                if(!U.isInNonRootMode(this))
-                    editor.putString("ui_refresh", "system-ui");
+                editor.putString("ui_refresh", "system-ui");
 
                 try {
                     getPackageManager().getPackageInfo("com.chrome.canary", 0);
@@ -898,9 +894,7 @@ SystemAlertPermissionDialogFragment.Listener {
 
                 editor.putString("rotation_lock_new", "landscape");
                 editor.putString("density", "160");
-
-                if(!U.isInNonRootMode(this))
-                    editor.putString("ui_refresh", "system-ui");
+                editor.putString("ui_refresh", "system-ui");
 
                 try {
                     getPackageManager().getPackageInfo("com.chrome.canary", 0);

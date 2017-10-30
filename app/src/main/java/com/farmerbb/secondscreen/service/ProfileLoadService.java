@@ -111,8 +111,7 @@ public final class ProfileLoadService extends IntentService {
         SharedPreferences.Editor editor = prefCurrent.edit();
 
         // Show brief "Loading profile" notification
-        if(!U.isInNonRootMode(this))
-            showToast.post(new ShowToast(this, R.string.loading_profile, Toast.LENGTH_SHORT));
+        showToast.post(new ShowToast(this, R.string.loading_profile, Toast.LENGTH_SHORT));
 
         // Handle toggling of certain values
         String toggle = prefCurrent.getString("toggle", "null");
@@ -229,7 +228,7 @@ public final class ProfileLoadService extends IntentService {
                 && Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP_MR1)
             cmWorkaround = true;
 
-        String uiRefresh = U.isInNonRootMode(this) || cmWorkaround
+        String uiRefresh = cmWorkaround
                 ? "activity-manager"
                 : prefSaved.getString("ui_refresh", "do-nothing");
 
@@ -281,11 +280,24 @@ public final class ProfileLoadService extends IntentService {
                         if((prefSaved.getInt("overscan_bottom", 0) != prefCurrent.getInt("overscan_bottom", 20))
                         || (prefSaved.getInt("overscan_left", 0) != prefCurrent.getInt("overscan_left", 20))
                         || (prefSaved.getInt("overscan_top", 0) != prefCurrent.getInt("overscan_top", 20))
-                        || (prefSaved.getInt("overscan_right", 0) != prefCurrent.getInt("overscan_right", 20)))
-                            su[overscanCommand] = U.overscanCommand + Integer.toString(prefSaved.getInt("overscan_bottom", 20)) + ","
-                                    + Integer.toString(prefSaved.getInt("overscan_left", 20)) + ","
-                                    + Integer.toString(prefSaved.getInt("overscan_top", 20)) + ","
-                                    + Integer.toString(prefSaved.getInt("overscan_right", 20));
+                        || (prefSaved.getInt("overscan_right", 0) != prefCurrent.getInt("overscan_right", 20))) {
+                            if(prefMain.getBoolean("landscape", false)) {
+                                su[overscanCommand] = U.overscanCommand + Integer.toString(prefSaved.getInt("overscan_left", 20)) + ","
+                                        + Integer.toString(prefSaved.getInt("overscan_top", 20)) + ","
+                                        + Integer.toString(prefSaved.getInt("overscan_right", 20)) + ","
+                                        + Integer.toString(prefSaved.getInt("overscan_bottom", 20));
+                            } else {
+                                su[overscanCommand] = U.overscanCommand + Integer.toString(prefSaved.getInt("overscan_bottom", 20)) + ","
+                                        + Integer.toString(prefSaved.getInt("overscan_left", 20)) + ","
+                                        + Integer.toString(prefSaved.getInt("overscan_top", 20)) + ","
+                                        + Integer.toString(prefSaved.getInt("overscan_right", 20));
+                            }
+                        }
+                    } else if(prefMain.getBoolean("landscape", false)) {
+                        su[overscanCommand] = U.overscanCommand + Integer.toString(prefSaved.getInt("overscan_left", 20)) + ","
+                                + Integer.toString(prefSaved.getInt("overscan_top", 20)) + ","
+                                + Integer.toString(prefSaved.getInt("overscan_right", 20)) + ","
+                                + Integer.toString(prefSaved.getInt("overscan_bottom", 20));
                     } else {
                         su[overscanCommand] = U.overscanCommand + Integer.toString(prefSaved.getInt("overscan_bottom", 20)) + ","
                                 + Integer.toString(prefSaved.getInt("overscan_left", 20)) + ","
@@ -565,7 +577,8 @@ public final class ProfileLoadService extends IntentService {
         }
 
         // Freeform windows
-        boolean rebootRequired = shouldRunSizeCommand || shouldRunDensityCommand;
+        boolean rebootRequired = uiRefresh.contains("activity-manager")
+                && (shouldRunSizeCommand || shouldRunDensityCommand);
 
         if(prefCurrent.getBoolean("not_active", true)) {
             if(Settings.Global.getInt(getContentResolver(), "enable_freeform_support", 0) == 1)
@@ -609,7 +622,7 @@ public final class ProfileLoadService extends IntentService {
                     editor.putInt("backlight_value", Settings.System.getInt(getContentResolver(), Settings.System.SCREEN_BRIGHTNESS));
             } catch (SettingNotFoundException e1) { /* Gracefully fail */ }
 
-            if(!uiRefresh.equals("activity-manager") || (U.isInNonRootMode(this) && !rebootRequired)) {
+            if(!uiRefresh.equals("activity-manager")) {
                 // Check to see if Chromecast screen mirroring is active.
                 // If it is, and user has "Restart SystemUI" as their UI refresh method,
                 // then don't immediately dim the screen.

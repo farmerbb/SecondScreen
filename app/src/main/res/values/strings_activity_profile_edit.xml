@@ -61,6 +61,11 @@
         <item>Do nothing</item>
         <item>Restart ActivityManager (soft reboot)</item>
     </string-array>
+    <string-array name="pref_ui_refresh_list_non_root">
+        <item>Do nothing</item>
+        <item>Kill background apps</item>
+        <item>Manual reboot</item>
+    </string-array>
     <string-array name="pref_rotation_list">
         <item>Use system setting</item>
         <item>Force auto-rotate (dock mode)</item>

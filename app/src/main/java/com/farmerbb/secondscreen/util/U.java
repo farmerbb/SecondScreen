@@ -16,6 +16,7 @@
 package com.farmerbb.secondscreen.util;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -600,20 +601,40 @@ public final class U {
             }
         } else if(hasWriteSecureSettingsPermission(context)) {
             for(String command : commands) {
-                if(command.startsWith("settings put")) {
-                    String[] commandArgs = command.split(" ");
+                String[] commandArgs = command.split(" ");
 
-                    switch(commandArgs[2]) {
-                        case "global":
-                            Settings.Global.putString(context.getContentResolver(), commandArgs[3], commandArgs[4]);
-                            break;
-                        case "secure":
-                            Settings.Secure.putString(context.getContentResolver(), commandArgs[3], commandArgs[4]);
-                            break;
-                        case "system":
-                            Settings.System.putString(context.getContentResolver(), commandArgs[3], commandArgs[4]);
-                            break;
-                    }
+                switch(commandArgs[0]) {
+                    case "settings":
+                        switch(commandArgs[2]) {
+                            case "global":
+                                Settings.Global.putString(context.getContentResolver(), commandArgs[3], commandArgs[4]);
+                                break;
+                            case "secure":
+                                Settings.Secure.putString(context.getContentResolver(), commandArgs[3], commandArgs[4]);
+                                break;
+                            case "system":
+                                Settings.System.putString(context.getContentResolver(), commandArgs[3], commandArgs[4]);
+                                break;
+                        }
+                        break;
+                    case "wm":
+                        try {
+                            switch(commandArgs[1]) {
+                                case "size":
+                                    wmSize(commandArgs[2]);
+                                    break;
+                                case "density":
+                                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1)
+                                        wmDensity(commandArgs[2]);
+                                    else
+                                        wmDensityOld(commandArgs[2]);
+                                    break;
+                                case "overscan":
+                                    wmOverscan(commandArgs[2]);
+                                    break;
+                            }
+                        } catch (Exception e) { /* Gracefully fail */ }
+                        break;
                 }
             }
 
@@ -1169,5 +1190,91 @@ public final class U {
             }
         } else
             runCommand(context, "input keyevent 26");
+    }
+
+    @SuppressLint("PrivateApi")
+    private static Object getWindowManagerService() throws Exception {
+        return Class.forName("android.view.WindowManagerGlobal")
+                .getMethod("getWindowManagerService")
+                .invoke(null);
+    }
+
+    @SuppressLint("PrivateApi")
+    private static void wmDensity(String commandArg) throws Exception {
+        // From android.os.UserHandle
+        final int USER_CURRENT_OR_SELF = -3;
+
+        if(commandArg.equals("reset")) {
+            Class.forName("android.view.IWindowManager")
+                    .getMethod("clearForcedDisplayDensityForUser", int.class, int.class)
+                    .invoke(getWindowManagerService(), Display.DEFAULT_DISPLAY, USER_CURRENT_OR_SELF);
+        } else {
+            int density = Integer.parseInt(commandArg);
+
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1)
+                Class.forName("android.view.IWindowManager")
+                        .getMethod("setForcedDisplayDensityForUser", int.class, int.class, int.class)
+                        .invoke(getWindowManagerService(), Display.DEFAULT_DISPLAY, density, USER_CURRENT_OR_SELF);
+        }
+    }
+
+    @SuppressLint("PrivateApi")
+    private static void wmDensityOld(String commandArg) throws Exception {
+        if(commandArg.equals("reset")) {
+            Class.forName("android.view.IWindowManager")
+                    .getMethod("clearForcedDisplayDensity", int.class)
+                    .invoke(getWindowManagerService(), Display.DEFAULT_DISPLAY);
+        } else {
+            int density = Integer.parseInt(commandArg);
+
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1)
+                Class.forName("android.view.IWindowManager")
+                        .getMethod("setForcedDisplayDensity", int.class, int.class)
+                        .invoke(getWindowManagerService(), Display.DEFAULT_DISPLAY, density);
+        }
+    }
+
+    @SuppressLint("PrivateApi")
+    private static void wmSize(String commandArg) throws Exception {
+        if(commandArg.equals("reset")) {
+            Class.forName("android.view.IWindowManager")
+                    .getMethod("clearForcedDisplaySize", int.class)
+                    .invoke(getWindowManagerService(), Display.DEFAULT_DISPLAY);
+        } else {
+            Scanner scanner = new Scanner(commandArg);
+            scanner.useDelimiter("x");
+
+            int width = scanner.nextInt();
+            int height = scanner.nextInt();
+
+            scanner.close();
+
+            Class.forName("android.view.IWindowManager")
+                    .getMethod("setForcedDisplaySize", int.class, int.class, int.class)
+                    .invoke(getWindowManagerService(), Display.DEFAULT_DISPLAY, width, height);
+        }
+    }
+
+    @SuppressLint("PrivateApi")
+    private static void wmOverscan(String commandArg) throws Exception {
+        int left, top, right, bottom;
+
+        if(commandArg.equals("reset"))
+            left = top = right = bottom = 0;
+        else {
+            Scanner scanner = new Scanner(commandArg);
+            scanner.useDelimiter(",");
+
+            left = scanner.nextInt();
+            top = scanner.nextInt();
+            right = scanner.nextInt();
+            bottom = scanner.nextInt();
+
+            scanner.close();
+        }
+
+        Class.forName("android.view.IWindowManager")
+                .getMethod("setOverscan", int.class, int.class, int.class, int.class, int.class)
+                .invoke(getWindowManagerService(), Display.DEFAULT_DISPLAY, left, top, right, bottom);
     }
 }
