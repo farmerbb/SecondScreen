@@ -5,9 +5,7 @@ ext {
 }
 
 repositories {
-    maven {
-        url "https://maven.google.com"
-    }
+    google()
 
     maven {
         url "https://jitpack.io"
@@ -16,7 +14,6 @@ repositories {
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.3"
 
     defaultConfig {
         applicationId "com.farmerbb.secondscreen"
@@ -55,6 +52,8 @@ android {
             manifestPlaceholders = [appName: "@string/app_name"]
         }
     }
+
+    flavorDimensions "default"
 
     productFlavors {
         paid {
