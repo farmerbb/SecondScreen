@@ -930,7 +930,7 @@ SystemAlertPermissionDialogFragment.Listener {
                     }
                 }
 
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && !U.isInNonRootMode(this))
                     editor.putBoolean("freeform", true);
 
                 break;
