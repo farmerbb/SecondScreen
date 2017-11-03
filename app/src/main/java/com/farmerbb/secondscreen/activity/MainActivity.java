@@ -1152,8 +1152,8 @@ SystemAlertPermissionDialogFragment.Listener {
             DialogFragment swiftkeyFragment = new SwiftkeyDialogFragment();
             swiftkeyFragment.show(getFragmentManager(), "swiftkey-fragment");
 
-        // Show dialog if device is newer than API 25 (Nougat MR1)
-        } else if(Build.VERSION.SDK_INT > Build.VERSION_CODES.N_MR1
+        // Show dialog if device is newer than API 27 (Oreo MR1)
+        } else if(Build.VERSION.SDK_INT > 27
                 && getFragmentManager().findFragmentByTag("upgrade-fragment") == null
                 && showUpgradeDialog) {
             showUpgradeDialog = false;
