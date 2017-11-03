@@ -184,6 +184,7 @@
     <string name="permission_needed">Permission needed</string>
     <string name="grant_permission">Grant Permission</string>
     <string name="freeform_message">Freeform mode requires a UI refresh method to be selected</string>
+    <string name="freeform_message_non_root">Freeform mode requires a reboot to take effect</string>
     <string name="pref_title_taskbar">Enable Taskbar</string>
     <string name="pref_description_taskbar">Show an overlay with recent apps and start menu (requires additional download)</string>
     <string name="quick_taskbar">Taskbar</string>

@@ -608,10 +608,14 @@ SharedPreferences.OnSharedPreferenceChangeListener {
                     listener.showExpertModeDialog();
                 break;
             case "freeform":
-                if(prefNew.getBoolean("freeform", true)
-                        && !U.isInNonRootMode(getActivity())
-                        && "do-nothing".equals(prefNew.getString("ui_refresh", "do-nothing")))
-                    U.showToastLong(getActivity(), R.string.freeform_message);
+                if(prefNew.getBoolean("freeform", true)) {
+                    if(!U.isInNonRootMode(getActivity())
+                            && "do-nothing".equals(prefNew.getString("ui_refresh", "do-nothing")))
+                        U.showToastLong(getActivity(), R.string.freeform_message);
+                    else if(U.isInNonRootMode(getActivity())
+                            && !"activity-manager".equals(prefNew.getString("ui_refresh", "do-nothing")))
+                        U.showToastLong(getActivity(), R.string.freeform_message_non_root);
+                }
                 break;
             case "taskbar":
                 // Check if Taskbar is installed, if not, then direct user to Play Store and uncheck preference
