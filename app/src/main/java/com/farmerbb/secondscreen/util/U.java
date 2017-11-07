@@ -1211,10 +1211,9 @@ public final class U {
         } else {
             int density = Integer.parseInt(commandArg);
 
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1)
-                Class.forName("android.view.IWindowManager")
-                        .getMethod("setForcedDisplayDensityForUser", int.class, int.class, int.class)
-                        .invoke(getWindowManagerService(), Display.DEFAULT_DISPLAY, density, USER_CURRENT_OR_SELF);
+            Class.forName("android.view.IWindowManager")
+                    .getMethod("setForcedDisplayDensityForUser", int.class, int.class, int.class)
+                    .invoke(getWindowManagerService(), Display.DEFAULT_DISPLAY, density, USER_CURRENT_OR_SELF);
         }
     }
 
@@ -1227,10 +1226,9 @@ public final class U {
         } else {
             int density = Integer.parseInt(commandArg);
 
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1)
-                Class.forName("android.view.IWindowManager")
-                        .getMethod("setForcedDisplayDensity", int.class, int.class)
-                        .invoke(getWindowManagerService(), Display.DEFAULT_DISPLAY, density);
+            Class.forName("android.view.IWindowManager")
+                    .getMethod("setForcedDisplayDensity", int.class, int.class)
+                    .invoke(getWindowManagerService(), Display.DEFAULT_DISPLAY, density);
         }
     }
 
