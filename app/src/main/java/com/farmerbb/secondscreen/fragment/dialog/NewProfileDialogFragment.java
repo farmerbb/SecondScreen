@@ -117,8 +117,6 @@ public final class NewProfileDialogFragment extends DialogFragment implements Ad
                 R.array.new_profile_templates, android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Set selection
-        spinner.setSelection(39);
         // Set listener
         spinner.setOnItemSelectedListener(this);
         // Apply the adapter to the spinner
