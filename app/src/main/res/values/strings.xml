@@ -64,7 +64,7 @@
     <string name="expert_mode_dialog">Expert mode overrides SecondScreen\'s internal blacklist of unsafe resolution and density combinations. Only use this option if you know exactly what you are doing. Safe mode is strongly recommended when using this option.\n\nReally enable expert mode?</string>
     <string name="expert_mode_summary">Allow any user-defined value to be set for resolution and density</string>
     <string name="failed_to_save">Error: Failed to save profile!</string>
-    <string name="first_run">This app REQUIRES elevated permissions (via root access, or adb shell commands) to operate, and is ONLY for devices with AOSP or Google experience ROMs! It is not guaranteed to function properly on devices with manufacturer-skinned ROMs.\n\nYou are SOLELY held responsible for how you use this app, for the type of device you use it on, and for the methods of obtaining elevated permissions on your device.</string>
+    <string name="first_run">This app REQUIRES elevated permissions (via root access, or adb shell commands) to operate, and is ONLY for devices with AOSP or Google experience ROMs!\n\nYou are SOLELY held responsible for how you use this app, for the type of device you use it on, and for the methods of obtaining elevated permissions on your device.</string>
     <string name="hdmi_checkbox">Start SecondScreen when connecting a display</string>
     <string name="hdmi_connected">Display connected</string>
     <string name="label_load_profile">Load Profile</string>

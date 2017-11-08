@@ -2,8 +2,8 @@
 
 SecondScreen is an application designed for power users that frequently connect their Android devices to external displays. It works with your existing screen mirroring solution to give you the best experience possible. With SecondScreen, you can change your device's resolution and density to fit your TV or monitor, enable always-on desktop mode in Chrome, and even turn your device's backlight off, among several other features.
 
-* **This app REQUIRES elevated permissions, granted via root access or adb shell commands! The app will do nothing if you do not have a rooted device or access to adb.**
-* **For devices with AOSP / Google experience ROMs ONLY; app is not guaranteed to function properly on devices with manufacturer-skinned ROMs.**
+* **This app REQUIRES elevated permissions, granted via root access or adb shell commands. The app will do nothing if you do not have a rooted device or access to adb.**
+* **This app is ONLY for devices with AOSP / Google experience ROMs. It is not guaranteed to function properly on devices with manufacturer-skinned ROMs.**
 * **This app does not provide screen mirroring capabilities on its own. Screen mirroring may require either an MHL/SlimPort adapter or a wireless solution such as Miracast or Chromecast.**
 * **A Bluetooth keyboard and mouse is strongly recommended as the app can make UI elements smaller and harder to press on the device itself.**
 
