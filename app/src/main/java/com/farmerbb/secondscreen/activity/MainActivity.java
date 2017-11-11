@@ -161,7 +161,18 @@ SystemAlertPermissionDialogFragment.Listener {
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
                 su[immersiveCommand] = U.immersiveCommand("do-nothing");
 
-            su[freeformCommand] = U.freeformCommand(false);
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                try {
+                    getPackageManager().getPackageInfo("com.farmerbb.taskbar", 0);
+                } catch (PackageManager.NameNotFoundException e) {
+                    try {
+                        getPackageManager().getPackageInfo("com.farmerbb.taskbar.paid", 0);
+                    } catch (PackageManager.NameNotFoundException e2) {
+                        su[freeformCommand] = U.freeformCommand(false);
+                    }
+                }
+            }
+            
             su[hdmiRotationCommand] = U.hdmiRotationCommand + "landscape";
 
             // Run superuser commands
