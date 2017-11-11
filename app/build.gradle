@@ -20,8 +20,8 @@ android {
         minSdkVersion 17
         targetSdkVersion 25
 
-        versionCode 159
-        versionName "2.6.3"
+        versionCode 160
+        versionName "2.6.4"
 
         resConfigs "en", "es", "fr", "sk"
         vectorDrawables.useSupportLibrary = true
@@ -67,12 +67,10 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-
-    compile "com.android.support:appcompat-v7:${SUPPORT_LIBRARY_VERSION}"
-    compile "com.android.support:design:${SUPPORT_LIBRARY_VERSION}"
-    compile 'org.apache.commons:commons-lang3:3.6'
-    compile 'eu.chainfire:libsuperuser:1.0.0.201704021214'
-    compile 'moe.banana:toast-compat:1.0.5'
-    compile group:'com.twofortyfouram', name:'android-plugin-api-for-locale', version:'[1.0.2,2.0['
+    implementation "com.android.support:appcompat-v7:${SUPPORT_LIBRARY_VERSION}"
+    implementation "com.android.support:design:${SUPPORT_LIBRARY_VERSION}"
+    implementation 'org.apache.commons:commons-lang3:3.6'
+    implementation 'eu.chainfire:libsuperuser:1.0.0.201704021214'
+    implementation 'moe.banana:toast-compat:1.0.5'
+    implementation group:'com.twofortyfouram', name:'android-plugin-api-for-locale', version:'[1.0.2,2.0['
 }
