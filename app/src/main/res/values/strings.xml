@@ -95,7 +95,9 @@
     <string name="profile_view_rotation_autorotate">Rotation (auto-rotate)</string>
     <string name="profile_view_rotation_landscape">Rotation (landscape)</string>
     <string name="profile_view_ui_refresh_systemui">UI refresh (System UI)</string>
+    <string name="profile_view_ui_refresh_systemui_alt">UI refresh (kill apps)</string>
     <string name="profile_view_ui_refresh_soft_reboot">UI refresh (soft reboot)</string>
+    <string name="profile_view_ui_refresh_soft_reboot_alt">UI refresh (manual reboot)</string>
     <string name="profile_view_wifi_on">Wi-Fi on</string>
     <string name="profile_view_freeform">Freeform mode</string>
     <string name="profile_view_hdmi_output">HDMI (Portrait)</string>

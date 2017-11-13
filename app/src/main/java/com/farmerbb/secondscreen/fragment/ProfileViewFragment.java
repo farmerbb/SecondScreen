@@ -236,11 +236,16 @@ public final class ProfileViewFragment extends Fragment {
                 if(getActivity().getPackageManager().hasSystemFeature("com.cyanogenmod.android")
                         && Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP_MR1)
                     generateProfileSettings(true, R.string.profile_view_ui_refresh_soft_reboot);
+                else if(U.isInNonRootMode(getActivity()))
+                    generateProfileSettings(true, R.string.profile_view_ui_refresh_systemui_alt);
                 else
                     generateProfileSettings(true, R.string.profile_view_ui_refresh_systemui);
                 break;
             case "activity-manager":
-                generateProfileSettings(true, R.string.profile_view_ui_refresh_soft_reboot);
+                if(U.isInNonRootMode(getActivity()))
+                    generateProfileSettings(true, R.string.profile_view_ui_refresh_soft_reboot_alt);
+                else
+                    generateProfileSettings(true, R.string.profile_view_ui_refresh_soft_reboot);
                 break;
         }
 

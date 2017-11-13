@@ -95,7 +95,9 @@
     <string name="profile_view_rotation_autorotate">Rotación (auto-rotación)</string>
     <string name="profile_view_rotation_landscape">Rotación (Apaisada)</string>
     <string name="profile_view_ui_refresh_systemui">Refrescar UI (Reiniciar Sistema)</string>
+    <string name="profile_view_ui_refresh_systemui_alt">@string/profile_view_ui_refresh_systemui</string>
     <string name="profile_view_ui_refresh_soft_reboot">Refrescar UI (Reiniciar software)</string>
+    <string name="profile_view_ui_refresh_soft_reboot_alt">@string/profile_view_ui_refresh_soft_reboot</string>
     <string name="profile_view_wifi_on">Activar Wi-Fi</string>
     <string name="profile_view_freeform">Freeform mode</string>
     <string name="profile_view_hdmi_output">HDMI (Portrait)</string>
