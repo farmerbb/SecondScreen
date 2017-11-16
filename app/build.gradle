@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 ext {
-    SUPPORT_LIBRARY_VERSION = "25.4.0"
+    SUPPORT_LIBRARY_VERSION = "27.0.1"
 }
 
 repositories {
@@ -13,14 +13,17 @@ repositories {
 }
 
 android {
-    compileSdkVersion 25
+    compileSdkVersion 27
+    buildToolsVersion "27.0.1"
 
     defaultConfig {
         applicationId "com.farmerbb.secondscreen"
         minSdkVersion 17
+
+        // Keeping target SDK at 25 for now
         targetSdkVersion 25
 
-        versionCode 161
+        versionCode 162
         versionName "2.6.4"
 
         resConfigs "en", "es", "fr", "sk"
