@@ -42,6 +42,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.util.DisplayMetrics;
 import android.view.Display;
+import android.view.Gravity;
 import android.view.WindowManager;
 import android.widget.Toast;
 
@@ -735,6 +736,11 @@ public final class U {
         cancelToast();
 
         ToastCompat toast = ToastCompat.makeText(context.getApplicationContext(), message, length);
+        toast.setGravity(
+                Gravity.BOTTOM | Gravity.CENTER_VERTICAL,
+                0,
+                context.getResources().getDimensionPixelSize(R.dimen.toast_y_offset));
+
         toast.show();
 
         ToastHelper.getInstance().setLastToast(toast);
