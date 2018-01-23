@@ -208,6 +208,7 @@ SharedPreferences.OnSharedPreferenceChangeListener {
         prefNewEditor.putString("temp_rotation_lock_new", "Null");
         prefNewEditor.putString("temp_freeform", "Null");
         prefNewEditor.putString("temp_hdmi_rotation", "Null");
+        prefNewEditor.putString("temp_screen_timeout", "Null");
 
         prefNewEditor.apply();
     }
@@ -518,6 +519,9 @@ SharedPreferences.OnSharedPreferenceChangeListener {
                         break;
                     case "temp_hdmi_rotation":
                         editor.putString("hdmi_rotation", value);
+                        break;
+                    case "temp_screen_timeout":
+                        editor.putString("screen_timeout", value);
                         break;
                 }
             }

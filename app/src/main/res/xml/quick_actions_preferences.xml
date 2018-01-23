@@ -84,7 +84,13 @@
             android:positiveButtonText="@null"
             android:title="@string/quick_rotation" />
         <ListPreference
-            android:defaultValue="do-nothing"
+            android:entries="@array/pref_screen_timeout_list"
+            android:entryValues="@array/pref_screen_timeout_list_values"
+            android:key="temp_screen_timeout"
+            android:negativeButtonText="@string/action_cancel"
+            android:positiveButtonText="@null"
+            android:title="@string/quick_screen_timeout" />
+        <ListPreference
             android:entries="@array/pref_immersive_list_alt"
             android:entryValues="@array/pref_immersive_list_values_alt"
             android:key="temp_immersive_new"
