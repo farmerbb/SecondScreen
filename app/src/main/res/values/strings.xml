@@ -136,13 +136,13 @@
     <string name="pref_title_vibration_off">Vibration off</string>
     <string name="pref_description_vibration_off">Disable the device\'s vibration motor (only works on some devices)</string>
     <string name="pref_title_chrome">Desktop mode in Chrome</string>
-    <string name="pref_description_chrome">Always show desktop sites in Chrome browser for a more PC-like experience</string>
+    <string name="pref_description_chrome">Always show desktop sites in the Chrome browser</string>
     <string name="pref_title_ui_refresh">UI refresh method</string>
     <string name="pref_title_navbar">Force show navigation bar</string>
-    <string name="pref_description_navbar">Shows the navigation bar for devices with physical buttons (only works on CyanogenMod ROMs)</string>
+    <string name="pref_description_navbar">Show the navigation bar for devices with physical buttons (only works on CyanogenMod ROMs)</string>
     <string name="pref_title_screen_timeout">Screen timeout</string>
     <string name="pref_title_freeform">Enable freeform mode</string>
-    <string name="pref_description_freeform">Allows showing apps in a workspace with floating, resizeable windows</string>
+    <string name="pref_description_freeform">Open apps in floating, resizeable windows</string>
     <string name="pref_title_hdmi_rotation">HDMI output rotation</string>
     <string name="pref_overscan_values">Overscan values</string>
     <string name="top">Top</string>
@@ -188,7 +188,7 @@
     <string name="freeform_message">Freeform mode requires a UI refresh method to be selected</string>
     <string name="freeform_message_non_root">Freeform mode requires a reboot to take effect</string>
     <string name="pref_title_taskbar">Enable Taskbar</string>
-    <string name="pref_description_taskbar">Show an overlay with recent apps and start menu (requires additional download)</string>
+    <string name="pref_description_taskbar">Show an on-screen overlay with recent apps and start menu, for a PC-like experience</string>
     <string name="quick_taskbar">Taskbar</string>
     <string name="system_alert_permission_dialog_message">SecondScreen needs optional permission to \"draw over other apps\" in order to force other installed apps to run in landscape mode.\n\nIf you don\'t grant permission, SecondScreen can still lock the device\'s orientation to landscape, but some apps will still run in portrait mode.</string>
     <string name="reboot_required_title">Reboot required</string>
@@ -215,5 +215,8 @@
     <string name="device_admin_disclosure">In order to lock your device\'s screen, SecondScreen needs to be activated as a device administrator. This permission is used only to lock the screen, and for no other purpose.\n\nIf you choose to activate this, you will need to deactivate SecondScreen as a device administrator prior to uninstalling.</string>
     <string name="action_activate">Activate</string>
     <string name="quick_screen_timeout">Screen Timeout</string>
+    <string name="pref_header_desktop_optimization">Desktop optimization</string>
+    <string name="pref_taskbar_settings_title_open">Open Taskbar settings</string>
+    <string name="pref_taskbar_settings_title_install">Install Taskbar app</string>
 
 </resources>

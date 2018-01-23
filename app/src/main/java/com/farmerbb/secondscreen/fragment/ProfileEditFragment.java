@@ -69,6 +69,7 @@ SharedPreferences.OnSharedPreferenceChangeListener {
     boolean isSavedProfile = false;
     boolean prefChange = true;
     boolean uiRefreshWarning = false;
+    boolean taskbarSettingsPrefEnabled = false;
 
     /* The activity that creates an instance of this fragment must
      * implement this interface in order to receive event call backs. */
@@ -245,6 +246,13 @@ SharedPreferences.OnSharedPreferenceChangeListener {
         else
             addPreferencesFromResource(R.xml.display_settings);
 
+        if(isPlayStoreInstalled(getActivity()) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            addPreferencesFromResource(R.xml.desktop_optimization);
+            findPreference("taskbar_settings").setOnPreferenceClickListener(this);
+            taskbarSettingsPrefEnabled = true;
+        } else
+            addPreferencesFromResource(R.xml.desktop_optimization_alt);
+
         addPreferencesFromResource(R.xml.additional_settings);
 
         // Modifications for certain scenarios
@@ -302,10 +310,8 @@ SharedPreferences.OnSharedPreferenceChangeListener {
         if(Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2)
             disablePreference(prefNew, "overscan_settings", false);
 
-        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
             disablePreference(prefNew, "immersive_new", false);
-            disablePreference(prefNew, "taskbar", true);
-        }
 
         if(Build.VERSION.SDK_INT < Build.VERSION_CODES.N)
             disablePreference(prefNew, "freeform", true);
@@ -350,11 +356,23 @@ SharedPreferences.OnSharedPreferenceChangeListener {
         else
             getActivity().setTitle(" " + prefNew.getString("profile_name", getResources().getString(R.string.action_new)));
 
-
         if(prefNew.getBoolean("overscan", false))
             findPreference("overscan_settings").setSummary(getResources().getString(R.string.enabled));
         else
             findPreference("overscan_settings").setSummary(getResources().getString(R.string.disabled));
+
+        String taskbarPackageName = getTaskbarPackageName();
+        if(taskbarPackageName == null)
+            disablePreference(prefNew, "taskbar", true);
+        else
+            findPreference("taskbar").setEnabled(true);
+
+        if(taskbarSettingsPrefEnabled) {
+            findPreference("taskbar_settings").setTitle(
+                    taskbarPackageName == null
+                            ? R.string.pref_taskbar_settings_title_install
+                            : R.string.pref_taskbar_settings_title_open);
+        }
     }
 
     @Override
@@ -641,6 +659,26 @@ SharedPreferences.OnSharedPreferenceChangeListener {
                     } catch (ActivityNotFoundException e) { /* Gracefully fail */ }
                 }
                 break;
+            case "taskbar_settings":
+                PackageManager packageManager = getActivity().getPackageManager();
+                String packageName = getTaskbarPackageName();
+                Intent intent2;
+
+                if(packageName == null) {
+                    intent2 = new Intent(Intent.ACTION_VIEW);
+                    intent2.setData(Uri.parse("https://play.google.com/store/apps/details?id=com.farmerbb.taskbar"));
+                } else
+                    intent2 = packageManager.getLaunchIntentForPackage(packageName);
+
+                if(intent2 != null) {
+                    intent2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                    try {
+                        startActivity(intent2);
+                    } catch (ActivityNotFoundException e) { /* Gracefully fail */ }
+                }
+
+                break;
         }
 
         return true;
@@ -862,5 +900,33 @@ SharedPreferences.OnSharedPreferenceChangeListener {
 
         if(preference instanceof CheckBoxPreference)
             ((CheckBoxPreference) preference).setChecked(false);
+    }
+
+    public static boolean isPlayStoreInstalled(Context context) {
+        try {
+            context.getPackageManager().getPackageInfo("com.android.vending", 0);
+            return true;
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
+        }
+    }
+
+    private String getTaskbarPackageName() {
+        PackageManager pm = getActivity().getPackageManager();
+        String packageName;
+
+        try {
+            packageName = "com.farmerbb.taskbar";
+            pm.getPackageInfo(packageName, 0);
+        } catch (PackageManager.NameNotFoundException e) {
+            try {
+                packageName = "com.farmerbb.taskbar.paid";
+                pm.getPackageInfo(packageName, 0);
+            } catch (PackageManager.NameNotFoundException e1) {
+                packageName = null;
+            }
+        }
+
+        return packageName;
     }
 }

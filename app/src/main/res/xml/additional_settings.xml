@@ -33,11 +33,6 @@
             android:title="@string/pref_title_daydreams_on" />
         <CheckBoxPreference
             android:defaultValue="false"
-            android:key="chrome"
-            android:summary="@string/pref_description_chrome"
-            android:title="@string/pref_title_chrome" />
-        <CheckBoxPreference
-            android:defaultValue="false"
             android:key="show_touches"
             android:summary="@string/pref_description_show_touches"
             android:title="@string/pref_title_show_touches" />
@@ -56,16 +51,6 @@
             android:key="clear_home"
             android:summary="@string/pref_description_clear_home"
             android:title="@string/pref_title_clear_home" />
-        <CheckBoxPreference
-            android:defaultValue="false"
-            android:key="taskbar"
-            android:summary="@string/pref_description_taskbar"
-            android:title="@string/pref_title_taskbar" />
-        <CheckBoxPreference
-            android:defaultValue="false"
-            android:key="freeform"
-            android:summary="@string/pref_description_freeform"
-            android:title="@string/pref_title_freeform" />
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="navbar"

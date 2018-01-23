@@ -215,5 +215,8 @@
     <string name="device_admin_disclosure">In order to lock your device\'s screen, SecondScreen needs to be activated as a device administrator. This permission is used only to lock the screen, and for no other purpose.\n\nIf you choose to activate this, you will need to deactivate SecondScreen as a device administrator prior to uninstalling.</string>
     <string name="action_activate">Activate</string>
     <string name="quick_screen_timeout">Vypnutie obrazovky</string>
+    <string name="pref_header_desktop_optimization">Desktop optimization</string>
+    <string name="pref_taskbar_settings_title_open">Open Taskbar settings</string>
+    <string name="pref_taskbar_settings_title_install">Install Taskbar app</string>
 
 </resources>
