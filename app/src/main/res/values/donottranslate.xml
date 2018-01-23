@@ -32,6 +32,9 @@
         <item>1440x2560</item>
         <item>1536x2048</item>
         <item>1200x1920</item>
+        <item>900x1600</item>
+        <item>900x1440</item>
+        <item>768x1366</item>
         <item>800x1280</item>
         <item>768x1280</item>
         <item>768x1024</item>
@@ -49,6 +52,9 @@
         <item>2560x1440</item>
         <item>2048x1536</item>
         <item>1920x1200</item>
+        <item>1600x900</item>
+        <item>1440x900</item>
+        <item>1366x768</item>
         <item>1280x800</item>
         <item>1280x768</item>
         <item>1024x768</item>
