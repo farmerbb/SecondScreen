@@ -1008,7 +1008,10 @@ public final class U {
                 blacklisted = true;
             else if(((currentDpi >= 320 && requestedDpi.equals("reset"))
                     || requestedDpi.equals("320")
+                    || requestedDpi.equals("340")
+                    || requestedDpi.equals("360")
                     || requestedDpi.equals("400")
+                    || requestedDpi.equals("420")
                     || requestedDpi.equals("480")
                     || requestedDpi.equals("560")
                     || requestedDpi.equals("640"))
@@ -1064,7 +1067,10 @@ public final class U {
                 blacklisted = true;
             else if(((currentDpi >= 320 && requestedDpi.equals("reset"))
                     || requestedDpi.equals("320")
+                    || requestedDpi.equals("340")
+                    || requestedDpi.equals("360")
                     || requestedDpi.equals("400")
+                    || requestedDpi.equals("420")
                     || requestedDpi.equals("480")
                     || requestedDpi.equals("560")
                     || requestedDpi.equals("640"))
