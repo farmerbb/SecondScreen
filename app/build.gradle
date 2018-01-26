@@ -23,8 +23,8 @@ android {
         // Keeping target SDK at 25 for now
         targetSdkVersion 25
 
-        versionCode 162
-        versionName "2.6.4"
+        versionCode 163
+        versionName "2.6.5"
 
         resConfigs "en", "es", "fr", "sk"
         vectorDrawables.useSupportLibrary = true
