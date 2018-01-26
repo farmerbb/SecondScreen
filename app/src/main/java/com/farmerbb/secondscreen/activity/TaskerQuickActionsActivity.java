@@ -480,7 +480,7 @@ SharedPreferences.OnSharedPreferenceChangeListener {
                         }
 
                         // Check to see if the user is trying to set a blacklisted resolution/DPI combo
-                        blacklisted = U.isBlacklisted(requestedRes, requestedDpi, currentHeight, currentWidth, currentDpi, prefMain.getBoolean("landscape", false));
+                        blacklisted = U.isBlacklisted(requestedRes, requestedDpi, currentHeight, currentWidth, currentDpi);
 
                         if(blacklisted && !prefMain.getBoolean("expert_mode", false))
                             U.showToastLong(this, R.string.blacklisted);

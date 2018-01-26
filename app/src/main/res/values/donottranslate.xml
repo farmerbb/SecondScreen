@@ -68,17 +68,17 @@
         <item>160</item>
         <item>213</item>
         <item>240</item>
+        <item>320</item>
+        <item>480</item>
+        <item>640</item>
         <item>260</item>
         <item>280</item>
         <item>300</item>
-        <item>320</item>
         <item>340</item>
         <item>360</item>
         <item>400</item>
         <item>420</item>
-        <item>480</item>
         <item>560</item>
-        <item>640</item>
     </string-array>
     <string-array name="pref_ui_refresh_list_values">
         <item>do-nothing</item>

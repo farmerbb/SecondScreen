@@ -48,17 +48,17 @@
         <item>160dpi (mdpi)</item>
         <item>213dpi (tvdpi)</item>
         <item>240dpi (hdpi)</item>
+        <item>320dpi (xhdpi)</item>
+        <item>480dpi (xxhdpi)</item>
+        <item>640dpi (xxxhdpi)</item>
         <item>260dpi</item>
         <item>280dpi</item>
         <item>300dpi</item>
-        <item>320dpi (xhdpi)</item>
         <item>340dpi</item>
         <item>360dpi</item>
         <item>400dpi</item>
         <item>420dpi</item>
-        <item>480dpi (xxhdpi)</item>
         <item>560dpi</item>
-        <item>640dpi (xxxhdpi)</item>
     </string-array>
     <string-array name="pref_ui_refresh_list">
         <item>No hacer nada</item>

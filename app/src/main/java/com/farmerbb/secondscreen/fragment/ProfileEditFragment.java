@@ -582,7 +582,7 @@ SharedPreferences.OnSharedPreferenceChangeListener {
             int currentDpi = SystemProperties.getInt("ro.sf.lcd_density", prefMain.getInt("density", 0));
 
             // Check to see if the user is trying to set a blacklisted resolution/DPI combo
-            boolean blacklisted = U.isBlacklisted(requestedRes, requestedDpi, currentHeight, currentWidth, currentDpi, prefMain.getBoolean("landscape", false));
+            boolean blacklisted = U.isBlacklisted(requestedRes, requestedDpi, currentHeight, currentWidth, currentDpi);
 
             if(blacklisted && !prefMain.getBoolean("expert_mode", false))
                 U.showToastLong(getActivity(), R.string.blacklisted);

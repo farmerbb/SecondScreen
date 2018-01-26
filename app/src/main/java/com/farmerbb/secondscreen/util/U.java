@@ -882,13 +882,13 @@ public final class U {
                         blurb = a.getResources().getStringArray(R.array.pref_dpi_list)[4];
                         break;
                     case "320":
-                        blurb = a.getResources().getStringArray(R.array.pref_dpi_list)[6];
+                        blurb = a.getResources().getStringArray(R.array.pref_dpi_list)[5];
                         break;
                     case "480":
-                        blurb = a.getResources().getStringArray(R.array.pref_dpi_list)[8];
+                        blurb = a.getResources().getStringArray(R.array.pref_dpi_list)[6];
                         break;
                     case "640":
-                        blurb = a.getResources().getStringArray(R.array.pref_dpi_list)[10];
+                        blurb = a.getResources().getStringArray(R.array.pref_dpi_list)[7];
                         break;
                     default:
                         blurb = value + a.getResources().getString(R.string.dpi);
