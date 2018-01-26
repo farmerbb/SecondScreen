@@ -985,126 +985,34 @@ public final class U {
     }
 
     // Determine if a resolution/density combo is blacklisted (unsafe to use under normal circumstances)
-    public static boolean isBlacklisted(String requestedRes, String requestedDpi, int currentHeight, int currentWidth, int currentDpi, boolean landscape) {
+    public static boolean isBlacklisted(String requestedRes, String requestedDpi, int currentHeight, int currentWidth, int currentDpi) {
         boolean blacklisted = false;
 
-        if(landscape) {
-            if(requestedRes.equals("3840x2160")
-                    && currentWidth < 2560 && currentHeight < 1440)
-                blacklisted = true;
-            else if(((currentDpi >= 480 && requestedDpi.equals("reset"))
-                    || requestedDpi.equals("480")
-                    || requestedDpi.equals("560")
-                    || requestedDpi.equals("640"))
-                    && ((currentWidth <= 1280 && currentHeight <= 800 && requestedRes.equals("reset"))
-                    || requestedRes.equals("1280x800")
-                    || requestedRes.equals("1280x768")
-                    || requestedRes.equals("1280x720")
-                    || requestedRes.equals("1024x768")
-                    || requestedRes.equals("960x600")
-                    || requestedRes.equals("854x480")
-                    || requestedRes.equals("800x600")
-                    || requestedRes.equals("800x480")))
-                blacklisted = true;
-            else if(((currentDpi >= 320 && requestedDpi.equals("reset"))
-                    || requestedDpi.equals("320")
-                    || requestedDpi.equals("340")
-                    || requestedDpi.equals("360")
-                    || requestedDpi.equals("400")
-                    || requestedDpi.equals("420")
-                    || requestedDpi.equals("480")
-                    || requestedDpi.equals("560")
-                    || requestedDpi.equals("640"))
-                    && ((currentWidth <= 960 && currentHeight <= 600 && requestedRes.equals("reset"))
-                    || requestedRes.equals("960x600")
-                    || requestedRes.equals("854x480")
-                    || requestedRes.equals("800x600")
-                    || requestedRes.equals("800x480")))
-                blacklisted = true;
-            else if(((currentDpi <= 240 && requestedDpi.equals("reset"))
-                    || requestedDpi.equals("120")
-                    || requestedDpi.equals("160")
-                    || requestedDpi.equals("213")
-                    || requestedDpi.equals("240"))
-                    && ((currentWidth >= 3840 && currentHeight >= 2160 && requestedRes.equals("reset"))
-                    || requestedRes.equals("3840x2160")))
-                blacklisted = true;
-            else if(((currentDpi <= 160 && requestedDpi.equals("reset"))
-                    || requestedDpi.equals("120")
-                    || requestedDpi.equals("160"))
-                    && ((currentWidth >= 2560 && currentHeight >= 1440 && requestedRes.equals("reset"))
-                    || requestedRes.equals("2560x1440")
-                    || requestedRes.equals("2560x1600")
-                    || requestedRes.equals("3840x2160")))
-                blacklisted = true;
-            else if(((currentDpi <= 120 && requestedDpi.equals("reset"))
-                    || requestedDpi.equals("120"))
-                    && ((currentWidth >= 1920 && currentHeight >= 1080 && requestedRes.equals("reset"))
-                    || requestedRes.equals("1920x1080")
-                    || requestedRes.equals("1920x1200")
-                    || requestedRes.equals("2048x1536")
-                    || requestedRes.equals("2560x1440")
-                    || requestedRes.equals("2560x1600")
-                    || requestedRes.equals("3840x2160")))
-                blacklisted = true;
-        } else {
-            if(requestedRes.equals("2160x3840")
-                    && currentHeight < 2560 && currentWidth < 1440)
-                blacklisted = true;
-            else if(((currentDpi >= 480 && requestedDpi.equals("reset"))
-                    || requestedDpi.equals("480")
-                    || requestedDpi.equals("560")
-                    || requestedDpi.equals("640"))
-                    && ((currentHeight <= 1280 && currentWidth <= 800 && requestedRes.equals("reset"))
-                    || requestedRes.equals("800x1280")
-                    || requestedRes.equals("768x1280")
-                    || requestedRes.equals("720x1280")
-                    || requestedRes.equals("768x1024")
-                    || requestedRes.equals("600x960")
-                    || requestedRes.equals("480x854")
-                    || requestedRes.equals("600x800")
-                    || requestedRes.equals("480x800")))
-                blacklisted = true;
-            else if(((currentDpi >= 320 && requestedDpi.equals("reset"))
-                    || requestedDpi.equals("320")
-                    || requestedDpi.equals("340")
-                    || requestedDpi.equals("360")
-                    || requestedDpi.equals("400")
-                    || requestedDpi.equals("420")
-                    || requestedDpi.equals("480")
-                    || requestedDpi.equals("560")
-                    || requestedDpi.equals("640"))
-                    && ((currentHeight <= 960 && currentWidth <= 600 && requestedRes.equals("reset"))
-                    || requestedRes.equals("600x960")
-                    || requestedRes.equals("480x854")
-                    || requestedRes.equals("600x800")
-                    || requestedRes.equals("480x800")))
-                blacklisted = true;
-            else if(((currentDpi <= 240 && requestedDpi.equals("reset"))
-                    || requestedDpi.equals("120")
-                    || requestedDpi.equals("160")
-                    || requestedDpi.equals("213")
-                    || requestedDpi.equals("240"))
-                    && ((currentHeight >= 3840 && currentWidth >= 2160 && requestedRes.equals("reset"))
-                    || requestedRes.equals("2160x3840")))
-                blacklisted = true;
-            else if(((currentDpi <= 160 && requestedDpi.equals("reset"))
-                    || requestedDpi.equals("120")
-                    || requestedDpi.equals("160"))
-                    && ((currentHeight >= 2560 && currentWidth >= 1440 && requestedRes.equals("reset"))
-                    || requestedRes.equals("1440x2560")
-                    || requestedRes.equals("1600x2560")
-                    || requestedRes.equals("2160x3840")))
-                blacklisted = true;
-            else if(((currentDpi <= 120 && requestedDpi.equals("reset"))
-                    || requestedDpi.equals("120"))
-                    && ((currentHeight >= 1920 && currentWidth >= 1080 && requestedRes.equals("reset"))
-                    || requestedRes.equals("1080x1920")
-                    || requestedRes.equals("1200x1920")
-                    || requestedRes.equals("1536x2048")
-                    || requestedRes.equals("1440x2560")
-                    || requestedRes.equals("1600x2560")
-                    || requestedRes.equals("2160x3840")))
+        if(requestedRes.equals("3840x2160") || requestedRes.equals("2160x3840")
+                && currentWidth < 2560 && currentHeight < 1440)
+            blacklisted = true;
+        else {
+            int height, width, density;
+            if("reset".equals(requestedRes)) {
+                height = currentHeight;
+                width = currentWidth;
+            } else {
+                Scanner scanner = new Scanner(requestedRes);
+                scanner.useDelimiter("x");
+
+                width = scanner.nextInt();
+                height = scanner.nextInt();
+
+                scanner.close();
+            }
+
+            if("reset".equals(requestedDpi))
+                density = currentDpi;
+            else
+                density = Integer.parseInt(requestedDpi);
+
+            int smallestWidth = (DisplayMetrics.DENSITY_DEFAULT * Math.min(height, width)) / density;
+            if(smallestWidth < 320 || smallestWidth > 1280)
                 blacklisted = true;
         }
 
