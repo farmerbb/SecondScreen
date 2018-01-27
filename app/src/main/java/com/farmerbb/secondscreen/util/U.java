@@ -32,6 +32,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
+import android.hardware.display.DisplayManager;
 import android.net.Uri;
 import android.os.Build;
 import android.preference.Preference;
@@ -988,7 +989,7 @@ public final class U {
     public static boolean isBlacklisted(String requestedRes, String requestedDpi, int currentHeight, int currentWidth, int currentDpi) {
         boolean blacklisted = false;
 
-        if(requestedRes.equals("3840x2160") || requestedRes.equals("2160x3840")
+        if((requestedRes.equals("3840x2160") || requestedRes.equals("2160x3840"))
                 && currentWidth < 2560 && currentHeight < 1440)
             blacklisted = true;
         else {
@@ -1021,27 +1022,20 @@ public final class U {
 
     // Detects if we are currently casting the screen using Chromecast
     public static boolean castScreenActive(Context context) {
-        boolean castScreenActive = false;
-        String castScreenService;
+        DisplayManager dm = (DisplayManager) context.getSystemService(Context.DISPLAY_SERVICE);
+        Display[] displays = dm.getDisplays();
 
-        // On KitKat, we can look for the CastRemoteDisplayProviderService,
-        // as it only runs when the "Cast screen" feature is active.
-        // On Lollipop, this service is ALWAYS running, so we can't look for it.
-        // However, if we are casting something while an external display is connected,
-        // then we can reasonably assume that it most likely is casting the screen anyway.
-        // So, look for the CastSocketMultiplexerLifeCycleService instead.
-        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
-            castScreenService = "com.google.android.gms.cast.media.CastRemoteDisplayProviderService";
-        else
-            castScreenService = "com.google.android.gms.cast.service.CastSocketMultiplexerLifeCycleService";
-
-        ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-        for(ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-            if(service.service.getClassName().equals(castScreenService))
-                castScreenActive = true;
+        for(Display display : displays) {
+            try {
+                if(Class.forName("android.view.Display")
+                        .getMethod("getOwnerPackageName")
+                        .invoke(display)
+                        .equals("com.google.android.gms"))
+                    return true;
+            } catch (Exception e) { /* Gracefully fail */ }
         }
 
-        return castScreenActive;
+        return false;
     }
 
     // Directs the user to check for updates

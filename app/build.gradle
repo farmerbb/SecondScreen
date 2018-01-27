@@ -23,7 +23,7 @@ android {
         // Keeping target SDK at 25 for now
         targetSdkVersion 25
 
-        versionCode 163
+        versionCode 164
         versionName "2.6.5"
 
         resConfigs "en", "es", "fr", "sk"
