@@ -67,8 +67,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
@@ -531,7 +533,12 @@ public final class U {
             System.arraycopy(listOfTitlesByDate, 0, listOfTitlesByName, 0, fakeNumOfProfiles);
 
             // Sort titles
-            Arrays.sort(listOfTitlesByName);
+            Arrays.sort(listOfTitlesByName, new Comparator<String>() {
+                @Override
+                public int compare(String s, String t1) {
+                    return Collator.getInstance().compare(s, t1);
+                }
+            });
 
             // Initialize profiles array
             for(int i = 0; i < fakeNumOfProfiles; i++)
