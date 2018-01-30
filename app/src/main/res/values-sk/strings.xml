@@ -195,7 +195,6 @@
     <string name="reboot_required_message">Prosím, reštartujte zariadenie pre aplikovanie nastavení pre SecondScreen</string>
     <string name="action_later">Neskôr</string>
     <string name="confirm_reboot_later">Kliknite na \"Neskôr\" znova pre potvrdenie</string>
-    <string name="permission_dialog_title">Nie je možné spustiť</string>
     <string name="permission_dialog_message">Nanešťastie, SecondScreen sa nepodarilo spustiť, pretože sa nepodarilo získať potrebné povolenia.\n\nProsím, vyskúšajte nasledovné, potom skúste znova:\n\n&#8226; Rootnite vaše zariadenie.  Ak už vaše zariadenie má root, uistite sa, že SecondScreen má povolené superuser práva.\n\n&#8226; Pripojte vaše zariadenie k PC s nainštalovaným Android SDK a použite nasledujúci adb shell príkaz:\n\npm grant %1$s %2$s</string>
     <string name="error_dialog_title">Chyba</string>
     <string name="error_dialog_message">Nanešťastie, kvôli OEM obmedzeniam, táto funkcia nemôže byť povolená na vašom zariadení.\n\nMôžete ju povoliť pomocou tohto adb príkazu:\n\nappops set %1$s %2$s allow</string>

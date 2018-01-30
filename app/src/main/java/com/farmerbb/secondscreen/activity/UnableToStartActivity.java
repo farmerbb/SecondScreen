@@ -33,7 +33,7 @@ public final class UnableToStartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_turn_off);
-        setTitle(R.string.permission_dialog_title);
+        setTitle(R.string.permission_needed);
         setFinishOnTouchOutside(false);
 
         TextView textView = (TextView) findViewById(R.id.turnOffTextView);
