@@ -486,7 +486,7 @@ public final class U {
 
         // Remove any files from the list that aren't profiles
         for(int i = 0; i < numOfFiles; i++) {
-            if(NumberUtils.isNumber(listOfFiles[i]) && !listOfFiles[i].equals(fakeEntryValue))
+            if(isValidFilename(listOfFiles[i]) && !listOfFiles[i].equals(fakeEntryValue))
                 listOfProfiles.add(listOfFiles[i]);
             else
                 numOfProfiles--;
@@ -1188,5 +1188,18 @@ public final class U {
         Class.forName("android.view.IWindowManager")
                 .getMethod("setOverscan", int.class, int.class, int.class, int.class, int.class)
                 .invoke(getWindowManagerService(), Display.DEFAULT_DISPLAY, left, top, right, bottom);
+    }
+
+    private static boolean isValidFilename(String filename) {
+        // Handle legacy default profiles from version 1.x.x
+        switch(filename) {
+            case "monitor_1080p":
+            case "monitor_720p":
+            case "tv_1080p":
+            case "tv_720p":
+                return true;
+        }
+
+        return NumberUtils.isNumber(filename);
     }
 }
