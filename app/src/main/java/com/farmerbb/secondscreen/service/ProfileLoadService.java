@@ -94,6 +94,8 @@ public final class ProfileLoadService extends IntentService {
                 showToast.post(new ShowToast(this, R.string.no_superuser, Toast.LENGTH_LONG));
             else {
                 Intent intent2 = new Intent(this, UnableToStartActivity.class);
+                intent2.putExtra("action", "load-profile");
+                intent2.putExtra("filename", filename);
                 intent2.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent2);
             }
