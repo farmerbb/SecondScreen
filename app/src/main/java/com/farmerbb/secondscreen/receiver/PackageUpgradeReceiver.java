@@ -32,18 +32,21 @@ public final class PackageUpgradeReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         // Load preferences
         SharedPreferences prefCurrent = U.getPrefCurrent(context);
-
-        // Restore DisplayConnectionService
         SharedPreferences prefMain = U.getPrefMain(context);
-        if(prefMain.getBoolean("hdmi", true) && prefMain.getBoolean("first-run", false)) {
-            Intent serviceIntent = new Intent(context, DisplayConnectionService.class);
-            context.startService(serviceIntent);
-        }
+        boolean isDebugMode = prefMain.getBoolean("debug_mode", false);
 
-        // Restore NotificationService
-        if(!prefCurrent.getBoolean("not_active", true)) {
-            Intent serviceIntent = new Intent(context, NotificationService.class);
-            context.startService(serviceIntent);
+        if(Intent.ACTION_MY_PACKAGE_REPLACED.equals(intent.getAction()) || isDebugMode) {
+            // Restore DisplayConnectionService
+            if(prefMain.getBoolean("hdmi", true) && prefMain.getBoolean("first-run", false)) {
+                Intent serviceIntent = new Intent(context, DisplayConnectionService.class);
+                context.startService(serviceIntent);
+            }
+
+            // Restore NotificationService
+            if(!prefCurrent.getBoolean("not_active", true)) {
+                Intent serviceIntent = new Intent(context, NotificationService.class);
+                context.startService(serviceIntent);
+            }
         }
     }
 }

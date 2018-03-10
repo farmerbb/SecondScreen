@@ -16,7 +16,7 @@
 
 <resources>
 
-    <string name="accept">I Accept</string>
+    <string name="accept">Accept</string>
     <string name="action_cancel">Cancel</string>
     <string name="action_close">Close</string>
     <string name="action_delete">Delete</string>
@@ -41,7 +41,7 @@
     <string name="both_versions_installed">Multiple versions of SecondScreen are installed on your device. Only one version may be installed at a time.\n\nPress Uninstall to remove the duplicate version, then reload the app.</string>
     <string name="check_for_update">Check For Update</string>
     <string name="checking_for_superuser">Checking for superuser access&#8230; please wait.</string>
-    <string name="decline">I Decline</string>
+    <string name="decline">Decline</string>
     <string name="deleting_current_profile">Cannot delete the currently active profile</string>
     <string name="dialog_about_message">SecondScreen: better screen mirroring for Android devices\n\n&#169; 2018 Braden Farmer\n\nThis app\'s <a href="http://github.com/farmerbb/SecondScreen">source code</a> is licensed under <a href="http://www.apache.org/licenses/LICENSE-2.0.html">Apache 2.0</a> (except as otherwise noted), and uses Apache-licensed code from the following projects:\n\n&#8226; <a href="http://github.com/Chainfire/libsuperuser">libsuperuser</a>\n\n&#8226; <a href="http://www.twofortyfouram.com/developer.html">Locale Developer API</a>\n\n&#8226; <a href="http://stackoverflow.com/a/28402378">SystemProperties</a>\n\nThis app uses graphical assets from the following sources, licensed under <a href="http://creativecommons.org/licenses/by/3.0/">CC-BY-3.0</a>:\n\n&#8226; <a href="http://developer.android.com/distribute/tools/promote/brand.html">Android robot (Google)</a></string>
     <string name="dialog_about_title">About SecondScreen</string>
@@ -53,7 +53,7 @@
     <string name="dialog_turn_off_message">is currently active. Would you like to turn it off?</string>
     <string name="dialog_turn_off_title">Turn profile off</string>
     <string name="dialog_ui_refresh">You\'ve left your UI refresh method as \"Do nothing\".  Selecting a UI refresh method is highly recommended when changing your resolution and/or density.\n\nSave anyway?</string>
-    <string name="dialog_upgrade_message">SecondScreen has not been tested on this version of Android. It may crash or behave in other unexpected ways.</string>
+    <string name="dialog_upgrade_message">SecondScreen has not been tested on this version of Android. It may stop working completely or behave in other unexpected ways.\n\nCheck for app updates if you see any issues.</string>
     <string name="display_disconnected">Display disconnected</string>
     <string name="dont_show_again">Don\'t show again</string>
     <string name="editing_current_profile">This is the currently active profile. Would you like to reload it to apply your changes?</string>
@@ -64,7 +64,7 @@
     <string name="expert_mode_dialog">Expert mode overrides SecondScreen\'s internal blacklist of unsafe resolution and density combinations. Only use this option if you know exactly what you are doing. Safe mode is strongly recommended when using this option.\n\nReally enable expert mode?</string>
     <string name="expert_mode_summary">Allow any user-defined value to be set for resolution and density</string>
     <string name="failed_to_save">Error: Failed to save profile!</string>
-    <string name="first_run">This app REQUIRES elevated permissions (via root access, or adb shell commands) to operate, and is ONLY for devices with AOSP or Google experience ROMs!\n\nYou are SOLELY held responsible for how you use this app, for the type of device you use it on, and for the methods of obtaining elevated permissions on your device.</string>
+    <string name="first_run">This app requires elevated permissions to operate! As with all apps of this nature, improper use may potentially render your device unusable.\n\nThis app is intended for devices with AOSP or Google experience ROMs only! It is not guaranteed to function properly on devices with manufacturer-skinned ROMs.\n\nBy pressing Accept, you acknowledge that you are SOLELY held responsible for how you use this app, for the type of device you use it on, and for the methods of obtaining elevated permissions on your device.</string>
     <string name="hdmi_checkbox">Start SecondScreen when connecting a display</string>
     <string name="hdmi_connected">Display connected</string>
     <string name="label_load_profile">Load Profile</string>
@@ -108,7 +108,6 @@
     <string name="select_profile_alt">Select a profile</string>
     <string name="select_screen_type">Select screen type:</string>
     <string name="show_list">Show list of profiles</string>
-    <string name="swiftkey">SwiftKey is installed on your device.\n\nThis keyboard cannot properly handle resolution and density changes. If you intend to change your device\'s resolution and/or density using SecondScreen, using a different software or hardware keyboard is highly recommended.</string>
     <string name="this_profile">This profile</string>
     <string name="turning_off_profile">Turning SecondScreen off&#8230;</string>
     <string name="welcome">Welcome to SecondScreen</string>
@@ -195,12 +194,12 @@
     <string name="reboot_required_message">Please reboot your device for SecondScreen to apply settings</string>
     <string name="action_later">Later</string>
     <string name="confirm_reboot_later">Press \"Later\" again to confirm</string>
-    <string name="permission_dialog_message">SecondScreen needs to obtain elevated permissions before it can start.\n\nPlease do one of the following, then press OK:\n\n&#8226; Root your device.  If your device is already rooted, then ensure that SecondScreen is allowed superuser permissions.\n\n&#8226; Connect your device to a computer with the Android SDK installed, and run the following adb shell command:\n\npm grant %1$s %2$s</string>
+    <string name="permission_dialog_message">SecondScreen uses elevated permissions to change device settings, such as resolution and density. These permissions are granted either through root access, or by running an adb shell command.\n\nPlease do one of the following:\n\n&#8226; Root your device.  If your device is already rooted, then ensure that SecondScreen is allowed superuser permissions.\n\n&#8226; Connect your device to a computer with the Android SDK installed, and run the following command (one line):</string>
     <string name="error_dialog_title">Error</string>
     <string name="error_dialog_message">Unfortunately, due to OEM restrictions, this feature can\'t be enabled on your device.\n\nYou may still be able to enable it by using this adb shell command:\n\nappops set %1$s %2$s allow</string>
-    <string name="pref_title_clear_home">Clear default launcher</string>
-    <string name="pref_description_clear_home">Select this if you want to use a different launcher while SecondScreen is active</string>
-    <string name="quick_clear_home">Clear launcher</string>
+    <string name="pref_title_clear_home">Change default launcher</string>
+    <string name="pref_description_clear_home">Use Taskbar as the default launcher if it\'s installed; otherwise, clear the default launcher</string>
+    <string name="quick_clear_home">Change launcher</string>
     <string name="hdmi_output_toast">Please unplug and replug your HDMI cable for this setting to take effect</string>
     <string name="disable_keyboard_title">Disable soft keyboard</string>
     <string name="disable_keyboard_message">By selecting this input method, SecondScreen can disable your soft keyboard, if it still shows up while a hardware keyboard is attached.\n\nA notification will appear in the status bar when this input method is active.  Tap it to change back to your previous keyboard.</string>
@@ -217,5 +216,7 @@
     <string name="pref_header_desktop_optimization">Desktop optimization</string>
     <string name="pref_taskbar_settings_title_open">Open Taskbar settings</string>
     <string name="pref_taskbar_settings_title_install">Install Taskbar app</string>
+    <string name="blissos_default">BlissOS Default Profile</string>
+    <string name="action_continue">Continue</string>
 
 </resources>

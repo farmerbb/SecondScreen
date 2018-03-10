@@ -26,6 +26,8 @@ import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ListView;
 
 import com.farmerbb.secondscreen.R;
 import com.farmerbb.secondscreen.activity.HdmiProfileSelectActivity;
@@ -80,10 +82,17 @@ public final class SettingsFragment extends PreferenceFragment implements OnPref
         setRetainInstance(true);
         setHasOptionsMenu(true);
 
-        // Change window title
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            // Change window title
             getActivity().setTitle(getResources().getString(R.string.action_settings));
-        else
+
+            // Remove dividers
+            View rootView = getView();
+            if(rootView != null) {
+                ListView list = rootView.findViewById(android.R.id.list);
+                if(list != null) list.setDivider(null);
+            }
+        } else
             getActivity().setTitle(" " + getResources().getString(R.string.action_settings));
 
         // Show the Up button in the action bar.

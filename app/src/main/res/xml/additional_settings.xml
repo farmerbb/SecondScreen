@@ -48,11 +48,6 @@
             android:title="@string/pref_title_vibration_off" />
         <CheckBoxPreference
             android:defaultValue="false"
-            android:key="clear_home"
-            android:summary="@string/pref_description_clear_home"
-            android:title="@string/pref_title_clear_home" />
-        <CheckBoxPreference
-            android:defaultValue="false"
             android:key="navbar"
             android:summary="@string/pref_description_navbar"
             android:title="@string/pref_title_navbar" />

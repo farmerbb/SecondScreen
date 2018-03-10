@@ -24,15 +24,16 @@ import android.app.FragmentTransaction;
 import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ShortcutInfo;
 import android.content.pm.ShortcutManager;
-import android.content.res.Configuration;
 import android.graphics.drawable.Icon;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -40,12 +41,9 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.DisplayMetrics;
-import android.view.Display;
-import android.view.Surface;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -67,7 +65,6 @@ import com.farmerbb.secondscreen.fragment.dialog.MultipleVersionsDialogFragment;
 import com.farmerbb.secondscreen.fragment.dialog.NewDeviceDialogFragment;
 import com.farmerbb.secondscreen.fragment.dialog.NewProfileDialogFragment;
 import com.farmerbb.secondscreen.fragment.dialog.ReloadProfileDialogFragment;
-import com.farmerbb.secondscreen.fragment.dialog.SwiftkeyDialogFragment;
 import com.farmerbb.secondscreen.fragment.dialog.SystemAlertPermissionDialogFragment;
 import com.farmerbb.secondscreen.fragment.dialog.UiRefreshDialogFragment;
 import com.farmerbb.secondscreen.receiver.BootReceiver;
@@ -109,7 +106,6 @@ AndroidUpgradeDialogFragment.Listener,
 NewDeviceDialogFragment.Listener,
 UiRefreshDialogFragment.Listener,
 MultipleVersionsDialogFragment.Listener,
-SwiftkeyDialogFragment.Listener,
 BusyboxDialogFragment.Listener,
 ProfileListFragment.Listener,
 ProfileEditFragment.Listener,
@@ -161,17 +157,9 @@ SystemAlertPermissionDialogFragment.Listener {
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
                 su[immersiveCommand] = U.immersiveCommand("do-nothing");
 
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                try {
-                    getPackageManager().getPackageInfo("com.farmerbb.taskbar", 0);
-                } catch (PackageManager.NameNotFoundException e) {
-                    try {
-                        getPackageManager().getPackageInfo("com.farmerbb.taskbar.paid", 0);
-                    } catch (PackageManager.NameNotFoundException e2) {
-                        su[freeformCommand] = U.freeformCommand(false);
-                    }
-                }
-            }
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
+                    && U.getTaskbarPackageName(MainActivity.this) == null)
+                su[freeformCommand] = U.freeformCommand(false);
             
             su[hdmiRotationCommand] = U.hdmiRotationCommand + "landscape";
 
@@ -204,6 +192,13 @@ SystemAlertPermissionDialogFragment.Listener {
     boolean returningFromGrantingSystemAlertPermission = false;
     String savedFilename;
 
+    private BroadcastReceiver showDialogsReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            showMoreDialogs();
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -228,6 +223,8 @@ SystemAlertPermissionDialogFragment.Listener {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             getWindow().setDecorCaptionShade(Window.DECOR_CAPTION_SHADE_DARK);
         }
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(showDialogsReceiver, new IntentFilter("com.farmerbb.secondscreen.SHOW_DIALOGS"));
 
         // Handle cases where both the free and (formerly) paid versions may be installed at the same time
         PackageInfo paidPackage;
@@ -299,7 +296,8 @@ SystemAlertPermissionDialogFragment.Listener {
                 }
 
                 // Determine if we need to show any dialogs before we create the fragments
-                showDialogs();
+                if(savedInstanceState == null)
+                    showDialogs();
 
                 // Read debug mode preference
                 if(isDebugModeEnabled(false))
@@ -349,6 +347,12 @@ SystemAlertPermissionDialogFragment.Listener {
         SharedPreferences.Editor editor = prefMain.edit();
         editor.remove("inactive");
         editor.apply();
+    }
+
+    @Override
+    protected void onDestroy() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(showDialogsReceiver);
+        super.onDestroy();
     }
 
     @Override
@@ -411,43 +415,6 @@ SystemAlertPermissionDialogFragment.Listener {
 
         // Commit fragment transaction
         transaction.commit();
-    }
-
-    private void getDisplayMetrics(SharedPreferences prefMain) {
-        SharedPreferences.Editor editor = prefMain.edit();
-
-        DisplayMetrics metrics = new DisplayMetrics();
-        WindowManager wm = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
-        Display disp = wm.getDefaultDisplay();
-        disp.getRealMetrics(metrics);
-
-        editor.putInt("density", SystemProperties.getInt("ro.sf.lcd_density", metrics.densityDpi));
-
-        if(getApplicationContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-            if(wm.getDefaultDisplay().getRotation() == Surface.ROTATION_90
-               || wm.getDefaultDisplay().getRotation() == Surface.ROTATION_270) {
-                editor.putBoolean("landscape", true);
-                editor.putInt("height", metrics.widthPixels);
-                editor.putInt("width", metrics.heightPixels);
-            } else {
-                editor.putBoolean("landscape", false);
-                editor.putInt("height", metrics.heightPixels);
-                editor.putInt("width", metrics.widthPixels);
-            }
-        } else if(getApplicationContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            if(wm.getDefaultDisplay().getRotation() == Surface.ROTATION_0
-               || wm.getDefaultDisplay().getRotation() == Surface.ROTATION_180) {
-                editor.putBoolean("landscape", true);
-                editor.putInt("height", metrics.heightPixels);
-                editor.putInt("width", metrics.widthPixels);
-            } else {
-                editor.putBoolean("landscape", false);
-                editor.putInt("height", metrics.widthPixels);
-                editor.putInt("width", metrics.heightPixels);
-            }
-        }
-
-        editor.apply();
     }
 
     private void initializeComponents(String name) {
@@ -528,18 +495,8 @@ SystemAlertPermissionDialogFragment.Listener {
         // Check if "first-run" preference hasn't already been set
         if(!prefMain.getBoolean("first-run", false)) {
 
-            // Gather display metrics
-            getDisplayMetrics(prefMain);
-
-            // Set some default preferences
-            SharedPreferences.Editor editor = prefMain.edit();
-            editor.putBoolean("first-run", true);
-            editor.putBoolean("safe_mode", true);
-            editor.putString("android_id", Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID));
-            editor.putBoolean("hdmi", true);
-            editor.putString("notification_action", "quick-actions");
-            editor.putBoolean("show-welcome-message", true);
-            editor.apply();
+            // Initialize preferences
+            U.initPrefs(this);
 
             // Restore DisplayConnectionService
             Intent serviceIntent = new Intent(this, DisplayConnectionService.class);
@@ -813,188 +770,7 @@ SystemAlertPermissionDialogFragment.Listener {
 
     @Override
     public void onNewProfilePositiveClick(String name, int pos) {
-        SharedPreferences prefNew = U.getPrefNew(this);
-        SharedPreferences prefMain = U.getPrefMain(this);
-        SharedPreferences.Editor editor = prefNew.edit();
-
-        if(name.isEmpty())
-            if(pos == 4)
-                editor.putString("profile_name", getResources().getString(R.string.action_new));
-            else
-                editor.putString("profile_name", getResources().getStringArray(R.array.new_profile_templates)[pos]);
-        else
-            editor.putString("profile_name", name);
-
-        switch(pos) {
-            // TV (1080p)
-            case 0:
-                if(prefMain.getBoolean("landscape", false))
-                    editor.putString("size", "1920x1080");
-                else
-                    editor.putString("size", "1080x1920");
-
-                editor.putString("rotation_lock_new", "landscape");
-                editor.putString("density", "240");
-                editor.putString("ui_refresh",
-                        U.isInNonRootMode(this) && Build.VERSION.SDK_INT == Build.VERSION_CODES.M
-                                ? "activity-manager"
-                                : "system-ui");
-
-                try {
-                    getPackageManager().getPackageInfo("com.chrome.canary", 0);
-                    editor.putBoolean("chrome", true);
-                } catch (PackageManager.NameNotFoundException e) {
-                    try {
-                        getPackageManager().getPackageInfo("com.chrome.dev", 0);
-                        editor.putBoolean("chrome", true);
-                    } catch (PackageManager.NameNotFoundException e1) {
-                        try {
-                            getPackageManager().getPackageInfo("com.chrome.beta", 0);
-                            editor.putBoolean("chrome", true);
-                        } catch (PackageManager.NameNotFoundException e2) {
-                            try {
-                                getPackageManager().getPackageInfo("com.android.chrome", 0);
-                                editor.putBoolean("chrome", true);
-                            } catch (PackageManager.NameNotFoundException e3) {
-                                editor.putBoolean("chrome", false);
-                            }
-                        }
-                    }
-                }
-
-                break;
-
-            // TV (720p)
-            case 1:
-                if(prefMain.getBoolean("landscape", false))
-                    editor.putString("size", "1280x720");
-                else
-                    editor.putString("size", "720x1280");
-
-                editor.putString("rotation_lock_new", "landscape");
-                editor.putString("density", "160");
-                editor.putString("ui_refresh",
-                        U.isInNonRootMode(this) && Build.VERSION.SDK_INT == Build.VERSION_CODES.M
-                                ? "activity-manager"
-                                : "system-ui");
-
-                try {
-                    getPackageManager().getPackageInfo("com.chrome.canary", 0);
-                    editor.putBoolean("chrome", true);
-                } catch (PackageManager.NameNotFoundException e) {
-                    try {
-                        getPackageManager().getPackageInfo("com.chrome.dev", 0);
-                        editor.putBoolean("chrome", true);
-                    } catch (PackageManager.NameNotFoundException e1) {
-                        try {
-                            getPackageManager().getPackageInfo("com.chrome.beta", 0);
-                            editor.putBoolean("chrome", true);
-                        } catch (PackageManager.NameNotFoundException e2) {
-                            try {
-                                getPackageManager().getPackageInfo("com.android.chrome", 0);
-                                editor.putBoolean("chrome", true);
-                            } catch (PackageManager.NameNotFoundException e3) {
-                                editor.putBoolean("chrome", false);
-                            }
-                        }
-                    }
-                }
-
-                break;
-
-            // Monitor (1080p)
-            case 2:
-                if(prefMain.getBoolean("landscape", false))
-                    editor.putString("size", "1920x1080");
-                else
-                    editor.putString("size", "1080x1920");
-
-                editor.putString("rotation_lock_new", "landscape");
-                editor.putString("density", "160");
-                editor.putString("ui_refresh",
-                        U.isInNonRootMode(this) && Build.VERSION.SDK_INT == Build.VERSION_CODES.M
-                                ? "activity-manager"
-                                : "system-ui");
-
-                try {
-                    getPackageManager().getPackageInfo("com.chrome.canary", 0);
-                    editor.putBoolean("chrome", true);
-                } catch (PackageManager.NameNotFoundException e) {
-                    try {
-                        getPackageManager().getPackageInfo("com.chrome.dev", 0);
-                        editor.putBoolean("chrome", true);
-                    } catch (PackageManager.NameNotFoundException e1) {
-                        try {
-                            getPackageManager().getPackageInfo("com.chrome.beta", 0);
-                            editor.putBoolean("chrome", true);
-                        } catch (PackageManager.NameNotFoundException e2) {
-                            try {
-                                getPackageManager().getPackageInfo("com.android.chrome", 0);
-                                editor.putBoolean("chrome", true);
-                            } catch (PackageManager.NameNotFoundException e3) {
-                                editor.putBoolean("chrome", false);
-                            }
-                        }
-                    }
-                }
-
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    try {
-                        PackageInfo pInfo = getPackageManager().getPackageInfo("com.farmerbb.taskbar", 0);
-                        if(pInfo.versionCode >= 21) editor.putBoolean("taskbar", true);
-                    } catch (PackageManager.NameNotFoundException e) {
-                        try {
-                            PackageInfo pInfo = getPackageManager().getPackageInfo("com.farmerbb.taskbar.paid", 0);
-                            if(pInfo.versionCode >= 21) editor.putBoolean("taskbar", true);
-                        } catch (PackageManager.NameNotFoundException e2) { /* Gracefully fail */ }
-                    }
-                }
-
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && !U.isInNonRootMode(this))
-                    editor.putBoolean("freeform", true);
-
-                break;
-
-            // AppRadio
-            case 3:
-                if(getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH))
-                    editor.putBoolean("bluetooth_on", true);
-
-                editor.putBoolean("backlight_off", true);
-
-                if(U.filesExist(U.vibrationOff))
-                    editor.putBoolean("vibration_off", true);
-
-                if(prefMain.getBoolean("expert_mode", false)) {
-                    editor.putString("size", Integer.toString(prefMain.getInt("width", 0))
-                            + "x"
-                            + Integer.toString(prefMain.getInt("height", 0)));
-
-                    editor.putString("density", Integer.toString(SystemProperties.getInt("ro.sf.lcd_density", prefMain.getInt("density", 0))));
-
-                    editor.putBoolean("size-reset", true);
-                    editor.putBoolean("density-reset", true);
-                }
-
-                break;
-
-            // Other / None
-            case 4:
-                if(prefMain.getBoolean("expert_mode", false)) {
-                    editor.putString("size", Integer.toString(prefMain.getInt("width", 0))
-                            + "x"
-                            + Integer.toString(prefMain.getInt("height", 0)));
-
-                    editor.putString("density", Integer.toString(SystemProperties.getInt("ro.sf.lcd_density", prefMain.getInt("density", 0))));
-
-                    editor.putBoolean("size-reset", true);
-                    editor.putBoolean("density-reset", true);
-                }
-
-                break;
-        }
-
-        editor.apply();
+        U.createProfileFromTemplate(this, name, pos, U.getPrefNew(this));
 
         // Add ProfileEditFragment
         getFragmentManager()
@@ -1077,7 +853,7 @@ SystemAlertPermissionDialogFragment.Listener {
 
         SharedPreferences prefMain = U.getPrefMain(this);
         SharedPreferences.Editor editor = prefMain.edit();
-        editor.putInt("current_api_version", Build.VERSION.SDK_INT);
+        editor.putFloat("current_api_version_new", U.getCurrentApiVersion());
         editor.apply();
     }
 
@@ -1088,14 +864,14 @@ SystemAlertPermissionDialogFragment.Listener {
 
         SharedPreferences prefMain = U.getPrefMain(this);
         SharedPreferences.Editor editor = prefMain.edit();
-        editor.putInt("current_api_version", Build.VERSION.SDK_INT);
+        editor.putFloat("current_api_version_new", U.getCurrentApiVersion());
         editor.apply();
     }
 
     @Override
     public void onNewDeviceDialogPositiveClick(DialogFragment dialog) {
         dialog.dismiss();
-        showDialogs();
+        showMoreDialogs();
     }
 
     @Override
@@ -1129,22 +905,16 @@ SystemAlertPermissionDialogFragment.Listener {
         finish();
     }
 
-    @SuppressLint("HardwareIds")
     private void showDialogs() {
+        if(U.hasElevatedPermissions(this))
+            showMoreDialogs();
+        else
+            startActivity(new Intent(this, UnableToStartActivity.class));
+    }
+
+    @SuppressLint("HardwareIds")
+    private void showMoreDialogs() {
         SharedPreferences prefMain = U.getPrefMain(this);
-        boolean swiftKey = true;
-
-        try {
-            getPackageManager().getPackageInfo("com.touchtype.swiftkey", 0);
-        } catch (PackageManager.NameNotFoundException e1) {
-            swiftKey = false;
-
-            if(prefMain.getBoolean("swiftkey", false)) {
-                SharedPreferences.Editor editor = prefMain.edit();
-                editor.remove("swiftkey");
-                editor.apply();
-            }
-        }
 
         // Save Android ID to preferences, and show dialog if ID does not match (new device)
         if("null".equals(prefMain.getString("android_id", "null"))) {
@@ -1161,27 +931,14 @@ SystemAlertPermissionDialogFragment.Listener {
                 newDeviceFragment.show(getFragmentManager(), "new-device-fragment");
             }
 
-        // Show dialog if SwiftKey is installed
-        } else if(swiftKey
-                && !prefMain.getBoolean("swiftkey", false)
-                && getFragmentManager().findFragmentByTag("swiftkey-fragment") == null) {
-            SharedPreferences.Editor editor = prefMain.edit();
-            editor.putBoolean("swiftkey", true);
-            editor.apply();
-
-            DialogFragment swiftkeyFragment = new SwiftkeyDialogFragment();
-            swiftkeyFragment.show(getFragmentManager(), "swiftkey-fragment");
-
-        // Show dialog if device is newer than API 27 (Oreo MR1)
-        } else if(Build.VERSION.SDK_INT > Build.VERSION_CODES.O_MR1
+        // Show dialog if on an untested Android version
+        } else if(U.isUntestedAndroidVersion(this)
                 && getFragmentManager().findFragmentByTag("upgrade-fragment") == null
                 && showUpgradeDialog) {
             showUpgradeDialog = false;
 
-            if(prefMain.getInt("current_api_version", Build.VERSION.SDK_INT - 1) < Build.VERSION.SDK_INT) {
-                DialogFragment upgradeFragment = new AndroidUpgradeDialogFragment();
-                upgradeFragment.show(getFragmentManager(), "upgrade-fragment");
-            }
+            DialogFragment upgradeFragment = new AndroidUpgradeDialogFragment();
+            upgradeFragment.show(getFragmentManager(), "upgrade-fragment");
 
         // Starting with 5.1.1 LMY48I, RunningAppProcessInfo no longer returns valid data,
         // which means we won't be able to use the "kill" command with the pid of SystemUI.
@@ -1220,12 +977,6 @@ SystemAlertPermissionDialogFragment.Listener {
     }
 
     @Override
-    public void onSwiftkeyDialogPositiveClick(DialogFragment dialog) {
-        dialog.dismiss();
-        showDialogs();
-    }
-
-    @Override
     public void onBusyboxDialogNegativeClick() {
         U.getPrefMain(this).edit().putBoolean("ignore_busybox_dialog", true).apply();
     }
@@ -1255,10 +1006,10 @@ SystemAlertPermissionDialogFragment.Listener {
                     nm.cancelAll();
 
                     // Clean up leftover dump files
-                    File file = new File(getExternalFilesDir(null), "prefCurrent");
-                    File file2 = new File(getExternalFilesDir(null), "prefSaved");
-                    File file3 = new File(getExternalFilesDir(null), "prefMain");
-                    File file4 = new File(getExternalFilesDir(null), "prefNew");
+                    File file = new File(getExternalFilesDir(null), "prefCurrent.xml");
+                    File file2 = new File(getExternalFilesDir(null), "prefSaved.xml");
+                    File file3 = new File(getExternalFilesDir(null), "prefMain.xml");
+                    File file4 = new File(getExternalFilesDir(null), "prefNew.xml");
                     file.delete();
                     file2.delete();
                     file3.delete();

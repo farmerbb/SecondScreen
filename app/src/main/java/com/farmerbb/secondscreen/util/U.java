@@ -29,6 +29,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
@@ -44,6 +45,7 @@ import android.support.v7.app.AlertDialog;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.Gravity;
+import android.view.Surface;
 import android.view.WindowManager;
 import android.widget.Toast;
 
@@ -65,6 +67,7 @@ import org.apache.commons.lang3.math.NumberUtils;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.Collator;
@@ -217,29 +220,12 @@ public final class U {
             return "am display-density " + args;
     }
 
-    public static String chromeCommand(String chromeVersion) {
-        return "echo 'chrome --user-agent=\"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/" + chromeVersion + " Safari/537.36\"' > " + CHROME_COMMAND_LINE + " && chmod 644 " + CHROME_COMMAND_LINE;
+    public static String chromeCommand(Context context) {
+        return "echo 'chrome --user-agent=\"Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/" + getChromeVersion(context) + " Safari/537.36\"' > " + CHROME_COMMAND_LINE + " && chmod 644 " + CHROME_COMMAND_LINE;
     }
 
-    public static String chromeCommand2(int channel) {
-        String returnCommand = "am force-stop ";
-
-        switch(channel) {
-            case 0:
-                returnCommand = returnCommand + "com.android.chrome";
-                break;
-            case 1:
-                returnCommand = returnCommand + "com.chrome.beta";
-                break;
-            case 2:
-                returnCommand = returnCommand + "com.chrome.dev";
-                break;
-            case 3:
-                returnCommand = returnCommand + "com.chrome.canary";
-                break;
-        }
-
-        return returnCommand;
+    public static String chromeCommand2(Context context) {
+        return "am force-stop " + getChromePackageName(context);
     }
 
     public static String immersiveCommand(String pref) {
@@ -321,8 +307,13 @@ public final class U {
 
         // Get launcher package name
         final ResolveInfo mInfo = pm.resolveActivity(homeIntent, 0);
+        final String launcherPackageName = mInfo.activityInfo.applicationInfo.packageName;
 
-        return "sleep 1 && am force-stop " + mInfo.activityInfo.applicationInfo.packageName;
+        if(launcherPackageName.equals(getTaskbarPackageName(context))
+                || launcherPackageName.equals("android"))
+            return "sleep 1";
+        else
+            return "sleep 1 && am force-stop " + launcherPackageName;
     }
 
     // Runs checks to determine if size or density commands need to be run.
@@ -564,16 +555,15 @@ public final class U {
     // Sends broadcast to refresh list of profiles
     public static void listProfilesBroadcast(Context context) {
         Intent listProfilesIntent = new Intent();
-        listProfilesIntent.setAction(U.LIST_PROFILES);
+        listProfilesIntent.setAction(LIST_PROFILES);
         LocalBroadcastManager.getInstance(context).sendBroadcast(listProfilesIntent);
     }
 
     // Miscellaneous utility methods
 
-    // Checks if superuser access is available.
-    // If debug mode is enabled, the app acts as if superuser access is always available,
-    // even on non-rooted devices.
-    public static boolean hasRoot(Context context) {
+    // Checks if elevated permissions are available.
+    // If debug mode is enabled, the app acts as if elevated permissions are always available.
+    public static boolean hasElevatedPermissions(Context context) {
         return Shell.SU.available()
                 || hasWriteSecureSettingsPermission(context)
                 || getPrefMain(context).getBoolean("debug_mode", false);
@@ -604,7 +594,7 @@ public final class U {
                 || Shell.SU.available()) {
             for(String command : commands) {
                 if(!command.equals("")) {
-                    U.runSuCommands(context, commands);
+                    runSuCommands(context, commands);
                     break;
                 }
             }
@@ -665,18 +655,19 @@ public final class U {
     // notification containing the command that would have been run instead.
     private static void runSuCommands(Context context, String[] commands) {
         if(getPrefMain(context).getBoolean("debug_mode", false)) {
-            String dump = "";
+            StringBuilder dump = new StringBuilder();
 
             for(String command : commands) {
                 if(!command.equals(""))
-                    dump = dump + context.getResources().getString(R.string.bullet) + " " + command + "\n";
+                    dump.append(context.getResources().getString(R.string.bullet))
+                            .append(" ").append(command).append("\n");
             }
 
             Notification notification = new NotificationCompat.Builder(context)
                     .setSmallIcon(R.drawable.ic_stat_name)
                     .setContentTitle(context.getResources().getString(R.string.debug_mode_enabled))
-                    .setContentText(dump)
-                    .setStyle(new NotificationCompat.BigTextStyle().bigText(dump))
+                    .setContentText(dump.toString())
+                    .setStyle(new NotificationCompat.BigTextStyle().bigText(dump.toString()))
                     .build();
 
             NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -1083,12 +1074,16 @@ public final class U {
         ComponentName componentName = new ComponentName(context, DummyLauncherActivity.class.getName());
         packageManager.setComponentEnabledSetting(componentName, PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
 
+        goHome(context);
+
+        packageManager.setComponentEnabledSetting(componentName, PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
+    }
+
+    public static void goHome(Context context) {
         Intent homeIntent = new Intent(Intent.ACTION_MAIN);
         homeIntent.addCategory(Intent.CATEGORY_HOME);
         homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(homeIntent);
-
-        packageManager.setComponentEnabledSetting(componentName, PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
     }
 
     // Locks the screen
@@ -1208,5 +1203,285 @@ public final class U {
         }
 
         return NumberUtils.isNumber(filename);
+    }
+
+    private static boolean isSystemApp(Context context) {
+        try {
+            ApplicationInfo info = context.getPackageManager().getApplicationInfo(BuildConfig.APPLICATION_ID, 0);
+            int mask = ApplicationInfo.FLAG_SYSTEM | ApplicationInfo.FLAG_UPDATED_SYSTEM_APP;
+            return (info.flags & mask) != 0;
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
+        }
+    }
+
+    public static boolean isBlissOs(Context context) {
+        String blissVersion = SystemProperties.get("ro.bliss.version");
+        return blissVersion != null && !blissVersion.isEmpty()
+                && BuildConfig.APPLICATION_ID.equals("com.farmerbb.secondscreen.free")
+                && isSystemApp(context);
+    }
+
+    private static void getDisplayMetrics(Context context) {
+        SharedPreferences prefMain = getPrefMain(context);
+        SharedPreferences.Editor editor = prefMain.edit();
+
+        DisplayMetrics metrics = new DisplayMetrics();
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Display disp = wm.getDefaultDisplay();
+        disp.getRealMetrics(metrics);
+
+        editor.putInt("density", SystemProperties.getInt("ro.sf.lcd_density", metrics.densityDpi));
+
+        if(context.getApplicationContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            if(wm.getDefaultDisplay().getRotation() == Surface.ROTATION_90
+                    || wm.getDefaultDisplay().getRotation() == Surface.ROTATION_270) {
+                editor.putBoolean("landscape", true);
+                editor.putInt("height", metrics.widthPixels);
+                editor.putInt("width", metrics.heightPixels);
+            } else {
+                editor.putBoolean("landscape", false);
+                editor.putInt("height", metrics.heightPixels);
+                editor.putInt("width", metrics.widthPixels);
+            }
+        } else if(context.getApplicationContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            if(wm.getDefaultDisplay().getRotation() == Surface.ROTATION_0
+                    || wm.getDefaultDisplay().getRotation() == Surface.ROTATION_180) {
+                editor.putBoolean("landscape", true);
+                editor.putInt("height", metrics.heightPixels);
+                editor.putInt("width", metrics.widthPixels);
+            } else {
+                editor.putBoolean("landscape", false);
+                editor.putInt("height", metrics.widthPixels);
+                editor.putInt("width", metrics.heightPixels);
+            }
+        }
+
+        editor.apply();
+    }
+
+    @SuppressWarnings("HardwareIds")
+    public static void initPrefs(Context context) {
+        // Gather display metrics
+        getDisplayMetrics(context);
+
+        // Set some default preferences
+        SharedPreferences prefMain = getPrefMain(context);
+        SharedPreferences.Editor editor = prefMain.edit();
+        editor.putBoolean("first-run", true);
+        editor.putBoolean("safe_mode", true);
+        editor.putString("android_id", Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID));
+        editor.putBoolean("hdmi", true);
+        editor.putString("notification_action", "quick-actions");
+        editor.putBoolean("show-welcome-message", !isBlissOs(context));
+        editor.apply();
+
+        // Create default profile for BlissOS
+        if(isBlissOs(context)) {
+            String filename = String.valueOf(System.currentTimeMillis());
+            String profileName = context.getResources().getString(R.string.blissos_default);
+
+            createProfileFromTemplate(context, profileName, 2, getPrefSaved(context, filename));
+
+            // Write the String to a new file with filename of current milliseconds of Unix time
+            try {
+                FileOutputStream output = context.openFileOutput(filename, Context.MODE_PRIVATE);
+                output.write(profileName.getBytes());
+                output.close();
+            } catch (IOException e) { /* Gracefully fail */ }
+        }
+    }
+
+    public static String getTaskbarPackageName(Context context) {
+        return getInstalledPackage(context, Arrays.asList(
+                "com.farmerbb.taskbar.paid",
+                "com.farmerbb.taskbar"));
+    }
+
+    public static String getChromePackageName(Context context) {
+        return getInstalledPackage(context, Arrays.asList(
+                "com.chrome.canary",
+                "com.chrome.dev",
+                "com.chrome.beta",
+                "com.android.chrome"));
+    }
+
+    // Returns the name of an installed package from a list of package names, in order of preference
+    private static String getInstalledPackage(Context context, List<String> packageNames) {
+        if(packageNames == null || packageNames.isEmpty())
+            return null;
+
+        List<String> packages = packageNames instanceof ArrayList ? packageNames : new ArrayList<>(packageNames);
+        String packageName = packages.get(0);
+
+        try {
+            context.getPackageManager().getPackageInfo(packageName, 0);
+            return packageName;
+        } catch (PackageManager.NameNotFoundException e) {
+            packages.remove(0);
+            return getInstalledPackage(context, packages);
+        }
+    }
+
+    private static String getChromeVersion(Context context) {
+        String packageName = getChromePackageName(context);
+        if(packageName != null) {
+            try {
+                PackageInfo pInfo = context.getPackageManager().getPackageInfo(packageName, 0);
+                return pInfo.versionName;
+            } catch (PackageManager.NameNotFoundException e) { /* Gracefully fail */ }
+        }
+
+        return null;
+    }
+    
+    public static void createProfileFromTemplate(Context context, String name, int pos, SharedPreferences profileToCreate) {
+        SharedPreferences.Editor editor = profileToCreate.edit();
+        SharedPreferences prefMain = getPrefMain(context);
+
+        if(name.isEmpty())
+            if(pos == 4)
+                editor.putString("profile_name", context.getResources().getString(R.string.action_new));
+            else
+                editor.putString("profile_name", context.getResources().getStringArray(R.array.new_profile_templates)[pos]);
+        else
+            editor.putString("profile_name", name);
+
+        switch(pos) {
+            // TV (1080p)
+            case 0:
+                if(prefMain.getBoolean("landscape", false))
+                    editor.putString("size", "1920x1080");
+                else
+                    editor.putString("size", "1080x1920");
+
+                editor.putString("rotation_lock_new", "landscape");
+                editor.putString("density", "240");
+                editor.putString("ui_refresh",
+                        isInNonRootMode(context) && Build.VERSION.SDK_INT == Build.VERSION_CODES.M
+                                ? "activity-manager"
+                                : "system-ui");
+
+                editor.putBoolean("chrome", getChromePackageName(context) != null);
+
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && getTaskbarPackageName(context) != null) {
+                    editor.putBoolean("taskbar", true);
+                    editor.putBoolean("freeform", true);
+                    editor.putBoolean("clear_home", true);
+                }
+
+                break;
+
+            // TV (720p)
+            case 1:
+                if(prefMain.getBoolean("landscape", false))
+                    editor.putString("size", "1280x720");
+                else
+                    editor.putString("size", "720x1280");
+
+                editor.putString("rotation_lock_new", "landscape");
+                editor.putString("density", "160");
+                editor.putString("ui_refresh",
+                        isInNonRootMode(context) && Build.VERSION.SDK_INT == Build.VERSION_CODES.M
+                                ? "activity-manager"
+                                : "system-ui");
+
+                editor.putBoolean("chrome", getChromePackageName(context) != null);
+
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && getTaskbarPackageName(context) != null) {
+                    editor.putBoolean("taskbar", true);
+                    editor.putBoolean("freeform", true);
+                    editor.putBoolean("clear_home", true);
+                }
+
+                break;
+
+            // Monitor (1080p)
+            case 2:
+                if(prefMain.getBoolean("landscape", false))
+                    editor.putString("size", "1920x1080");
+                else
+                    editor.putString("size", "1080x1920");
+
+                editor.putString("rotation_lock_new", "landscape");
+                editor.putString("density", "160");
+                editor.putString("ui_refresh",
+                        isInNonRootMode(context) && Build.VERSION.SDK_INT == Build.VERSION_CODES.M
+                                ? "activity-manager"
+                                : "system-ui");
+
+                editor.putBoolean("chrome", getChromePackageName(context) != null);
+
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && getTaskbarPackageName(context) != null) {
+                    editor.putBoolean("taskbar", true);
+                    editor.putBoolean("freeform", true);
+                    editor.putBoolean("clear_home", true);
+                }
+
+                break;
+
+            // AppRadio
+            case 3:
+                if(context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH))
+                    editor.putBoolean("bluetooth_on", true);
+
+                editor.putBoolean("backlight_off", true);
+
+                if(filesExist(vibrationOff))
+                    editor.putBoolean("vibration_off", true);
+
+                if(prefMain.getBoolean("expert_mode", false)) {
+                    editor.putString("size", Integer.toString(prefMain.getInt("width", 0))
+                            + "x"
+                            + Integer.toString(prefMain.getInt("height", 0)));
+
+                    editor.putString("density", Integer.toString(SystemProperties.getInt("ro.sf.lcd_density", prefMain.getInt("density", 0))));
+
+                    editor.putBoolean("size-reset", true);
+                    editor.putBoolean("density-reset", true);
+                }
+
+                break;
+
+            // Other / None
+            case 4:
+                if(prefMain.getBoolean("expert_mode", false)) {
+                    editor.putString("size", Integer.toString(prefMain.getInt("width", 0))
+                            + "x"
+                            + Integer.toString(prefMain.getInt("height", 0)));
+
+                    editor.putString("density", Integer.toString(SystemProperties.getInt("ro.sf.lcd_density", prefMain.getInt("density", 0))));
+
+                    editor.putBoolean("size-reset", true);
+                    editor.putBoolean("density-reset", true);
+                }
+
+                break;
+        }
+
+        editor.apply();
+    }
+
+    public static boolean hasFreeformSupport(Context context) {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
+                && (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_FREEFORM_WINDOW_MANAGEMENT)
+                || Settings.Global.getInt(context.getContentResolver(), "enable_freeform_support", 0) != 0
+                || (Build.VERSION.SDK_INT <= Build.VERSION_CODES.N_MR1
+                && Settings.Global.getInt(context.getContentResolver(), "force_resizable_activities", 0) != 0
+                && getTaskbarPackageName(context) != null));
+    }
+
+    public static boolean isUntestedAndroidVersion(Context context) {
+        SharedPreferences prefMain = getPrefMain(context);
+        float testedApiVersion = 27.0f;
+
+        return getCurrentApiVersion() > Math.max(testedApiVersion, prefMain.getFloat("current_api_version_new", testedApiVersion));
+    }
+
+    public static float getCurrentApiVersion() {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            return Float.valueOf(Build.VERSION.SDK_INT + "." + Build.VERSION.PREVIEW_SDK_INT);
+        else
+            return (float) Build.VERSION.SDK_INT;
     }
 }

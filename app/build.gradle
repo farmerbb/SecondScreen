@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 ext {
-    SUPPORT_LIBRARY_VERSION = "27.0.2"
+    SUPPORT_LIBRARY_VERSION = "27.1.0"
 }
 
 repositories {
@@ -20,11 +20,11 @@ android {
         applicationId "com.farmerbb.secondscreen"
         minSdkVersion 17
 
-        // Keeping target SDK at 25 for now
+        //noinspection OldTargetApi
         targetSdkVersion 25
 
-        versionCode 168
-        versionName "2.6.5"
+        versionCode 169
+        versionName "2.7"
 
         resConfigs "en", "es", "fr", "sk"
         vectorDrawables.useSupportLibrary = true

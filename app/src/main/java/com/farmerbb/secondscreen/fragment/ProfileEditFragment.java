@@ -24,9 +24,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -41,7 +39,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 
 import com.farmerbb.secondscreen.R;
 import com.farmerbb.secondscreen.activity.FragmentContainerActivity;
@@ -115,13 +115,21 @@ SharedPreferences.OnSharedPreferenceChangeListener {
         // Show the Up button in the action bar.
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        // Animate elevation change
-        if(getActivity().findViewById(R.id.layoutMain).getTag().equals("main-layout-large")
-                && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            LinearLayout profileViewEdit = (LinearLayout) getActivity().findViewById(R.id.profileViewEdit);
-            LinearLayout profileList = (LinearLayout) getActivity().findViewById(R.id.profileList);
-            profileList.animate().z(0f);
-            profileViewEdit.animate().z(getResources().getDimensionPixelSize(R.dimen.profile_view_edit_elevation));
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            // Animate elevation change
+            if(getActivity().findViewById(R.id.layoutMain).getTag().equals("main-layout-large")) {
+                LinearLayout profileViewEdit = (LinearLayout) getActivity().findViewById(R.id.profileViewEdit);
+                LinearLayout profileList = (LinearLayout) getActivity().findViewById(R.id.profileList);
+                profileList.animate().z(0f);
+                profileViewEdit.animate().z(getResources().getDimensionPixelSize(R.dimen.profile_view_edit_elevation));
+            }
+
+            // Remove dividers
+            View rootView = getView();
+            if(rootView != null) {
+                ListView list = rootView.findViewById(android.R.id.list);
+                if(list != null) list.setDivider(null);
+            }
         }
     }
 
@@ -316,23 +324,8 @@ SharedPreferences.OnSharedPreferenceChangeListener {
         if(Build.VERSION.SDK_INT < Build.VERSION_CODES.N)
             disablePreference(prefNew, "freeform", true);
 
-        try {
-            getActivity().getPackageManager().getPackageInfo("com.chrome.canary", 0);
-        } catch (NameNotFoundException e) {
-            try {
-                getActivity().getPackageManager().getPackageInfo("com.chrome.dev", 0);
-            } catch (NameNotFoundException e1) {
-                try {
-                    getActivity().getPackageManager().getPackageInfo("com.chrome.beta", 0);
-                } catch (NameNotFoundException e2) {
-                    try {
-                        getActivity().getPackageManager().getPackageInfo("com.android.chrome", 0);
-                    } catch (NameNotFoundException e3) {
-                        disablePreference(prefNew, "chrome", true);
-                    }
-                }
-            }
-        }
+        if(U.getChromePackageName(getActivity()) == null)
+            disablePreference(prefNew, "chrome", true);
 
         if(U.isInNonRootMode(getActivity())) {
             disablePreference(prefNew, "hdmi_rotation", false);
@@ -361,7 +354,7 @@ SharedPreferences.OnSharedPreferenceChangeListener {
         else
             findPreference("overscan_settings").setSummary(getResources().getString(R.string.disabled));
 
-        String taskbarPackageName = getTaskbarPackageName();
+        String taskbarPackageName = U.getTaskbarPackageName(getActivity());
         if(taskbarPackageName == null)
             disablePreference(prefNew, "taskbar", true);
         else
@@ -637,18 +630,7 @@ SharedPreferences.OnSharedPreferenceChangeListener {
                 break;
             case "taskbar":
                 // Check if Taskbar is installed, if not, then direct user to Play Store and uncheck preference
-                boolean taskbarInstalled = false;
-                try {
-                    PackageInfo pInfo = getActivity().getPackageManager().getPackageInfo("com.farmerbb.taskbar", 0);
-                    if(pInfo.versionCode >= 21) taskbarInstalled = true;
-                } catch (PackageManager.NameNotFoundException e) {
-                    try {
-                        PackageInfo pInfo = getActivity().getPackageManager().getPackageInfo("com.farmerbb.taskbar.paid", 0);
-                        if(pInfo.versionCode >= 21) taskbarInstalled = true;
-                    } catch (PackageManager.NameNotFoundException e2) { /* Gracefully fail */ }
-                }
-
-                if(!taskbarInstalled) {
+                if(U.getTaskbarPackageName(getActivity()) == null) {
                     ((CheckBoxPreference) p).setChecked(false);
                     Intent taskbarIntent = new Intent(Intent.ACTION_VIEW);
                     taskbarIntent.setData(Uri.parse("https://play.google.com/store/apps/details?id=com.farmerbb.taskbar"));
@@ -661,7 +643,7 @@ SharedPreferences.OnSharedPreferenceChangeListener {
                 break;
             case "taskbar_settings":
                 PackageManager packageManager = getActivity().getPackageManager();
-                String packageName = getTaskbarPackageName();
+                String packageName = U.getTaskbarPackageName(getActivity());
                 Intent intent2;
 
                 if(packageName == null) {
@@ -909,24 +891,5 @@ SharedPreferences.OnSharedPreferenceChangeListener {
         } catch (PackageManager.NameNotFoundException e) {
             return false;
         }
-    }
-
-    private String getTaskbarPackageName() {
-        PackageManager pm = getActivity().getPackageManager();
-        String packageName;
-
-        try {
-            packageName = "com.farmerbb.taskbar";
-            pm.getPackageInfo(packageName, 0);
-        } catch (PackageManager.NameNotFoundException e) {
-            try {
-                packageName = "com.farmerbb.taskbar.paid";
-                pm.getPackageInfo(packageName, 0);
-            } catch (PackageManager.NameNotFoundException e1) {
-                packageName = null;
-            }
-        }
-
-        return packageName;
     }
 }

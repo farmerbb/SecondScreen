@@ -1,0 +1,3 @@
+<resources>
+    <dimen name="adb_shell_command">14sp</dimen>
+</resources>

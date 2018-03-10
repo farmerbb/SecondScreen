@@ -19,7 +19,6 @@ import android.app.ActivityManager;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.ListPreference;
@@ -243,26 +242,8 @@ public final class NotificationSettingsActivity extends PreferenceActivity imple
 
         switch(value) {
             case "temp_chrome":
-                if(U.isInNonRootMode(this))
+                if(U.isInNonRootMode(this) || U.getChromePackageName(this) == null)
                     unsupported = true;
-
-                try {
-                    getPackageManager().getPackageInfo("com.chrome.canary", 0);
-                } catch (PackageManager.NameNotFoundException e) {
-                    try {
-                        getPackageManager().getPackageInfo("com.chrome.dev", 0);
-                    } catch (PackageManager.NameNotFoundException e1) {
-                        try {
-                            getPackageManager().getPackageInfo("com.chrome.beta", 0);
-                        } catch (PackageManager.NameNotFoundException e2) {
-                            try {
-                                getPackageManager().getPackageInfo("com.android.chrome", 0);
-                            } catch (PackageManager.NameNotFoundException e3) {
-                                unsupported = true;
-                            }
-                        }
-                    }
-                }
                 break;
             case "temp_immersive":
                 if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)

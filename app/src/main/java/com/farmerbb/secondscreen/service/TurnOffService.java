@@ -21,7 +21,6 @@ import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Handler;
@@ -62,7 +61,7 @@ public final class TurnOffService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         SharedPreferences prefCurrent = U.getPrefCurrent(this);
 
-        if(U.hasRoot(this))
+        if(U.hasElevatedPermissions(this))
             turnOffProfile(prefCurrent);
         else {
             SharedPreferences.Editor editor = prefCurrent.edit();
@@ -136,13 +135,29 @@ public final class TurnOffService extends IntentService {
         }
 
         // Clear default home
-        boolean shouldClearHome = false;
+        boolean shouldDisableTaskbarHome = false;
 
         if(prefCurrent.getBoolean("clear_home", false))
-            shouldClearHome = true;
+            shouldDisableTaskbarHome = true;
 
-        if(shouldClearHome)
-            U.clearDefaultHome(this);
+        boolean shouldClearHome = shouldDisableTaskbarHome;
+        if(shouldClearHome) {
+            Intent taskbarIntent = null;
+            String taskbarPackageName = U.getTaskbarPackageName(this);
+
+            if(taskbarPackageName != null)
+                taskbarIntent = new Intent("com.farmerbb.taskbar.DISABLE_HOME");
+
+            if(taskbarIntent != null) {
+                taskbarIntent.setPackage(taskbarPackageName);
+                taskbarIntent.putExtra("secondscreen", true);
+                sendBroadcast(taskbarIntent);
+            } else {
+                U.clearDefaultHome(this);
+
+                shouldDisableTaskbarHome = false;
+            }
+        }
 
         // Resolution and density
 
@@ -227,32 +242,9 @@ public final class TurnOffService extends IntentService {
         }
 
         // Chrome
-        int channel = 0;
-
-        // If multiple versions of Chrome are installed on the device,
-        // assume that the user is running the newest version.
-        try {
-            getPackageManager().getPackageInfo("com.chrome.canary", 0);
-            channel = 3;
-        } catch (PackageManager.NameNotFoundException e) {
-            try {
-                getPackageManager().getPackageInfo("com.chrome.dev", 0);
-                channel = 2;
-            } catch (PackageManager.NameNotFoundException e1) {
-                try {
-                    getPackageManager().getPackageInfo("com.chrome.beta", 0);
-                    channel = 1;
-                } catch (PackageManager.NameNotFoundException e2) {
-                    try {
-                        getPackageManager().getPackageInfo("com.android.chrome", 0);
-                    } catch (PackageManager.NameNotFoundException e3) { /* Gracefully fail */ }
-                }
-            }
-        }
-
         if(prefCurrent.getBoolean("chrome", true)) {
             su[chromeCommand] = U.chromeCommandRemove;
-            su[chromeCommand2] = U.chromeCommand2(channel);
+            su[chromeCommand2] = U.chromeCommand2(this);
         }
 
         // Daydreams
@@ -317,8 +309,10 @@ public final class TurnOffService extends IntentService {
                 && (shouldRunSizeCommand || shouldRunDensityCommand);
 
         if(prefCurrent.getBoolean("freeform", true)) {
-            su[freeformCommand] = U.freeformCommand(prefCurrent.getBoolean("freeform_system", false));
-            rebootRequired = true;
+            boolean freeformSystem = prefCurrent.getBoolean("freeform_system", false);
+            su[freeformCommand] = U.freeformCommand(freeformSystem);
+            if(!rebootRequired && (U.hasFreeformSupport(this) != freeformSystem))
+                rebootRequired = true;
         }
 
         // HDMI rotation
@@ -375,6 +369,11 @@ public final class TurnOffService extends IntentService {
         }
 
         // Determine if we need to stop Taskbar
+        boolean shouldDisableFreeform = false;
+
+        if(prefCurrent.getBoolean("freeform", false))
+            shouldDisableFreeform = true;
+
         boolean shouldStopTaskbar = false;
 
         if(prefCurrent.getBoolean("taskbar", false))
@@ -402,22 +401,31 @@ public final class TurnOffService extends IntentService {
 
         sendBroadcast(query);
 
-        // Send broadcast to stop Taskbar
-        if(shouldStopTaskbar) {
-            Intent taskbarIntent = new Intent("com.farmerbb.taskbar.QUIT");
+        // Send broadcast to start or stop Taskbar
+        Intent freeformIntent = null;
 
-            try {
-                getPackageManager().getPackageInfo("com.farmerbb.taskbar.paid", 0);
-                taskbarIntent.setPackage("com.farmerbb.taskbar.paid");
-            } catch (PackageManager.NameNotFoundException e) {
-                try {
-                    getPackageManager().getPackageInfo("com.farmerbb.taskbar", 0);
-                    taskbarIntent.setPackage("com.farmerbb.taskbar");
-                } catch (PackageManager.NameNotFoundException e2) { /* Gracefully fail */ }
-            }
+        if(shouldDisableFreeform)
+            freeformIntent = new Intent("com.farmerbb.taskbar.DISABLE_FREEFORM_MODE");
 
+        if(freeformIntent != null) {
+            freeformIntent.setPackage(U.getTaskbarPackageName(this));
+            freeformIntent.putExtra("secondscreen", true);
+            sendBroadcast(freeformIntent);
+        }
+
+        Intent taskbarIntent = null;
+
+        if(shouldStopTaskbar)
+            taskbarIntent = new Intent("com.farmerbb.taskbar.QUIT");
+
+        if(taskbarIntent != null) {
+            taskbarIntent.setPackage(U.getTaskbarPackageName(this));
+            taskbarIntent.putExtra("secondscreen", true);
             sendBroadcast(taskbarIntent);
         }
+
+        if(shouldDisableTaskbarHome && !(U.isInNonRootMode(this) && rebootRequired))
+            U.goHome(this);
 
         // Stop NotificationService
         Intent serviceIntent = new Intent(this, NotificationService.class);

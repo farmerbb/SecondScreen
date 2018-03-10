@@ -16,7 +16,9 @@
 package com.farmerbb.secondscreen.activity;
 
 import android.Manifest;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -33,26 +35,26 @@ public final class UnableToStartActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // UnableToStartActivity requires a bundle extra "action" to be passed to it,
-        // so that the activity knows what to do after permission is granted.
-        if(!getIntent().hasExtra("action"))
-            finish();
-        else {
-            setContentView(R.layout.activity_turn_off);
-            setTitle(R.string.permission_needed);
-            setFinishOnTouchOutside(false);
+        setContentView(R.layout.activity_turn_off);
+        setTitle(R.string.permission_needed);
+        setFinishOnTouchOutside(false);
 
-            TextView textView = (TextView) findViewById(R.id.turnOffTextView);
-            textView.setText(getString(R.string.permission_dialog_message, BuildConfig.APPLICATION_ID, Manifest.permission.WRITE_SECURE_SETTINGS));
+        TextView textView = findViewById(R.id.turnOffTextView);
+        textView.setText(R.string.permission_dialog_message);
 
-            Button button1 = (Button) findViewById(R.id.turnOffButtonPrimary);
-            Button button2 = (Button) findViewById(R.id.turnOffButtonSecondary);
+        TextView adbShellCommand = findViewById(R.id.adb_shell_command);
+        adbShellCommand.setVisibility(View.VISIBLE);
+        adbShellCommand.setText(getString(R.string.adb_shell_command, BuildConfig.APPLICATION_ID, Manifest.permission.WRITE_SECURE_SETTINGS));
 
-            button1.setText(R.string.action_ok);
-            button1.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if(U.hasRoot(UnableToStartActivity.this)) {
+        Button button1 = findViewById(R.id.turnOffButtonPrimary);
+        Button button2 = findViewById(R.id.turnOffButtonSecondary);
+
+        button1.setText(R.string.action_continue);
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(getIntent().hasExtra("action")) {
+                    if(U.hasElevatedPermissions(UnableToStartActivity.this)) {
                         switch(getIntent().getStringExtra("action")) {
                             case "load-profile":
                                 U.loadProfile(UnableToStartActivity.this, getIntent().getStringExtra("filename"));
@@ -62,13 +64,15 @@ public final class UnableToStartActivity extends AppCompatActivity {
                                 break;
                         }
                     }
+                } else
+                    LocalBroadcastManager.getInstance(UnableToStartActivity.this)
+                            .sendBroadcast(new Intent("com.farmerbb.secondscreen.SHOW_DIALOGS"));
 
-                    finish();
-                }
-            });
+                finish();
+            }
+        });
 
-            button2.setVisibility(View.GONE);
-        }
+        button2.setVisibility(View.GONE);
     }
 
     // Disable the back button

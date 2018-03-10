@@ -26,6 +26,8 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ListView;
 
 import com.farmerbb.secondscreen.R;
 import com.farmerbb.secondscreen.service.TestOverscanService;
@@ -78,9 +80,16 @@ public final class OverscanFragment extends PreferenceFragment implements
         setRetainInstance(true);
         setHasOptionsMenu(true);
 
-        // Change window title
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            // Change window title
             getActivity().setTitle(getResources().getString(R.string.pref_title_overscan_settings));
+
+            // Remove dividers
+            View rootView = getView();
+            if(rootView != null) {
+                ListView list = rootView.findViewById(android.R.id.list);
+                if(list != null) list.setDivider(null);
+            }
         } else
             getActivity().setTitle(" " + getResources().getString(R.string.pref_title_overscan_settings));
 

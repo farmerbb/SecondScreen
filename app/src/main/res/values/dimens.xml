@@ -20,4 +20,6 @@
 
     <dimen name="list_view_padding">16dp</dimen>
     <dimen name="toast_y_offset">64dp</dimen>
+
+    <dimen name="adb_shell_command">12sp</dimen>
 </resources>

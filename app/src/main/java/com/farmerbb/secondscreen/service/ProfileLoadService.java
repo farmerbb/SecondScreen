@@ -22,9 +22,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
 import android.hardware.display.DisplayManager;
 import android.net.wifi.WifiManager;
@@ -83,7 +81,7 @@ public final class ProfileLoadService extends IntentService {
         SharedPreferences prefCurrent = U.getPrefCurrent(this);
 
         // Check for root and then load profile
-        if(U.hasRoot(this))
+        if(U.hasElevatedPermissions(this))
             loadProfile(prefCurrent);
         else {
             SharedPreferences.Editor editor = prefCurrent.edit();
@@ -209,16 +207,38 @@ public final class ProfileLoadService extends IntentService {
         }
 
         // Clear default home
-        boolean shouldClearHome = false;
+        boolean shouldEnableTaskbarHome = false;
+        boolean shouldDisableTaskbarHome = false;
 
         if(!prefCurrent.getBoolean("clear_home", false) && prefSaved.getBoolean("clear_home", false))
-            shouldClearHome = true;
+            shouldEnableTaskbarHome = true;
 
         if(prefCurrent.getBoolean("clear_home", false) && !prefSaved.getBoolean("clear_home", false))
-            shouldClearHome = true;
+            shouldDisableTaskbarHome = true;
 
-        if(shouldClearHome)
-            U.clearDefaultHome(this);
+        boolean shouldClearHome = shouldEnableTaskbarHome || shouldDisableTaskbarHome;
+        if(shouldClearHome) {
+            Intent taskbarIntent = null;
+            String taskbarPackageName = U.getTaskbarPackageName(this);
+
+            if(taskbarPackageName != null) {
+                if(shouldEnableTaskbarHome)
+                    taskbarIntent = new Intent("com.farmerbb.taskbar.ENABLE_HOME");
+                else if(shouldDisableTaskbarHome)
+                    taskbarIntent = new Intent("com.farmerbb.taskbar.DISABLE_HOME");
+            }
+
+            if(taskbarIntent != null) {
+                taskbarIntent.setPackage(taskbarPackageName);
+                taskbarIntent.putExtra("secondscreen", true);
+                sendBroadcast(taskbarIntent);
+            } else {
+                U.clearDefaultHome(this);
+
+                shouldEnableTaskbarHome = false;
+                shouldDisableTaskbarHome = false;
+            }
+        }
 
         // Resolution and density
 
@@ -437,52 +457,22 @@ public final class ProfileLoadService extends IntentService {
                 break;
         }
 
-        // Get Chrome version
-        PackageInfo pInfo;
-        String chromeVersion = " ";
-        int channel = 0;
-
-        // If multiple versions of Chrome are installed on the device,
-        // assume that the user is running the newest version.
-        try {
-            pInfo = getPackageManager().getPackageInfo("com.chrome.canary", 0);
-            chromeVersion = pInfo.versionName;
-            channel = 3;
-        } catch (NameNotFoundException e) {
-            try {
-                pInfo = getPackageManager().getPackageInfo("com.chrome.dev", 0);
-                chromeVersion = pInfo.versionName;
-                channel = 2;
-            } catch (NameNotFoundException e1) {
-                try {
-                    pInfo = getPackageManager().getPackageInfo("com.chrome.beta", 0);
-                    chromeVersion = pInfo.versionName;
-                    channel = 1;
-                } catch (NameNotFoundException e2) {
-                    try {
-                        pInfo = getPackageManager().getPackageInfo("com.android.chrome", 0);
-                        chromeVersion = pInfo.versionName;
-                    } catch (NameNotFoundException e3) { /* Gracefully fail */ }
-                }
-            }
-        }
-
         // Chrome desktop mode
         if(prefSaved.getBoolean("chrome", false)) {
             if(prefCurrent.getBoolean("not_active", true)) {
-                su[chromeCommand] = U.chromeCommand(chromeVersion);
-                su[chromeCommand2] = U.chromeCommand2(channel);
+                su[chromeCommand] = U.chromeCommand(this);
+                su[chromeCommand2] = U.chromeCommand2(this);
             } else {
                 if(!prefCurrent.getBoolean("chrome", false)) {
-                    su[chromeCommand] = U.chromeCommand(chromeVersion);
-                    su[chromeCommand2] = U.chromeCommand2(channel);
+                    su[chromeCommand] = U.chromeCommand(this);
+                    su[chromeCommand2] = U.chromeCommand2(this);
                 }
             }
         } else {
             if(!prefCurrent.getBoolean("not_active", true))
                 if(prefCurrent.getBoolean("chrome", false)) {
                     su[chromeCommand] = U.chromeCommandRemove;
-                    su[chromeCommand2] = U.chromeCommand2(channel);
+                    su[chromeCommand2] = U.chromeCommand2(this);
                 }
         }
 
@@ -582,29 +572,28 @@ public final class ProfileLoadService extends IntentService {
         boolean rebootRequired = uiRefresh.contains("activity-manager")
                 && (shouldRunSizeCommand || shouldRunDensityCommand);
 
-        if(prefCurrent.getBoolean("not_active", true)) {
-            if(Settings.Global.getInt(getContentResolver(), "enable_freeform_support", 0) == 1)
-                editor.putBoolean("freeform_system", true);
-            else if(Settings.Global.getInt(getContentResolver(), "enable_freeform_support", 0) == 0)
-                editor.putBoolean("freeform_system", false);
-        }
+        if(prefCurrent.getBoolean("not_active", true))
+            editor.putBoolean("freeform_system", U.hasFreeformSupport(this));
 
         if(prefSaved.getBoolean("freeform", false)) {
             if(prefCurrent.getBoolean("not_active", true)) {
                 su[freeformCommand] = U.freeformCommand(true);
-                rebootRequired = true;
-            }
-            else {
+                if(!rebootRequired && !U.hasFreeformSupport(this))
+                    rebootRequired = true;
+            } else {
                 if(!prefCurrent.getBoolean("freeform", false)) {
                     su[freeformCommand] = U.freeformCommand(true);
-                    rebootRequired = true;
+                    if(!rebootRequired && !U.hasFreeformSupport(this))
+                        rebootRequired = true;
                 }
             }
         } else {
             if(!prefCurrent.getBoolean("not_active", true))
                 if(prefCurrent.getBoolean("freeform", false)) {
-                    su[freeformCommand] = U.freeformCommand(prefCurrent.getBoolean("freeform_system", false));
-                    rebootRequired = true;
+                    boolean freeformSystem = prefCurrent.getBoolean("freeform_system", false);
+                    su[freeformCommand] = U.freeformCommand(freeformSystem);
+                    if(!rebootRequired && (U.hasFreeformSupport(this) != freeformSystem))
+                        rebootRequired = true;
                 }
         }
 
@@ -932,6 +921,15 @@ public final class ProfileLoadService extends IntentService {
             editor.remove("force_ui_refresh");
 
         // Determine if we need to start or stop Taskbar
+        boolean shouldEnableFreeform = false;
+        boolean shouldDisableFreeform = false;
+
+        if(!prefCurrent.getBoolean("freeform", false) && prefSaved.getBoolean("freeform", false))
+            shouldEnableFreeform = true;
+
+        if(prefCurrent.getBoolean("freeform", false) && !prefSaved.getBoolean("freeform", false))
+            shouldDisableFreeform = true;
+
         boolean shouldStartTaskbar = false;
         boolean shouldStopTaskbar = false;
 
@@ -966,8 +964,10 @@ public final class ProfileLoadService extends IntentService {
         editor.putInt("overscan_bottom", prefSaved.getInt("overscan_bottom", 20));
 
         // Set "not_active" status to false
-        if(prefCurrent.getBoolean("not_active", true))
+        if(prefCurrent.getBoolean("not_active", true)) {
             editor.putBoolean("not_active", false);
+            editor.putLong("time_of_profile_start", System.currentTimeMillis());
+        }
 
         // Commit settings (for reliability)
         editor.commit();
@@ -993,37 +993,35 @@ public final class ProfileLoadService extends IntentService {
         sendBroadcast(query);
 
         // Send broadcast to start or stop Taskbar
-        if(shouldStartTaskbar) {
-            Intent taskbarIntent = new Intent("com.farmerbb.taskbar.START");
+        Intent freeformIntent = null;
 
-            try {
-                getPackageManager().getPackageInfo("com.farmerbb.taskbar.paid", 0);
-                taskbarIntent.setPackage("com.farmerbb.taskbar.paid");
-            } catch (PackageManager.NameNotFoundException e) {
-                try {
-                    getPackageManager().getPackageInfo("com.farmerbb.taskbar", 0);
-                    taskbarIntent.setPackage("com.farmerbb.taskbar");
-                } catch (PackageManager.NameNotFoundException e2) { /* Gracefully fail */ }
-            }
+        if(shouldEnableFreeform)
+            freeformIntent = new Intent("com.farmerbb.taskbar.ENABLE_FREEFORM_MODE");
+        else if(shouldDisableFreeform)
+            freeformIntent = new Intent("com.farmerbb.taskbar.DISABLE_FREEFORM_MODE");
 
+        if(freeformIntent != null) {
+            freeformIntent.setPackage(U.getTaskbarPackageName(this));
+            freeformIntent.putExtra("secondscreen", true);
+            sendBroadcast(freeformIntent);
+        }
+
+        Intent taskbarIntent = null;
+
+        if(shouldStartTaskbar)
+            taskbarIntent = new Intent("com.farmerbb.taskbar.START");
+        else if(shouldStopTaskbar)
+            taskbarIntent = new Intent("com.farmerbb.taskbar.QUIT");
+
+        if(taskbarIntent != null) {
+            taskbarIntent.setPackage(U.getTaskbarPackageName(this));
+            taskbarIntent.putExtra("secondscreen", true);
             sendBroadcast(taskbarIntent);
         }
 
-        if(shouldStopTaskbar) {
-            Intent taskbarIntent = new Intent("com.farmerbb.taskbar.QUIT");
-
-            try {
-                getPackageManager().getPackageInfo("com.farmerbb.taskbar.paid", 0);
-                taskbarIntent.setPackage("com.farmerbb.taskbar.paid");
-            } catch (PackageManager.NameNotFoundException e) {
-                try {
-                    getPackageManager().getPackageInfo("com.farmerbb.taskbar", 0);
-                    taskbarIntent.setPackage("com.farmerbb.taskbar");
-                } catch (PackageManager.NameNotFoundException e2) { /* Gracefully fail */ }
-            }
-
-            sendBroadcast(taskbarIntent);
-        }
+        if((shouldEnableTaskbarHome || shouldDisableTaskbarHome)
+                && !(U.isInNonRootMode(this) && rebootRequired))
+            U.goHome(this);
 
         // Start (or restart) NotificationService
         Intent serviceIntent = new Intent(this, NotificationService.class);

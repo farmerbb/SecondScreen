@@ -18,7 +18,6 @@ package com.farmerbb.secondscreen.service;
 import android.app.IntentService;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.hardware.display.DisplayManager;
 import android.provider.Settings;
 import android.view.Display;
@@ -114,16 +113,8 @@ public final class BootService extends IntentService {
         // Send broadcast to start Taskbar
         if(prefCurrent.getBoolean("taskbar", false)) {
             Intent taskbarIntent = new Intent("com.farmerbb.taskbar.START");
-
-            try {
-                getPackageManager().getPackageInfo("com.farmerbb.taskbar.paid", 0);
-                taskbarIntent.setPackage("com.farmerbb.taskbar.paid");
-            } catch (PackageManager.NameNotFoundException e) {
-                try {
-                    getPackageManager().getPackageInfo("com.farmerbb.taskbar", 0);
-                    taskbarIntent.setPackage("com.farmerbb.taskbar");
-                } catch (PackageManager.NameNotFoundException e2) { /* Gracefully fail */ }
-            }
+            taskbarIntent.putExtra("secondscreen", true);
+            taskbarIntent.setPackage(U.getTaskbarPackageName(this));
 
             sendBroadcast(taskbarIntent);
         }

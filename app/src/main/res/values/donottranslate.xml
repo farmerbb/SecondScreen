@@ -21,6 +21,7 @@
     <string name="twofortyfouram_locale_breadcrumb_format" translatable="false">%1$s%2$s%3$s</string>
     <string name="twofortyfouram_locale_breadcrumb_separator" translatable="false">\u0020&gt;\u0020</string>
     <string name="x" translatable="false">&#215;</string>
+    <string name="adb_shell_command">adb shell pm grant %1$s %2$s</string>
 
     <string-array name="pref_resolution_list_values">
         <item>reset</item>

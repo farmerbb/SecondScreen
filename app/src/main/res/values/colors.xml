@@ -26,4 +26,5 @@
     <color name="navbar">#000000</color>
     <color name="close_button">#009688</color>
     <color name="light_gray">#25000000</color>
+    <color name="app_shortcut_bg">#F5F5F5</color>
 </resources>

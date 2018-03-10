@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright 2015 Braden Farmer
+<!-- Copyright 2018 Braden Farmer
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -16,12 +16,12 @@
 
 <resources>
 
-    <style name="Theme.Secondscreen.Dialog" parent="Theme.AppCompat.Light.Dialog">
+    <style name="Theme.Secondscreen.Dialog.List" parent="Theme.AppCompat.Light.Dialog">
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorAccent">@color/primary_dark</item>
-        <item name="android:windowMinWidthMajor">95%</item>
-        <item name="android:windowMinWidthMinor">95%</item>
+        <item name="android:windowMinWidthMajor">80%</item>
+        <item name="android:windowMinWidthMinor">80%</item>
     </style>
 
 </resources>

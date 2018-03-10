@@ -36,8 +36,14 @@
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+
     <uses-permission android:name="com.farmerbb.taskbar.START_STOP_TASKBAR" />
+    <uses-permission android:name="com.farmerbb.taskbar.ENABLE_DISABLE_HOME" />
+    <uses-permission android:name="com.farmerbb.taskbar.ENABLE_DISABLE_FREEFORM" />
+
     <uses-permission android:name="com.farmerbb.taskbar.paid.START_STOP_TASKBAR" />
+    <uses-permission android:name="com.farmerbb.taskbar.paid.ENABLE_DISABLE_HOME" />
+    <uses-permission android:name="com.farmerbb.taskbar.paid.ENABLE_DISABLE_FREEFORM" />
 
     <uses-permission-sdk-23 android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission-sdk-23 android:name="android.permission.WRITE_SECURE_SETTINGS"/>
@@ -51,7 +57,7 @@
             android:name="com.farmerbb.secondscreen.activity.DebugModeActivity"
             android:excludeFromRecents="true"
             android:label="${appName}"
-            android:theme="@style/Theme.Secondscreen.Dialog"
+            android:theme="@style/Theme.Secondscreen.Dialog.List"
             android:documentLaunchMode="always" >
         </activity>
         <activity
@@ -68,6 +74,7 @@
             android:enabled="false" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.APPLICATION_PREFERENCES"/>   
 
                 <category android:name="android.intent.category.HOME" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -83,12 +90,12 @@
             android:label="${appName}"
             android:launchMode="singleInstance"
             android:documentLaunchMode="always"
-            android:theme="@style/Theme.Secondscreen.Dialog" >
+            android:theme="@style/Theme.Secondscreen.Dialog.List" >
         </activity>
         <activity
             android:name="com.farmerbb.secondscreen.activity.HdmiProfileSelectActivity"
             android:label="${appName}"
-            android:theme="@style/Theme.Secondscreen.Dialog" >
+            android:theme="@style/Theme.Secondscreen.Dialog.List" >
         </activity>
         <activity
             android:name="com.farmerbb.secondscreen.activity.LockDeviceActivity"
@@ -111,7 +118,7 @@
             android:name="com.farmerbb.secondscreen.activity.NotificationSettingsActivity"
             android:excludeFromRecents="true"
             android:label="${appName}"
-            android:theme="@style/Theme.Secondscreen.Dialog"
+            android:theme="@style/Theme.Secondscreen.Dialog.List"
             android:documentLaunchMode="always" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -127,7 +134,7 @@
             android:icon="@mipmap/ic_launcher"
             android:label="@string/label_load_profile"
             android:documentLaunchMode="always"
-            android:theme="@style/Theme.Secondscreen.Dialog" >
+            android:theme="@style/Theme.Secondscreen.Dialog.List" >
             <intent-filter>
                 <action android:name="com.twofortyfouram.locale.intent.action.EDIT_SETTING" />
                 <action android:name="android.intent.action.MAIN" />
@@ -168,7 +175,7 @@
             android:icon="@mipmap/ic_launcher"
             android:label="@string/label_profile_active"
             android:documentLaunchMode="always"
-            android:theme="@style/Theme.Secondscreen.Dialog" >
+            android:theme="@style/Theme.Secondscreen.Dialog.List" >
             <intent-filter>
                 <action android:name="com.twofortyfouram.locale.intent.action.EDIT_CONDITION" />
             </intent-filter>

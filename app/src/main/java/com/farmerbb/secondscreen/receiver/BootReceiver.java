@@ -19,6 +19,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.SystemClock;
 
 import com.farmerbb.secondscreen.service.BootService;
 import com.farmerbb.secondscreen.service.DisplayConnectionService;
@@ -36,28 +37,48 @@ public final class BootReceiver extends BroadcastReceiver {
         // Load preferences
         SharedPreferences prefCurrent = U.getPrefCurrent(context);
         SharedPreferences prefMain = U.getPrefMain(context);
+        boolean isDebugMode = prefMain.getBoolean("debug_mode", false);
 
-        // Restore DisplayConnectionService
-        if(prefMain.getBoolean("hdmi", true) && prefMain.getBoolean("first-run", false)) {
-            Intent serviceIntent = new Intent(context, DisplayConnectionService.class);
-            context.startService(serviceIntent);
-        }
+        if(Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction()) || isDebugMode) {
+            // Initialize preferences on BlissOS
+            if(U.isBlissOs(context) && !prefMain.getBoolean("first-run", false))
+                U.initPrefs(context);
 
-        if(!prefCurrent.getBoolean("not_active", true)) {
-            if(prefMain.getBoolean("safe_mode", false) && !"activity-manager".equals(prefCurrent.getString("ui_refresh", "do-nothing"))) {
-                SharedPreferences.Editor editor = prefCurrent.edit();
-                editor.putString("ui_refresh", "do-nothing");
-                editor.apply();
+            // Restore DisplayConnectionService
+            if(prefMain.getBoolean("hdmi", true) && prefMain.getBoolean("first-run", false)) {
+                Intent serviceIntent = new Intent(context, DisplayConnectionService.class);
+                context.startService(serviceIntent);
+            }
 
-                U.turnOffProfile(context);
-            } else if("quick_actions".equals(prefCurrent.getString("filename", "0"))) {
-                SharedPreferences prefSaved = U.getPrefQuickActions(context);
-                if("0".equals(prefSaved.getString("original_filename", "0"))) {
+            if(!prefCurrent.getBoolean("not_active", true)) {
+                if(prefMain.getBoolean("safe_mode", false)
+                        && !"activity-manager".equals(prefCurrent.getString("ui_refresh", "do-nothing"))
+                        && prefCurrent.getLong("time_of_profile_start", 0)
+                        < (System.currentTimeMillis() - (isDebugMode ? 0 : SystemClock.elapsedRealtime()))) {
                     SharedPreferences.Editor editor = prefCurrent.edit();
                     editor.putString("ui_refresh", "do-nothing");
                     editor.apply();
 
                     U.turnOffProfile(context);
+                } else if("quick_actions".equals(prefCurrent.getString("filename", "0"))) {
+                    SharedPreferences prefSaved = U.getPrefQuickActions(context);
+                    if("0".equals(prefSaved.getString("original_filename", "0"))
+                            && prefCurrent.getLong("time_of_profile_start", 0)
+                            < (System.currentTimeMillis() - (isDebugMode ? 0 : SystemClock.elapsedRealtime()))) {
+                        SharedPreferences.Editor editor = prefCurrent.edit();
+                        editor.putString("ui_refresh", "do-nothing");
+                        editor.apply();
+
+                        U.turnOffProfile(context);
+                    } else {
+                        // Restore NotificationService
+                        Intent serviceIntent = new Intent(context, NotificationService.class);
+                        context.startService(serviceIntent);
+
+                        // Start BootService to run superuser commands
+                        Intent serviceIntent2 = new Intent(context, BootService.class);
+                        context.startService(serviceIntent2);
+                    }
                 } else {
                     // Restore NotificationService
                     Intent serviceIntent = new Intent(context, NotificationService.class);
@@ -67,14 +88,6 @@ public final class BootReceiver extends BroadcastReceiver {
                     Intent serviceIntent2 = new Intent(context, BootService.class);
                     context.startService(serviceIntent2);
                 }
-            } else {
-                // Restore NotificationService
-                Intent serviceIntent = new Intent(context, NotificationService.class);
-                context.startService(serviceIntent);
-
-                // Start BootService to run superuser commands
-                Intent serviceIntent2 = new Intent(context, BootService.class);
-                context.startService(serviceIntent2);
             }
         }
     }

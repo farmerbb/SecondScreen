@@ -31,6 +31,11 @@
             android:key="taskbar"
             android:summary="@string/pref_description_taskbar"
             android:title="@string/pref_title_taskbar" />
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="clear_home"
+            android:summary="@string/pref_description_clear_home"
+            android:title="@string/pref_title_clear_home" />
     </PreferenceCategory>
 
 </PreferenceScreen>

@@ -90,14 +90,14 @@ public class DebugModeActivity extends PreferenceActivity implements OnPreferenc
                 sendBroadcast(intent4);
                 break;
             case "dump_app_state":
-                dumpAppState("current", "prefCurrent");
-                dumpAppState(getPackageName() + "_preferences", "prefNew");
-                dumpAppState(U.getPrefCurrent(this).getString("filename", "0"), "prefSaved");
+                dumpAppState("current", "prefCurrent.xml");
+                dumpAppState(getPackageName() + "_preferences", "prefNew.xml");
+                dumpAppState(U.getPrefCurrent(this).getString("filename", "0"), "prefSaved.xml");
 
                 if(getPackageName().equals("com.farmerbb.secondscreen"))
-                    dumpAppState(MainActivity.class.getName().replace("com.farmerbb.secondscreen.", ""), "prefMain");
+                    dumpAppState(MainActivity.class.getName().replace("com.farmerbb.secondscreen.", ""), "prefMain.xml");
                 else
-                    dumpAppState(MainActivity.class.getName(), "prefMain");
+                    dumpAppState(MainActivity.class.getName(), "prefMain.xml");
 
                 break;
         }

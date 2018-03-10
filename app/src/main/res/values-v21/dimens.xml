@@ -1,6 +1,4 @@
 <resources>
-
     <dimen name="fab_padding">24dp</dimen>
-
     <dimen name="list_view_padding">8dp</dimen>
 </resources>

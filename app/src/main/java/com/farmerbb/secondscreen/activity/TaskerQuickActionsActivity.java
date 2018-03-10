@@ -20,7 +20,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
 import android.os.Build;
@@ -148,23 +147,8 @@ SharedPreferences.OnSharedPreferenceChangeListener {
             if(Build.VERSION.SDK_INT < Build.VERSION_CODES.N)
                 getPreferenceScreen().findPreference("temp_freeform").setEnabled(false);
 
-            try {
-                getPackageManager().getPackageInfo("com.chrome.canary", 0);
-            } catch (NameNotFoundException e) {
-                try {
-                    getPackageManager().getPackageInfo("com.chrome.dev", 0);
-                } catch (NameNotFoundException e1) {
-                    try {
-                        getPackageManager().getPackageInfo("com.chrome.beta", 0);
-                    } catch (NameNotFoundException e2) {
-                        try {
-                            getPackageManager().getPackageInfo("com.android.chrome", 0);
-                        } catch (NameNotFoundException e3) {
-                            getPreferenceScreen().findPreference("temp_chrome").setEnabled(false);
-                        }
-                    }
-                }
-            }
+            if(U.getChromePackageName(this) == null)
+                getPreferenceScreen().findPreference("temp_chrome").setEnabled(false);
 
             if(U.isInNonRootMode(this)) {
                 getPreferenceScreen().findPreference("temp_hdmi_rotation").setEnabled(false);

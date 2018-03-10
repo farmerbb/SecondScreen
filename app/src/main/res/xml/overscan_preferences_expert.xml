@@ -26,7 +26,7 @@
         <EditTextPreference
             android:dependency="overscan"
             android:defaultValue="0"
-            android:inputType="number"
+            android:inputType="numberSigned"
             android:key="overscan_top_expert"
             android:maxLines="1"
             android:selectAllOnFocus="true"
@@ -35,7 +35,7 @@
         <EditTextPreference
             android:dependency="overscan"
             android:defaultValue="0"
-            android:inputType="number"
+            android:inputType="numberSigned"
             android:key="overscan_bottom_expert"
             android:maxLines="1"
             android:selectAllOnFocus="true"
@@ -44,7 +44,7 @@
         <EditTextPreference
             android:dependency="overscan"
             android:defaultValue="0"
-            android:inputType="number"
+            android:inputType="numberSigned"
             android:key="overscan_left_expert"
             android:maxLines="1"
             android:selectAllOnFocus="true"
@@ -53,7 +53,7 @@
         <EditTextPreference
             android:dependency="overscan"
             android:defaultValue="0"
-            android:inputType="number"
+            android:inputType="numberSigned"
             android:key="overscan_right_expert"
             android:maxLines="1"
             android:selectAllOnFocus="true"

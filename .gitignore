@@ -1,4 +1,5 @@
 *.iml
+*.apk
 .gradle
 /local.properties
 /.idea
@@ -6,6 +7,4 @@
 /build
 /captures
 /app/build
-/app/app-free-release.apk
-/app/app-paid-release.apk
 output.json
