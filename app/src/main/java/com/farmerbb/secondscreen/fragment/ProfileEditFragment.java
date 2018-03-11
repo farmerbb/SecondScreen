@@ -285,7 +285,6 @@ SharedPreferences.OnSharedPreferenceChangeListener {
         findPreference("daydreams_on").setOnPreferenceClickListener(this);
         findPreference("overscan_settings").setOnPreferenceClickListener(this);
         findPreference("freeform").setOnPreferenceClickListener(this);
-        findPreference("taskbar").setOnPreferenceClickListener(this);
 
         if(prefMain.getBoolean("expert_mode", false))
             findPreference("size").setOnPreferenceClickListener(this);
@@ -619,26 +618,13 @@ SharedPreferences.OnSharedPreferenceChangeListener {
                     listener.showExpertModeDialog();
                 break;
             case "freeform":
-                if(prefNew.getBoolean("freeform", true)) {
+                if(prefNew.getBoolean("freeform", true) && !U.hasFreeformSupport(getActivity())) {
                     if(!U.isInNonRootMode(getActivity())
                             && "do-nothing".equals(prefNew.getString("ui_refresh", "do-nothing")))
                         U.showToastLong(getActivity(), R.string.freeform_message);
                     else if(U.isInNonRootMode(getActivity())
                             && !"activity-manager".equals(prefNew.getString("ui_refresh", "do-nothing")))
                         U.showToastLong(getActivity(), R.string.freeform_message_non_root);
-                }
-                break;
-            case "taskbar":
-                // Check if Taskbar is installed, if not, then direct user to Play Store and uncheck preference
-                if(U.getTaskbarPackageName(getActivity()) == null) {
-                    ((CheckBoxPreference) p).setChecked(false);
-                    Intent taskbarIntent = new Intent(Intent.ACTION_VIEW);
-                    taskbarIntent.setData(Uri.parse("https://play.google.com/store/apps/details?id=com.farmerbb.taskbar"));
-                    taskbarIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-
-                    try {
-                        startActivity(taskbarIntent);
-                    } catch (ActivityNotFoundException e) { /* Gracefully fail */ }
                 }
                 break;
             case "taskbar_settings":
