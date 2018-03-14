@@ -23,7 +23,7 @@ android {
         //noinspection OldTargetApi
         targetSdkVersion 25
 
-        versionCode 171
+        versionCode 172
         versionName "2.7"
 
         resConfigs "en", "es", "fr", "sk"

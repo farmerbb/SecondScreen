@@ -240,6 +240,34 @@ public final class ProfileLoadService extends IntentService {
             }
         }
 
+        // Freeform windows
+        boolean rebootRequired = false;
+
+        if(prefCurrent.getBoolean("not_active", true))
+            editor.putBoolean("freeform_system", U.hasFreeformSupport(this));
+
+        if(prefSaved.getBoolean("freeform", false)) {
+            if(prefCurrent.getBoolean("not_active", true)) {
+                su[freeformCommand] = U.freeformCommand(true);
+                if(!U.hasFreeformSupport(this))
+                    rebootRequired = true;
+            } else {
+                if(!prefCurrent.getBoolean("freeform", false)) {
+                    su[freeformCommand] = U.freeformCommand(true);
+                    if(!U.hasFreeformSupport(this))
+                        rebootRequired = true;
+                }
+            }
+        } else {
+            if(!prefCurrent.getBoolean("not_active", true))
+                if(prefCurrent.getBoolean("freeform", false)) {
+                    boolean freeformSystem = prefCurrent.getBoolean("freeform_system", false);
+                    su[freeformCommand] = U.freeformCommand(freeformSystem);
+                    if(U.hasFreeformSupport(this) != freeformSystem)
+                        rebootRequired = true;
+                }
+        }
+
         // Resolution and density
 
         // Determine if CyanogenMod workaround is needed
@@ -250,7 +278,7 @@ public final class ProfileLoadService extends IntentService {
                 && Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP_MR1)
             cmWorkaround = true;
 
-        String uiRefresh = cmWorkaround
+        String uiRefresh = (cmWorkaround || rebootRequired)
                 ? "activity-manager"
                 : prefSaved.getString("ui_refresh", "do-nothing");
 
@@ -286,6 +314,11 @@ public final class ProfileLoadService extends IntentService {
                 // We run the density command twice, for reliability
                 su[densityCommand2] = su[densityCommand];
             }
+        }
+
+        if(!rebootRequired) {
+            rebootRequired = uiRefresh.contains("activity-manager")
+                    && (shouldRunSizeCommand || shouldRunDensityCommand);
         }
 
         // Overscan
@@ -566,35 +599,6 @@ public final class ProfileLoadService extends IntentService {
 
                 editor.putInt("vibration_value", -1);
             }
-        }
-
-        // Freeform windows
-        boolean rebootRequired = uiRefresh.contains("activity-manager")
-                && (shouldRunSizeCommand || shouldRunDensityCommand);
-
-        if(prefCurrent.getBoolean("not_active", true))
-            editor.putBoolean("freeform_system", U.hasFreeformSupport(this));
-
-        if(prefSaved.getBoolean("freeform", false)) {
-            if(prefCurrent.getBoolean("not_active", true)) {
-                su[freeformCommand] = U.freeformCommand(true);
-                if(!rebootRequired && !U.hasFreeformSupport(this))
-                    rebootRequired = true;
-            } else {
-                if(!prefCurrent.getBoolean("freeform", false)) {
-                    su[freeformCommand] = U.freeformCommand(true);
-                    if(!rebootRequired && !U.hasFreeformSupport(this))
-                        rebootRequired = true;
-                }
-            }
-        } else {
-            if(!prefCurrent.getBoolean("not_active", true))
-                if(prefCurrent.getBoolean("freeform", false)) {
-                    boolean freeformSystem = prefCurrent.getBoolean("freeform_system", false);
-                    su[freeformCommand] = U.freeformCommand(freeformSystem);
-                    if(!rebootRequired && (U.hasFreeformSupport(this) != freeformSystem))
-                        rebootRequired = true;
-                }
         }
 
         // Backlight off

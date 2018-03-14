@@ -53,6 +53,7 @@ public final class BootReceiver extends BroadcastReceiver {
             if(!prefCurrent.getBoolean("not_active", true)) {
                 if(prefMain.getBoolean("safe_mode", false)
                         && !"activity-manager".equals(prefCurrent.getString("ui_refresh", "do-nothing"))
+                        && !prefCurrent.getBoolean("reboot_required", false)
                         && prefCurrent.getLong("time_of_profile_start", 0)
                         < (System.currentTimeMillis() - (isDebugMode ? 0 : SystemClock.elapsedRealtime()))) {
                     SharedPreferences.Editor editor = prefCurrent.edit();
@@ -63,6 +64,7 @@ public final class BootReceiver extends BroadcastReceiver {
                 } else if("quick_actions".equals(prefCurrent.getString("filename", "0"))) {
                     SharedPreferences prefSaved = U.getPrefQuickActions(context);
                     if("0".equals(prefSaved.getString("original_filename", "0"))
+                            && !prefCurrent.getBoolean("reboot_required", false)
                             && prefCurrent.getLong("time_of_profile_start", 0)
                             < (System.currentTimeMillis() - (isDebugMode ? 0 : SystemClock.elapsedRealtime()))) {
                         SharedPreferences.Editor editor = prefCurrent.edit();
@@ -71,6 +73,8 @@ public final class BootReceiver extends BroadcastReceiver {
 
                         U.turnOffProfile(context);
                     } else {
+                        prefCurrent.edit().putBoolean("reboot_required", false).apply();
+
                         // Restore NotificationService
                         Intent serviceIntent = new Intent(context, NotificationService.class);
                         context.startService(serviceIntent);
@@ -80,6 +84,8 @@ public final class BootReceiver extends BroadcastReceiver {
                         context.startService(serviceIntent2);
                     }
                 } else {
+                    prefCurrent.edit().putBoolean("reboot_required", false).apply();
+
                     // Restore NotificationService
                     Intent serviceIntent = new Intent(context, NotificationService.class);
                     context.startService(serviceIntent);
