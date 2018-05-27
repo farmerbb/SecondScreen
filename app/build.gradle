@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 ext {
-    SUPPORT_LIBRARY_VERSION = "27.1.0"
+    SUPPORT_LIBRARY_VERSION = "27.1.1"
 }
 
 repositories {
@@ -28,6 +28,11 @@ android {
 
         resConfigs "en", "es", "fr", "sk"
         vectorDrawables.useSupportLibrary = true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     signingConfigs {

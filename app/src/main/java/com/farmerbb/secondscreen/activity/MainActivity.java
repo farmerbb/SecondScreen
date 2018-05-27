@@ -912,8 +912,12 @@ SystemAlertPermissionDialogFragment.Listener {
             startActivity(new Intent(this, UnableToStartActivity.class));
     }
 
-    @SuppressLint("HardwareIds")
     private void showMoreDialogs() {
+        new Handler().postDelayed(this::reallyShowMoreDialogs, 100);
+    }
+
+    @SuppressLint("HardwareIds")
+    private void reallyShowMoreDialogs() {
         SharedPreferences prefMain = U.getPrefMain(this);
 
         // Save Android ID to preferences, and show dialog if ID does not match (new device)
