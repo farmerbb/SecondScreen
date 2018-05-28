@@ -32,9 +32,7 @@ public final class QuickActionsDialogFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage(R.string.quick_actions_message)
         .setTitle(getResources().getStringArray(R.array.pref_notification_action_list)[1])
-        .setPositiveButton(R.string.action_close, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {}
-        });
+        .setPositiveButton(R.string.action_close, (dialog, id) -> {});
 
         // Create the AlertDialog object and return it
         return builder.create();

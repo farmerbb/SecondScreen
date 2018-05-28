@@ -50,26 +50,23 @@ public final class UnableToStartActivity extends AppCompatActivity {
         Button button2 = findViewById(R.id.turnOffButtonSecondary);
 
         button1.setText(R.string.action_continue);
-        button1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(getIntent().hasExtra("action")) {
-                    if(U.hasElevatedPermissions(UnableToStartActivity.this)) {
-                        switch(getIntent().getStringExtra("action")) {
-                            case "load-profile":
-                                U.loadProfile(UnableToStartActivity.this, getIntent().getStringExtra("filename"));
-                                break;
-                            case "turn-off-profile":
-                                U.turnOffProfile(UnableToStartActivity.this);
-                                break;
-                        }
+        button1.setOnClickListener(v -> {
+            if(getIntent().hasExtra("action")) {
+                if(U.hasElevatedPermissions(this)) {
+                    switch(getIntent().getStringExtra("action")) {
+                        case "load-profile":
+                            U.loadProfile(this, getIntent().getStringExtra("filename"));
+                            break;
+                        case "turn-off-profile":
+                            U.turnOffProfile(this);
+                            break;
                     }
-                } else
-                    LocalBroadcastManager.getInstance(UnableToStartActivity.this)
-                            .sendBroadcast(new Intent("com.farmerbb.secondscreen.SHOW_DIALOGS"));
+                }
+            } else
+                LocalBroadcastManager.getInstance(UnableToStartActivity.this)
+                        .sendBroadcast(new Intent("com.farmerbb.secondscreen.SHOW_DIALOGS"));
 
-                finish();
-            }
+            finish();
         });
 
         button2.setVisibility(View.GONE);

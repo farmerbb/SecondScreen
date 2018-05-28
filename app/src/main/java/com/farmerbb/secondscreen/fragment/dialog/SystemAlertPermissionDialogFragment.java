@@ -59,16 +59,8 @@ public final class SystemAlertPermissionDialogFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage(R.string.system_alert_permission_dialog_message)
                 .setTitle(R.string.permission_needed)
-                .setPositiveButton(R.string.grant_permission, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        listener.onSystemAlertPermissionDialogPositiveClick();
-                    }
-                })
-                .setNegativeButton(R.string.action_cancel, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        listener.onSystemAlertPermissionDialogNegativeClick();
-                    }
-                });
+                .setPositiveButton(R.string.grant_permission, (dialog, id) -> listener.onSystemAlertPermissionDialogPositiveClick())
+                .setNegativeButton(R.string.action_cancel, (dialog, id) -> listener.onSystemAlertPermissionDialogNegativeClick());
 
         // Create the AlertDialog object and return it
         return builder.create();

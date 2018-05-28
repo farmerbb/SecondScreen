@@ -62,25 +62,21 @@ public final class ReloadProfileDialogFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(R.string.dialog_reload_profile_title)
         .setMessage(R.string.editing_current_profile)
-        .setPositiveButton(R.string.action_save_reload, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                if(getArguments() != null)
-                    listener.onReloadDialogPositiveClick(getArguments().getString("filename"),
+        .setPositiveButton(R.string.action_save_reload, (dialog, id) -> {
+            if(getArguments() != null)
+                listener.onReloadDialogPositiveClick(getArguments().getString("filename"),
+                    getArguments().getBoolean("is-edit"),
+                    getArguments().getBoolean("return-to-list"));
+            else
+                listener.onReloadDialogPositiveClick(null, false, false);
+        })
+        .setNegativeButton(R.string.action_save_only, (dialog, id) -> {
+            if(getArguments() != null)
+                listener.onReloadDialogNegativeClick(getArguments().getString("filename"),
                         getArguments().getBoolean("is-edit"),
                         getArguments().getBoolean("return-to-list"));
-                else
-                    listener.onReloadDialogPositiveClick(null, false, false);
-            }
-        })
-        .setNegativeButton(R.string.action_save_only, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                if(getArguments() != null)
-                    listener.onReloadDialogNegativeClick(getArguments().getString("filename"),
-                            getArguments().getBoolean("is-edit"),
-                            getArguments().getBoolean("return-to-list"));
-                else
-                    listener.onReloadDialogNegativeClick(null, false, false);
-            }
+            else
+                listener.onReloadDialogNegativeClick(null, false, false);
         });
 
         // Create the AlertDialog object and return it

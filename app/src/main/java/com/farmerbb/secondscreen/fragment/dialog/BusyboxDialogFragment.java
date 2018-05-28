@@ -61,14 +61,8 @@ public final class BusyboxDialogFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage(R.string.busybox_message)
                 .setTitle(R.string.busybox_required)
-                .setPositiveButton(R.string.action_ok, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {}
-                })
-                .setNegativeButton(R.string.action_ignore, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        listener.onBusyboxDialogNegativeClick();
-                    }
-                });
+                .setPositiveButton(R.string.action_ok, (dialog, id) -> {})
+                .setNegativeButton(R.string.action_ignore, (dialog, id) -> listener.onBusyboxDialogNegativeClick());
 
         // Create the AlertDialog object and return it
         return builder.create();

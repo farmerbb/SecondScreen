@@ -78,44 +78,34 @@ public final class ExpertModeSizeDialogFragment extends DialogFragment {
             final View view = inflater.inflate(R.layout.fragment_expert_mode_size, null);
             builder.setView(view)
                 .setTitle(R.string.pref_title_resolution)
-                .setPositiveButton(R.string.action_ok, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        editText = (EditText) view.findViewById(R.id.fragmentEditText1);
-                        editText2 = (EditText) view.findViewById(R.id.fragmentEditText2);
+                .setPositiveButton(R.string.action_ok, (dialog, id) -> {
+                    editText = view.findViewById(R.id.fragmentEditText1);
+                    editText2 = view.findViewById(R.id.fragmentEditText2);
 
-                        String height = editText.getText().toString();
-                        String width = editText2.getText().toString();
+                    String height = editText.getText().toString();
+                    String width = editText2.getText().toString();
 
-                        listener.onExpertModeSizePositiveClick(height, width);
-                    }
+                    listener.onExpertModeSizePositiveClick(height, width);
                 })
-                .setNegativeButton(R.string.action_cancel, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                    }
-                });
+                .setNegativeButton(R.string.action_cancel, (dialog, id) -> {}
+                );
 
-            editText = (EditText) view.findViewById(R.id.fragmentEditText1);
-            editText2 = (EditText) view.findViewById(R.id.fragmentEditText2);
+            editText = view.findViewById(R.id.fragmentEditText1);
+            editText2 = view.findViewById(R.id.fragmentEditText2);
 
             editText.setText(getArguments().getString("height"));
             editText2.setText(getArguments().getString("width"));
 
             editText.selectAll();
-            editText.setOnFocusChangeListener(new OnFocusChangeListener() {
-                    @Override
-                    public void onFocusChange(View v, boolean hasFocus) {
-                        if(showKeyboard) {
-                            showKeyboard = false;
-                            editText.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                                    imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);
-                                }
-                            });
-                        }
-                    }
-                });
+            editText.setOnFocusChangeListener((v, hasFocus) -> {
+                if(showKeyboard) {
+                    showKeyboard = false;
+                    editText.post(() -> {
+                        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);
+                    });
+                }
+            });
             editText.requestFocus();
 
             // Remove padding from layout on pre-Lollipop devices

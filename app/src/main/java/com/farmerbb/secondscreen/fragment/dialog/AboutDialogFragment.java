@@ -76,23 +76,17 @@ public final class AboutDialogFragment extends DialogFragment {
 
         builder.setView(view)
         .setTitle(R.string.dialog_about_title)
-        .setPositiveButton(R.string.action_close, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {}
-        });
+        .setPositiveButton(R.string.action_close, (dialog, id) -> {});
 
         if(!BuildConfig.DEBUG) {
-            builder.setNegativeButton(R.string.check_for_update, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    listener.onAboutDialogNegativeClick(AboutDialogFragment.this);
-                }
-            });
+            builder.setNegativeButton(R.string.check_for_update, (dialog, id) -> listener.onAboutDialogNegativeClick(this));
         }
 
-        textView = (TextView) view.findViewById(R.id.dialogMessage);
+        textView = view.findViewById(R.id.dialogMessage);
         textView.setText(R.string.dialog_about_message);
         textView.setMovementMethod(LinkMovementMethod.getInstance());
 
-        checkbox = (LinearLayout) view.findViewById(R.id.checkBoxLayout);
+        checkbox = view.findViewById(R.id.checkBoxLayout);
         checkbox.setVisibility(View.GONE);
 
         // Create the AlertDialog object and return it

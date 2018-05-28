@@ -38,22 +38,19 @@ public final class RebootRequiredActivity extends AppCompatActivity {
         setTitle(R.string.reboot_required_title);
         setFinishOnTouchOutside(false);
 
-        TextView textView = (TextView) findViewById(R.id.turnOffTextView);
+        TextView textView = findViewById(R.id.turnOffTextView);
         textView.setText(R.string.reboot_required_message);
 
-        Button button1 = (Button) findViewById(R.id.turnOffButtonPrimary);
-        Button button2 = (Button) findViewById(R.id.turnOffButtonSecondary);
+        Button button1 = findViewById(R.id.turnOffButtonPrimary);
+        Button button2 = findViewById(R.id.turnOffButtonSecondary);
 
         button1.setText(R.string.action_later);
-        button1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(rebootLater)
-                    finish();
-                else {
-                    rebootLater = true;
-                    U.showToast(RebootRequiredActivity.this, R.string.confirm_reboot_later);
-                }
+        button1.setOnClickListener(v -> {
+            if(rebootLater)
+                finish();
+            else {
+                rebootLater = true;
+                U.showToast(RebootRequiredActivity.this, R.string.confirm_reboot_later);
             }
         });
 

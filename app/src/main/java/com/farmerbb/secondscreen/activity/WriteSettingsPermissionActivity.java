@@ -44,23 +44,20 @@ public final class WriteSettingsPermissionActivity extends AppCompatActivity {
             setContentView(R.layout.activity_turn_off);
             setTitle(R.string.permission_needed);
 
-            TextView textView = (TextView) findViewById(R.id.turnOffTextView);
+            TextView textView = findViewById(R.id.turnOffTextView);
             textView.setText(R.string.no_write_settings_permission);
 
-            Button button1 = (Button) findViewById(R.id.turnOffButtonPrimary);
-            Button button2 = (Button) findViewById(R.id.turnOffButtonSecondary);
+            Button button1 = findViewById(R.id.turnOffButtonPrimary);
+            Button button2 = findViewById(R.id.turnOffButtonSecondary);
 
             button1.setText(R.string.grant_permission);
-            button1.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS, Uri.parse("package:" + getPackageName()));
+            button1.setOnClickListener(v -> {
+                Intent intent = new Intent(Settings.ACTION_MANAGE_WRITE_SETTINGS, Uri.parse("package:" + getPackageName()));
 
-                    try {
-                        startActivity(intent);
-                    } catch (ActivityNotFoundException e) {
-                        U.showErrorDialog(WriteSettingsPermissionActivity.this, "WRITE_SETTINGS");
-                    }
+                try {
+                    startActivity(intent);
+                } catch (ActivityNotFoundException e) {
+                    U.showErrorDialog(this, "WRITE_SETTINGS");
                 }
             });
 

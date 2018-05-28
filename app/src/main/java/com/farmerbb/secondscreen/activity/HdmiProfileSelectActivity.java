@@ -55,20 +55,17 @@ public final class HdmiProfileSelectActivity extends AppCompatActivity {
             final ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, arrayList);
 
             // Display the ListView
-            final ListView listView = (ListView) findViewById(R.id.listView2);
+            final ListView listView = findViewById(R.id.listView2);
             listView.setPadding(getResources().getDimensionPixelSize(R.dimen.list_view_padding), 0, 0, 0);
             listView.setAdapter(adapter);
             listView.setClickable(true);
-            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-                    SharedPreferences prefMain = U.getPrefMain(HdmiProfileSelectActivity.this);
-                    SharedPreferences.Editor editor = prefMain.edit();
-                    editor.putString("hdmi_load_profile", profileList[0][position]);
-                    editor.apply();
+            listView.setOnItemClickListener((arg0, arg1, position, arg3) -> {
+                SharedPreferences prefMain = U.getPrefMain(HdmiProfileSelectActivity.this);
+                SharedPreferences.Editor editor = prefMain.edit();
+                editor.putString("hdmi_load_profile", profileList[0][position]);
+                editor.apply();
 
-                    finish();
-                }
+                finish();
             });
         }
     }

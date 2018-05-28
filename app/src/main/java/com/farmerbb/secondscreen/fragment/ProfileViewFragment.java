@@ -106,8 +106,8 @@ public final class ProfileViewFragment extends Fragment {
         // Animate elevation change
         if(getActivity().findViewById(R.id.layoutMain).getTag().equals("main-layout-large")
                 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            LinearLayout profileViewEdit = (LinearLayout) getActivity().findViewById(R.id.profileViewEdit);
-            LinearLayout profileList = (LinearLayout) getActivity().findViewById(R.id.profileList);
+            LinearLayout profileViewEdit = getActivity().findViewById(R.id.profileViewEdit);
+            LinearLayout profileList = getActivity().findViewById(R.id.profileList);
             profileList.animate().z(0f);
             profileViewEdit.animate().z(getResources().getDimensionPixelSize(R.dimen.profile_view_edit_elevation));
         }
@@ -117,11 +117,11 @@ public final class ProfileViewFragment extends Fragment {
 
         SharedPreferences prefSaved = U.getPrefSaved(getActivity(), filename);
         SharedPreferences prefCurrent = U.getPrefCurrent(getActivity());
-        Button button = (Button) getActivity().findViewById(R.id.pvButton);
-        TextView resolution = (TextView) getActivity().findViewById(R.id.pvResolution);
-        TextView density = (TextView) getActivity().findViewById(R.id.pvDensity);
-        TextView profileSettingsLeft = (TextView) getActivity().findViewById(R.id.pvProfileSettingsLeft);
-        TextView profileSettingsRight = (TextView) getActivity().findViewById(R.id.pvProfileSettingsRight);
+        Button button = getActivity().findViewById(R.id.pvButton);
+        TextView resolution = getActivity().findViewById(R.id.pvResolution);
+        TextView density = getActivity().findViewById(R.id.pvDensity);
+        TextView profileSettingsLeft = getActivity().findViewById(R.id.pvProfileSettingsLeft);
+        TextView profileSettingsRight = getActivity().findViewById(R.id.pvProfileSettingsRight);
 
         // Change color and/or background of the Load/Turn Off button
         if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
@@ -134,37 +134,17 @@ public final class ProfileViewFragment extends Fragment {
             SharedPreferences prefQuick = U.getPrefQuickActions(getActivity());
             if(filename.equals(prefQuick.getString("original_filename", "0"))) {
                 button.setText(getResources().getStringArray(R.array.pref_notification_action_list)[0] + " " + getArguments().getString("title"));
-                button.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        listener.onTurnOffProfileButtonClick();
-                    }
-                });
+                button.setOnClickListener(view -> listener.onTurnOffProfileButtonClick());
             } else {
                 button.setText(getResources().getString(R.string.action_load) + " " + getArguments().getString("title"));
-                button.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        listener.onLoadProfileButtonClick(filename);
-                    }
-                });
+                button.setOnClickListener(view -> listener.onLoadProfileButtonClick(filename));
             }
         } else if(filename.equals(prefCurrent.getString("filename", "0"))) {
             button.setText(getResources().getStringArray(R.array.pref_notification_action_list)[0] + " " + getArguments().getString("title"));
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    listener.onTurnOffProfileButtonClick();
-                }
-            });
+            button.setOnClickListener(view -> listener.onTurnOffProfileButtonClick());
         } else {
             button.setText(getResources().getString(R.string.action_load) + " " + getArguments().getString("title"));
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    listener.onLoadProfileButtonClick(filename);
-                }
-            });
+            button.setOnClickListener(view -> listener.onLoadProfileButtonClick(filename));
         }
 
         // Generate a brief overview of this profile's settings to display within the fragment
@@ -259,7 +239,7 @@ public final class ProfileViewFragment extends Fragment {
             profileSettingsRight.setText(right);
 
         if(n == 0) {
-            TextView header = (TextView) getActivity().findViewById(R.id.pvHeaderProfileSettings);
+            TextView header = getActivity().findViewById(R.id.pvHeaderProfileSettings);
             header.setText(" ");
             header.setBackgroundColor(Color.WHITE);
         }

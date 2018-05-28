@@ -64,11 +64,7 @@ public final class MultipleVersionsDialogFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage(R.string.both_versions_installed)
             .setTitle(R.string.safeguard_title)
-            .setPositiveButton(R.string.action_uninstall, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    listener.uninstallPackage(getArguments().getString("package"));
-                }
-            });
+            .setPositiveButton(R.string.action_uninstall, (dialog, id) -> listener.uninstallPackage(getArguments().getString("package")));
 
         // Prevent the user from cancelling this particular dialog
         setCancelable(false);

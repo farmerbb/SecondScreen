@@ -64,14 +64,8 @@ public final class ExpertModeDialogFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(R.string.dialog_are_you_sure)
         .setMessage(R.string.expert_mode_dialog)
-        .setPositiveButton(R.string.action_ok, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                listener.onExpertModeDialogPositiveClick(checkBoxPreference);
-            }
-        })
-        .setNegativeButton(R.string.action_cancel, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {}
-        });
+        .setPositiveButton(R.string.action_ok, (dialog, id) -> listener.onExpertModeDialogPositiveClick(checkBoxPreference))
+        .setNegativeButton(R.string.action_cancel, (dialog, id) -> {});
 
         // Create the AlertDialog object and return it
         return builder.create();

@@ -62,16 +62,8 @@ public final class FirstRunDialogFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage(R.string.first_run)
                 .setTitle(R.string.welcome)
-                .setPositiveButton(R.string.accept, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        listener.onFirstRunDialogPositiveClick();
-                    }
-                })
-                .setNegativeButton(R.string.decline, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        listener.onFirstRunDialogNegativeClick();
-                    }
-                });
+                .setPositiveButton(R.string.accept, (dialog, id) -> listener.onFirstRunDialogPositiveClick())
+                .setNegativeButton(R.string.decline, (dialog, id) -> listener.onFirstRunDialogNegativeClick());
 
         // Prevent the user from cancelling this particular dialog
         setCancelable(false);

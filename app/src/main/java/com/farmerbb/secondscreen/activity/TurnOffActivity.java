@@ -77,8 +77,8 @@ public final class TurnOffActivity extends AppCompatActivity {
             setTitle(getResources().getString(R.string.display_disconnected));
             setContentView(R.layout.activity_turn_off);
 
-            Button buttonPrimary = (Button) findViewById(R.id.turnOffButtonPrimary);
-            Button buttonSecondary = (Button) findViewById(R.id.turnOffButtonSecondary);
+            Button buttonPrimary = findViewById(R.id.turnOffButtonPrimary);
+            Button buttonSecondary = findViewById(R.id.turnOffButtonSecondary);
             buttonPrimary.setText(getResources().getString(R.string.action_turn_off).toUpperCase());
             buttonSecondary.setText(getResources().getString(R.string.action_close).toUpperCase());
 
@@ -109,31 +109,23 @@ public final class TurnOffActivity extends AppCompatActivity {
             }
 
             // Set TextView contents
-            TextView textView = (TextView) findViewById(R.id.turnOffTextView);
+            TextView textView = findViewById(R.id.turnOffTextView);
             textView.setText(name + " " + getResources().getString(R.string.dialog_turn_off_message));
 
             // Set OnClickListeners for the buttons
-            buttonSecondary.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    finish();
-                }
-            });
-            buttonPrimary.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    try {
-                        SharedPreferences prefCurrent = U.getPrefCurrent(TurnOffActivity.this);
-                        if(!prefCurrent.getBoolean("not_active", true))
-                            U.turnOffProfile(TurnOffActivity.this);
-                    } catch (NullPointerException e) { /* Gracefully fail */ }
+            buttonSecondary.setOnClickListener(view -> finish());
+            buttonPrimary.setOnClickListener(view -> {
+                try {
+                    SharedPreferences prefCurrent1 = U.getPrefCurrent(TurnOffActivity.this);
+                    if(!prefCurrent1.getBoolean("not_active", true))
+                        U.turnOffProfile(TurnOffActivity.this);
+                } catch (NullPointerException e) { /* Gracefully fail */ }
 
-                    finish();
-                }
+                finish();
             });
 
             // "Don't show again" checkbox
-            CheckBox checkBox = (CheckBox) findViewById(R.id.turnOffCheckbox);
+            CheckBox checkBox = findViewById(R.id.turnOffCheckbox);
             checkBox.setVisibility(View.VISIBLE);
         } else
             finish();
@@ -155,7 +147,7 @@ public final class TurnOffActivity extends AppCompatActivity {
             LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
 
             // Set checkbox preference
-            CheckBox checkbox = (CheckBox) findViewById(R.id.turnOffCheckbox);
+            CheckBox checkbox = findViewById(R.id.turnOffCheckbox);
             if(checkbox.isChecked()) {
                 SharedPreferences prefMain = U.getPrefMain(this);
                 SharedPreferences.Editor editor = prefMain.edit();

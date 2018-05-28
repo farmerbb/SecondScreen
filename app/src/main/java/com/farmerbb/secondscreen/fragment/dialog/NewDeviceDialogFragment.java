@@ -64,11 +64,7 @@ public final class NewDeviceDialogFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage(R.string.new_device_message)
         .setTitle(R.string.safeguard_title)
-        .setPositiveButton(R.string.action_ok, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                listener.onNewDeviceDialogPositiveClick(NewDeviceDialogFragment.this);
-            }
-        });
+        .setPositiveButton(R.string.action_ok, (dialog, id) -> listener.onNewDeviceDialogPositiveClick(NewDeviceDialogFragment.this));
 
         // Create the AlertDialog object and return it
         return builder.create();

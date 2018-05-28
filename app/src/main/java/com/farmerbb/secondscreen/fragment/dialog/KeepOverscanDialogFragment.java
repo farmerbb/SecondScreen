@@ -62,16 +62,8 @@ public final class KeepOverscanDialogFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage(R.string.keep_overscan)
             .setTitle(R.string.quick_overscan)
-            .setPositiveButton(R.string.action_ok, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    listener.onKeepOverscanDialogPositiveClick();
-                }
-            })
-            .setNegativeButton(R.string.action_cancel, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    listener.onKeepOverscanDialogNegativeClick();
-                }
-            });
+            .setPositiveButton(R.string.action_ok, (dialog, id) -> listener.onKeepOverscanDialogPositiveClick())
+            .setNegativeButton(R.string.action_cancel, (dialog, id) -> listener.onKeepOverscanDialogNegativeClick());
 
         // Create the AlertDialog object and return it
         return builder.create();

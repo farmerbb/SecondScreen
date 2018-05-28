@@ -63,16 +63,8 @@ public final class AndroidUpgradeDialogFragment extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setMessage(R.string.dialog_upgrade_message)
         .setTitle(R.string.safeguard_title)
-        .setPositiveButton(R.string.action_ok, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                listener.onUpgradeDialogPositiveClick(AndroidUpgradeDialogFragment.this);
-            }
-        })
-        .setNegativeButton(R.string.check_for_update, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                listener.onUpgradeDialogNegativeClick(AndroidUpgradeDialogFragment.this);
-            }
-        });
+        .setPositiveButton(R.string.action_ok, (dialog, id) -> listener.onUpgradeDialogPositiveClick(this))
+        .setNegativeButton(R.string.check_for_update, (dialog, id) -> listener.onUpgradeDialogNegativeClick(this));
 
         // Prevent the user from cancelling this particular dialog
         setCancelable(false);

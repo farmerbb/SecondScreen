@@ -104,7 +104,7 @@ public final class HdmiActivity extends Activity {
             LocalBroadcastManager.getInstance(this).unregisterReceiver(receiver);
 
             // Set checkbox preference
-            CheckBox checkbox = (CheckBox) findViewById(R.id.hdmiCheckBox);
+            CheckBox checkbox = findViewById(R.id.hdmiCheckBox);
             if(!checkbox.isChecked()) {
                 SharedPreferences prefMain = U.getPrefMain(this);
                 SharedPreferences.Editor editor = prefMain.edit();
@@ -124,7 +124,7 @@ public final class HdmiActivity extends Activity {
         setTitle(getResources().getString(R.string.hdmi_connected));
         menu = true;
 
-        TextView header = (TextView) findViewById(R.id.hdmi_header);
+        TextView header = findViewById(R.id.hdmi_header);
         header.setText(getString(R.string.hdmi_connected));
 
         if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
@@ -159,7 +159,7 @@ public final class HdmiActivity extends Activity {
                 break;
         }
 
-        TextView textView = (TextView) findViewById(R.id.hdmiTextView);
+        TextView textView = findViewById(R.id.hdmiTextView);
         textView.setText(extScreenRes);
 
         // Get array of profiles
@@ -178,15 +178,12 @@ public final class HdmiActivity extends Activity {
             final ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, arrayList);
 
             // Display the ListView
-            final ListView listView = (ListView) findViewById(R.id.listView3);
+            final ListView listView = findViewById(R.id.listView3);
             listView.setAdapter(adapter);
             listView.setClickable(true);
-            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-                    U.loadProfile(HdmiActivity.this, profileList[0][position]);
-                    finish();
-                }
+            listView.setOnItemClickListener((arg0, arg1, position, arg3) -> {
+                U.loadProfile(HdmiActivity.this, profileList[0][position]);
+                finish();
             });
         }
     }

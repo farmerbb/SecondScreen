@@ -74,27 +74,24 @@ public final class NotificationSettingsActivity extends PreferenceActivity imple
         Preference systemNotificationSettings = getPreferenceScreen().findPreference("system_notification_settings");
         
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            systemNotificationSettings.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-                @Override
-                public boolean onPreferenceClick(Preference preference) {
-                    Intent intent = new Intent();
-                    intent.setAction("android.settings.APP_NOTIFICATION_SETTINGS");
+            systemNotificationSettings.setOnPreferenceClickListener(preference -> {
+                Intent intent = new Intent();
+                intent.setAction("android.settings.APP_NOTIFICATION_SETTINGS");
 
-                    if(Build.VERSION.SDK_INT > Build.VERSION_CODES.N_MR1)
-                        intent.putExtra("android.provider.extra.APP_PACKAGE", getPackageName());
-                    else {
-                        intent.putExtra("app_package", getPackageName());
-                        intent.putExtra("app_uid", getApplicationInfo().uid);
-                    }
-
-                    try {
-                        startActivity(intent);
-                        restartNotificationService = true;
-                    } catch (ActivityNotFoundException e) { /* Gracefully fail */ }
-                    
-                    return true;
+                if(Build.VERSION.SDK_INT > Build.VERSION_CODES.N_MR1)
+                    intent.putExtra("android.provider.extra.APP_PACKAGE", getPackageName());
+                else {
+                    intent.putExtra("app_package", getPackageName());
+                    intent.putExtra("app_uid", getApplicationInfo().uid);
                 }
-            }); 
+
+                try {
+                    startActivity(intent);
+                    restartNotificationService = true;
+                } catch (ActivityNotFoundException e) { /* Gracefully fail */ }
+
+                return true;
+            });
         } else
             systemNotificationSettings.setEnabled(false);
     }

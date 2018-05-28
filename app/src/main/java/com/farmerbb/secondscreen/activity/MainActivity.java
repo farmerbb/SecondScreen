@@ -211,7 +211,7 @@ SystemAlertPermissionDialogFragment.Listener {
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             // Remove margins from layout on Lollipop devices
-            LinearLayout layout = (LinearLayout) findViewById(R.id.profileViewEdit);
+            LinearLayout layout = findViewById(R.id.profileViewEdit);
             LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) layout.getLayoutParams();
             params.setMargins(0, 0, 0, 0);
             layout.setLayoutParams(params);
@@ -765,7 +765,7 @@ SystemAlertPermissionDialogFragment.Listener {
 
     @Override
     public TextView getHelperText() {
-        return (TextView) findViewById(R.id.textView1);
+        return findViewById(R.id.textView1);
     }
 
     @Override
@@ -1031,12 +1031,7 @@ SystemAlertPermissionDialogFragment.Listener {
     }
 
     private void showDebugModeToast(final String message) {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                U.showToast(MainActivity.this, message, Toast.LENGTH_SHORT);
-            }
-        }, 100);
+        new Handler().postDelayed(() -> U.showToast(this, message, Toast.LENGTH_SHORT), 100);
     }
 
     @Override

@@ -52,31 +52,18 @@ public class LockDeviceActivity extends Activity {
             AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(this, R.style.Theme_Secondscreen_2));
             builder.setTitle(R.string.permission_needed)
                     .setMessage(R.string.device_admin_disclosure)
-                    .setNegativeButton(R.string.action_cancel, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            new Handler().post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    finish();
-                                }
-                            });
-                        }
-                    })
-                    .setPositiveButton(R.string.action_activate, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            Intent intent = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
-                            intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, new ComponentName(LockDeviceActivity.this, LockDeviceReceiver.class));
-                            intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION, getString(R.string.device_admin_description));
+                    .setNegativeButton(R.string.action_cancel, (dialog, which) -> new Handler().post(this::finish))
+                    .setPositiveButton(R.string.action_activate, (dialog, which) -> {
+                        Intent intent = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
+                        intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, new ComponentName(this, LockDeviceReceiver.class));
+                        intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION, getString(R.string.device_admin_description));
 
-                            try {
-                                startActivity(intent);
-                            } catch (ActivityNotFoundException e) {
-                                U.showToast(LockDeviceActivity.this, R.string.not_compatible);
+                        try {
+                            startActivity(intent);
+                        } catch (ActivityNotFoundException e) {
+                            U.showToast(this, R.string.not_compatible);
 
-                                finish();
-                            }
+                            finish();
                         }
                     });
 

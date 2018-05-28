@@ -118,8 +118,8 @@ SharedPreferences.OnSharedPreferenceChangeListener {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             // Animate elevation change
             if(getActivity().findViewById(R.id.layoutMain).getTag().equals("main-layout-large")) {
-                LinearLayout profileViewEdit = (LinearLayout) getActivity().findViewById(R.id.profileViewEdit);
-                LinearLayout profileList = (LinearLayout) getActivity().findViewById(R.id.profileList);
+                LinearLayout profileViewEdit = getActivity().findViewById(R.id.profileViewEdit);
+                LinearLayout profileList = getActivity().findViewById(R.id.profileList);
                 profileList.animate().z(0f);
                 profileViewEdit.animate().z(getResources().getDimensionPixelSize(R.dimen.profile_view_edit_elevation));
             }

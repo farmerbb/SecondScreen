@@ -83,7 +83,7 @@ public final class ProfileListFragment extends Fragment {
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.row_layout, parent, false);
             }
             // Lookup view for data population
-            TextView profileTitle = (TextView) convertView.findViewById(R.id.profileTitle);
+            TextView profileTitle = convertView.findViewById(R.id.profileTitle);
             // Populate the data into the template view using the data object
             profileTitle.setText(profile);
 
@@ -166,19 +166,16 @@ public final class ProfileListFragment extends Fragment {
         LocalBroadcastManager.getInstance(getActivity()).registerReceiver(receiver, filter);
 
         // Floating action button
-        FloatingActionButton floatingActionButton = (FloatingActionButton) getActivity().findViewById(R.id.button_floating_action);
+        FloatingActionButton floatingActionButton = getActivity().findViewById(R.id.button_floating_action);
         floatingActionButton.setImageResource(R.drawable.ic_action_new);
         if(getActivity().findViewById(R.id.layoutMain).getTag().equals("main-layout-large"))
             floatingActionButton.hide();
 
         if(getId() == R.id.profileViewEdit) {
             floatingActionButton.show();
-            floatingActionButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    DialogFragment newProfileFragment = new NewProfileDialogFragment();
-                    newProfileFragment.show(getFragmentManager(), "new");
-                }
+            floatingActionButton.setOnClickListener(v -> {
+                DialogFragment newProfileFragment = new NewProfileDialogFragment();
+                newProfileFragment.show(getFragmentManager(), "new");
             });
         }
     }
@@ -226,15 +223,15 @@ public final class ProfileListFragment extends Fragment {
     }
 
     private void listProfiles() {
-        final TextView helper = (TextView) getActivity().findViewById(R.id.textView1);
-        final ListView listView = (ListView) getActivity().findViewById(R.id.listView1);
+        final TextView helper = getActivity().findViewById(R.id.textView1);
+        final ListView listView = getActivity().findViewById(R.id.listView1);
 
         // Get array of profiles
         final String[][] profileList = U.listProfiles(getActivity());
 
         // If there are no saved profiles, then display the empty view
         if(profileList == null) {
-            TextView empty = (TextView) getActivity().findViewById(R.id.empty);
+            TextView empty = getActivity().findViewById(R.id.empty);
             empty.setText(getResources().getString(R.string.no_profiles_found));
             empty.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.accent));
 
@@ -262,68 +259,60 @@ public final class ProfileListFragment extends Fragment {
             // Display the ListView
             listView.setAdapter(adapter);
             listView.setClickable(true);
-            listView.setOnItemClickListener(new OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-                    listener.viewProfile(profileList[0][position]);
+            listView.setOnItemClickListener((arg0, arg1, position, arg3) -> {
+                listener.viewProfile(profileList[0][position]);
 
-                    // Update status of indicated item
-                    SharedPreferences prefCurrent = listener.getPrefCurrent();
-                    if("quick_actions".equals(prefCurrent.getString("filename", "0"))) {
-                        SharedPreferences prefSaved = listener.getPrefQuickActions();
-                        for(int i = 0; i < numOfFiles; i++) {
-                            if(profileList[0][i].equals(prefSaved.getString("original_filename", "0")))
-                                listView.setItemChecked(i, true);
-                            else
-                                listView.setItemChecked(i, false);
-                        }
-                    } else {
-                        for(int i = 0; i < numOfFiles; i++) {
-                            if(profileList[0][i].equals(prefCurrent.getString("filename", "0")))
-                                listView.setItemChecked(i, true);
-                            else
-                                listView.setItemChecked(i, false);
-                        }
+                // Update status of indicated item
+                SharedPreferences prefCurrent = listener.getPrefCurrent();
+                if("quick_actions".equals(prefCurrent.getString("filename", "0"))) {
+                    SharedPreferences prefSaved = listener.getPrefQuickActions();
+                    for(int i = 0; i < numOfFiles; i++) {
+                        if(profileList[0][i].equals(prefSaved.getString("original_filename", "0")))
+                            listView.setItemChecked(i, true);
+                        else
+                            listView.setItemChecked(i, false);
                     }
-
-                    // Set helper text based on whether or not a profile is active
-                    initHelperText(listener.getHelperText(), prefCurrent);
+                } else {
+                    for(int i = 0; i < numOfFiles; i++) {
+                        if(profileList[0][i].equals(prefCurrent.getString("filename", "0")))
+                            listView.setItemChecked(i, true);
+                        else
+                            listView.setItemChecked(i, false);
+                    }
                 }
+
+                // Set helper text based on whether or not a profile is active
+                initHelperText(listener.getHelperText(), prefCurrent);
             });
 
             // Make ListView handle long presses
             listView.setLongClickable(true);
-            listView.setOnItemLongClickListener(new OnItemLongClickListener() {
+            listView.setOnItemLongClickListener((arg0, arg1, position, arg3) -> {
+                listener.editProfile(profileList[0][position]);
 
-                @Override
-                public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-                    listener.editProfile(profileList[0][position]);
-
-                    // Update status of indicated item
-                    SharedPreferences prefCurrent = listener.getPrefCurrent();
-                    if("quick_actions".equals(prefCurrent.getString("filename", "0"))) {
-                        SharedPreferences prefSaved = listener.getPrefQuickActions();
-                        for(int i = 0; i < numOfFiles; i++) {
-                            if(profileList[0][i].equals(prefSaved.getString("original_filename", "0")))
-                                listView.setItemChecked(i, true);
-                            else
-                                listView.setItemChecked(i, false);
-                        }
-                    } else {
-                        for(int i = 0; i < numOfFiles; i++) {
-                            if(profileList[0][i].equals(prefCurrent.getString("filename", "0")))
-                                listView.setItemChecked(i, true);
-                            else
-                                listView.setItemChecked(i, false);
-                        }
+                // Update status of indicated item
+                SharedPreferences prefCurrent = listener.getPrefCurrent();
+                if("quick_actions".equals(prefCurrent.getString("filename", "0"))) {
+                    SharedPreferences prefSaved = listener.getPrefQuickActions();
+                    for(int i = 0; i < numOfFiles; i++) {
+                        if(profileList[0][i].equals(prefSaved.getString("original_filename", "0")))
+                            listView.setItemChecked(i, true);
+                        else
+                            listView.setItemChecked(i, false);
                     }
-
-                    // Set helper text based on whether or not a profile is active
-                    initHelperText(listener.getHelperText(), prefCurrent);
-
-                    return true;
+                } else {
+                    for(int i = 0; i < numOfFiles; i++) {
+                        if(profileList[0][i].equals(prefCurrent.getString("filename", "0")))
+                            listView.setItemChecked(i, true);
+                        else
+                            listView.setItemChecked(i, false);
+                    }
                 }
 
+                // Set helper text based on whether or not a profile is active
+                initHelperText(listener.getHelperText(), prefCurrent);
+
+                return true;
             });
 
             // Prepare the ListView for indicating the currently loaded profile
@@ -352,53 +341,47 @@ public final class ProfileListFragment extends Fragment {
         }
 
         // Allow clicking on helper text to enable debug mode / show debug menu
-        helper.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(listener.isDebugModeEnabled(true)) {
-                    if(profileList == null)
-                        helper.setText(R.string.debug_mode_enabled);
-                    else
-                        helper.setText(R.string.profile_helper_text_debug);
+        helper.setOnClickListener(v -> {
+            if(listener.isDebugModeEnabled(true)) {
+                if(profileList == null)
+                    helper.setText(R.string.debug_mode_enabled);
+                else
+                    helper.setText(R.string.profile_helper_text_debug);
 
-                    helper.setTextColor(Color.WHITE);
-                    helper.setBackgroundColor(Color.RED);
+                helper.setTextColor(Color.WHITE);
+                helper.setBackgroundColor(Color.RED);
+            } else {
+                if(profileList == null) {
+                    helper.setText(" ");
+                    helper.setBackgroundColor(Color.WHITE);
                 } else {
-                    if(profileList == null) {
-                        helper.setText(" ");
-                        helper.setBackgroundColor(Color.WHITE);
-                    } else {
-                        SharedPreferences prefCurrent = listener.getPrefCurrent();
-                        if("0".equals(prefCurrent.getString("filename", "0")))
-                            helper.setText(R.string.profile_helper_text);
-                        else {
-                            if("quick_actions".equals(prefCurrent.getString("filename", "0"))) {
-                                SharedPreferences prefSaved = listener.getPrefQuickActions();
-                                if("0".equals(prefSaved.getString("original_filename", "0")))
-                                    helper.setText(R.string.profile_helper_text);
-                                else
-                                    helper.setText(R.string.profile_helper_text_alt);
-                            } else
+                    SharedPreferences prefCurrent = listener.getPrefCurrent();
+                    if("0".equals(prefCurrent.getString("filename", "0")))
+                        helper.setText(R.string.profile_helper_text);
+                    else {
+                        if("quick_actions".equals(prefCurrent.getString("filename", "0"))) {
+                            SharedPreferences prefSaved = listener.getPrefQuickActions();
+                            if("0".equals(prefSaved.getString("original_filename", "0")))
+                                helper.setText(R.string.profile_helper_text);
+                            else
                                 helper.setText(R.string.profile_helper_text_alt);
-                        }
-
-                        helper.setTextColor(ContextCompat.getColor(getActivity(), R.color.text_color_secondary));
-                        helper.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.accent));
+                        } else
+                            helper.setText(R.string.profile_helper_text_alt);
                     }
+
+                    helper.setTextColor(ContextCompat.getColor(getActivity(), R.color.text_color_secondary));
+                    helper.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.accent));
                 }
             }
         });
 
-        helper.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                if(listener.isDebugModeEnabled(false)) {
-                    Intent intent = new Intent(getActivity(), DebugModeActivity.class);
-                    startActivity(intent);
-                }
-
-                return false;
+        helper.setOnLongClickListener(v -> {
+            if(listener.isDebugModeEnabled(false)) {
+                Intent intent = new Intent(getActivity(), DebugModeActivity.class);
+                startActivity(intent);
             }
+
+            return false;
         });
     }
 

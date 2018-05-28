@@ -75,20 +75,16 @@ public final class FirstLoadDialogFragment extends DialogFragment {
 
         builder.setView(view)
         .setTitle(R.string.dialog_load_profile)
-        .setPositiveButton(R.string.action_ok, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                checkbox = (CheckBox) view.findViewById(R.id.firstLoadCheckBox);
-                listener.onFirstLoadPositiveClick(FirstLoadDialogFragment.this,
-                        getArguments().getString("filename"),
-                        checkbox.isChecked());
-            }
+        .setPositiveButton(R.string.action_ok, (dialog, id) -> {
+            checkbox = view.findViewById(R.id.firstLoadCheckBox);
+            listener.onFirstLoadPositiveClick(FirstLoadDialogFragment.this,
+                    getArguments().getString("filename"),
+                    checkbox.isChecked());
         })
-        .setNegativeButton(R.string.action_cancel, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-            }
-        });
+        .setNegativeButton(R.string.action_cancel, (dialog, id) -> {}
+        );
 
-        textView = (TextView) view.findViewById(R.id.dialogMessage);
+        textView = view.findViewById(R.id.dialogMessage);
         textView.setText(R.string.dialog_first_load);
 
         // Create the AlertDialog object and return it

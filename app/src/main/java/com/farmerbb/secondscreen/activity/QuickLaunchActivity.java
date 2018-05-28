@@ -107,34 +107,31 @@ public final class QuickLaunchActivity extends Activity {
                 final ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, arrayList);
 
                 // Display the ListView
-                final ListView listView = (ListView) findViewById(R.id.listView2);
+                final ListView listView = findViewById(R.id.listView2);
                 listView.setAdapter(adapter);
                 listView.setClickable(true);
-                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-                        PackageManager pm;
-                        pm = getPackageManager();
+                listView.setOnItemClickListener((arg0, arg1, position, arg3) -> {
+                    PackageManager pm;
+                    pm = getPackageManager();
 
-                        Intent i = new Intent(Intent.ACTION_MAIN);
-                        i.addCategory(Intent.CATEGORY_HOME);
-                        i.addCategory(Intent.CATEGORY_DEFAULT);
+                    Intent i = new Intent(Intent.ACTION_MAIN);
+                    i.addCategory(Intent.CATEGORY_HOME);
+                    i.addCategory(Intent.CATEGORY_DEFAULT);
 
-                        final ResolveInfo mInfo = pm.resolveActivity(i, 0);
+                    final ResolveInfo mInfo = pm.resolveActivity(i, 0);
 
-                        try {
-                            if(mInfo.activityInfo.applicationInfo.packageName.equals(getCallingPackage()))
-                                quickLaunchProfile(profileList[0][position]);
-                            else {
-                                try {
-                                    loadProfile(profileList[0][position]);
-                                } catch (IOException e) {
-                                    U.showToast(QuickLaunchActivity.this, R.string.error_loading_profile);
-                                }
+                    try {
+                        if(mInfo.activityInfo.applicationInfo.packageName.equals(getCallingPackage()))
+                            quickLaunchProfile(profileList[0][position]);
+                        else {
+                            try {
+                                loadProfile(profileList[0][position]);
+                            } catch (IOException e) {
+                                U.showToast(this, R.string.error_loading_profile);
                             }
-                        } catch (NullPointerException e) {
-                            finish();
                         }
+                    } catch (NullPointerException e) {
+                        finish();
                     }
                 });
             }

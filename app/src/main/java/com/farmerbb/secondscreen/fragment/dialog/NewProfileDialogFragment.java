@@ -82,36 +82,26 @@ public final class NewProfileDialogFragment extends DialogFragment implements Ad
 
         builder.setView(view)
                 .setTitle(R.string.action_new)
-                .setPositiveButton(R.string.action_ok, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        editText = (EditText) view.findViewById(R.id.newProfile);
-                        String name = editText.getText().toString();
-                        listener.onNewProfilePositiveClick(name, pos);
-                    }
+                .setPositiveButton(R.string.action_ok, (dialog, id) -> {
+                    editText = view.findViewById(R.id.newProfile);
+                    String name = editText.getText().toString();
+                    listener.onNewProfilePositiveClick(name, pos);
                 })
-                .setNegativeButton(R.string.action_cancel, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {}
-                });
+                .setNegativeButton(R.string.action_cancel, (dialog, id) -> {});
 
-        editText = (EditText) view.findViewById(R.id.newProfile);
-        editText.setOnFocusChangeListener(new OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(showKeyboard) {
-                    showKeyboard = false;
-                    editText.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                            imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);
-                        }
-                    });
-                }
+        editText = view.findViewById(R.id.newProfile);
+        editText.setOnFocusChangeListener((v, hasFocus) -> {
+            if(showKeyboard) {
+                showKeyboard = false;
+                editText.post(() -> {
+                    InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);
+                });
             }
         });
         editText.requestFocus();
 
-        spinner = (Spinner) view.findViewById(R.id.spinner);
+        spinner = view.findViewById(R.id.spinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
         adapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.new_profile_templates, android.R.layout.simple_spinner_item);

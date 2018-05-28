@@ -65,8 +65,8 @@ public final class WelcomeFragment extends Fragment {
         // Animate elevation change
         if(getActivity().findViewById(R.id.layoutMain).getTag().equals("main-layout-large")
                 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            LinearLayout profileViewEdit = (LinearLayout) getActivity().findViewById(R.id.profileViewEdit);
-            LinearLayout profileList = (LinearLayout) getActivity().findViewById(R.id.profileList);
+            LinearLayout profileViewEdit = getActivity().findViewById(R.id.profileViewEdit);
+            LinearLayout profileList = getActivity().findViewById(R.id.profileList);
 
             if(getArguments().getBoolean("show-welcome-message", true)) {
                 profileList.animate().z(0f);
@@ -93,14 +93,11 @@ public final class WelcomeFragment extends Fragment {
         ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(false);
 
         // Floating action button
-        FloatingActionButton floatingActionButton = (FloatingActionButton) getActivity().findViewById(R.id.button_floating_action_welcome);
+        FloatingActionButton floatingActionButton = getActivity().findViewById(R.id.button_floating_action_welcome);
         floatingActionButton.setImageResource(R.drawable.ic_action_new);
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DialogFragment newProfileFragment = new NewProfileDialogFragment();
-                newProfileFragment.show(getFragmentManager(), "new");
-            }
+        floatingActionButton.setOnClickListener(v -> {
+            DialogFragment newProfileFragment = new NewProfileDialogFragment();
+            newProfileFragment.show(getFragmentManager(), "new");
         });
     }
 

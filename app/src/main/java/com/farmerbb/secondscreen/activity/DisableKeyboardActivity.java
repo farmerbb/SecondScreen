@@ -32,19 +32,14 @@ public final class DisableKeyboardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_turn_off);
         setTitle(R.string.disable_keyboard_title);
 
-        TextView textView = (TextView) findViewById(R.id.turnOffTextView);
+        TextView textView = findViewById(R.id.turnOffTextView);
         textView.setText(R.string.disable_keyboard_message);
 
-        Button button1 = (Button) findViewById(R.id.turnOffButtonPrimary);
-        Button button2 = (Button) findViewById(R.id.turnOffButtonSecondary);
+        Button button1 = findViewById(R.id.turnOffButtonPrimary);
+        Button button2 = findViewById(R.id.turnOffButtonSecondary);
 
         button1.setText(R.string.action_close);
-        button1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        button1.setOnClickListener(v -> finish());
 
         button2.setVisibility(View.GONE);
     }
