@@ -473,7 +473,8 @@ SharedPreferences.OnSharedPreferenceChangeListener {
                             switch(key) {
                                 case "temp_size":
                                     editor.putString("size", value);
-                                    if("0".equals(prefSaved.getString("original_filename", "0"))) {
+                                    if(Build.VERSION.SDK_INT < Build.VERSION_CODES.N
+                                            && "0".equals(prefSaved.getString("original_filename", "0"))) {
                                         editor.putString("ui_refresh", "system-ui");
                                         editorCurrent.putBoolean("force_safe_mode", true);
                                         editorCurrent.apply();
@@ -481,7 +482,8 @@ SharedPreferences.OnSharedPreferenceChangeListener {
                                     break;
                                 case "temp_density":
                                     editor.putString("density", value);
-                                    if("0".equals(prefSaved.getString("original_filename", "0"))) {
+                                    if(Build.VERSION.SDK_INT < Build.VERSION_CODES.N
+                                            && "0".equals(prefSaved.getString("original_filename", "0"))) {
                                         editor.putString("ui_refresh", "system-ui");
                                         editorCurrent.putBoolean("force_safe_mode", true);
                                         editorCurrent.apply();
