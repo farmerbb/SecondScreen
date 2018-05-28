@@ -595,7 +595,8 @@ SharedPreferences.OnSharedPreferenceChangeListener {
                     && "reset".equals(requestedDpi))
                     && "do-nothing".equals(prefNew.getString("ui_refresh", "do-nothing"))
                     && !prefMain.getBoolean("expert_mode", false)
-                    && Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+                    && (Build.VERSION.SDK_INT < Build.VERSION_CODES.N
+                    || U.isInNonRootMode(getActivity()) && Build.VERSION.SDK_INT > Build.VERSION_CODES.O_MR1)) {
                 listener.showUiRefreshDialog(filename, isEdit, returnToList);
             } else
                 preSave(filename, isEdit, returnToList);
