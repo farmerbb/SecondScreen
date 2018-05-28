@@ -1366,6 +1366,7 @@ public final class U {
                 editor.putBoolean("chrome", getChromePackageName(context) != null);
 
                 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
+                        && Build.VERSION.SDK_INT <= Build.VERSION_CODES.O_MR1
                         && getTaskbarPackageName(context) != null
                         && isPlayStoreRelease(context)) {
                     editor.putBoolean("taskbar", true);
@@ -1392,6 +1393,7 @@ public final class U {
                 editor.putBoolean("chrome", getChromePackageName(context) != null);
 
                 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
+                        && Build.VERSION.SDK_INT <= Build.VERSION_CODES.O_MR1
                         && getTaskbarPackageName(context) != null
                         && isPlayStoreRelease(context)) {
                     editor.putBoolean("taskbar", true);
@@ -1418,6 +1420,7 @@ public final class U {
                 editor.putBoolean("chrome", getChromePackageName(context) != null);
 
                 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
+                        && Build.VERSION.SDK_INT <= Build.VERSION_CODES.O_MR1
                         && getTaskbarPackageName(context) != null
                         && isPlayStoreRelease(context)) {
                     editor.putBoolean("taskbar", true);
@@ -1471,6 +1474,7 @@ public final class U {
 
     public static boolean hasFreeformSupport(Context context) {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
+                && Build.VERSION.SDK_INT <= Build.VERSION_CODES.O_MR1
                 && (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_FREEFORM_WINDOW_MANAGEMENT)
                 || Settings.Global.getInt(context.getContentResolver(), "enable_freeform_support", 0) != 0
                 || (Build.VERSION.SDK_INT <= Build.VERSION_CODES.N_MR1
