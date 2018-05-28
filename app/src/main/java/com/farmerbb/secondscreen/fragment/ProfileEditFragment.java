@@ -254,7 +254,9 @@ SharedPreferences.OnSharedPreferenceChangeListener {
         else
             addPreferencesFromResource(R.xml.display_settings);
 
-        if(isPlayStoreInstalled(getActivity()) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if(isPlayStoreInstalled(getActivity())
+                && U.isPlayStoreRelease(getActivity())
+                && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             addPreferencesFromResource(R.xml.desktop_optimization);
             findPreference("taskbar_settings").setOnPreferenceClickListener(this);
             taskbarSettingsPrefEnabled = true;
@@ -354,7 +356,7 @@ SharedPreferences.OnSharedPreferenceChangeListener {
             findPreference("overscan_settings").setSummary(getResources().getString(R.string.disabled));
 
         String taskbarPackageName = U.getTaskbarPackageName(getActivity());
-        if(taskbarPackageName == null)
+        if(taskbarPackageName == null || !U.isPlayStoreRelease(getActivity()))
             disablePreference(prefNew, "taskbar", true);
         else
             findPreference("taskbar").setEnabled(true);

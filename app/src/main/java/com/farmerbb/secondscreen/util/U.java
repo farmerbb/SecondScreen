@@ -32,6 +32,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.content.pm.Signature;
 import android.content.res.Configuration;
 import android.hardware.display.DisplayManager;
 import android.net.Uri;
@@ -1042,15 +1043,11 @@ public final class U {
 
     // Directs the user to check for updates
     public static void checkForUpdates(Context context) {
-        // If Google Play Store is installed, direct the user to the Play Store page for SecondScreen.
-        // Otherwise, direct them to the Downloads page on the xda thread.
         String url;
-        try {
-            context.getPackageManager().getPackageInfo("com.android.vending", 0);
-            url = "https://play.google.com/store/apps/details?id=" + context.getPackageName();
-        } catch (PackageManager.NameNotFoundException e) {
-            url = "http://forum.xda-developers.com/devdb/project/?id=5032#downloads";
-        }
+        if(isPlayStoreRelease(context))
+            url = "https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID;
+        else
+            url = "https://f-droid.org/repository/browse/?fdid=" + BuildConfig.APPLICATION_ID;
 
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse(url));
@@ -1368,7 +1365,9 @@ public final class U {
 
                 editor.putBoolean("chrome", getChromePackageName(context) != null);
 
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && getTaskbarPackageName(context) != null) {
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
+                        && getTaskbarPackageName(context) != null
+                        && isPlayStoreRelease(context)) {
                     editor.putBoolean("taskbar", true);
                     editor.putBoolean("freeform", true);
                     editor.putBoolean("clear_home", true);
@@ -1392,7 +1391,9 @@ public final class U {
 
                 editor.putBoolean("chrome", getChromePackageName(context) != null);
 
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && getTaskbarPackageName(context) != null) {
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
+                        && getTaskbarPackageName(context) != null
+                        && isPlayStoreRelease(context)) {
                     editor.putBoolean("taskbar", true);
                     editor.putBoolean("freeform", true);
                     editor.putBoolean("clear_home", true);
@@ -1416,7 +1417,9 @@ public final class U {
 
                 editor.putBoolean("chrome", getChromePackageName(context) != null);
 
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && getTaskbarPackageName(context) != null) {
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
+                        && getTaskbarPackageName(context) != null
+                        && isPlayStoreRelease(context)) {
                     editor.putBoolean("taskbar", true);
                     editor.putBoolean("freeform", true);
                     editor.putBoolean("clear_home", true);
@@ -1487,5 +1490,20 @@ public final class U {
             return Float.valueOf(Build.VERSION.SDK_INT + "." + Build.VERSION.PREVIEW_SDK_INT);
         else
             return (float) Build.VERSION.SDK_INT;
+    }
+
+    @SuppressLint("PackageManagerGetSignatures")
+    public static boolean isPlayStoreRelease(Context context) {
+        Signature playStoreSignature = new Signature(context.getString(R.string.signature));
+        try {
+            PackageManager pm = context.getPackageManager();
+            PackageInfo info = pm.getPackageInfo(context.getPackageName(), PackageManager.GET_SIGNATURES);
+            for(Signature signature : info.signatures) {
+                if(signature.equals(playStoreSignature))
+                    return true;
+            }
+        } catch (Exception e) { /* Gracefully fail */ }
+
+        return false;
     }
 }
