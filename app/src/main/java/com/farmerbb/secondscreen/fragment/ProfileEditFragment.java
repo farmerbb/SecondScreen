@@ -225,6 +225,12 @@ SharedPreferences.OnSharedPreferenceChangeListener {
             } else
                 editor.putString("ui_refresh", prefSaved.getString("ui_refresh", "do-nothing"));
 
+            if(U.isInNonRootMode(getActivity())
+                    && Build.VERSION.SDK_INT > Build.VERSION_CODES.O_MR1
+                    && prefSaved.getString("ui_refresh", "do-nothing").equals("system-ui")) {
+                editor.putString("ui_refresh", "activity-manager");
+            }
+
             editor.putString("profile_name", prefSaved.getString("profile_name", getResources().getString(R.string.action_new)));
             editor.putBoolean("bluetooth_on", prefSaved.getBoolean("bluetooth_on", false));
             editor.putBoolean("wifi_on", prefSaved.getBoolean("wifi_on", false));
@@ -280,7 +286,11 @@ SharedPreferences.OnSharedPreferenceChangeListener {
 
         if(U.isInNonRootMode(getActivity())) {
             ListPreference uiRefresh = (ListPreference) findPreference("ui_refresh");
-            uiRefresh.setEntries(R.array.pref_ui_refresh_list_non_root);
+            if(Build.VERSION.SDK_INT > Build.VERSION_CODES.O_MR1) {
+                uiRefresh.setEntries(R.array.pref_ui_refresh_list_non_root_alt);
+                uiRefresh.setEntryValues(R.array.pref_ui_refresh_list_values_alt);
+            } else
+                uiRefresh.setEntries(R.array.pref_ui_refresh_list_non_root);
         }
 
         // Set OnClickListeners for certain preferences

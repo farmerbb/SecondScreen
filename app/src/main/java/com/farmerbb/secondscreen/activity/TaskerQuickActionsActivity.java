@@ -156,6 +156,11 @@ SharedPreferences.OnSharedPreferenceChangeListener {
                 getPreferenceScreen().findPreference("temp_chrome").setEnabled(false);
                 getPreferenceScreen().findPreference("temp_vibration_off").setEnabled(false);
                 getPreferenceScreen().findPreference("temp_freeform").setEnabled(false);
+
+                if(Build.VERSION.SDK_INT > Build.VERSION_CODES.O_MR1) {
+                    getPreferenceScreen().findPreference("temp_size").setEnabled(false);
+                    getPreferenceScreen().findPreference("temp_density").setEnabled(false);
+                }
             }
 
             // Set active state of "Reset settings" button

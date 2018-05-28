@@ -1359,7 +1359,9 @@ public final class U {
                 editor.putString("rotation_lock_new", "landscape");
                 editor.putString("density", "240");
                 editor.putString("ui_refresh",
-                        isInNonRootMode(context) && Build.VERSION.SDK_INT == Build.VERSION_CODES.M
+                        isInNonRootMode(context)
+                                && (Build.VERSION.SDK_INT == Build.VERSION_CODES.M
+                                || Build.VERSION.SDK_INT > Build.VERSION_CODES.O_MR1)
                                 ? "activity-manager"
                                 : "system-ui");
 
@@ -1386,7 +1388,9 @@ public final class U {
                 editor.putString("rotation_lock_new", "landscape");
                 editor.putString("density", "160");
                 editor.putString("ui_refresh",
-                        isInNonRootMode(context) && Build.VERSION.SDK_INT == Build.VERSION_CODES.M
+                        isInNonRootMode(context)
+                                && (Build.VERSION.SDK_INT == Build.VERSION_CODES.M
+                                || Build.VERSION.SDK_INT > Build.VERSION_CODES.O_MR1)
                                 ? "activity-manager"
                                 : "system-ui");
 
@@ -1413,7 +1417,9 @@ public final class U {
                 editor.putString("rotation_lock_new", "landscape");
                 editor.putString("density", "160");
                 editor.putString("ui_refresh",
-                        isInNonRootMode(context) && Build.VERSION.SDK_INT == Build.VERSION_CODES.M
+                        isInNonRootMode(context)
+                                && (Build.VERSION.SDK_INT == Build.VERSION_CODES.M
+                                || Build.VERSION.SDK_INT > Build.VERSION_CODES.O_MR1)
                                 ? "activity-manager"
                                 : "system-ui");
 

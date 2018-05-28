@@ -53,6 +53,7 @@
     <string name="dialog_turn_off_message">esta actualmente activo. ¿Le gustaría cerrarlo?</string>
     <string name="dialog_turn_off_title">Cerrar Perfil</string>
     <string name="dialog_ui_refresh">Has dejado tu método de actualización de la interfaz de usuario como \"No hacer nada\".  La selección de un método de actualización de la interfaz de usuario es muy recomendable cuando se cambia la resolución y/o la densidad.\n\n¿Guardar de todos modos?</string>
+    <string name="dialog_ui_refresh_non_root">Has dejado tu método de actualización de la interfaz de usuario como \"No hacer nada\".  La selección de un método de actualización de la interfaz de usuario es muy recomendable cuando se cambia la resolución y/o la densidad.\n\n¿Guardar de todos modos?</string>
     <string name="dialog_upgrade_message">SecondScreen no ha sido probado en esta versión de Android. Se puede bloquearse o comportarse de otras formas inesperadas.</string>
     <string name="display_disconnected">Cerrar Perfil</string>
     <string name="dont_show_again">No mostrar de nuevo</string>
