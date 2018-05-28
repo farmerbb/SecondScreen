@@ -22,7 +22,7 @@
     <string name="action_delete">Supprimer</string>
     <string name="action_edit">Editer</string>
     <string name="action_import">Importer</string>
-    <string name="action_load">Charger</string>
+    <string name="action_load">Charger %1$s</string>
     <string name="action_new">Nouveau Profile</string>
     <string name="action_quick">Actions</string>
     <string name="action_save">Sauvegarder</string>
@@ -30,7 +30,7 @@
     <string name="action_save_only">Sauvegarder uniquement</string>
     <string name="action_ok">OK</string>
     <string name="action_settings">Paramètres</string>
-    <string name="action_turn_off">Désactiver</string>
+    <string name="action_turn_off">Désactiver %1$s</string>
     <string name="action_uninstall">Uninstall</string>
     <string name="am_restart_warning">This option is not recommended when mirroring to wireless displays</string>
     <string name="any_profile">N\'importe quel profile?</string>
@@ -50,7 +50,7 @@
     <string name="dialog_first_load">SecondScreen va maintenant demander les droits superutilisateur et charger le profile. Votre écran peut clignoter car il va changer de résolution et/ou de densité.\n\nPour désactiver un profile actif, appuyez sur son nom et selectionnez Désactiver.</string>
     <string name="dialog_load_profile">Charger le profile</string>
     <string name="dialog_reload_profile_title">Recharger le profile?</string>
-    <string name="dialog_turn_off_message">est actuellement actif. Voulez vous le désactiver?</string>
+    <string name="dialog_turn_off_message">%1$s est actuellement actif. Voulez vous le désactiver?</string>
     <string name="dialog_turn_off_title">Désactiver le profile?</string>
     <string name="dialog_ui_refresh">You\'ve left your UI refresh method as \"Do nothing\".  Selecting a UI refresh method is highly recommended when changing your resolution and/or density.\n\nSave anyway?</string>
     <string name="dialog_ui_refresh_non_root">You\'ve left your UI refresh method as \"Do nothing\".  Selecting a UI refresh method is highly recommended when changing your resolution and/or density.\n\nSave anyway?</string>

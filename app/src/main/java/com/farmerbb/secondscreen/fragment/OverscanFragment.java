@@ -253,19 +253,16 @@ public final class OverscanFragment extends PreferenceFragment implements
      * A preference value change listener that updates the preference's summary
      * to reflect its new value.
      */
-    private static Preference.OnPreferenceChangeListener opcl = new Preference.OnPreferenceChangeListener() {
-        @Override
-        public boolean onPreferenceChange(Preference preference, Object value) {
-            String stringValue = value.toString();
+    private static Preference.OnPreferenceChangeListener opcl = (preference, value) -> {
+        String stringValue = value.toString();
 
-            // Damage control if user inputs an empty value
-            if(stringValue.isEmpty())
-                stringValue = "0";
+        // Damage control if user inputs an empty value
+        if(stringValue.isEmpty())
+            stringValue = "0";
 
-            // Set the summary to the value's simple string representation
-            preference.setSummary(stringValue);
+        // Set the summary to the value's simple string representation
+        preference.setSummary(stringValue);
 
-            return true;
-        }
+        return true;
     };
 }

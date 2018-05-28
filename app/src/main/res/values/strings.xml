@@ -22,7 +22,7 @@
     <string name="action_delete">Delete</string>
     <string name="action_edit">Edit</string>
     <string name="action_import">Import</string>
-    <string name="action_load">Load</string>
+    <string name="action_load">Load %1$s</string>
     <string name="action_new">New Profile</string>
     <string name="action_quick">Actions</string>
     <string name="action_save">Save</string>
@@ -30,7 +30,7 @@
     <string name="action_save_only">Save only</string>
     <string name="action_ok">OK</string>
     <string name="action_settings">Settings</string>
-    <string name="action_turn_off">Turn Off</string>
+    <string name="action_turn_off">Turn Off %1$s</string>
     <string name="action_uninstall">Uninstall</string>
     <string name="am_restart_warning">This method is not recommended when mirroring to wireless displays</string>
     <string name="any_profile">Any profile</string>
@@ -50,7 +50,7 @@
     <string name="dialog_first_load">&#8226; Connect your display first, if you have not already done so.\n\n&#8226; Make sure you\'ve granted root/adb access to SecondScreen - otherwise, it won\'t do anything.\n\n&#8226; Hang tight for a few seconds as your device changes its resolution and density!\n\n&#8226; When the SecondScreen icon appears in the status bar, your device is ready to use.\n\n&#8226; For best results, connect any Bluetooth devices after the profile is finished loading.\n\n&#8226; When you\'re finished using your display, select the Turn Off option in the notification.</string>
     <string name="dialog_load_profile">Instructions</string>
     <string name="dialog_reload_profile_title">Reload profile?</string>
-    <string name="dialog_turn_off_message">is currently active. Would you like to turn it off?</string>
+    <string name="dialog_turn_off_message">%1$s is currently active. Would you like to turn it off?</string>
     <string name="dialog_turn_off_title">Turn profile off</string>
     <string name="dialog_ui_refresh">You\'ve left your UI refresh method as \"Do nothing\".  Selecting a UI refresh method is highly recommended when changing your resolution and/or density.\n\nSave anyway?</string>
     <string name="dialog_ui_refresh_non_root">You\'ve left your UI refresh method as \"Do nothing\".  Setting the UI refresh method to \"Manual reboot\" is required when changing your resolution and/or density on this device.\n\nSave anyway?</string>

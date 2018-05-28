@@ -22,7 +22,7 @@
     <string name="action_delete">Eliminar</string>
     <string name="action_edit">Editar</string>
     <string name="action_import">Importar</string>
-    <string name="action_load">Cargar</string>
+    <string name="action_load">Cargar %1$s</string>
     <string name="action_new">Nuevo perfil</string>
     <string name="action_quick">Acciones</string>
     <string name="action_save">Guardar</string>
@@ -30,7 +30,7 @@
     <string name="action_save_only">Guardar sólo</string>
     <string name="action_ok">Aceptar</string>
     <string name="action_settings">Configuración</string>
-    <string name="action_turn_off">Cerrar</string>
+    <string name="action_turn_off">Cerrar %1$s</string>
     <string name="action_uninstall">Uninstall</string>
     <string name="am_restart_warning">Este método no se recomienda con el mirroring, pantalla inalámbrica</string>
     <string name="any_profile">Cualquier perfil</string>
@@ -50,7 +50,7 @@
     <string name="dialog_first_load">SecondScreen ahora solicita el acceso de superusuario y se cargará el perfil. Su pantalla puede parpadear a medida que cambia la resolución y la densidad.\n\nPara desactivar un perfil activo, toque su nombre y seleccione Cerrar.</string>
     <string name="dialog_load_profile">Cargar Perfil</string>
     <string name="dialog_reload_profile_title">¿Actualizar el perfil?</string>
-    <string name="dialog_turn_off_message">esta actualmente activo. ¿Le gustaría cerrarlo?</string>
+    <string name="dialog_turn_off_message">%1$s esta actualmente activo. ¿Le gustaría cerrarlo?</string>
     <string name="dialog_turn_off_title">Cerrar Perfil</string>
     <string name="dialog_ui_refresh">Has dejado tu método de actualización de la interfaz de usuario como \"No hacer nada\".  La selección de un método de actualización de la interfaz de usuario es muy recomendable cuando se cambia la resolución y/o la densidad.\n\n¿Guardar de todos modos?</string>
     <string name="dialog_ui_refresh_non_root">Has dejado tu método de actualización de la interfaz de usuario como \"No hacer nada\".  La selección de un método de actualización de la interfaz de usuario es muy recomendable cuando se cambia la resolución y/o la densidad.\n\n¿Guardar de todos modos?</string>

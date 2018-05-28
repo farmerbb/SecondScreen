@@ -63,7 +63,7 @@ public final class UnableToStartActivity extends AppCompatActivity {
                     }
                 }
             } else
-                LocalBroadcastManager.getInstance(UnableToStartActivity.this)
+                LocalBroadcastManager.getInstance(this)
                         .sendBroadcast(new Intent("com.farmerbb.secondscreen.SHOW_DIALOGS"));
 
             finish();

@@ -22,7 +22,7 @@
     <string name="action_delete">Vymazať</string>
     <string name="action_edit">Upraviť</string>
     <string name="action_import">Import</string>
-    <string name="action_load">Načítať</string>
+    <string name="action_load">Načítať %1$s</string>
     <string name="action_new">Nový profil</string>
     <string name="action_quick">Akcie</string>
     <string name="action_save">Uložiť</string>
@@ -30,7 +30,7 @@
     <string name="action_save_only">Iba uložiť</string>
     <string name="action_ok">OK</string>
     <string name="action_settings">Nastavenia</string>
-    <string name="action_turn_off">Vypnúť</string>
+    <string name="action_turn_off">Vypnúť %1$s</string>
     <string name="action_uninstall">Odinštalovať</string>
     <string name="am_restart_warning">Toto nastavenie nie je odporúčané pri bezdrôtovom zrkadlení</string>
     <string name="any_profile">Žiadny profil</string>
@@ -50,7 +50,7 @@
     <string name="dialog_first_load">SecondScreen si teraz vyžiada superuser prístup a načíta profil. Pri zmene rozlíšenia a/alebo hustoty môže vaša obrazovka blikať.\n\nPre vypnutie aktívneho profilu, kliknite na jeho meno a zvoľte Vypnúť.</string>
     <string name="dialog_load_profile">Načítať profil</string>
     <string name="dialog_reload_profile_title">Načítať znovu profil?</string>
-    <string name="dialog_turn_off_message">je momentálne aktívny. Chcete ho vypnúť?</string>
+    <string name="dialog_turn_off_message">%1$s je momentálne aktívny. Chcete ho vypnúť?</string>
     <string name="dialog_turn_off_title">Vypnúť profil</string>
     <string name="dialog_ui_refresh">Ponechali ste metódu obnovenia UI na \"Neurobiť nič\".  Odporúčame zvoliť metódu obnovenia UI pri zmene rozlíšenia a/alebo hustoty.\n\nAj tak uložiť?</string>
     <string name="dialog_ui_refresh_non_root">Ponechali ste metódu obnovenia UI na \"Neurobiť nič\".  Odporúčame zvoliť metódu obnovenia UI pri zmene rozlíšenia a/alebo hustoty.\n\nAj tak uložiť?</string>

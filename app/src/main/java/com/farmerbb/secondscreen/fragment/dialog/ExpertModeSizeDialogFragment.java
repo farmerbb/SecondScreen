@@ -15,7 +15,7 @@
 
 package com.farmerbb.secondscreen.fragment.dialog;
 
-    import android.app.Activity;
+import android.app.Activity;
 import android.support.v7.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -25,7 +25,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnFocusChangeListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 

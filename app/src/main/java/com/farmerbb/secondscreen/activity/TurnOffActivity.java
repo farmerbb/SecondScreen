@@ -110,7 +110,7 @@ public final class TurnOffActivity extends AppCompatActivity {
 
             // Set TextView contents
             TextView textView = findViewById(R.id.turnOffTextView);
-            textView.setText(name + " " + getResources().getString(R.string.dialog_turn_off_message));
+            textView.setText(getResources().getString(R.string.dialog_turn_off_message, name));
 
             // Set OnClickListeners for the buttons
             buttonSecondary.setOnClickListener(view -> finish());

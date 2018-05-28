@@ -133,17 +133,17 @@ public final class ProfileViewFragment extends Fragment {
         if("quick_actions".equals(prefCurrent.getString("filename", "0"))) {
             SharedPreferences prefQuick = U.getPrefQuickActions(getActivity());
             if(filename.equals(prefQuick.getString("original_filename", "0"))) {
-                button.setText(getResources().getStringArray(R.array.pref_notification_action_list)[0] + " " + getArguments().getString("title"));
+                button.setText(getResources().getString(R.string.action_turn_off, getArguments().getString("title")));
                 button.setOnClickListener(view -> listener.onTurnOffProfileButtonClick());
             } else {
-                button.setText(getResources().getString(R.string.action_load) + " " + getArguments().getString("title"));
+                button.setText(getResources().getString(R.string.action_load, getArguments().getString("title")));
                 button.setOnClickListener(view -> listener.onLoadProfileButtonClick(filename));
             }
         } else if(filename.equals(prefCurrent.getString("filename", "0"))) {
-            button.setText(getResources().getStringArray(R.array.pref_notification_action_list)[0] + " " + getArguments().getString("title"));
+            button.setText(getResources().getString(R.string.action_turn_off, getArguments().getString("title")));
             button.setOnClickListener(view -> listener.onTurnOffProfileButtonClick());
         } else {
-            button.setText(getResources().getString(R.string.action_load) + " " + getArguments().getString("title"));
+            button.setText(getResources().getString(R.string.action_load, getArguments().getString("title")));
             button.setOnClickListener(view -> listener.onLoadProfileButtonClick(filename));
         }
 
