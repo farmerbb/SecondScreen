@@ -477,18 +477,22 @@ SharedPreferences.OnSharedPreferenceChangeListener {
                             switch(key) {
                                 case "temp_size":
                                     editor.putString("size", value);
-                                    if(Build.VERSION.SDK_INT < Build.VERSION_CODES.N
-                                            && "0".equals(prefSaved.getString("original_filename", "0"))) {
-                                        editor.putString("ui_refresh", "system-ui");
+                                    if("0".equals(prefSaved.getString("original_filename", "0"))) {
+                                        editor.putString("ui_refresh",
+                                                Build.VERSION.SDK_INT < Build.VERSION_CODES.N
+                                                        ? "system-ui"
+                                                        : "do-nothing");
                                         editorCurrent.putBoolean("force_safe_mode", true);
                                         editorCurrent.apply();
                                     }
                                     break;
                                 case "temp_density":
                                     editor.putString("density", value);
-                                    if(Build.VERSION.SDK_INT < Build.VERSION_CODES.N
-                                            && "0".equals(prefSaved.getString("original_filename", "0"))) {
-                                        editor.putString("ui_refresh", "system-ui");
+                                    if("0".equals(prefSaved.getString("original_filename", "0"))) {
+                                        editor.putString("ui_refresh",
+                                                Build.VERSION.SDK_INT < Build.VERSION_CODES.N
+                                                        ? "system-ui"
+                                                        : "do-nothing");
                                         editorCurrent.putBoolean("force_safe_mode", true);
                                         editorCurrent.apply();
                                     }
