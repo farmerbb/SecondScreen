@@ -144,8 +144,7 @@ SharedPreferences.OnSharedPreferenceChangeListener {
             if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
                 getPreferenceScreen().findPreference("temp_immersive_new").setEnabled(false);
 
-            if(Build.VERSION.SDK_INT < Build.VERSION_CODES.N
-                    || Build.VERSION.SDK_INT > Build.VERSION_CODES.O_MR1)
+            if(!U.canEnableFreeform(this))
                 getPreferenceScreen().findPreference("temp_freeform").setEnabled(false);
 
             if(U.getChromePackageName(this) == null)

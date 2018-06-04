@@ -28,6 +28,8 @@ android {
 
         resConfigs "en", "es", "fr", "sk"
         vectorDrawables.useSupportLibrary = true
+
+        buildConfigField "float", "TESTED_API_VERSION", "27.0f"
     }
 
     compileOptions {

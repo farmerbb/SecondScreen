@@ -332,8 +332,7 @@ SharedPreferences.OnSharedPreferenceChangeListener {
         if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
             disablePreference(prefNew, "immersive_new", false);
 
-        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.N
-                || Build.VERSION.SDK_INT > Build.VERSION_CODES.O_MR1)
+        if(!U.canEnableFreeform(getActivity()))
             disablePreference(prefNew, "freeform", true);
 
         if(U.getChromePackageName(getActivity()) == null)

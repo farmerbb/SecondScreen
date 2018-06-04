@@ -1361,8 +1361,7 @@ public final class U {
 
                 editor.putBoolean("chrome", getChromePackageName(context) != null);
 
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
-                        && Build.VERSION.SDK_INT <= Build.VERSION_CODES.O_MR1
+                if(canEnableFreeform(context)
                         && getTaskbarPackageName(context) != null
                         && isPlayStoreRelease(context)) {
                     editor.putBoolean("taskbar", true);
@@ -1390,8 +1389,7 @@ public final class U {
 
                 editor.putBoolean("chrome", getChromePackageName(context) != null);
 
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
-                        && Build.VERSION.SDK_INT <= Build.VERSION_CODES.O_MR1
+                if(canEnableFreeform(context)
                         && getTaskbarPackageName(context) != null
                         && isPlayStoreRelease(context)) {
                     editor.putBoolean("taskbar", true);
@@ -1419,8 +1417,7 @@ public final class U {
 
                 editor.putBoolean("chrome", getChromePackageName(context) != null);
 
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
-                        && Build.VERSION.SDK_INT <= Build.VERSION_CODES.O_MR1
+                if(canEnableFreeform(context)
                         && getTaskbarPackageName(context) != null
                         && isPlayStoreRelease(context)) {
                     editor.putBoolean("taskbar", true);
@@ -1472,9 +1469,15 @@ public final class U {
         editor.apply();
     }
 
-    public static boolean hasFreeformSupport(Context context) {
+    public static boolean canEnableFreeform(Context context) {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
-                && Build.VERSION.SDK_INT <= Build.VERSION_CODES.O_MR1
+                && (getCurrentApiVersion() <= 27.0f
+                || context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_FREEFORM_WINDOW_MANAGEMENT));
+    }
+
+    @TargetApi(Build.VERSION_CODES.N)
+    public static boolean hasFreeformSupport(Context context) {
+        return canEnableFreeform(context)
                 && (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_FREEFORM_WINDOW_MANAGEMENT)
                 || Settings.Global.getInt(context.getContentResolver(), "enable_freeform_support", 0) != 0
                 || (Build.VERSION.SDK_INT <= Build.VERSION_CODES.N_MR1
@@ -1484,9 +1487,11 @@ public final class U {
 
     public static boolean isUntestedAndroidVersion(Context context) {
         SharedPreferences prefMain = getPrefMain(context);
-        float testedApiVersion = 27.0f;
 
-        return getCurrentApiVersion() > Math.max(testedApiVersion, prefMain.getFloat("current_api_version_new", testedApiVersion));
+        return getCurrentApiVersion() > Math.max(
+                BuildConfig.TESTED_API_VERSION,
+                prefMain.getFloat("current_api_version_new", BuildConfig.TESTED_API_VERSION)
+        );
     }
 
     public static float getCurrentApiVersion() {
