@@ -271,6 +271,8 @@ SharedPreferences.OnSharedPreferenceChangeListener {
 
         addPreferencesFromResource(R.xml.additional_settings);
 
+        boolean disableUiRefreshWarning = false;
+
         // Modifications for certain scenarios
         if(!prefMain.getBoolean("expert_mode", false) && prefMain.getBoolean("landscape", false)) {
             ListPreference size = (ListPreference) findPreference("size");
@@ -282,6 +284,8 @@ SharedPreferences.OnSharedPreferenceChangeListener {
             ListPreference uiRefresh = (ListPreference) findPreference("ui_refresh");
             uiRefresh.setEntries(R.array.pref_ui_refresh_list_alt);
             uiRefresh.setEntryValues(R.array.pref_ui_refresh_list_values_alt);
+
+            disableUiRefreshWarning = true;
         }
 
         if(U.isInNonRootMode(getActivity())) {
@@ -289,6 +293,8 @@ SharedPreferences.OnSharedPreferenceChangeListener {
             if(Build.VERSION.SDK_INT > Build.VERSION_CODES.O_MR1) {
                 uiRefresh.setEntries(R.array.pref_ui_refresh_list_non_root_alt);
                 uiRefresh.setEntryValues(R.array.pref_ui_refresh_list_values_alt);
+
+                disableUiRefreshWarning = true;
             } else
                 uiRefresh.setEntries(R.array.pref_ui_refresh_list_non_root);
         }
@@ -345,7 +351,7 @@ SharedPreferences.OnSharedPreferenceChangeListener {
             disablePreference(prefNew, "show_touches", false);
         }
 
-        uiRefreshWarning = true;
+        uiRefreshWarning = !disableUiRefreshWarning;
     }
 
     @SuppressWarnings("deprecation")
