@@ -58,7 +58,7 @@ public final class HdmiProfileSelectActivity extends AppCompatActivity {
             listView.setAdapter(adapter);
             listView.setClickable(true);
             listView.setOnItemClickListener((arg0, arg1, position, arg3) -> {
-                SharedPreferences prefMain = U.getPrefMain(HdmiProfileSelectActivity.this);
+                SharedPreferences prefMain = U.getPrefMain(this);
                 SharedPreferences.Editor editor = prefMain.edit();
                 editor.putString("hdmi_load_profile", profileList[0][position]);
                 editor.apply();

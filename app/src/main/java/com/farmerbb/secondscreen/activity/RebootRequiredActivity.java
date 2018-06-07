@@ -50,7 +50,7 @@ public final class RebootRequiredActivity extends AppCompatActivity {
                 finish();
             else {
                 rebootLater = true;
-                U.showToast(RebootRequiredActivity.this, R.string.confirm_reboot_later);
+                U.showToast(this, R.string.confirm_reboot_later);
             }
         });
 

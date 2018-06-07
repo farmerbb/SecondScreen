@@ -180,7 +180,7 @@ public final class HdmiActivity extends Activity {
             listView.setAdapter(adapter);
             listView.setClickable(true);
             listView.setOnItemClickListener((arg0, arg1, position, arg3) -> {
-                U.loadProfile(HdmiActivity.this, profileList[0][position]);
+                U.loadProfile(this, profileList[0][position]);
                 finish();
             });
         }

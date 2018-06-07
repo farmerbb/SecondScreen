@@ -116,9 +116,9 @@ public final class TurnOffActivity extends AppCompatActivity {
             buttonSecondary.setOnClickListener(view -> finish());
             buttonPrimary.setOnClickListener(view -> {
                 try {
-                    SharedPreferences prefCurrent1 = U.getPrefCurrent(TurnOffActivity.this);
+                    SharedPreferences prefCurrent1 = U.getPrefCurrent(this);
                     if(!prefCurrent1.getBoolean("not_active", true))
-                        U.turnOffProfile(TurnOffActivity.this);
+                        U.turnOffProfile(this);
                 } catch (NullPointerException e) { /* Gracefully fail */ }
 
                 finish();

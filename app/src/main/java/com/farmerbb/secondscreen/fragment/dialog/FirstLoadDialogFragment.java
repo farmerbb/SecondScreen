@@ -76,7 +76,7 @@ public final class FirstLoadDialogFragment extends DialogFragment {
         .setTitle(R.string.dialog_load_profile)
         .setPositiveButton(R.string.action_ok, (dialog, id) -> {
             checkbox = view.findViewById(R.id.firstLoadCheckBox);
-            listener.onFirstLoadPositiveClick(FirstLoadDialogFragment.this,
+            listener.onFirstLoadPositiveClick(this,
                     getArguments().getString("filename"),
                     checkbox.isChecked());
         })
