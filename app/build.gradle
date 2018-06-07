@@ -23,13 +23,13 @@ android {
         //noinspection OldTargetApi
         targetSdkVersion 25
 
-        versionCode 173
+        versionCode 174
         versionName "2.7.1"
 
         resConfigs "en", "es", "fr", "sk"
         vectorDrawables.useSupportLibrary = true
 
-        buildConfigField "float", "TESTED_API_VERSION", "27.0f"
+        buildConfigField "float", "TESTED_API_VERSION", "28.0f"
     }
 
     compileOptions {
