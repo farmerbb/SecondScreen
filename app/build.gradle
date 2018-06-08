@@ -23,7 +23,7 @@ android {
         //noinspection OldTargetApi
         targetSdkVersion 25
 
-        versionCode 174
+        versionCode 175
         versionName "2.7.1"
 
         resConfigs "en", "es", "fr", "sk"
@@ -74,6 +74,15 @@ android {
             applicationId "com.farmerbb.secondscreen.free"
         }
     }
+
+    sourceSets {
+        main {
+            java { srcDirs('src/main/java', 'src/support/java') }
+            res { srcDirs('src/main/res') }
+            manifest.srcFile 'src/main/AndroidManifest.xml'
+        }
+    }
+
 }
 
 dependencies {

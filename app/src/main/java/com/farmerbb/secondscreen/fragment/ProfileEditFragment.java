@@ -225,12 +225,6 @@ SharedPreferences.OnSharedPreferenceChangeListener {
             } else
                 editor.putString("ui_refresh", prefSaved.getString("ui_refresh", "do-nothing"));
 
-            if(U.isInNonRootMode(getActivity())
-                    && Build.VERSION.SDK_INT > Build.VERSION_CODES.O_MR1
-                    && prefSaved.getString("ui_refresh", "do-nothing").equals("system-ui")) {
-                editor.putString("ui_refresh", "activity-manager");
-            }
-
             editor.putString("profile_name", prefSaved.getString("profile_name", getResources().getString(R.string.action_new)));
             editor.putBoolean("bluetooth_on", prefSaved.getBoolean("bluetooth_on", false));
             editor.putBoolean("wifi_on", prefSaved.getBoolean("wifi_on", false));
@@ -271,8 +265,6 @@ SharedPreferences.OnSharedPreferenceChangeListener {
 
         addPreferencesFromResource(R.xml.additional_settings);
 
-        boolean disableUiRefreshWarning = false;
-
         // Modifications for certain scenarios
         if(!prefMain.getBoolean("expert_mode", false) && prefMain.getBoolean("landscape", false)) {
             ListPreference size = (ListPreference) findPreference("size");
@@ -284,19 +276,11 @@ SharedPreferences.OnSharedPreferenceChangeListener {
             ListPreference uiRefresh = (ListPreference) findPreference("ui_refresh");
             uiRefresh.setEntries(R.array.pref_ui_refresh_list_alt);
             uiRefresh.setEntryValues(R.array.pref_ui_refresh_list_values_alt);
-
-            disableUiRefreshWarning = true;
         }
 
         if(U.isInNonRootMode(getActivity())) {
             ListPreference uiRefresh = (ListPreference) findPreference("ui_refresh");
-            if(Build.VERSION.SDK_INT > Build.VERSION_CODES.O_MR1) {
-                uiRefresh.setEntries(R.array.pref_ui_refresh_list_non_root_alt);
-                uiRefresh.setEntryValues(R.array.pref_ui_refresh_list_values_alt);
-
-                disableUiRefreshWarning = true;
-            } else
-                uiRefresh.setEntries(R.array.pref_ui_refresh_list_non_root);
+            uiRefresh.setEntries(R.array.pref_ui_refresh_list_non_root);
         }
 
         // Set OnClickListeners for certain preferences
@@ -351,7 +335,7 @@ SharedPreferences.OnSharedPreferenceChangeListener {
             disablePreference(prefNew, "show_touches", false);
         }
 
-        uiRefreshWarning = !disableUiRefreshWarning;
+        uiRefreshWarning = true;
     }
 
     @SuppressWarnings("deprecation")
@@ -600,8 +584,7 @@ SharedPreferences.OnSharedPreferenceChangeListener {
                     && "reset".equals(requestedDpi))
                     && "do-nothing".equals(prefNew.getString("ui_refresh", "do-nothing"))
                     && !prefMain.getBoolean("expert_mode", false)
-                    && (Build.VERSION.SDK_INT < Build.VERSION_CODES.N
-                    || U.isInNonRootMode(getActivity()) && Build.VERSION.SDK_INT > Build.VERSION_CODES.O_MR1)) {
+                    && Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
                 listener.showUiRefreshDialog(filename, isEdit, returnToList);
             } else
                 preSave(filename, isEdit, returnToList);

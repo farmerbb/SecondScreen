@@ -53,7 +53,6 @@
     <string name="dialog_turn_off_message">%1$s je momentálne aktívny. Chcete ho vypnúť?</string>
     <string name="dialog_turn_off_title">Vypnúť profil</string>
     <string name="dialog_ui_refresh">Ponechali ste metódu obnovenia UI na \"Neurobiť nič\".  Odporúčame zvoliť metódu obnovenia UI pri zmene rozlíšenia a/alebo hustoty.\n\nAj tak uložiť?</string>
-    <string name="dialog_ui_refresh_non_root">Ponechali ste metódu obnovenia UI na \"Neurobiť nič\".  Odporúčame zvoliť metódu obnovenia UI pri zmene rozlíšenia a/alebo hustoty.\n\nAj tak uložiť?</string>
     <string name="dialog_upgrade_message">SecondScreen nebol testovaný na tejto verzia Androida. Môže padať alebo sa správať nečakane.</string>
     <string name="display_disconnected">Vypnúť profil</string>
     <string name="dont_show_again">Znovu nezobrazovať</string>

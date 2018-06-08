@@ -16,14 +16,12 @@
 package com.farmerbb.secondscreen.fragment.dialog;
 
 import android.app.Activity;
-import android.os.Build;
 import android.support.v7.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.os.Bundle;
 
 import com.farmerbb.secondscreen.R;
-import com.farmerbb.secondscreen.util.U;
 
 // This dialog is shown when the user attempts to save a profile with resolution/density changes,
 // and they have not selected a UI refresh method.  It invites the user to go back and select a
@@ -61,17 +59,13 @@ public final class UiRefreshDialogFragment extends DialogFragment {
 
         // Use the Builder class for convenient dialog construction
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage(
-                U.isInNonRootMode(getActivity())
-                        && Build.VERSION.SDK_INT > Build.VERSION_CODES.O_MR1
-                ? R.string.dialog_ui_refresh_non_root
-                : R.string.dialog_ui_refresh)
-            .setTitle(R.string.pref_title_ui_refresh)
-            .setPositiveButton(R.string.action_save, (dialog, id) ->
-                    listener.onUiRefreshDialogPositiveClick(getArguments().getString("filename"),
-                            getArguments().getBoolean("is-edit"),
-                            getArguments().getBoolean("return-to-list")))
-            .setNegativeButton(R.string.action_cancel, (dialog, id) -> {});
+        builder.setMessage(R.string.dialog_ui_refresh)
+                .setTitle(R.string.pref_title_ui_refresh)
+                .setPositiveButton(R.string.action_save, (dialog, id) ->
+                        listener.onUiRefreshDialogPositiveClick(getArguments().getString("filename"),
+                                getArguments().getBoolean("is-edit"),
+                                getArguments().getBoolean("return-to-list")))
+                .setNegativeButton(R.string.action_cancel, (dialog, id) -> {});
 
         // Create the AlertDialog object and return it
         return builder.create();

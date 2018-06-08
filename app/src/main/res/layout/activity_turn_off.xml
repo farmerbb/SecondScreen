@@ -48,7 +48,8 @@ limitations under the License.
                 android:textSize="@dimen/adb_shell_command"
                 android:textColor="@color/text_color_primary"
                 android:fontFamily="monospace"
-                android:visibility="gone" />
+                android:visibility="gone"
+                android:textIsSelectable="true" />
 
         </LinearLayout>
 

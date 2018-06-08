@@ -19,30 +19,24 @@ import android.annotation.TargetApi;
 import android.app.ActivityManager;
 import android.app.Notification;
 import android.app.PendingIntent;
-import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
-import android.graphics.PixelFormat;
 import android.hardware.display.DisplayManager;
 import android.os.Build;
-import android.os.IBinder;
-import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.Display;
-import android.view.Gravity;
-import android.view.View;
-import android.view.WindowManager;
 
 import com.farmerbb.secondscreen.R;
 import com.farmerbb.secondscreen.activity.MainActivity;
 import com.farmerbb.secondscreen.activity.TaskerQuickActionsActivity;
 import com.farmerbb.secondscreen.activity.TurnOffActivity;
+import com.farmerbb.secondscreen.support.RotationLockService;
 import com.farmerbb.secondscreen.util.U;
 
 // The NotificationService is started whenever a profile is active, whether it be a user-created
@@ -52,11 +46,9 @@ import com.farmerbb.secondscreen.util.U;
 // backlight.  It will also temporarily restore the backlight if a display is connected or
 // disconnected while a profile is active.  Lastly, it is responsible for showing the
 // TurnOffActivity when the DisplayConnectionService is not running.
-public final class NotificationService extends Service {
+public final class NotificationService extends RotationLockService {
 
     NotificationCompat.Builder mBuilder;
-    WindowManager windowManager;
-    View view;
 
     BroadcastReceiver screenOnReceiver = new BroadcastReceiver() {
         @Override
@@ -91,20 +83,6 @@ public final class NotificationService extends Service {
                 Intent serviceIntent = new Intent(context, ScreenOnService.class);
                 context.startService(serviceIntent);
             }
-        }
-    };
-
-    BroadcastReceiver userForegroundReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            drawSystemOverlay();
-        }
-    };
-
-    BroadcastReceiver userBackgroundReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            removeSystemOverlay();
         }
     };
 
@@ -161,29 +139,39 @@ public final class NotificationService extends Service {
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onCreate() {
-        // Load preferences
-        SharedPreferences prefCurrent = U.getPrefCurrent(this);
-        SharedPreferences prefMain = U.getPrefMain(this);
-
         // Register broadcast receivers for screen on and user present
         final IntentFilter filter1 = new IntentFilter();
         final IntentFilter filter2 = new IntentFilter();
-        final IntentFilter filter3 = new IntentFilter();
-        final IntentFilter filter4 = new IntentFilter();
 
         filter1.addAction(Intent.ACTION_SCREEN_ON);
         filter1.addAction(Intent.ACTION_DREAMING_STARTED);
         filter2.addAction(Intent.ACTION_USER_PRESENT);
-        filter3.addAction(Intent.ACTION_USER_FOREGROUND);
-        filter4.addAction(Intent.ACTION_USER_BACKGROUND);
 
         registerReceiver(screenOnReceiver, filter1);
         registerReceiver(userPresentReceiver, filter2);
-        registerReceiver(userForegroundReceiver, filter3);
-        registerReceiver(userBackgroundReceiver, filter4);
 
         DisplayManager manager = (DisplayManager) getSystemService(DISPLAY_SERVICE);
         manager.registerDisplayListener(listener, null);
+
+        super.onCreate();
+    }
+
+    @Override
+    public void onDestroy() {
+        unregisterReceiver(screenOnReceiver);
+        unregisterReceiver(userPresentReceiver);
+
+        DisplayManager manager = (DisplayManager) getSystemService(DISPLAY_SERVICE);
+        manager.unregisterDisplayListener(listener);
+
+        super.onDestroy();
+    }
+
+    @Override
+    protected void startService() {
+        // Load preferences
+        SharedPreferences prefCurrent = U.getPrefCurrent(this);
+        SharedPreferences prefMain = U.getPrefMain(this);
 
         // Intent to launch MainActivity when notification is clicked
         Intent mainActivityIntent = new Intent(this, MainActivity.class);
@@ -212,33 +200,23 @@ public final class NotificationService extends Service {
                     .setVisibility(Notification.VISIBILITY_PUBLIC);
         }
 
-        // Start NotificationService
         startForeground(1, mBuilder.build());
-
-        drawSystemOverlay();
     }
 
     @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        return START_STICKY;
-    }
+    protected int getScreenOrientation() {
+        SharedPreferences prefCurrent = U.getPrefCurrent(this);
+        String rotationLockPref = prefCurrent.getString("rotation_lock_new", "fallback");
 
-    @Override
-    public void onDestroy() {
-        unregisterReceiver(screenOnReceiver);
-        unregisterReceiver(userPresentReceiver);
-        unregisterReceiver(userForegroundReceiver);
-        unregisterReceiver(userBackgroundReceiver);
-
-        DisplayManager manager = (DisplayManager) getSystemService(DISPLAY_SERVICE);
-        manager.unregisterDisplayListener(listener);
-
-        removeSystemOverlay();
-    }
-
-    @Override
-    public IBinder onBind(Intent arg0) {
-        return null;
+        switch(rotationLockPref) {
+            case "landscape":
+            case "fallback":
+                return ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
+            case "auto-rotate":
+                return ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR;
+            default:
+                return -1;
+        }
     }
 
     private void setActionButton(String key, SharedPreferences prefCurrent, int code) {
@@ -322,43 +300,5 @@ public final class NotificationService extends Service {
 
         // Add action to notification builder
         mBuilder.addAction(0, customString, customPendingIntent);
-    }
-
-    private void drawSystemOverlay() {
-        SharedPreferences prefCurrent = U.getPrefCurrent(this);
-        String rotationLockPref = prefCurrent.getString("rotation_lock_new", "fallback");
-
-        // Draw system overlay, if needed
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
-                && Settings.canDrawOverlays(this)
-                && !rotationLockPref.equals("do-nothing")) {
-            windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
-            WindowManager.LayoutParams params = new WindowManager.LayoutParams(
-                    0,
-                    0,
-                    WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY,
-                    WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
-                    PixelFormat.TRANSLUCENT);
-
-            params.gravity = Gravity.TOP | Gravity.START;
-
-            switch(rotationLockPref) {
-                case "landscape":
-                case "fallback":
-                    params.screenOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
-                    break;
-                case "auto-rotate":
-                    params.screenOrientation = ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR;
-                    break;
-            }
-
-            view = new View(this);
-            windowManager.addView(view, params);
-        }
-    }
-
-    private void removeSystemOverlay() {
-        if(windowManager != null && view != null)
-            windowManager.removeView(view);
     }
 }
