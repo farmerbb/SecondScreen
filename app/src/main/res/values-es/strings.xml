@@ -30,7 +30,8 @@
     <string name="action_save_only">Guardar sólo</string>
     <string name="action_ok">Aceptar</string>
     <string name="action_settings">Configuración</string>
-    <string name="action_turn_off">Cerrar %1$s</string>
+    <string name="action_turn_off">Cerrar</string>
+    <string name="action_turn_off_alt">Cerrar %1$s</string>
     <string name="action_uninstall">Uninstall</string>
     <string name="am_restart_warning">Este método no se recomienda con el mirroring, pantalla inalámbrica</string>
     <string name="any_profile">Cualquier perfil</string>

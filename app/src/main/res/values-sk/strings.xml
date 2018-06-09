@@ -30,7 +30,8 @@
     <string name="action_save_only">Iba uložiť</string>
     <string name="action_ok">OK</string>
     <string name="action_settings">Nastavenia</string>
-    <string name="action_turn_off">Vypnúť %1$s</string>
+    <string name="action_turn_off">Vypnúť</string>
+    <string name="action_turn_off_alt">Vypnúť %1$s</string>
     <string name="action_uninstall">Odinštalovať</string>
     <string name="am_restart_warning">Toto nastavenie nie je odporúčané pri bezdrôtovom zrkadlení</string>
     <string name="any_profile">Žiadny profil</string>

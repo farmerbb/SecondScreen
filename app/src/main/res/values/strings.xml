@@ -30,7 +30,8 @@
     <string name="action_save_only">Save only</string>
     <string name="action_ok">OK</string>
     <string name="action_settings">Settings</string>
-    <string name="action_turn_off">Turn Off %1$s</string>
+    <string name="action_turn_off">Turn Off</string>
+    <string name="action_turn_off_alt">Turn Off %1$s</string>
     <string name="action_uninstall">Uninstall</string>
     <string name="am_restart_warning">This method is not recommended when mirroring to wireless displays</string>
     <string name="any_profile">Any profile</string>

@@ -149,7 +149,7 @@ public final class SettingsFragment extends PreferenceFragment implements OnPref
             File file = new File(getActivity().getFilesDir() + File.separator + prefMain.getString("hdmi_load_profile", "show_list"));
             if(file.exists()) {
                 try {
-                    findPreference("hdmi_select_profile").setSummary(getResources().getString(R.string.action_load) + " " + U.getProfileTitle(getActivity(), prefMain.getString("hdmi_load_profile", "show_list")));
+                    findPreference("hdmi_select_profile").setSummary(getResources().getString(R.string.action_load, U.getProfileTitle(getActivity(), prefMain.getString("hdmi_load_profile", "show_list"))));
                 } catch (IOException e) { /* Gracefully fail */ }
             } else
                 findPreference("hdmi_select_profile").setSummary(getResources().getString(R.string.show_list));

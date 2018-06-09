@@ -30,7 +30,8 @@
     <string name="action_save_only">Sauvegarder uniquement</string>
     <string name="action_ok">OK</string>
     <string name="action_settings">Paramètres</string>
-    <string name="action_turn_off">Désactiver %1$s</string>
+    <string name="action_turn_off">Désactiver</string>
+    <string name="action_turn_off_alt">Désactiver %1$s</string>
     <string name="action_uninstall">Uninstall</string>
     <string name="am_restart_warning">This option is not recommended when mirroring to wireless displays</string>
     <string name="any_profile">N\'importe quel profile?</string>
