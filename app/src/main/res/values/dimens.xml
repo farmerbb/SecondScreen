@@ -22,4 +22,5 @@
     <dimen name="toast_y_offset">64dp</dimen>
 
     <dimen name="adb_shell_command">12sp</dimen>
+    <dimen name="logo_margin">20dp</dimen>
 </resources>

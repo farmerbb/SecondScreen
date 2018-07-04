@@ -15,6 +15,7 @@
 -->
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
 
@@ -27,9 +28,10 @@
     <ImageView
         android:layout_width="250dp"
         android:layout_height="250dp"
+        android:layout_marginRight="@dimen/logo_margin"
         android:id="@+id/imageView"
         android:layout_gravity="center_horizontal"
-        android:src="@drawable/secondscreen_logo"/>
+        app:srcCompat="@drawable/secondscreen_logo"/>
 
     <TextView
         android:paddingTop="16dp"
