@@ -23,6 +23,7 @@ import android.os.Bundle;
 
 import com.farmerbb.secondscreen.util.BundleScrubber;
 import com.farmerbb.secondscreen.util.PluginBundleManager;
+import com.farmerbb.secondscreen.util.U;
 
 // Receiver run by Tasker periodically to check the state of currently active profiles, whenever
 // a SecondScreen state is included as a condition in a Tasker profile.
@@ -30,6 +31,8 @@ public final class TaskerConditionReceiver extends BroadcastReceiver {
     @SuppressWarnings("deprecation")
     @Override
     public void onReceive(Context context, Intent intent) {
+        if(U.isTaskerDisabled(context)) return;
+
         BundleScrubber.scrub(intent);
 
         final Bundle bundle = intent.getBundleExtra(com.twofortyfouram.locale.api.Intent.EXTRA_BUNDLE);

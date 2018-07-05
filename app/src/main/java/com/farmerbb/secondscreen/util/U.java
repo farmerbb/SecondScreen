@@ -386,11 +386,15 @@ public final class U {
 
     // XML file containing the main application preferences; normally set to the MainActivity preferences file.
     public static SharedPreferences getPrefMain(Context context) {
+        return getPrefMain(context, Context.MODE_PRIVATE);
+    }
+
+    private static SharedPreferences getPrefMain(Context context, int mode) {
         SharedPreferences prefMain;
         if(context.getPackageName().equals("com.farmerbb.secondscreen"))
-            prefMain = context.getSharedPreferences(MainActivity.class.getName().replace("com.farmerbb.secondscreen.", ""), Context.MODE_PRIVATE);
+            prefMain = context.getSharedPreferences(MainActivity.class.getName().replace("com.farmerbb.secondscreen.", ""), mode);
         else
-            prefMain = context.getSharedPreferences(MainActivity.class.getName(), Context.MODE_PRIVATE);
+            prefMain = context.getSharedPreferences(MainActivity.class.getName(), mode);
 
         return prefMain;
     }
@@ -1389,5 +1393,10 @@ public final class U {
         } catch (Exception e) { /* Gracefully fail */ }
 
         return false;
+    }
+
+    public static boolean isTaskerDisabled(Context context) {
+        SharedPreferences prefMain = getPrefMain(context, Context.MODE_MULTI_PROCESS);
+        return !prefMain.getBoolean("tasker_enabled", true);
     }
 }

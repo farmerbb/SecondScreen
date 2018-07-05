@@ -33,6 +33,8 @@ import com.farmerbb.secondscreen.util.U;
 public final class TaskerActionReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
+        if(U.isTaskerDisabled(context)) return;
+
         BundleScrubber.scrub(intent);
 
         final Bundle bundle = intent.getBundleExtra(com.twofortyfouram.locale.api.Intent.EXTRA_BUNDLE);
