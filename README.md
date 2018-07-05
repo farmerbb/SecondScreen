@@ -1,4 +1,4 @@
-![SecondScreen](http://i.imgur.com/ezGbcL1l.png "SecondScreen")
+![SecondScreen](http://i.imgur.com/EkYuo7A.png "SecondScreen")
 
 SecondScreen is an application designed for power users that frequently connect their Android devices to external displays. It works with your existing screen mirroring solution to give you the best experience possible. With SecondScreen, you can change your device's resolution and density to fit your TV or monitor, enable always-on desktop mode in Chrome, and even turn your device's backlight off, among several other features.
 
