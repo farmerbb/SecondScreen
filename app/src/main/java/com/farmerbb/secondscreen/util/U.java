@@ -955,33 +955,28 @@ public final class U {
     public static boolean isBlacklisted(String requestedRes, String requestedDpi, int currentHeight, int currentWidth, int currentDpi) {
         boolean blacklisted = false;
 
-        if((requestedRes.equals("3840x2160") || requestedRes.equals("2160x3840"))
-                && currentWidth < 2560 && currentHeight < 1440)
-            blacklisted = true;
-        else {
-            int height, width, density;
-            if("reset".equals(requestedRes)) {
-                height = currentHeight;
-                width = currentWidth;
-            } else {
-                Scanner scanner = new Scanner(requestedRes);
-                scanner.useDelimiter("x");
+        int height, width, density;
+        if("reset".equals(requestedRes)) {
+            height = currentHeight;
+            width = currentWidth;
+        } else {
+            Scanner scanner = new Scanner(requestedRes);
+            scanner.useDelimiter("x");
 
-                width = scanner.nextInt();
-                height = scanner.nextInt();
+            width = scanner.nextInt();
+            height = scanner.nextInt();
 
-                scanner.close();
-            }
-
-            if("reset".equals(requestedDpi))
-                density = currentDpi;
-            else
-                density = Integer.parseInt(requestedDpi);
-
-            int smallestWidth = (DisplayMetrics.DENSITY_DEFAULT * Math.min(height, width)) / density;
-            if(smallestWidth < 320 || smallestWidth > 1280)
-                blacklisted = true;
+            scanner.close();
         }
+
+        if("reset".equals(requestedDpi))
+            density = currentDpi;
+        else
+            density = Integer.parseInt(requestedDpi);
+
+        int smallestWidth = (DisplayMetrics.DENSITY_DEFAULT * Math.min(height, width)) / density;
+        if(smallestWidth < 320 || smallestWidth > 1280)
+            blacklisted = true;
 
         return blacklisted;
     }
@@ -1161,7 +1156,7 @@ public final class U {
             String filename = String.valueOf(System.currentTimeMillis());
             String profileName = context.getResources().getString(R.string.blissos_default);
 
-            createProfileFromTemplate(context, profileName, 2, getPrefSaved(context, filename));
+            createProfileFromTemplate(context, profileName, 3, getPrefSaved(context, filename));
 
             // Write the String to a new file with filename of current milliseconds of Unix time
             try {
@@ -1220,7 +1215,7 @@ public final class U {
         SharedPreferences prefMain = getPrefMain(context);
 
         if(name.isEmpty())
-            if(pos == 4)
+            if(pos == 5)
                 editor.putString("profile_name", context.getResources().getString(R.string.action_new));
             else
                 editor.putString("profile_name", context.getResources().getStringArray(R.array.new_profile_templates)[pos]);
@@ -1228,8 +1223,34 @@ public final class U {
             editor.putString("profile_name", name);
 
         switch(pos) {
-            // TV (1080p)
+            // TV (4K)
             case 0:
+                if(prefMain.getBoolean("landscape", false))
+                    editor.putString("size", "3840x2160");
+                else
+                    editor.putString("size", "2160x3840");
+
+                editor.putString("rotation_lock_new", "landscape");
+                editor.putString("density", "480");
+                editor.putString("ui_refresh",
+                        isInNonRootMode(context) && Build.VERSION.SDK_INT == Build.VERSION_CODES.M
+                                ? "activity-manager"
+                                : "system-ui");
+
+                editor.putBoolean("chrome", getChromePackageName(context) != null);
+
+                if(canEnableFreeform(context)
+                        && getTaskbarPackageName(context) != null
+                        && isPlayStoreRelease(context)) {
+                    editor.putBoolean("taskbar", true);
+                    editor.putBoolean("freeform", true);
+                    editor.putBoolean("clear_home", true);
+                }
+
+                break;
+
+            // TV (1080p)
+            case 1:
                 if(prefMain.getBoolean("landscape", false))
                     editor.putString("size", "1920x1080");
                 else
@@ -1255,7 +1276,7 @@ public final class U {
                 break;
 
             // TV (720p)
-            case 1:
+            case 2:
                 if(prefMain.getBoolean("landscape", false))
                     editor.putString("size", "1280x720");
                 else
@@ -1281,7 +1302,7 @@ public final class U {
                 break;
 
             // Monitor (1080p)
-            case 2:
+            case 3:
                 if(prefMain.getBoolean("landscape", false))
                     editor.putString("size", "1920x1080");
                 else
@@ -1307,7 +1328,7 @@ public final class U {
                 break;
 
             // AppRadio
-            case 3:
+            case 4:
                 if(context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH))
                     editor.putBoolean("bluetooth_on", true);
 
@@ -1330,7 +1351,7 @@ public final class U {
                 break;
 
             // Other / None
-            case 4:
+            case 5:
                 if(prefMain.getBoolean("expert_mode", false)) {
                     editor.putString("size", Integer.toString(prefMain.getInt("width", 0))
                             + "x"
