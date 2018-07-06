@@ -1223,15 +1223,15 @@ public final class U {
             editor.putString("profile_name", name);
 
         switch(pos) {
-            // TV (4K)
+            // TV (1080p)
             case 0:
                 if(prefMain.getBoolean("landscape", false))
-                    editor.putString("size", "3840x2160");
+                    editor.putString("size", "1920x1080");
                 else
-                    editor.putString("size", "2160x3840");
+                    editor.putString("size", "1080x1920");
 
                 editor.putString("rotation_lock_new", "landscape");
-                editor.putString("density", "480");
+                editor.putString("density", "240");
                 editor.putString("ui_refresh",
                         isInNonRootMode(context) && Build.VERSION.SDK_INT == Build.VERSION_CODES.M
                                 ? "activity-manager"
@@ -1249,15 +1249,15 @@ public final class U {
 
                 break;
 
-            // TV (1080p)
+            // TV (4K)
             case 1:
                 if(prefMain.getBoolean("landscape", false))
-                    editor.putString("size", "1920x1080");
+                    editor.putString("size", "3840x2160");
                 else
-                    editor.putString("size", "1080x1920");
+                    editor.putString("size", "2160x3840");
 
                 editor.putString("rotation_lock_new", "landscape");
-                editor.putString("density", "240");
+                editor.putString("density", "480");
                 editor.putString("ui_refresh",
                         isInNonRootMode(context) && Build.VERSION.SDK_INT == Build.VERSION_CODES.M
                                 ? "activity-manager"

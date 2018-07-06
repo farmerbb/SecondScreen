@@ -16,8 +16,8 @@
 <resources>
 
     <string-array name="new_profile_templates">
-        <item>TV (4K)</item>
         <item>TV (1080p)</item>
+        <item>TV (4K)</item>
         <item>TV (720p)</item>
         <item>Moniteur (1080p)</item>
         <item>AppRadio</item>
