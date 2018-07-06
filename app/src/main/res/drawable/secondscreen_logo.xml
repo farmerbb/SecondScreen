@@ -10,7 +10,7 @@
         android:strokeWidth="1.5"/>
     <path
         android:pathData="M135.54,10.63h-96.53v64.35h96.53z"
-        android:strokeColor="#ffffff"
+        android:strokeColor="#e5e5e5"
         android:fillColor="#879e09"
         android:strokeWidth="0.4"/>
     <path
@@ -23,7 +23,7 @@
         android:strokeWidth="1.5"/>
     <path
         android:pathData="M58.58,36.93h-47.83v35.87h47.83z"
-        android:strokeColor="#ffffff"
+        android:strokeColor="#d5d5d5"
         android:fillColor="#879e09"
         android:strokeWidth="0.4"/>
     <path
