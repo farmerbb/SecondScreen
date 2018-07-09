@@ -30,6 +30,7 @@ android {
         vectorDrawables.useSupportLibrary = true
 
         buildConfigField "float", "TESTED_API_VERSION", "28.0f"
+        buildConfigField "String", "SUPPORT_APPLICATION_ID", "\"com.farmerbb.secondscreen.support\""
     }
 
     compileOptions {

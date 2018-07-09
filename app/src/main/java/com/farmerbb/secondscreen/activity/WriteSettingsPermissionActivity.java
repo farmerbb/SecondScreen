@@ -26,6 +26,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.farmerbb.secondscreen.R;
+import com.farmerbb.secondscreen.support.NonRootUtils;
 import com.farmerbb.secondscreen.util.U;
 
 // This activity is responsible for informing the user of, and having them grant, permission for
@@ -69,7 +70,7 @@ public final class WriteSettingsPermissionActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        if(U.hasWriteSettingsPermission(this)) {
+        if(NonRootUtils.hasWriteSettingsPermission(this)) {
             switch(getIntent().getStringExtra("action")) {
                 case "load-profile":
                     U.loadProfile(this, getIntent().getStringExtra("filename"));

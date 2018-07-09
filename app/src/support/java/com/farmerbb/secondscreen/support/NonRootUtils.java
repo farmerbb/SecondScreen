@@ -15,8 +15,10 @@
 
 package com.farmerbb.secondscreen.support;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.provider.Settings;
 import android.view.Display;
@@ -35,36 +37,52 @@ public final class NonRootUtils {
                 case "settings":
                     switch(commandArgs[2]) {
                         case "global":
-                            Settings.Global.putString(context.getContentResolver(), commandArgs[3], commandArgs[4]);
+                            if(hasWriteSecureSettingsPermission(context))
+                                Settings.Global.putString(context.getContentResolver(), commandArgs[3], commandArgs[4]);
                             break;
                         case "secure":
-                            Settings.Secure.putString(context.getContentResolver(), commandArgs[3], commandArgs[4]);
+                            if(hasWriteSecureSettingsPermission(context))
+                                Settings.Secure.putString(context.getContentResolver(), commandArgs[3], commandArgs[4]);
                             break;
                         case "system":
-                            Settings.System.putString(context.getContentResolver(), commandArgs[3], commandArgs[4]);
+                            if(hasWriteSettingsPermission(context))
+                                Settings.System.putString(context.getContentResolver(), commandArgs[3], commandArgs[4]);
                             break;
                     }
+
                     break;
                 case "wm":
-                    try {
-                        switch(commandArgs[1]) {
-                            case "size":
-                                wmSize(commandArgs[2]);
-                                break;
-                            case "density":
-                                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1)
-                                    wmDensity(commandArgs[2]);
-                                else
-                                    wmDensityOld(commandArgs[2]);
-                                break;
-                            case "overscan":
-                                wmOverscan(commandArgs[2]);
-                                break;
-                        }
-                    } catch (Exception e) { /* Gracefully fail */ }
+                    if(hasWriteSecureSettingsPermission(context)) {
+                        try {
+                            switch(commandArgs[1]) {
+                                case "size":
+                                    wmSize(commandArgs[2]);
+                                    break;
+                                case "density":
+                                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1)
+                                        wmDensity(commandArgs[2]);
+                                    else
+                                        wmDensityOld(commandArgs[2]);
+                                    break;
+                                case "overscan":
+                                    wmOverscan(commandArgs[2]);
+                                    break;
+                            }
+                        } catch (Exception e) { /* Gracefully fail */ }
+                    }
+
                     break;
             }
         }
+    }
+
+    public static boolean hasWriteSettingsPermission(Context context) {
+        return Build.VERSION.SDK_INT < Build.VERSION_CODES.M || Settings.System.canWrite(context);
+    }
+
+    public static boolean hasWriteSecureSettingsPermission(Context context) {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
+                && context.checkSelfPermission(Manifest.permission.WRITE_SECURE_SETTINGS) == PackageManager.PERMISSION_GRANTED;
     }
 
     @SuppressLint("PrivateApi")

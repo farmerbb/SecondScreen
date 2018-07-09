@@ -15,7 +15,6 @@
 
 package com.farmerbb.secondscreen.util;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -566,7 +565,7 @@ public final class U {
     // If debug mode is enabled, the app acts as if elevated permissions are always available.
     public static boolean hasElevatedPermissions(Context context) {
         return Shell.SU.available()
-                || hasWriteSecureSettingsPermission(context)
+                || NonRootUtils.hasWriteSecureSettingsPermission(context)
                 || getPrefMain(context).getBoolean("debug_mode", false);
     }
 
@@ -576,41 +575,31 @@ public final class U {
                 && !(Shell.SU.available() || getPrefMain(context).getBoolean("debug_mode", false));
     }
 
-    // Checks to see if the WRITE_SETTINGS permission is granted on Marshmallow devices.
-    @TargetApi(Build.VERSION_CODES.M)
-    public static boolean hasWriteSettingsPermission(Context context) {
-        return Build.VERSION.SDK_INT < Build.VERSION_CODES.M || Settings.System.canWrite(context);
-    }
-
-    // Checks to see if the WRITE_SECURE_SETTINGS permission is granted on Marshmallow devices.
-    private static boolean hasWriteSecureSettingsPermission(Context context) {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
-                && context.checkSelfPermission(Manifest.permission.WRITE_SECURE_SETTINGS) == PackageManager.PERMISSION_GRANTED;
-    }
-
     // Executes multiple commands, either by calling superuser
     // or by writing to the settings database directly.
     public static void runCommands(Context context, String[] commands, boolean rebootRequired) {
-        if(getPrefMain(context).getBoolean("debug_mode", false)
-                || Shell.SU.available()) {
+        if(Shell.SU.available() || getPrefMain(context).getBoolean("debug_mode", false)) {
             for(String command : commands) {
-                if(!command.equals("")) {
+                if(!command.isEmpty()) {
                     runSuCommands(context, commands);
                     break;
                 }
             }
-        } else if(hasWriteSecureSettingsPermission(context)) {
-            NonRootUtils.runCommands(context, commands);
 
-            if(rebootRequired) {
-                SharedPreferences prefCurrent = getPrefCurrent(context);
-                if(!prefCurrent.getBoolean("not_active", true))
-                    prefCurrent.edit().putBoolean("reboot_required", true).apply();
+            return;
+        }
 
-                Intent intent = new Intent(context, RebootRequiredActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
-            }
+        NonRootUtils.runCommands(context, commands);
+        CommandDispatcher.getInstance().dispatch(context);
+
+        if(rebootRequired) {
+            SharedPreferences prefCurrent = getPrefCurrent(context);
+            if(!prefCurrent.getBoolean("not_active", true))
+                prefCurrent.edit().putBoolean("reboot_required", true).apply();
+
+            Intent intent = new Intent(context, RebootRequiredActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
         }
     }
 
@@ -651,7 +640,16 @@ public final class U {
 
     // Loads a profile with the given filename
     public static void loadProfile(Context context, String filename) {
-        if(hasWriteSettingsPermission(context)) {
+        // Initialize the support library
+        if(hasSupportLibrary(context)) {
+            try {
+                Intent intent = new Intent();
+                intent.setComponent(ComponentName.unflattenFromString(BuildConfig.SUPPORT_APPLICATION_ID + "/.InitActivity"));
+                context.startActivity(intent);
+            } catch (ActivityNotFoundException e) { /* Gracefully fail */ }
+        }
+
+        if(NonRootUtils.hasWriteSettingsPermission(context)) {
             // Set filename in current.xml
             SharedPreferences prefCurrent = getPrefCurrent(context);
             SharedPreferences.Editor editor = prefCurrent.edit();
@@ -673,7 +671,7 @@ public final class U {
 
     // Turns off the currently active profile
     public static void turnOffProfile(Context context) {
-        if(hasWriteSettingsPermission(context)) {
+        if(NonRootUtils.hasWriteSettingsPermission(context)) {
             // Set filename in current.xml
             SharedPreferences prefCurrent = getPrefCurrent(context);
             SharedPreferences.Editor editor = prefCurrent.edit();
@@ -1431,7 +1429,6 @@ public final class U {
 
         switch(rotationLockPref) {
             case "landscape":
-            case "fallback":
                 return ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
             case "auto-rotate":
                 return ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR;
@@ -1439,6 +1436,17 @@ public final class U {
                 return ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
             default:
                 return -1;
+        }
+    }
+
+    public static boolean hasSupportLibrary(Context context) {
+        PackageManager pm = context.getPackageManager();
+        try {
+            pm.getPackageInfo(BuildConfig.SUPPORT_APPLICATION_ID, 0);
+            return pm.checkSignatures(BuildConfig.SUPPORT_APPLICATION_ID, BuildConfig.APPLICATION_ID)
+                    == PackageManager.SIGNATURE_MATCH;
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
         }
     }
 }

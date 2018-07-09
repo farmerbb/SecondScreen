@@ -47,6 +47,7 @@
 
     <uses-permission-sdk-23 android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission-sdk-23 android:name="android.permission.WRITE_SECURE_SETTINGS"/>
+    <uses-permission-sdk-23 android:name="com.farmerbb.secondscreen.support.USE_SUPPORT_LIBRARY"/>
 
     <application
         android:allowBackup="true"

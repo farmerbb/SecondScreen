@@ -332,7 +332,9 @@ SharedPreferences.OnSharedPreferenceChangeListener {
             disablePreference(prefNew, "hdmi_rotation", false);
             disablePreference(prefNew, "chrome", false);
             disablePreference(prefNew, "vibration_off", false);
-            disablePreference(prefNew, "show_touches", false);
+
+            if(!U.hasSupportLibrary(getActivity()))
+                disablePreference(prefNew, "show_touches", false);
         }
 
         uiRefreshWarning = true;

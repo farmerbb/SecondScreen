@@ -31,6 +31,7 @@ import android.widget.Toast;
 import com.farmerbb.secondscreen.R;
 import com.farmerbb.secondscreen.activity.UnableToStartActivity;
 import com.farmerbb.secondscreen.activity.TaskerConditionActivity;
+import com.farmerbb.secondscreen.util.CommandDispatcher;
 import com.farmerbb.secondscreen.util.ShowToast;
 import com.farmerbb.secondscreen.util.U;
 
@@ -297,6 +298,10 @@ public final class TurnOffService extends IntentService {
         // Show touches
         if(prefCurrent.getBoolean("show_touches", true))
             su[showTouchesCommand] = U.showTouchesCommand(prefCurrent.getBoolean("show_touches_system", false));
+
+        if(CommandDispatcher.getInstance().addCommand(this, su[showTouchesCommand])
+                || U.isInNonRootMode(this))
+            su[showTouchesCommand] = "";
 
         // Navigation bar
         if(getPackageManager().hasSystemFeature("com.cyanogenmod.android")

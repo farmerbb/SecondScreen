@@ -24,7 +24,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.content.pm.ActivityInfo;
 import android.hardware.display.DisplayManager;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
@@ -167,6 +166,7 @@ public final class NotificationService extends RotationLockService {
         super.onDestroy();
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     protected void startService() {
         // Load preferences
@@ -205,18 +205,7 @@ public final class NotificationService extends RotationLockService {
 
     @Override
     protected int getScreenOrientation() {
-        SharedPreferences prefCurrent = U.getPrefCurrent(this);
-        String rotationLockPref = prefCurrent.getString("rotation_lock_new", "fallback");
-
-        switch(rotationLockPref) {
-            case "landscape":
-            case "fallback":
-                return ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
-            case "auto-rotate":
-                return ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR;
-            default:
-                return -1;
-        }
+        return U.hasSupportLibrary(this) ? -1 : U.getScreenOrientation(this);
     }
 
     private void setActionButton(String key, SharedPreferences prefCurrent, int code) {
