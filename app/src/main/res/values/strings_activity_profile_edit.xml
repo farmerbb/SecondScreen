@@ -78,7 +78,8 @@
     <string-array name="pref_rotation_list">
         <item>Use system setting</item>
         <item>Force auto-rotate (dock mode)</item>
-        <item>Lock rotation to landscape</item>
+        <item>Lock orientation to landscape</item>
+        <item>Lock orientation to portrait</item>
     </string-array>
     <string-array name="pref_quick_actions">
         <item>On</item>

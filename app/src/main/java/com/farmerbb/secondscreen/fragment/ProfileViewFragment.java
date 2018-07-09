@@ -183,6 +183,9 @@ public final class ProfileViewFragment extends Fragment {
             case "auto-rotate":
                 generateProfileSettings(true, R.string.profile_view_rotation_autorotate);
                 break;
+            case "portrait":
+                generateProfileSettings(true, R.string.profile_view_rotation_portrait);
+                break;
         }
 
         switch(prefSaved.getString("screen_timeout", "do-nothing")) {

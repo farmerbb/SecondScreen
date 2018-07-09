@@ -95,6 +95,7 @@
     <string name="profile_view_screen_timeout_always_on_charging">Vypnutie (zapnutá pri nabíjaní)</string>
     <string name="profile_view_rotation_autorotate">Otáčanie (autom. otáčanie)</string>
     <string name="profile_view_rotation_landscape">Otáčanie (na šírku)</string>
+    <string name="profile_view_rotation_portrait">Orientation (portrait)</string>
     <string name="profile_view_ui_refresh_systemui">Obnovenie užívateľského prostredia (System UI)</string>
     <string name="profile_view_ui_refresh_systemui_alt">@string/profile_view_ui_refresh_systemui</string>
     <string name="profile_view_ui_refresh_soft_reboot">Obnovenie užívateľského prostredia (soft. reštart)</string>

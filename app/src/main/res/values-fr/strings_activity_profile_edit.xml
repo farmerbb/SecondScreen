@@ -79,6 +79,7 @@
         <item>Utiliser les paramètres système</item>
         <item>Forcer la rotation automatique</item>
         <item>Vérouiller la rotation en mode paysage</item>
+        <item>Lock orientation to portrait</item>
     </string-array>
     <string-array name="pref_quick_actions">
         <item>Activé</item>

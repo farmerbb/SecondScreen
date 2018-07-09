@@ -431,6 +431,16 @@ public final class ProfileLoadService extends IntentService {
 
                 Settings.System.putInt(getContentResolver(), Settings.System.ACCELEROMETER_ROTATION, 0);
                 break;
+            case "portrait":
+                dockMode = Intent.EXTRA_DOCK_STATE_UNDOCKED;
+
+                if(prefMain.getBoolean("landscape", false))
+                    Settings.System.putInt(getContentResolver(), Settings.System.USER_ROTATION, Surface.ROTATION_90);
+                else
+                    Settings.System.putInt(getContentResolver(), Settings.System.USER_ROTATION, Surface.ROTATION_0);
+
+                Settings.System.putInt(getContentResolver(), Settings.System.ACCELEROMETER_ROTATION, 0);
+                break;
             case "do-nothing":
                 dockMode = prefCurrent.getInt("dock_mode", Intent.EXTRA_DOCK_STATE_UNDOCKED);
                 Settings.System.putInt(getContentResolver(), Settings.System.USER_ROTATION, prefCurrent.getInt("user_rotation", Surface.ROTATION_0));

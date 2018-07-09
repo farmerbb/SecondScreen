@@ -79,6 +79,7 @@
         <item>Použiť nastavenia systému</item>
         <item>Vynútiť automatické otáčanie</item>
         <item>Zamknúť v režime na šírku</item>
+        <item>Lock orientation to portrait</item>
     </string-array>
     <string-array name="pref_quick_actions">
         <item>ZAP</item>

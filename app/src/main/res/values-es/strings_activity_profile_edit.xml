@@ -79,6 +79,7 @@
         <item>Usar los ajustes del sistema</item>
         <item>Fuerza auto-rotación</item>
         <item>Bloqueé la orientación horizontal</item>
+        <item>Lock orientation to portrait</item>
     </string-array>
     <string-array name="pref_quick_actions">
         <item>On</item>

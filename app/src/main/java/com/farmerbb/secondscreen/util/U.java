@@ -28,6 +28,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -926,6 +927,9 @@ public final class U {
                     case "landscape":
                         blurb = a.getResources().getStringArray(R.array.pref_rotation_list)[2];
                         break;
+                    case "portrait":
+                        blurb = a.getResources().getStringArray(R.array.pref_rotation_list)[3];
+                        break;
                 }
                 break;
             case "temp_vibration_off":
@@ -1419,5 +1423,22 @@ public final class U {
     public static boolean isTaskerDisabled(Context context) {
         SharedPreferences prefMain = getPrefMain(context, Context.MODE_MULTI_PROCESS);
         return !prefMain.getBoolean("tasker_enabled", true);
+    }
+
+    public static int getScreenOrientation(Context context) {
+        SharedPreferences prefCurrent = getPrefCurrent(context);
+        String rotationLockPref = prefCurrent.getString("rotation_lock_new", "fallback");
+
+        switch(rotationLockPref) {
+            case "landscape":
+            case "fallback":
+                return ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
+            case "auto-rotate":
+                return ActivityInfo.SCREEN_ORIENTATION_FULL_SENSOR;
+            case "portrait":
+                return ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+            default:
+                return -1;
+        }
     }
 }

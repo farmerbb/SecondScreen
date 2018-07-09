@@ -96,6 +96,7 @@
         <item>do-nothing</item>
         <item>auto-rotate</item>
         <item>landscape</item>
+        <item>portrait</item>
     </string-array>
     <string-array name="pref_quick_actions_values">
         <item>On</item>

@@ -93,8 +93,9 @@
     <string name="profile_view_navbar">Force navbar</string>
     <string name="profile_view_screen_timeout_always_on">Timeout (always on)</string>
     <string name="profile_view_screen_timeout_always_on_charging">Timeout (charging)</string>
-    <string name="profile_view_rotation_autorotate">Rotation (auto-rotate)</string>
-    <string name="profile_view_rotation_landscape">Rotation (landscape)</string>
+    <string name="profile_view_rotation_autorotate">Orientation (auto-rotate)</string>
+    <string name="profile_view_rotation_landscape">Orientation (landscape)</string>
+    <string name="profile_view_rotation_portrait">Orientation (portrait)</string>
     <string name="profile_view_ui_refresh_systemui">UI refresh (System UI)</string>
     <string name="profile_view_ui_refresh_systemui_alt">UI refresh (kill apps)</string>
     <string name="profile_view_ui_refresh_soft_reboot">UI refresh (soft reboot)</string>
@@ -130,7 +131,7 @@
     <string name="pref_description_daydreams_on">Show the screensaver when device is locked (wired connections only)</string>
     <string name="pref_title_show_touches">Show touches</string>
     <string name="pref_description_show_touches">Show visual feedback for touchscreen events</string>
-    <string name="pref_title_rotation">Screen rotation</string>
+    <string name="pref_title_rotation">Screen orientation</string>
     <string name="pref_title_backlight_off">Backlight off</string>
     <string name="pref_description_backlight_off">Dim the device\'s backlight as much as possible while a display is connected</string>
     <string name="pref_title_vibration_off">Vibration off</string>
@@ -143,7 +144,7 @@
     <string name="pref_title_screen_timeout">Screen timeout</string>
     <string name="pref_title_freeform">Enable freeform mode</string>
     <string name="pref_description_freeform">Open apps in floating, resizeable windows</string>
-    <string name="pref_title_hdmi_rotation">HDMI output rotation</string>
+    <string name="pref_title_hdmi_rotation">HDMI output orientation</string>
     <string name="pref_overscan_values">Overscan values</string>
     <string name="top">Top</string>
     <string name="bottom">Bottom</string>
@@ -168,9 +169,9 @@
     <string name="pref_title_immersive_alt">Status/Navigation Bars</string>
     <string name="immersive">Immersive</string>
     <string name="quick_immersive">Immersive Mode</string>
-    <string name="quick_rotation">Screen Rotation</string>
+    <string name="quick_rotation">Screen Orientation</string>
     <string name="quick_freeform">Freeform Mode</string>
-    <string name="quick_hdmi_rotation">HDMI Output Rotation</string>
+    <string name="quick_hdmi_rotation">HDMI Output Orientation</string>
     <string name="debug_mode_enabling">You are now %1$d steps away from enabling debug mode.</string>
     <string name="debug_mode_enabled">Debug mode enabled</string>
     <string name="debug_mode_disabled">Debug mode disabled</string>
