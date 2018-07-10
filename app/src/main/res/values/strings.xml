@@ -40,7 +40,7 @@
     <string name="available_actions">Available Actions</string>
     <string name="blacklisted">To protect your device, SecondScreen will not allow you to use this resolution and/or density value.</string>
     <string name="both_versions_installed">Multiple versions of SecondScreen are installed on your device. Only one version may be installed at a time.\n\nPress Uninstall to remove the duplicate version, then reload the app.</string>
-    <string name="check_for_update">Check For Update</string>
+    <string name="check_for_update">Check For Updates</string>
     <string name="checking_for_superuser">Checking for superuser access&#8230; please wait.</string>
     <string name="decline">Decline</string>
     <string name="deleting_current_profile">Cannot delete the currently active profile</string>

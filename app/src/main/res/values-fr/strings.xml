@@ -40,7 +40,7 @@
     <string name="available_actions">Actions Disponibles</string>
     <string name="blacklisted">Pour protéger votre appareil, SecondScreen ne vous autorisera pas à sauvegarder ce profil avec la résolution et la densité choisies</string>
     <string name="both_versions_installed">Please uninstall this version of SecondScreen and use the previously installed version instead.</string>
-    <string name="check_for_update">Check For Update</string>
+    <string name="check_for_update">Check For Updates</string>
     <string name="checking_for_superuser">Checking for superuser access&#8230; please wait.</string>
     <string name="decline">Je refuse</string>
     <string name="deleting_current_profile">Impossible de supprimer le profile en cours</string>
