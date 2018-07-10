@@ -23,8 +23,8 @@ android {
         //noinspection OldTargetApi
         targetSdkVersion 25
 
-        versionCode 176
-        versionName "2.7.1"
+        versionCode 177
+        versionName "2.8"
 
         resConfigs "en", "es", "fr", "sk"
         vectorDrawables.useSupportLibrary = true
