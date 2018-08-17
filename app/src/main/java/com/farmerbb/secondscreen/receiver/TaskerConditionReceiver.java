@@ -31,7 +31,7 @@ public final class TaskerConditionReceiver extends BroadcastReceiver {
     @SuppressWarnings("deprecation")
     @Override
     public void onReceive(Context context, Intent intent) {
-        if(U.isTaskerDisabled(context)) return;
+        if(U.isExternalAccessDisabled(context)) return;
 
         BundleScrubber.scrub(intent);
 

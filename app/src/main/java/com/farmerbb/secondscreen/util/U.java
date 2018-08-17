@@ -386,15 +386,11 @@ public final class U {
 
     // XML file containing the main application preferences; normally set to the MainActivity preferences file.
     public static SharedPreferences getPrefMain(Context context) {
-        return getPrefMain(context, Context.MODE_PRIVATE);
-    }
-
-    private static SharedPreferences getPrefMain(Context context, int mode) {
         SharedPreferences prefMain;
         if(context.getPackageName().equals("com.farmerbb.secondscreen"))
-            prefMain = context.getSharedPreferences(MainActivity.class.getName().replace("com.farmerbb.secondscreen.", ""), mode);
+            prefMain = context.getSharedPreferences(MainActivity.class.getName().replace("com.farmerbb.secondscreen.", ""), Context.MODE_PRIVATE);
         else
-            prefMain = context.getSharedPreferences(MainActivity.class.getName(), mode);
+            prefMain = context.getSharedPreferences(MainActivity.class.getName(), Context.MODE_PRIVATE);
 
         return prefMain;
     }
@@ -1373,8 +1369,9 @@ public final class U {
 
     public static boolean canEnableFreeform(Context context) {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
-                && (getCurrentApiVersion() <= 27.0f
-                || context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_FREEFORM_WINDOW_MANAGEMENT));
+                && (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_FREEFORM_WINDOW_MANAGEMENT)
+                || Build.VERSION.SDK_INT < Build.VERSION_CODES.P
+                || (getTaskbarPackageName(context) != null && isPlayStoreRelease(context)));
     }
 
     @TargetApi(Build.VERSION_CODES.N)
@@ -1384,7 +1381,7 @@ public final class U {
                 || Settings.Global.getInt(context.getContentResolver(), "enable_freeform_support", 0) != 0
                 || (Build.VERSION.SDK_INT <= Build.VERSION_CODES.N_MR1
                 && Settings.Global.getInt(context.getContentResolver(), "force_resizable_activities", 0) != 0
-                && getTaskbarPackageName(context) != null));
+                && (getTaskbarPackageName(context) != null && isPlayStoreRelease(context))));
     }
 
     public static boolean isUntestedAndroidVersion(Context context) {
@@ -1418,8 +1415,8 @@ public final class U {
         return false;
     }
 
-    public static boolean isTaskerDisabled(Context context) {
-        SharedPreferences prefMain = getPrefMain(context, Context.MODE_MULTI_PROCESS);
+    public static boolean isExternalAccessDisabled(Context context) {
+        SharedPreferences prefMain = getPrefMain(context);
         return !prefMain.getBoolean("tasker_enabled", true);
     }
 

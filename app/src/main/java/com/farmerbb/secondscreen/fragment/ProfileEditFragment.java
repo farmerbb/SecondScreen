@@ -358,10 +358,17 @@ SharedPreferences.OnSharedPreferenceChangeListener {
             findPreference("overscan_settings").setSummary(getResources().getString(R.string.disabled));
 
         String taskbarPackageName = U.getTaskbarPackageName(getActivity());
-        if(taskbarPackageName == null || !U.isPlayStoreRelease(getActivity()))
+        if(taskbarPackageName == null || !U.isPlayStoreRelease(getActivity())) {
             disablePreference(prefNew, "taskbar", true);
-        else
+
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P)
+                disablePreference(prefNew, "freeform", true);
+        } else {
             findPreference("taskbar").setEnabled(true);
+
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P)
+                findPreference("freeform").setEnabled(true);
+        }
 
         if(taskbarSettingsPrefEnabled) {
             findPreference("taskbar_settings").setTitle(
