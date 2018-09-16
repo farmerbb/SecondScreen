@@ -1230,21 +1230,13 @@ public final class U {
 
                 editor.putString("rotation_lock_new", "landscape");
                 editor.putString("density", "240");
-                editor.putString("ui_refresh",
-                        isInNonRootMode(context) && Build.VERSION.SDK_INT == Build.VERSION_CODES.M
-                                ? "activity-manager"
-                                : "system-ui");
 
-                editor.putBoolean("chrome", getChromePackageName(context) != null);
-
-                if(canEnableFreeform(context)
-                        && getTaskbarPackageName(context) != null
-                        && isPlayStoreRelease(context)) {
-                    editor.putBoolean("taskbar", true);
-                    editor.putBoolean("freeform", true);
-                    editor.putBoolean("clear_home", true);
+                if(Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+                    editor.putString("ui_refresh",
+                            isInNonRootMode(context) ? "activity-manager" : "system-ui");
                 }
 
+                editor.putBoolean("chrome", getChromePackageName(context) != null);
                 break;
 
             // TV (4K)
@@ -1256,21 +1248,13 @@ public final class U {
 
                 editor.putString("rotation_lock_new", "landscape");
                 editor.putString("density", "480");
-                editor.putString("ui_refresh",
-                        isInNonRootMode(context) && Build.VERSION.SDK_INT == Build.VERSION_CODES.M
-                                ? "activity-manager"
-                                : "system-ui");
 
-                editor.putBoolean("chrome", getChromePackageName(context) != null);
-
-                if(canEnableFreeform(context)
-                        && getTaskbarPackageName(context) != null
-                        && isPlayStoreRelease(context)) {
-                    editor.putBoolean("taskbar", true);
-                    editor.putBoolean("freeform", true);
-                    editor.putBoolean("clear_home", true);
+                if(Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+                    editor.putString("ui_refresh",
+                            isInNonRootMode(context) ? "activity-manager" : "system-ui");
                 }
 
+                editor.putBoolean("chrome", getChromePackageName(context) != null);
                 break;
 
             // TV (720p)
@@ -1282,21 +1266,13 @@ public final class U {
 
                 editor.putString("rotation_lock_new", "landscape");
                 editor.putString("density", "160");
-                editor.putString("ui_refresh",
-                        isInNonRootMode(context) && Build.VERSION.SDK_INT == Build.VERSION_CODES.M
-                                ? "activity-manager"
-                                : "system-ui");
 
-                editor.putBoolean("chrome", getChromePackageName(context) != null);
-
-                if(canEnableFreeform(context)
-                        && getTaskbarPackageName(context) != null
-                        && isPlayStoreRelease(context)) {
-                    editor.putBoolean("taskbar", true);
-                    editor.putBoolean("freeform", true);
-                    editor.putBoolean("clear_home", true);
+                if(Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+                    editor.putString("ui_refresh",
+                            isInNonRootMode(context) ? "activity-manager" : "system-ui");
                 }
 
+                editor.putBoolean("chrome", getChromePackageName(context) != null);
                 break;
 
             // Monitor (1080p)
@@ -1308,10 +1284,11 @@ public final class U {
 
                 editor.putString("rotation_lock_new", "landscape");
                 editor.putString("density", "160");
-                editor.putString("ui_refresh",
-                        isInNonRootMode(context) && Build.VERSION.SDK_INT == Build.VERSION_CODES.M
-                                ? "activity-manager"
-                                : "system-ui");
+
+                if(Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+                    editor.putString("ui_refresh",
+                            isInNonRootMode(context) ? "activity-manager" : "system-ui");
+                }
 
                 editor.putBoolean("chrome", getChromePackageName(context) != null);
 
