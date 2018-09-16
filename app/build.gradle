@@ -95,7 +95,7 @@ android {
 dependencies {
     implementation "com.android.support:appcompat-v7:${SUPPORT_LIBRARY_VERSION}"
     implementation "com.android.support:design:${SUPPORT_LIBRARY_VERSION}"
-    implementation 'org.apache.commons:commons-lang3:3.7'
+    implementation 'org.apache.commons:commons-lang3:3.8'
     implementation 'eu.chainfire:libsuperuser:1.0.0.201704021214'
     implementation 'moe.banana:toast-compat:1.0.5'
     implementation group:'com.twofortyfouram', name:'android-plugin-api-for-locale', version:'[1.0.2,2.0['
