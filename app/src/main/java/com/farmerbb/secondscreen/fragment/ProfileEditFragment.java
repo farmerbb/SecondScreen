@@ -574,6 +574,9 @@ SharedPreferences.OnSharedPreferenceChangeListener {
     }
 
     public void onBackPressed(String filename, boolean isEdit, boolean returnToList) {
+        // Unregister listener
+        PreferenceManager.getDefaultSharedPreferences(getActivity()).unregisterOnSharedPreferenceChangeListener(this);
+
         if(prefChange) {
             SharedPreferences prefNew = U.getPrefNew(getActivity());
             SharedPreferences prefMain = U.getPrefMain(getActivity());
