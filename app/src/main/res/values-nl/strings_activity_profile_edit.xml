@@ -21,10 +21,10 @@
         <item>TV (720p)</item>
         <item>Monitor (1080p)</item>
         <item>AppRadio</item>
-        <item>Other / None</item>
+        <item>Overig / Geen</item>
     </string-array>
     <string-array name="pref_resolution_list">
-        <item>Device native</item>
+        <item>Systeemstandaard</item>
         <item>3840x2160 (4K)</item>
         <item>1920x1080 (1080p)</item>
         <item>1280x720 (720p)</item>
@@ -44,7 +44,7 @@
         <item>800x480</item>
     </string-array>
     <string-array name="pref_dpi_list">
-        <item>Device native</item>
+        <item>Systeemstandaard</item>
         <item>120dpi (ldpi)</item>
         <item>160dpi (mdpi)</item>
         <item>213dpi (tvdpi)</item>
@@ -62,68 +62,68 @@
         <item>560dpi</item>
     </string-array>
     <string-array name="pref_ui_refresh_list">
-        <item>Do nothing</item>
-        <item>Restart System UI and kill background apps</item>
-        <item>Restart ActivityManager (soft reboot)</item>
+        <item>Niks doen</item>
+        <item>Werkomgeving opnieuw starten en achtergrondapps beëindigen</item>
+        <item>ActivityManager herstarten (zachte herstart)</item>
     </string-array>
     <string-array name="pref_ui_refresh_list_alt">
-        <item>Do nothing</item>
-        <item>Restart ActivityManager (soft reboot)</item>
+        <item>Niks doen</item>
+        <item>ActivityManager herstarten (zachte herstart)</item>
     </string-array>
     <string-array name="pref_ui_refresh_list_non_root">
-        <item>Do nothing</item>
-        <item>Kill background apps</item>
-        <item>Manual reboot</item>
+        <item>Niks doen</item>
+        <item>Achtergrondapps beëindigen</item>
+        <item>Handmatig herstarten</item>
     </string-array>
     <string-array name="pref_rotation_list">
-        <item>Use system setting</item>
-        <item>Force auto-rotate (dock mode)</item>
-        <item>Lock orientation to landscape</item>
-        <item>Lock orientation to portrait</item>
+        <item>Systeeminstelling gebruiken</item>
+        <item>Automatisch draaien afdwingen (dock-modus)</item>
+        <item>Oriëntatie vergrendelen op horizontale modus</item>
+        <item>Oriëntatie vergrendelen op verticale modus</item>
     </string-array>
     <string-array name="pref_quick_actions">
-        <item>On</item>
-        <item>Off</item>
-        <item>Toggle</item>
+        <item>Aan</item>
+        <item>Uit</item>
+        <item>Schakelen</item>
     </string-array>
     <string-array name="pref_quick_actions_overscan">
-        <item>Off</item>
+        <item>Uit</item>
         <item>20%</item>
         <item>40%</item>
         <item>60%</item>
         <item>80%</item>
         <item>100%</item>
-        <item>Toggle</item>
+        <item>Schakelen</item>
     </string-array>
     <string-array name="pref_notification_action_list">
-        <item>Turn Off</item>
-        <item>Quick Actions</item>
-        <item>Lock Device</item>
-        <item>Toggle Backlight</item>
-        <item>Toggle Chrome Desktop Mode</item>
-        <item>Toggle Immersive Mode</item>
-        <item>Toggle Overscan</item>
-        <item>Toggle Vibration</item>
+        <item>Uitschakelen</item>
+        <item>Snelle acties</item>
+        <item>Apparaat vergrendelen</item>
+        <item>Achtergrondverlichting aan/uit</item>
+        <item>Chrome-bureaubladmodus aan/uit</item>
+        <item>Volledig schermmodus aan/uit</item>
+        <item>Overscan aan/uit</item>
+        <item>Trillen aan/uit</item>
     </string-array>
     <string-array name="pref_screen_timeout_list">
-        <item>Use system setting</item>
-        <item>Always on</item>
-        <item>Always on while charging</item>
+        <item>Systeeminstelling gebruiken</item>
+        <item>Altijd aan</item>
+        <item>Altijd aan tijdens opladen</item>
     </string-array>
     <string-array name="pref_immersive_list">
-        <item>Device default</item>
-        <item>Show status bar only</item>
-        <item>Hide status and navigation bars (immersive mode)</item>
+        <item>Systeemstandaard</item>
+        <item>Alleen statusbalk tonen</item>
+        <item>Status- en navigatiebalken verbergen (volledig schermmodus)</item>
     </string-array>
     <string-array name="pref_immersive_list_alt">
-        <item>Device default</item>
-        <item>Show status bar only</item>
-        <item>Hide status and navigation bars (immersive mode)</item>
-        <item>Toggle immersive mode</item>
+        <item>Systeemstandaard</item>
+        <item>Alleen statusbalk tonen</item>
+        <item>Status- en navigatiebalken verbergen (volledig schermmodus)</item>
+        <item>Volledig schermmodus aan/uit</item>
     </string-array>
     <string-array name="pref_hdmi_rotation_list">
-        <item>Landscape</item>
-        <item>Portrait</item>
+        <item>Horizontaal</item>
+        <item>Verticaal</item>
     </string-array>
 
 </resources>
