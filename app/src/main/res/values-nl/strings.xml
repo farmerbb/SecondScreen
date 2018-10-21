@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright 2015 Braden Farmer
+<!-- Copyright 2018 Braden Farmer
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -122,7 +122,7 @@
     <string name="pref_title_dpi">Dichtheid</string>
     <string name="pref_title_overscan_settings">Overscan-instellingen</string>
     <string name="pref_title_overscan">Overscan inschakelen</string>
-    <string name="pref_description_overscan">Handig op oude tv's, die delen van het beeld bijsnijden</string>
+    <string name="pref_description_overscan">Handig op oude tv\'s, die delen van het beeld bijsnijden</string>
     <string name="pref_title_bluetooth_on">Bluetooth inschakelen</string>
     <string name="pref_description_bluetooth_on">Bluetooth automatisch inschakelen (om een toetsenbord, muis en/of spelcontroller te verbinden)</string>
     <string name="pref_title_wifi_on">Wi-Fi inschakelen</string>
