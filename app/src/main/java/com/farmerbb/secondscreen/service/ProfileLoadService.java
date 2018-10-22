@@ -82,7 +82,7 @@ public final class ProfileLoadService extends IntentService {
         SharedPreferences prefCurrent = U.getPrefCurrent(this);
 
         // Check for root and then load profile
-        if(U.hasElevatedPermissions(this))
+        if(U.hasElevatedPermissions(this, true))
             loadProfile(prefCurrent);
         else {
             SharedPreferences.Editor editor = prefCurrent.edit();

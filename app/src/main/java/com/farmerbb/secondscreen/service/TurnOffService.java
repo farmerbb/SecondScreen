@@ -62,7 +62,7 @@ public final class TurnOffService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         SharedPreferences prefCurrent = U.getPrefCurrent(this);
 
-        if(U.hasElevatedPermissions(this))
+        if(U.hasElevatedPermissions(this, true))
             turnOffProfile(prefCurrent);
         else {
             SharedPreferences.Editor editor = prefCurrent.edit();

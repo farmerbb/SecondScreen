@@ -52,7 +52,7 @@ public final class UnableToStartActivity extends AppCompatActivity {
         button1.setText(R.string.action_continue);
         button1.setOnClickListener(v -> {
             if(getIntent().hasExtra("action")) {
-                if(U.hasElevatedPermissions(this)) {
+                if(U.hasElevatedPermissions(this, true)) {
                     switch(getIntent().getStringExtra("action")) {
                         case "load-profile":
                             U.loadProfile(this, getIntent().getStringExtra("filename"));

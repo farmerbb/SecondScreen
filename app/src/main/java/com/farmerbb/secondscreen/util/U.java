@@ -556,7 +556,11 @@ public final class U {
     // Checks if elevated permissions are available.
     // If debug mode is enabled, the app acts as if elevated permissions are always available.
     public static boolean hasElevatedPermissions(Context context) {
-        return Superuser.getInstance().available()
+        return hasElevatedPermissions(context, false);
+    }
+
+    public static boolean hasElevatedPermissions(Context context, boolean forceRecheck) {
+        return Superuser.getInstance().available(forceRecheck)
                 || NonRootUtils.hasWriteSecureSettingsPermission(context)
                 || getPrefMain(context).getBoolean("debug_mode", false);
     }

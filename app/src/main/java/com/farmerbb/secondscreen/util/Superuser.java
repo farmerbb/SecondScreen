@@ -32,16 +32,17 @@ class Superuser {
     }
 
     boolean available() {
-        if(hasRoot == null)
+        return available(false);
+    }
+
+    boolean available(boolean forceRecheck) {
+        if(hasRoot == null || forceRecheck)
             hasRoot = Shell.SU.available();
 
         return hasRoot;
     }
 
     void run(String[] commands) {
-        hasRoot = null;
-
-        if(available())
-            Shell.SU.run(commands);
+        Shell.SU.run(commands);
     }
 }
