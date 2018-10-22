@@ -45,7 +45,6 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.util.DisplayMetrics;
 import android.view.Display;
-import android.view.Gravity;
 import android.view.Surface;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -78,9 +77,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
-
-import eu.chainfire.libsuperuser.Shell;
-import moe.banana.support.ToastCompat;
 
 // Utility class to store common methods and objects shared between multiple classes
 public final class U {
@@ -560,7 +556,7 @@ public final class U {
     // Checks if elevated permissions are available.
     // If debug mode is enabled, the app acts as if elevated permissions are always available.
     public static boolean hasElevatedPermissions(Context context) {
-        return Shell.SU.available()
+        return Superuser.getInstance().available()
                 || NonRootUtils.hasWriteSecureSettingsPermission(context)
                 || getPrefMain(context).getBoolean("debug_mode", false);
     }
@@ -568,13 +564,25 @@ public final class U {
     // Checks if SecondScreen is running in non-root mode.
     public static boolean isInNonRootMode(Context context) {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.M
-                && !(Shell.SU.available() || getPrefMain(context).getBoolean("debug_mode", false));
+                && !(Superuser.getInstance().available()
+                || getPrefMain(context).getBoolean("debug_mode", false));
     }
 
     // Executes multiple commands, either by calling superuser
     // or by writing to the settings database directly.
     public static void runCommands(Context context, String[] commands, boolean rebootRequired) {
-        if(Shell.SU.available() || getPrefMain(context).getBoolean("debug_mode", false)) {
+        boolean arrayIsEmpty = true;
+        for(String command : commands) {
+            if(command != null && !command.equals("")) {
+                arrayIsEmpty = false;
+                break;
+            }
+        }
+
+        if(arrayIsEmpty) return;
+
+        if(Superuser.getInstance().available()
+                || getPrefMain(context).getBoolean("debug_mode", false)) {
             for(String command : commands) {
                 if(!command.isEmpty()) {
                     runSuCommands(context, commands);
@@ -631,7 +639,7 @@ public final class U {
             // to the log just in case.
             System.out.println(dump);
         } else
-            Shell.SU.run(commands);
+            Superuser.getInstance().run(commands);
     }
 
     // Loads a profile with the given filename
@@ -697,19 +705,14 @@ public final class U {
     public static void showToast(Context context, String message, int length) {
         cancelToast();
 
-        ToastCompat toast = ToastCompat.makeText(context.getApplicationContext(), message, length);
-        toast.setGravity(
-                Gravity.BOTTOM | Gravity.CENTER_VERTICAL,
-                0,
-                context.getResources().getDimensionPixelSize(R.dimen.toast_y_offset));
-
+        ToastInterface toast =  new ToastCompatImpl(context, message, length);
         toast.show();
 
         ToastHelper.getInstance().setLastToast(toast);
     }
 
     public static void cancelToast() {
-        ToastCompat toast = ToastHelper.getInstance().getLastToast();
+        ToastInterface toast = ToastHelper.getInstance().getLastToast();
         if(toast != null) toast.cancel();
     }
 

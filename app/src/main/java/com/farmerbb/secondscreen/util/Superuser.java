@@ -1,4 +1,4 @@
-/* Copyright 2017 Braden Farmer
+/* Copyright 2018 Braden Farmer
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,25 +15,33 @@
 
 package com.farmerbb.secondscreen.util;
 
-class ToastHelper {
+import eu.chainfire.libsuperuser.Shell;
 
-    private ToastInterface lastToast;
+class Superuser {
 
-    private static ToastHelper theInstance;
+    private Boolean hasRoot = null;
 
-    private ToastHelper() {}
+    private static Superuser theInstance;
 
-    public static ToastHelper getInstance() {
-        if(theInstance == null) theInstance = new ToastHelper();
+    private Superuser() {}
+
+    public static Superuser getInstance() {
+        if(theInstance == null) theInstance = new Superuser();
 
         return theInstance;
     }
 
-    ToastInterface getLastToast() {
-        return lastToast;
+    boolean available() {
+        if(hasRoot == null)
+            hasRoot = Shell.SU.available();
+
+        return hasRoot;
     }
 
-    void setLastToast(ToastInterface lastToast) {
-        this.lastToast = lastToast;
+    void run(String[] commands) {
+        hasRoot = null;
+
+        if(available())
+            Shell.SU.run(commands);
     }
 }

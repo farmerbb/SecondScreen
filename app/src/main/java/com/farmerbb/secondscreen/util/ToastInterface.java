@@ -1,4 +1,4 @@
-/* Copyright 2017 Braden Farmer
+/* Copyright 2018 Braden Farmer
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,25 +15,7 @@
 
 package com.farmerbb.secondscreen.util;
 
-class ToastHelper {
-
-    private ToastInterface lastToast;
-
-    private static ToastHelper theInstance;
-
-    private ToastHelper() {}
-
-    public static ToastHelper getInstance() {
-        if(theInstance == null) theInstance = new ToastHelper();
-
-        return theInstance;
-    }
-
-    ToastInterface getLastToast() {
-        return lastToast;
-    }
-
-    void setLastToast(ToastInterface lastToast) {
-        this.lastToast = lastToast;
-    }
+interface ToastInterface {
+    void show();
+    void cancel();
 }
