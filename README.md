@@ -46,3 +46,4 @@ SecondScreen is an application designed for power users that frequently connect 
 * César Parga, Adrian Brown (Spanish)
 * Christophe Romana (French)
 * ja-som (Slovak)
+* Heimen Stoffels (German)
