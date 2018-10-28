@@ -113,6 +113,7 @@ public final class SettingsFragment extends PreferenceFragment implements OnPref
         editor.putBoolean("expert_mode", prefMain.getBoolean("expert_mode", false));
         editor.putBoolean("force_backlight_off", prefMain.getBoolean("force_backlight_off", false));
         editor.putBoolean("tasker_enabled", prefMain.getBoolean("tasker_enabled", true));
+        editor.putBoolean("notch_compat_mode", prefMain.getBoolean("notch_compat_mode", false));
         editor.apply();
 
         if(addPrefs) {
@@ -124,6 +125,7 @@ public final class SettingsFragment extends PreferenceFragment implements OnPref
             findPreference("expert_mode").setOnPreferenceClickListener(this);
             findPreference("hdmi_select_profile").setOnPreferenceClickListener(this);
             findPreference("notification_settings").setOnPreferenceClickListener(this);
+            findPreference("notch_compat_mode").setOnPreferenceClickListener(this);
 
             addPrefs = false;
         }
@@ -155,6 +157,10 @@ public final class SettingsFragment extends PreferenceFragment implements OnPref
             } else
                 findPreference("hdmi_select_profile").setSummary(getResources().getString(R.string.show_list));
         }
+
+        findPreference("notch_compat_mode").setEnabled(
+                Build.VERSION.SDK_INT >= Build.VERSION_CODES.P && !prefMain.getBoolean("landscape", false)
+        );
     }
 
     @Override
@@ -208,6 +214,7 @@ public final class SettingsFragment extends PreferenceFragment implements OnPref
         editor.putBoolean("expert_mode", prefNew.getBoolean("expert_mode", false));
         editor.putBoolean("force_backlight_off", prefNew.getBoolean("force_backlight_off", false));
         editor.putBoolean("tasker_enabled", prefNew.getBoolean("tasker_enabled", true));
+        editor.putBoolean("notch_compat_mode", prefNew.getBoolean("notch_compat_mode", false));
         editor.apply();
 
         // Cleanup
@@ -217,14 +224,16 @@ public final class SettingsFragment extends PreferenceFragment implements OnPref
         prefNewEditor.remove("expert_mode");
         prefNewEditor.remove("force_backlight_off");
         prefNewEditor.remove("tasker_enabled");
+        prefNewEditor.remove("notch_compat_mode");
         prefNewEditor.apply();
     }
 
     @Override
     public boolean onPreferenceClick(Preference p) {
+        SharedPreferences prefCurrent = U.getPrefCurrent(getActivity());
+
         switch(p.getKey()) {
             case "safe_mode":
-                SharedPreferences prefCurrent = U.getPrefCurrent(getActivity());
                 if(!prefCurrent.getBoolean("not_active", true) && !"quick_actions".equals(prefCurrent.getString("filename", "0")))
                     safeMode = true;
                 break;
@@ -255,6 +264,10 @@ public final class SettingsFragment extends PreferenceFragment implements OnPref
             case "notification_settings":
                 Intent intent = new Intent(getActivity(), NotificationSettingsActivity.class);
                 startActivity(intent);
+                break;
+            case "notch_compat_mode":
+                if(!prefCurrent.getBoolean("not_active", true))
+                    U.showToast(getActivity(), R.string.notch_compat_mode_toast);
                 break;
         }
 

@@ -44,6 +44,12 @@
 
     <CheckBoxPreference
         android:defaultValue="false"
+        android:key="notch_compat_mode"
+        android:summary="@string/pref_summary_notch_compat_mode"
+        android:title="@string/pref_title_notch_compat_mode" />
+
+    <CheckBoxPreference
+        android:defaultValue="false"
         android:key="expert_mode"
         android:summary="@string/expert_mode_summary"
         android:title="@string/expert_mode" />
