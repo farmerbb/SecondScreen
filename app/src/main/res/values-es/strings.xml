@@ -223,7 +223,7 @@
     <string name="pref_title_tasker_enabled">Allow third-party app integration</string>
     <string name="pref_summary_tasker_enabled">Disable for improved security</string>
     <string name="pref_title_notch_compat_mode">Notch compatibility mode</string>
-    <string name="pref_summary_notch_compat_mode">Applies a workaround on devices with screen notches to improve display output</string>
+    <string name="pref_summary_notch_compat_mode">Apply a workaround on devices with screen notches to improve display output</string>
     <string name="notch_compat_mode_toast">This setting will take effect the next time a profile is loaded</string>
 
 </resources>
