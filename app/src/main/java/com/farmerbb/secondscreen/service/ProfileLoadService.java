@@ -554,6 +554,11 @@ public final class ProfileLoadService extends IntentService {
         // Vibration off
         String vibrationValue = "-1";
 
+        if(prefCurrent.getBoolean("not_active", true)) {
+            editor.putInt("haptic_feedback_enabled_system",
+                    Settings.System.getInt(getContentResolver(), "haptic_feedback_enabled", 0));
+        }
+
         // If user has set "vibration off" in profile
         if(prefSaved.getBoolean("vibration_off", false)) {
             // Check if one of the correct vibration files exist on device, read from it, then get the current value.
@@ -594,9 +599,14 @@ public final class ProfileLoadService extends IntentService {
             // This should always be valid, because "vibration off" can only be set on a supported device (should never be -1)
             if(!(vibrationValue.equals("0") || vibrationValue.equals("-1")))
                 editor.putInt("vibration_value", Integer.parseInt(vibrationValue));
+
+            // Change haptic feedback system preference for devices that don't support disabling via sysfs
+            if(prefCurrent.getBoolean("not_active", true)
+                    || !prefCurrent.getBoolean("vibration_off", false))
+                Settings.System.putInt(getContentResolver(), "haptic_feedback_enabled", 0);
         }
 
-        // If user has NOT set vibration off in profile (or if they are on an unsupported device)
+        // If user has NOT set vibration off in profile
         else {
             // Check to see if correct vibration files exist
             // If so, check to see if a valid vibration value exists (returns -1 if invalid)
@@ -610,6 +620,13 @@ public final class ProfileLoadService extends IntentService {
 
                 editor.putInt("vibration_value", -1);
             }
+
+            // Change haptic feedback system preference for devices that don't support disabling via sysfs
+            if(!prefCurrent.getBoolean("not_active", true)
+                    && prefCurrent.getBoolean("vibration_off", false)
+                    && prefCurrent.getInt("haptic_feedback_enabled_system", -1) != -1)
+                Settings.System.putInt(getContentResolver(), "haptic_feedback_enabled",
+                        prefCurrent.getInt("haptic_feedback_enabled_system", -1));
         }
 
         // Backlight off

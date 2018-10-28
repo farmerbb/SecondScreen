@@ -313,9 +313,6 @@ SharedPreferences.OnSharedPreferenceChangeListener {
         if(!getActivity().getPackageManager().hasSystemFeature("com.cyanogenmod.android"))
             disablePreference(prefNew, "navbar", true);
 
-        if(!U.filesExist(U.vibrationOff))
-            disablePreference(prefNew, "vibration_off", true);
-
         if(Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2)
             disablePreference(prefNew, "overscan_settings", false);
 
@@ -331,7 +328,6 @@ SharedPreferences.OnSharedPreferenceChangeListener {
         if(U.isInNonRootMode(getActivity())) {
             disablePreference(prefNew, "hdmi_rotation", false);
             disablePreference(prefNew, "chrome", false);
-            disablePreference(prefNew, "vibration_off", false);
 
             if(!U.hasSupportLibrary(getActivity()))
                 disablePreference(prefNew, "show_touches", false);

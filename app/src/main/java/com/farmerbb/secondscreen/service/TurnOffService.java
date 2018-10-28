@@ -270,10 +270,18 @@ public final class TurnOffService extends IntentService {
         }
 
         // Vibration off
-        if(prefCurrent.getBoolean("vibration_off", false) && prefCurrent.getInt("vibration_value", -1) != -1) {
-            for(File vibrationOff : U.vibrationOff) {
-                if(vibrationOff.exists())
-                    su[vibrationCommand] = "echo " + Integer.toString(prefCurrent.getInt("vibration_value", -1)) + " > " + vibrationOff.getAbsolutePath();
+        if(prefCurrent.getBoolean("vibration_off", false)) {
+            if(prefCurrent.getInt("vibration_value", -1) != -1) {
+                for(File vibrationOff : U.vibrationOff) {
+                    if(vibrationOff.exists())
+                        su[vibrationCommand] = "echo " + Integer.toString(prefCurrent.getInt("vibration_value", -1)) + " > " + vibrationOff.getAbsolutePath();
+                }
+            }
+
+            // Change haptic feedback system preference for devices that don't support disabling via sysfs
+            if(prefCurrent.getInt("haptic_feedback_enabled_system", -1) != -1) {
+                Settings.System.putInt(getContentResolver(), "haptic_feedback_enabled",
+                        prefCurrent.getInt("haptic_feedback_enabled_system", -1));
             }
         }
 

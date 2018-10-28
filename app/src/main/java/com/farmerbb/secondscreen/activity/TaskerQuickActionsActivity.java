@@ -135,9 +135,6 @@ SharedPreferences.OnSharedPreferenceChangeListener {
             findPreference("turn_off").setOnPreferenceClickListener(this);
 
             // Disable unsupported preferences
-            if(!U.filesExist(U.vibrationOff))
-                getPreferenceScreen().findPreference("temp_vibration_off").setEnabled(false);
-
             if(Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2)
                 getPreferenceScreen().findPreference("temp_overscan").setEnabled(false);
 
@@ -153,7 +150,6 @@ SharedPreferences.OnSharedPreferenceChangeListener {
             if(U.isInNonRootMode(this)) {
                 getPreferenceScreen().findPreference("temp_hdmi_rotation").setEnabled(false);
                 getPreferenceScreen().findPreference("temp_chrome").setEnabled(false);
-                getPreferenceScreen().findPreference("temp_vibration_off").setEnabled(false);
                 getPreferenceScreen().findPreference("temp_freeform").setEnabled(false);
             }
 

@@ -156,11 +156,13 @@ public final class ProfileViewFragment extends Fragment {
         right = "";
         n = 0;
 
-        generateProfileSettings(prefSaved.getBoolean("backlight_off", false), R.string.pref_title_backlight_off);
         generateProfileSettings(prefSaved.getBoolean("bluetooth_on", false), R.string.profile_view_bluetooth_on);
         generateProfileSettings(prefSaved.getBoolean("chrome", false), R.string.quick_chrome);
         generateProfileSettings(prefSaved.getBoolean("clear_home", false), R.string.quick_clear_home);
-        generateProfileSettings(prefSaved.getBoolean("daydreams_on", false), R.string.profile_view_daydreams_on);
+
+        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.N)
+            generateProfileSettings(prefSaved.getBoolean("daydreams_on", false), R.string.profile_view_daydreams_on);
+
         generateProfileSettings(prefSaved.getBoolean("navbar", false), R.string.profile_view_navbar);
         generateProfileSettings(prefSaved.getBoolean("freeform", false), R.string.profile_view_freeform);
 
@@ -188,14 +190,11 @@ public final class ProfileViewFragment extends Fragment {
                 break;
         }
 
-        switch(prefSaved.getString("screen_timeout", "do-nothing")) {
-            case "always-on":
-                generateProfileSettings(true, R.string.profile_view_screen_timeout_always_on);
-                break;
-            case "always-on-charging":
-                generateProfileSettings(true, R.string.profile_view_screen_timeout_always_on_charging);
-                break;
-        }
+        generateProfileSettings(prefSaved.getBoolean("backlight_off", false), R.string.pref_title_backlight_off);
+        generateProfileSettings(prefSaved.getBoolean("vibration_off", false), R.string.pref_title_vibration_off);
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
+            generateProfileSettings(prefSaved.getBoolean("daydreams_on", false), R.string.profile_view_daydreams_on);
 
         generateProfileSettings(prefSaved.getBoolean("show_touches", false), R.string.pref_title_show_touches);
 
@@ -213,6 +212,15 @@ public final class ProfileViewFragment extends Fragment {
         }
 
         generateProfileSettings(prefSaved.getBoolean("taskbar", false), R.string.quick_taskbar);
+
+        switch(prefSaved.getString("screen_timeout", "do-nothing")) {
+            case "always-on":
+                generateProfileSettings(true, R.string.profile_view_screen_timeout_always_on);
+                break;
+            case "always-on-charging":
+                generateProfileSettings(true, R.string.profile_view_screen_timeout_always_on_charging);
+                break;
+        }
 
         switch(prefSaved.getString("ui_refresh", "do-nothing")) {
             case "system-ui":
@@ -232,7 +240,6 @@ public final class ProfileViewFragment extends Fragment {
                 break;
         }
 
-        generateProfileSettings(prefSaved.getBoolean("vibration_off", false), R.string.pref_title_vibration_off);
         generateProfileSettings(prefSaved.getBoolean("wifi_on", false), R.string.profile_view_wifi_on);
 
         if(!left.isEmpty())
