@@ -254,7 +254,7 @@ SharedPreferences.OnSharedPreferenceChangeListener {
         else
             addPreferencesFromResource(R.xml.display_settings);
 
-        if(isPlayStoreInstalled(getActivity())
+        if(U.isPlayStoreInstalled(getActivity())
                 && U.isPlayStoreRelease(getActivity())
                 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             addPreferencesFromResource(R.xml.desktop_optimization);
@@ -878,14 +878,5 @@ SharedPreferences.OnSharedPreferenceChangeListener {
 
         if(preference instanceof CheckBoxPreference)
             ((CheckBoxPreference) preference).setChecked(false);
-    }
-
-    public static boolean isPlayStoreInstalled(Context context) {
-        try {
-            context.getPackageManager().getPackageInfo("com.android.vending", 0);
-            return true;
-        } catch (PackageManager.NameNotFoundException e) {
-            return false;
-        }
     }
 }

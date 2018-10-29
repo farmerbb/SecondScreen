@@ -1007,9 +1007,13 @@ public final class U {
     // Directs the user to check for updates
     public static void checkForUpdates(Context context) {
         String url;
-        if(isPlayStoreRelease(context))
-            url = "https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID;
-        else
+        if(isPlayStoreRelease(context)) {
+            if(BuildConfig.APPLICATION_ID.equals("com.farmerbb.secondscreen.free")
+                    && !isPlayStoreInstalled(context))
+                url = "https://github.com/farmerbb/SecondScreen/releases";
+            else
+                url = "https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID;
+        } else
             url = "https://f-droid.org/repository/browse/?fdid=" + BuildConfig.APPLICATION_ID;
 
         Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -1426,6 +1430,15 @@ public final class U {
             pm.getPackageInfo(BuildConfig.SUPPORT_APPLICATION_ID, 0);
             return pm.checkSignatures(BuildConfig.SUPPORT_APPLICATION_ID, BuildConfig.APPLICATION_ID)
                     == PackageManager.SIGNATURE_MATCH;
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
+        }
+    }
+
+    public static boolean isPlayStoreInstalled(Context context) {
+        try {
+            context.getPackageManager().getPackageInfo("com.android.vending", 0);
+            return true;
         } catch (PackageManager.NameNotFoundException e) {
             return false;
         }
