@@ -23,8 +23,8 @@ android {
         //noinspection ExpiringTargetSdkVersion
         targetSdkVersion 25
 
-        versionCode 179
-        versionName "2.8.1"
+        versionCode 180
+        versionName "2.8.2"
 
         resConfigs "en", "es", "fr", "sk", "nl"
         vectorDrawables.useSupportLibrary = true
