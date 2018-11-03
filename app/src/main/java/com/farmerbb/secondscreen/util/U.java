@@ -583,24 +583,24 @@ public final class U {
             }
         }
 
-        if(arrayIsEmpty) return;
+        boolean runAsRoot = Superuser.getInstance().available()
+                || getPrefMain(context).getBoolean("debug_mode", false);
 
-        if(Superuser.getInstance().available()
-                || getPrefMain(context).getBoolean("debug_mode", false)) {
-            for(String command : commands) {
-                if(!command.isEmpty()) {
-                    runSuCommands(context, commands);
-                    break;
+        if(!arrayIsEmpty) {
+            if(runAsRoot) {
+                for(String command : commands) {
+                    if(!command.isEmpty()) {
+                        runSuCommands(context, commands);
+                        break;
+                    }
                 }
-            }
-
-            return;
+            } else
+                NonRootUtils.runCommands(context, commands);
         }
 
-        NonRootUtils.runCommands(context, commands);
         CommandDispatcher.getInstance().dispatch(context);
 
-        if(rebootRequired) {
+        if(!runAsRoot && rebootRequired) {
             SharedPreferences prefCurrent = getPrefCurrent(context);
             if(!prefCurrent.getBoolean("not_active", true))
                 prefCurrent.edit().putBoolean("reboot_required", true).apply();
