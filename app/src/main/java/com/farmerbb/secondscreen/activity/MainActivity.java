@@ -906,7 +906,7 @@ SystemAlertPermissionDialogFragment.Listener {
     }
 
     private void showDialogs() {
-        if(U.hasElevatedPermissions(this))
+        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.M || U.hasElevatedPermissions(this))
             showMoreDialogs();
         else
             startActivity(new Intent(this, UnableToStartActivity.class));
