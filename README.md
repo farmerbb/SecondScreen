@@ -28,7 +28,7 @@ SecondScreen is an application designed for power users that frequently connect 
       alt="Get it on Google Play"
       height="80"
       align="middle">](https://play.google.com/store/apps/details?id=com.farmerbb.secondscreen.free)
-[<img src="https://f-droid.org/badge/get-it-on.png"
+[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
       alt="Get it on F-Droid"
       height="80"
       align="middle">](https://f-droid.org/packages/com.farmerbb.secondscreen.free/)
