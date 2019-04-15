@@ -89,7 +89,7 @@
     <string name="profile_helper_text">Premi il nome di un profilo per vedere o caricare le sue impostazioni.\nCrea profili aggiuntivi usando il pulsante più.</string>
     <string name="profile_helper_text_alt">Il profilo sottostante evidenziato è attualmente attivo.\nPremi il suo nome per vedere le sue impostazioni o per disattivarlo.</string>
     <string name="profile_view_bluetooth_on">Bluetooth attivo</string>
-    <string name="profile_view_daydreams_on">Daydreams attivo</string>
+    <string name="profile_view_daydreams_on">Salvaschermo attivo</string>
     <string name="profile_view_navbar">Forza barra di navigazione</string>
     <string name="profile_view_screen_timeout_always_on">Timeout (sempre acceso)</string>
     <string name="profile_view_screen_timeout_always_on_charging">Timeout (durante la ricarica)</string>
@@ -127,7 +127,7 @@
     <string name="pref_description_bluetooth_on">Attiva automaticamente il Bluetooth (per connettere una tastiera, un mouse e/o un controller di gioco)</string>
     <string name="pref_title_wifi_on">Attiva il Wi-Fi</string>
     <string name="pref_description_wifi_on">Attiva automaticamente il Wi-Fi</string>
-    <string name="pref_title_daydreams_on">Attiva Daydreams</string>
+    <string name="pref_title_daydreams_on">Attiva Salvaschermo</string>
     <string name="pref_description_daydreams_on">Mostra il salvaschermo mentre il dispositivo è bloccato (solo connessioni via cavo)</string>
     <string name="pref_title_show_touches">Mostra tocchi</string>
     <string name="pref_description_show_touches">Mostra un segnale visivo per eventi touchscreen</string>
@@ -152,7 +152,7 @@
     <string name="right">Destra</string>
     <string name="pref_title_test_overscan">Prova overscan</string>
     <string name="pref_description_test_overscan">Nota: I valori overscan assumono che il dispositivo sia orientato orizzontalmente, e sono precisi solo quando il profilo è attivo.</string>
-    <string name="configure_daydreams">Per favore, assicurarsi che Daydreams è totalmente configurato (nelle impostazioni di sistema del display) prima di caricare questo profilo.</string>
+    <string name="configure_daydreams">Per favore, assicurarsi che il Salvaschermo sia totalmente configurato (nelle impostazioni di sistema del display) prima di caricare questo profilo.</string>
     <string name="disabled">Disattivata</string>
     <string name="enabled">Attivata</string>
     <string name="quick_backlight">Retroilluminazione</string>
