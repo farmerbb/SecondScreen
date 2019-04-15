@@ -1,0 +1,282 @@
+<!-- File "app/src/main/res/values/strings_activity_profile_edit.xml" -->
+
+<!-- File "app/src/main/res/values/strings.xml" -->
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2015 Braden Farmer
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+
+<resources>
+
+    <string name="accept">Accetta</string>
+    <string name="action_cancel">Cancella</string>
+    <string name="action_close">Chiudi</string>
+    <string name="action_delete">Elimina</string>
+    <string name="action_edit">Modifica</string>
+    <string name="action_import">Importa</string>
+    <string name="action_load">Carica %1$s</string>
+    <string name="action_new">Nuovo Profilo</string>
+    <string name="action_quick">Azioni</string>
+    <string name="action_save">Salva</string>
+    <string name="action_save_reload">Salva &amp; Ricarica</string>
+    <string name="action_save_only">Salva solamente</string>
+    <string name="action_ok">OK</string>
+    <string name="action_settings">Impostazioni</string>
+    <string name="action_turn_off">Spegni</string>
+    <string name="action_turn_off_alt">Spegni %1$s</string>
+    <string name="action_uninstall">Disinstalla</string>
+    <string name="am_restart_warning">Questo metodo non è suggerito quando si trasmette verso display wireless</string>
+    <string name="any_profile">Qualunque profilo</string>
+    <string name="app_name">SecondScreen</string>
+    <string name="app_name_debug">SecondScreen (Debug)</string>
+    <string name="available_actions">Azioni Disponibili</string>
+    <string name="blacklisted">Per proteggere il tuo dispositivo, SecondScreen non ti permetterà di usare questa risoluzione e/o questo valore di densità.</string>
+    <string name="both_versions_installed">Diverse versioni di SecondScreen sono installate sul tuo dispositivo. Solo una versione alla volta può essere installata.\n
+   \n
+   Premi Disinstalla per rimuovere la versione duplicata, poi riapri l\'app.</string>
+    <string name="check_for_update">Controlla Aggiornamenti</string>
+    <string name="checking_for_superuser">Verifica dell\'accesso superuser... attendere prego.</string>
+    <string name="decline">Declina</string>
+    <string name="deleting_current_profile">Impossibile cancellare il profilo attualmente attivo</string>
+    <string name="dialog_about_message">SecondScreen: trasmissione dello schermo migliorata per dispositivi Android\n
+  \n
+  © 2018 Braden Farmer\n
+  Logo dell\'app di mayowadavid</string>
+    <string name="dialog_about_title">A proposito di SecondScreen</string>
+    <string name="dialog_are_you_sure">Sei sicuro?</string>
+    <string name="dialog_delete_button_title">Cancella profilo</string>
+    <string name="dialog_first_load">• Prima connetti il tuo display, se non l\'hai già fatto.\n
+  \n
+  • Assicurati di aver concesso l\'accesso root/adb a SecondScreen - altrimenti, non sarà in grado di fare nulla.\n
+  \n
+  • Tieni duro per alcuni secondi mentre il tuo dispositivo cambia la sua risoluzione e la sua densità!\n
+  \n
+  • Quando l\'icona di SecondScreen appare nella barra di stato, il tuo dispositivo sarà pronto all\'uso.</string>
+    <string name="dialog_load_profile">Istruzioni</string>
+    <string name="dialog_reload_profile_title">Ricarica profilo?</string>
+    <string name="dialog_turn_off_message">%1$s è attualmente attivo. Vuoi disattivarlo?</string>
+    <string name="dialog_turn_off_title">Disattiva profilo</string>
+    <string name="dialog_ui_refresh">Hai lasciato \"Non fare nulla\" come metodo di aggiornamento dell\'UI. Scegliere un metodo di aggiornamento dell\'UI è fortemente raccomandato mentre si cambia la tua risoluzione e/o densità.\n
+  \n
+  Salvare comunque?</string>
+    <string name="dialog_upgrade_message">SecondScreen non è stato testato per questa versione di Android. Potrebbe smettere di funzionare completamente o comportarsi in modi inaspettati.\n
+  \n
+  Controlla se ci sono aggiornamenti dell\'app se riscontri problemi.</string>
+    <string name="display_disconnected">Display disconnesso</string>
+    <string name="dont_show_again">Non mostrare di nuovo</string>
+    <string name="editing_current_profile">Questo è il profilo attualmente attivo. Vuoi ricaricarlo per applicare i cambiamenti?</string>
+    <string name="enter_profile_name">Inserisci il nome del profilo</string>
+    <string name="error_loading_list">Errore durante il caricamento della lista dei profili!</string>
+    <string name="error_loading_profile">Errore durante il caricamento del profilo!</string>
+    <string name="expert_mode">Modalità Esperto</string>
+    <string name="expert_mode_dialog">La modalità Esperto ignora la lista nera interna delle combinazioni di risoluzione e densità insicure di SecondScreen. Usa questa opzione solo se sai esattamente cosa stai facendo. La modalità Sicura è fortemente raccomandata quando si usa quest\'opzione.\n
+  \n
+  Attivare davvero la modalità Esperto?</string>
+    <string name="expert_mode_summary">Permetti qualunque valore definito dall\'utente di essere usato per la risoluzione e la densità</string>
+    <string name="failed_to_save">Errore: Salvataggio del profilo fallito!</string>
+    <string name="first_run">Questa applicazione richiede permessi elevati per funzionare! Come molte applicazioni di questa natura, un uso improprio potrebbe rendere il tuo dispositivo inutilizzabile.\n
+  \n
+  Questa applicazione è ideata solo per dispositivi con ROM AOSP o Google Experience! Non è garantito che funzioni correttamente su dispitivi con ROM modificate dal produttore.\n
+  \n
+  Premendo Accetta, riconosci che sei L\'UNICO responsabile per come usi quest\'applicazione, per il tipo di dispositivo su cui la usi e per i metodi di ottenimento di permessi elevati sul tuo dispositivo.</string>
+    <string name="hdmi_checkbox">Avvia SecondScreen quando si connette un display</string>
+    <string name="hdmi_connected">Display connesso</string>
+    <string name="label_load_profile">Carica Profilo</string>
+    <string name="label_profile_active">Profilo Attivo</string>
+    <string name="label_quick_actions">Azioni Rapide</string>
+    <string name="loading_profile">Caricamento SecondScreen...</string>
+    <string name="notification">SecondScreen è attivo</string>
+    <string name="notification_settings">Impostazioni di notifica</string>
+    <string name="new_device_message">Sembra che SecondScreen sia stato ripristinato da un backup.\n
+  \n
+  Se questo è un dispositivo diverso, per favore cancella i dati dell\'app ed esegui di nuovo SecondScreen per assicurarti che funzioni correttamente (altrimenti, potresti incorrere in problemi).</string>
+    <string name="no_profiles_found">Nessun profilo trovato</string>
+    <string name="no_superuser">Impossibile ottenere i permessi superuser!</string>
+    <string name="pref_description_safe_mode">I profili non resteranno attivi dopo il riavvio</string>
+    <string name="pref_title_hdmi">Avvia automaticamente</string>
+    <string name="pref_title_hdmi_select_profile">Avvia automaticamente l\'azione</string>
+    <string name="pref_title_hide_notification">Nascondi l\'icona di notifica</string>
+    <string name="pref_title_notification_action">Pulsante di azione secondaria</string>
+    <string name="pref_title_safe_mode">Modalità Sicura (raccomandata)</string>
+    <string name="profile_deleted">Profilo cancellato</string>
+    <string name="profile_saved">Profilo salvato</string>
+    <string name="profile_settings">Impostazioni del Profilo</string>
+    <string name="profile_helper_text">Premi il nome di un profilo per vedere o caricare le sue impostazioni.\n
+ Crea profili aggiuntivi usando il pulsante più.</string>
+    <string name="profile_helper_text_alt">Il profilo sottostante evidenziato è attualmente attivo.\n
+ Premi il suo nome per vedere le sue impostazioni o per disattivarlo.</string>
+    <string name="profile_view_bluetooth_on">Bluetooth attivo</string>
+    <string name="profile_view_daydreams_on">Daydreams attivo</string>
+    <string name="profile_view_navbar">Forza barra di navigazione</string>
+    <string name="profile_view_screen_timeout_always_on">Timeout (sempre acceso)</string>
+    <string name="profile_view_screen_timeout_always_on_charging">Timeout (durante la ricarica)</string>
+    <string name="profile_view_rotation_autorotate">Orientamento (ruota automaticamente)</string>
+    <string name="profile_view_rotation_landscape">Orientamento (orizzontale)</string>
+    <string name="profile_view_rotation_portrait">Orientamento (veritcale)</string>
+    <string name="profile_view_ui_refresh_systemui">Aggiornamento UI (UI di Sistema)</string>
+    <string name="profile_view_ui_refresh_systemui_alt">Aggiornamento UI (termina applicazioni)</string>
+    <string name="profile_view_ui_refresh_soft_reboot">Aggiornamento UI (riavvio soft)</string>
+    <string name="profile_view_ui_refresh_soft_reboot_alt">Aggiornamento UI (riavvio manuale)</string>
+    <string name="profile_view_wifi_on">Wi-Fi attivo</string>
+    <string name="profile_view_freeform">Modalità Freeform</string>
+    <string name="profile_view_hdmi_output">HDMI (Verticale)</string>
+    <string name="quick_actions_message">Usa Azioni Rapide per accedere alle funzionalità di SecondScreen senza creare un nuovo profilo, o modifica temporaneamente un profilo esistente senza editarlo.</string>
+    <string name="recreate_shortcut">Profilo non trovato!\n
+ \n
+ Per favore, ricrea o cancella questo collegamento.</string>
+    <string name="safeguard_title">ATTENZIONE</string>
+    <string name="select_profile">Seleziona profilo</string>
+    <string name="select_profile_alt">Seleziona un profilo</string>
+    <string name="select_screen_type">Seleziona il tipo di schermo:</string>
+    <string name="show_list">Mostra lista di profili</string>
+    <string name="this_profile">Questo profilo</string>
+    <string name="turning_off_profile">Spegnendo SecondScreen...</string>
+    <string name="welcome">Benvenuto in SecondScreen</string>
+    <string name="welcome_message">Premi il pulsante più per creare il tuo primo profilo</string>
+    <string name="title_activity_profile_edit">Modifica Profilo</string>
+    <string name="pref_header_display_settings">Impostazioni display</string>
+    <string name="pref_header_additional_settings">Impostazioni aggiuntive</string>
+    <string name="pref_title_profile_name">Nome del profilo</string>
+    <string name="pref_title_resolution">Risoluzione</string>
+    <string name="pref_title_dpi">Densità</string>
+    <string name="pref_title_overscan_settings">Impostazioni overscan</string>
+    <string name="pref_title_overscan">Attiva overscan</string>
+    <string name="pref_description_overscan">Utile per TV vecchie che tagliano parti dell\'immagine</string>
+    <string name="pref_title_bluetooth_on">Attiva il Bluetooth</string>
+    <string name="pref_description_bluetooth_on">Attiva automaticamente il Bluetooth (per connettere una tastiera, un mouse e/o un controller di gioco)</string>
+    <string name="pref_title_wifi_on">Attiva il Wi-Fi</string>
+    <string name="pref_description_wifi_on">Attiva automaticamente il Wi-Fi</string>
+    <string name="pref_title_daydreams_on">Attiva Daydreams</string>
+    <string name="pref_description_daydreams_on">Mostra il salvaschermo mentre il dispositivo è bloccato (solo connessioni via cavo)</string>
+    <string name="pref_title_show_touches">Mostra tocchi</string>
+    <string name="pref_description_show_touches">Mostra un segnale visivo per eventi touchscreen</string>
+    <string name="pref_title_rotation">Orientamento dello schermo</string>
+    <string name="pref_title_backlight_off">Riduci la retroilluminazione</string>
+    <string name="pref_description_backlight_off">Attenua la retroilluminazione del dispositivo il più possibile mentre un display è connesso</string>
+    <string name="pref_title_vibration_off">Riduci la vibrazione</string>
+    <string name="pref_description_vibration_off">Disattiva la vibrazione del dispositivo il più possibile</string>
+    <string name="pref_title_chrome">Modalità Desktop in Chrome</string>
+    <string name="pref_description_chrome">Mostra sempre i siti in versione desktop nel browser Chrome</string>
+    <string name="pref_title_ui_refresh">Metodo di aggiornamento dell\'UI</string>
+    <string name="pref_title_navbar">Mostra forzatamente la barra di navigazione</string>
+    <string name="pref_description_navbar">Mostra la barra di navigazione per dispositivi con pulsanti fisici (funziona solo su ROM CyanogenMod)</string>
+    <string name="pref_title_screen_timeout">Timeout dello schermo</string>
+    <string name="pref_title_freeform">Attiva la modalità freeform</string>
+    <string name="pref_description_freeform">Apri applicazioni in finestre fluttuanti e ridimensionabili</string>
+    <string name="pref_title_hdmi_rotation">Orientamento dell\'output HDMI</string>
+    <string name="pref_overscan_values">Valori Overscan</string>
+    <string name="top">In cima</string>
+    <string name="bottom">In fondo</string>
+    <string name="left">Sinistra</string>
+    <string name="right">Destra</string>
+    <string name="pref_title_test_overscan">Prova overscan</string>
+    <string name="pref_description_test_overscan">Nota: I valori overscan assumono che il dispositivo sia orientato orizzontalmente, e sono precisi solo quando il profilo è attivo.</string>
+    <string name="configure_daydreams">Per favore, assicurarsi che Daydreams è totalmente configurato (nelle impostazioni di sistema del display) prima di caricare questo profilo.</string>
+    <string name="disabled">Disattivata</string>
+    <string name="enabled">Attivata</string>
+    <string name="quick_backlight">Retroilluminazione</string>
+    <string name="quick_vibration">Vibrazione</string>
+    <string name="quick_chrome">Modalità Desktop su Chrome</string>
+    <string name="quick_overscan">Overscan</string>
+    <string name="quick_turn_off">Ripristina le impostazioni</string>
+    <string name="quick_turn_off_description">Premi per ripristinare le impostazioni cambiate</string>
+    <string name="keep_overscan">Continua ad usare i valori overscan attivi?</string>
+    <string name="not_compatible">Incompatibile con questo dispositivo</string>
+    <string name="desktop">Desktop</string>
+    <string name="pref_title_notification_action_2">Pulsante di azione primaria</string>
+    <string name="pref_title_immersive">Barre di stato/navigazione</string>
+    <string name="pref_title_immersive_alt">Barre di Stato/Navigazione</string>
+    <string name="immersive">Immersiva</string>
+    <string name="quick_immersive">Modalità Immersiva</string>
+    <string name="quick_rotation">Orientamento dello schermo</string>
+    <string name="quick_freeform">Modalità Freeform</string>
+    <string name="quick_hdmi_rotation">Orientamento dell\'output HDMI</string>
+    <string name="debug_mode_enabling">Sei a %1$ passi dall\'attivare la modalità Debug</string>
+    <string name="debug_mode_enabled">Modalità Debug attivata</string>
+    <string name="debug_mode_disabled">Modalità Debug disattivata</string>
+    <string name="profile_helper_text_debug">Modalità Debug attivata\n
+ Premi per disattivare la modalità Debug</string>
+    <string name="debug_show_simulated_size_density">Mostra la dimensione/densità simulata</string>
+    <string name="debug_simulate_reboot">Simula riavvio</string>
+    <string name="debug_simulate_app_upgrade">Simula l\'upgrade dell\'applicazione</string>
+    <string name="debug_dump_app_state">Scarica l\'attuale stato dell\'applicazione</string>
+    <string name="busybox_required">Busybox Richiesto</string>
+    <string name="action_ignore">Ignora</string>
+    <string name="busybox_message">A causa delle restrizioni in questa versione di Android, è necessario installare Busybox affinché SecondScreen possa aggiornare correttamente l\'interfaccia grafica.\n
+   \n
+   Si suggerisce fortemente di installare Busybox oppure di aggiornare ad una nuova versione di Android.</string>
+    <string name="no_write_settings_permission">SecondScreen richiede il permesso di modificare le impostazioni di sistema prima di poter continuare.\n
+ \n
+ Per favore, premi \"Concedi Permesso\" ed assicurati che SecondScreen sia abilitato in \"Permetti la modifica delle impostazioni di sistema\"</string>
+    <string name="permission_needed">Permesso necessario</string>
+    <string name="grant_permission">Concedi Permesso</string>
+    <string name="freeform_message">La modalità Freeform richiede la scelta di un metodo di aggiornamento dell\'UI</string>
+    <string name="freeform_message_non_root">La modalità Freeform necessita un riavvio per funzionare</string>
+    <string name="pref_title_taskbar">Attiva Taskbar</string>
+    <string name="pref_description_taskbar">Mostra un overlay a schermo con le app recenti e un menù start, per un\'esperienza simile al PC</string>
+    <string name="quick_taskbar">Taskbar</string>
+    <string name="system_alert_permission_dialog_message">SecondScreen ha bisogno del permesso opzionale per \"disegnare sopra altre applicazioni\" per obbligare le altre app installate a funzionare in modalità orizzontale.\n
+ \n
+ Se non concedi il permesso, SecondScreen può comunque bloccare l\'orientamento del dispositivo in orizzontale, ma alcune app continueranno ad essere eseguite in modalità verticale.</string>
+    <string name="reboot_required_title">Riavvio richiesto</string>
+    <string name="reboot_required_message">Per favore, riavvia il tuo dispositivo affinché SecondScreen possa applicare le impostazioni</string>
+    <string name="action_later">Posticipa</string>
+    <string name="confirm_reboot_later">Premi \"Più tardi\" di nuovo per confermare</string>
+    <string name="permission_dialog_message">SecondScreen usa permessi elevati per cambiare le impostazioni del dispositivo, come la risoluzione e la densità. Questi permessi sono concessi attraverso l\'accesso root o eseguendo un comando adb in una shell.\n
+ \n
+ Per favore, esegui uno dei seguenti:\n
+ \n
+ • Effettua il root sul tuo dispositivo. Se il tuo dispositivo è già rootato, assicurati che siano concessi i permessi superuser a SecondScreen.\n
+ \n
+ • Connetti il tuo dispositivo ad un computer con installato \"Android SDK\", ed esegui il seguente comando (in un\'unica linea):</string>
+    <string name="error_dialog_title">Errore</string>
+    <string name="error_dialog_message">Sfortunatamente, a causa delle restrizioni del produttore, questa funzione non può essere attivata sul tuo dispositivo.\n
+  \n
+  Potresti comunque essere in grado di attivarla usando questo comando attraverso adb shell:\n
+  \n
+  appops set %1$s %2$s allow</string>
+    <string name="pref_title_clear_home">Cambia il launcher predefinito</string>
+    <string name="pref_description_clear_home">Usa Taskbar come launcher predefinito se è installato; altrimenti, pulisci il launcher predefinito</string>
+    <string name="quick_clear_home">Cambia launcher</string>
+    <string name="hdmi_output_toast">Per favore, scollega e collega il tuo cavo HDMI affinché quest\'impostazione sia resa effettiva</string>
+    <string name="disable_keyboard_title">Disattiva la tastiera virtuale.</string>
+    <string name="disable_keyboard_message">Scegliendo questo metodo di inserimento, SecondScreen può disattivare la tua tastiera virtuale, se continua ad apparire mentre una tastiera fisica è collegata.\n
+  \n
+  Una notifica apparirà nella barra di stato quando questo metodo di inserimento è attivo. Premilo per tornare alla tua tastiera precedente.</string>
+    <string name="force_backlight_off">Forza lo spegnimento della retroilluminazione</string>
+    <string name="force_backlight_off_description">Consenti lo spegnimento della retroilluminazione senza un display connesso</string>
+    <string name="system_notification_settings">Impostazioni di notifica di sistema</string>
+    <string name="disabling_soft_keyboard">Disattivando la tastiera virtuale</string>
+    <string name="tap_to_change_keyboards">Premi per cambiare tastiere</string>
+    <string name="device_admin_description_short">Permette a SecondScreen di spegnere lo schermo del dispositivo</string>
+    <string name="device_admin_description">Permette a SecondScreen di spegnere lo schermo del dispositivo.\n
+  \n
+  Sarà necessario disattivare SecondScreen come amministratore del dispositivo prima della disinstallazione.</string>
+    <string name="device_admin_disclosure">SecondScreen necessita di essere attivato come amministratore del dispositivo per bloccare lo schermo del dispositivo. Questo permesso è usato solo per bloccare lo schermo e per nessun altro scopo.\n
+  \n
+  Se decidi di attivarlo, dovrai disattivare SecondScreen come amministratore del dispositivo prima della disinstallazione.</string>
+    <string name="action_activate">Attiva</string>
+    <string name="quick_screen_timeout">Timeout dello schermo</string>
+    <string name="pref_header_desktop_optimization">Ottimizzazione desktop</string>
+    <string name="pref_taskbar_settings_title_open">Apri le impostazioni di Taskbar</string>
+    <string name="pref_taskbar_settings_title_install">Install l\'app Taskbar</string>
+    <string name="blissos_default">Profilo Predefinito Bliss OS</string>
+    <string name="action_continue">Continua</string>
+    <string name="pref_title_tasker_enabled">Permetti l\'integrazione con app di terze parti</string>
+    <string name="pref_summary_tasker_enabled">Disattiva per migliorare la sicurezza</string>
+    <string name="pref_title_notch_compat_mode">Modalità compatibilità notch (tacca)</string>
+    <string name="pref_summary_notch_compat_mode">Applica un espediente sui dispositivi con notch (tacca) sullo schermo per migliorare lo schermo trasmesso</string>
+    <string name="notch_compat_mode_toast">Quest\'impostazione avrà effetto la prossima volta che un profilo verrà caricato</string>
+
+</resources>
