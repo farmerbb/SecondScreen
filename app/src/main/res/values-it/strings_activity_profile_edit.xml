@@ -60,7 +60,7 @@
     </string-array>
     <string-array name="pref_ui_refresh_list">
         <item>Non fare nulla</item>
-        <item>Riavvia l'UI di Sistema e termina le app in background</item>
+        <item>Riavvia l\'UI di Sistema e termina le app in background</item>
         <item>Riavvia ActivityManager (riavvio soft)</item>
     </string-array>
     <string-array name="pref_ui_refresh_list_alt">
@@ -74,9 +74,9 @@
     </string-array>
     <string-array name="pref_rotation_list">
         <item>Usa impostazioni di sistema</item>
-        <item>Forza l'orientamento automatico (modalità dock)</item>
-        <item>Blocca l'orientamento in orizzontale</item>
-        <item>Blocca l'orientamento in verticale</item>
+        <item>Forza l\'orientamento automatico (modalità dock)</item>
+        <item>Blocca l\'orientamento in orizzontale</item>
+        <item>Blocca l\'orientamento in verticale</item>
     </string-array>
     <string-array name="pref_quick_actions">
         <item>Acceso</item>
