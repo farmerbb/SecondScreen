@@ -26,7 +26,7 @@ android {
         versionCode 180
         versionName "2.8.2"
 
-        resConfigs "en", "es", "fr", "sk", "nl"
+        resConfigs "en", "es", "fr", "sk", "nl", "it"
         vectorDrawables.useSupportLibrary = true
 
         buildConfigField "float", "TESTED_API_VERSION", "28.0f"
