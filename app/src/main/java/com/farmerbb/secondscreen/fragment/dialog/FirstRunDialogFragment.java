@@ -16,10 +16,13 @@
 package com.farmerbb.secondscreen.fragment.dialog;
 
 import android.app.Activity;
+import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import com.farmerbb.secondscreen.R;
 
@@ -38,6 +41,9 @@ public final class FirstRunDialogFragment extends DialogFragment {
 
     // Use this instance of the interface to deliver action events
     Listener listener;
+
+    private int secondsLeft = 5;
+    private boolean isStarted = false;
 
     // Override the Fragment.onAttach() method to instantiate the Listener
     @SuppressWarnings("deprecation")
@@ -69,5 +75,36 @@ public final class FirstRunDialogFragment extends DialogFragment {
 
         // Create the AlertDialog object and return it
         return builder.create();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        isStarted = true;
+
+        startCountdown((AlertDialog) getDialog());
+    }
+
+    @Override
+    public void onStop() {
+        isStarted = false;
+        super.onStop();
+    }
+
+    private void startCountdown(AlertDialog dialog) {
+        if(!isStarted) return;
+
+        Button button = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+        if(secondsLeft == 0) {
+            button.setEnabled(true);
+            button.setText(getString(R.string.accept));
+            return;
+        }
+
+        button.setEnabled(false);
+        button.setText(getString(R.string.accept_alt, secondsLeft));
+        secondsLeft--;
+
+        new Handler().postDelayed(() -> startCountdown(dialog), 1000);
     }
 }

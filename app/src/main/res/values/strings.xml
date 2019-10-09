@@ -17,6 +17,7 @@
 <resources>
 
     <string name="accept">Accept</string>
+    <string name="accept_alt">Accept (%d)</string>
     <string name="action_cancel">Cancel</string>
     <string name="action_close">Close</string>
     <string name="action_delete">Delete</string>

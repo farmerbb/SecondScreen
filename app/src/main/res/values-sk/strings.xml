@@ -17,6 +17,7 @@
 <resources>
 
     <string name="accept">Súhlasím</string>
+    <string name="accept_alt">Súhlasím (%d)</string>
     <string name="action_cancel">Zrušiť</string>
     <string name="action_close">Zavrieť</string>
     <string name="action_delete">Vymazať</string>
