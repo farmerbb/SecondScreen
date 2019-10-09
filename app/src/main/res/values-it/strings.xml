@@ -228,6 +228,6 @@
     <string name="notch_compat_mode_toast">Quest\'impostazione avrà effetto la prossima volta che un profilo verrà caricato</string>
     <string name="profile_active">Profile active</string>
     <string name="auto_start">Auto-start</string>
-    <string name="auto_start_active">Auto-start is enabled, waiting for display connections&#8230;</string>
+    <string name="auto_start_active">Auto-start enabled, waiting for display connections&#8230;</string>
 
 </resources>
