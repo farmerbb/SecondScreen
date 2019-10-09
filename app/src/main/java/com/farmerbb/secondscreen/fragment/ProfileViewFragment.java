@@ -24,6 +24,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -90,6 +91,10 @@ public final class ProfileViewFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        new Handler().post(this::showUI);
+    }
+
+    private void showUI() {
         // Set values
         setRetainInstance(true);
         setHasOptionsMenu(true);
