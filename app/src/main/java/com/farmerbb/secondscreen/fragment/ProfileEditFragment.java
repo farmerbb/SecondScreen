@@ -47,7 +47,6 @@ import com.farmerbb.secondscreen.R;
 import com.farmerbb.secondscreen.activity.FragmentContainerActivity;
 import com.farmerbb.secondscreen.fragment.dialog.SystemAlertPermissionDialogFragment;
 import com.farmerbb.secondscreen.util.U;
-import com.jrummyapps.android.os.SystemProperties;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -188,7 +187,7 @@ SharedPreferences.OnSharedPreferenceChangeListener {
                     editor.putString("size", prefSaved.getString("size", "reset"));
 
                 if("reset".equals(prefSaved.getString("density", "reset"))) {
-                    editor.putString("density", Integer.toString(SystemProperties.getInt("ro.sf.lcd_density", prefMain.getInt("density", 0))));
+                    editor.putString("density", Integer.toString(U.getSystemProperty("ro.sf.lcd_density", prefMain.getInt("density", 0))));
                     editor.putBoolean("density-reset", true);
                 } else
                     editor.putString("density", prefSaved.getString("density", "reset"));
@@ -210,7 +209,7 @@ SharedPreferences.OnSharedPreferenceChangeListener {
                 if(prefSaved.getBoolean("density-reset", false)) {
                     editor.remove("density-reset");
 
-                    if(Integer.toString(SystemProperties.getInt("ro.sf.lcd_density", prefMain.getInt("density", 0))).equals(prefSaved.getString("density", "reset")))
+                    if(Integer.toString(U.getSystemProperty("ro.sf.lcd_density", prefMain.getInt("density", 0))).equals(prefSaved.getString("density", "reset")))
                         editor.putString("density", "reset");
                     else
                         editor.putString("density", prefSaved.getString("density", "reset"));
@@ -581,7 +580,7 @@ SharedPreferences.OnSharedPreferenceChangeListener {
             String requestedDpi = prefNew.getString("density", "reset");
             int currentHeight = prefMain.getInt("height", 0);
             int currentWidth = prefMain.getInt("width", 0);
-            int currentDpi = SystemProperties.getInt("ro.sf.lcd_density", prefMain.getInt("density", 0));
+            int currentDpi = U.getSystemProperty("ro.sf.lcd_density", prefMain.getInt("density", 0));
 
             // Check to see if the user is trying to set a blacklisted resolution/DPI combo
             boolean blacklisted = U.isBlacklisted(requestedRes, requestedDpi, currentHeight, currentWidth, currentDpi);

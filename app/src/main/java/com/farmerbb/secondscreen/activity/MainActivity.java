@@ -74,7 +74,6 @@ import com.farmerbb.secondscreen.receiver.TaskerConditionReceiver;
 import com.farmerbb.secondscreen.service.DisplayConnectionService;
 import com.farmerbb.secondscreen.service.NotificationService;
 import com.farmerbb.secondscreen.util.U;
-import com.jrummyapps.android.os.SystemProperties;
 
 import java.io.File;
 import java.io.IOException;
@@ -815,7 +814,7 @@ SystemAlertPermissionDialogFragment.Listener {
         SharedPreferences prefMain = U.getPrefMain(this);
         SharedPreferences prefNew = U.getPrefNew(this);
         SharedPreferences.Editor editor = prefNew.edit();
-        String density = Integer.toString(SystemProperties.getInt("ro.sf.lcd_density", prefMain.getInt("density", 0)));
+        String density = Integer.toString(U.getSystemProperty("ro.sf.lcd_density", prefMain.getInt("density", 0)));
 
         editor.putString("density", density);
         editor.apply();

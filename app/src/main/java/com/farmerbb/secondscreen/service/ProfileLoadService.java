@@ -41,7 +41,6 @@ import com.farmerbb.secondscreen.activity.TaskerConditionActivity;
 import com.farmerbb.secondscreen.util.CommandDispatcher;
 import com.farmerbb.secondscreen.util.ShowToast;
 import com.farmerbb.secondscreen.util.U;
-import com.jrummyapps.android.os.SystemProperties;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -854,7 +853,7 @@ public final class ProfileLoadService extends IntentService {
 
         // HDMI rotation
         if(prefCurrent.getBoolean("not_active", true)) {
-            if("portrait".equals(SystemProperties.get("persist.demo.hdmirotation")))
+            if("portrait".equals(U.getSystemProperty("persist.demo.hdmirotation")))
                 editor.putString("hdmi_rotation_system", "portrait");
             else
                 editor.putString("hdmi_rotation_system", "landscape");

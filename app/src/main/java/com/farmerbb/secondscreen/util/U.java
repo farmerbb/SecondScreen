@@ -61,7 +61,6 @@ import com.farmerbb.secondscreen.receiver.LockDeviceReceiver;
 import com.farmerbb.secondscreen.service.ProfileLoadService;
 import com.farmerbb.secondscreen.service.TurnOffService;
 import com.farmerbb.secondscreen.support.NonRootUtils;
-import com.jrummyapps.android.os.SystemProperties;
 
 import org.apache.commons.lang3.math.NumberUtils;
 
@@ -361,7 +360,7 @@ public final class U {
 
         SharedPreferences prefMain = getPrefMain(context);
         String currentDpi;
-        String nativeDpi = Integer.toString(SystemProperties.getInt("ro.sf.lcd_density", prefMain.getInt("density", 0)));
+        String nativeDpi = Integer.toString(U.getSystemProperty("ro.sf.lcd_density", prefMain.getInt("density", 0)));
 
         if(prefMain.getBoolean("debug_mode", false)) {
             SharedPreferences prefCurrent = getPrefCurrent(context);
@@ -1100,7 +1099,7 @@ public final class U {
     }
 
     public static boolean isBlissOs(Context context) {
-        String blissVersion = SystemProperties.get("ro.bliss.version");
+        String blissVersion = U.getSystemProperty("ro.bliss.version");
         return blissVersion != null && !blissVersion.isEmpty()
                 && BuildConfig.APPLICATION_ID.equals("com.farmerbb.secondscreen.free")
                 && isSystemApp(context);
@@ -1115,7 +1114,7 @@ public final class U {
         Display disp = wm.getDefaultDisplay();
         disp.getRealMetrics(metrics);
 
-        editor.putInt("density", SystemProperties.getInt("ro.sf.lcd_density", metrics.densityDpi));
+        editor.putInt("density", U.getSystemProperty("ro.sf.lcd_density", metrics.densityDpi));
 
         if(context.getApplicationContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             if(wm.getDefaultDisplay().getRotation() == Surface.ROTATION_90
@@ -1328,7 +1327,7 @@ public final class U {
                             + "x"
                             + Integer.toString(prefMain.getInt("height", 0)));
 
-                    editor.putString("density", Integer.toString(SystemProperties.getInt("ro.sf.lcd_density", prefMain.getInt("density", 0))));
+                    editor.putString("density", Integer.toString(U.getSystemProperty("ro.sf.lcd_density", prefMain.getInt("density", 0))));
 
                     editor.putBoolean("size-reset", true);
                     editor.putBoolean("density-reset", true);
@@ -1343,7 +1342,7 @@ public final class U {
                             + "x"
                             + Integer.toString(prefMain.getInt("height", 0)));
 
-                    editor.putString("density", Integer.toString(SystemProperties.getInt("ro.sf.lcd_density", prefMain.getInt("density", 0))));
+                    editor.putString("density", Integer.toString(U.getSystemProperty("ro.sf.lcd_density", prefMain.getInt("density", 0))));
 
                     editor.putBoolean("size-reset", true);
                     editor.putBoolean("density-reset", true);
@@ -1455,5 +1454,25 @@ public final class U {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
                 ? WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
                 : WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY;
+    }
+
+    @SuppressLint("PrivateApi")
+    public static String getSystemProperty(String key) {
+        try {
+            Class<?> cls = Class.forName("android.os.SystemProperties");
+            return cls.getMethod("get", String.class).invoke(null, key).toString();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @SuppressLint("PrivateApi")
+    public static int getSystemProperty(String key, int def) {
+        try {
+            Class<?> cls = Class.forName("android.os.SystemProperties");
+            return (int) cls.getMethod("getInt", String.class, int.class).invoke(null, key, def);
+        } catch (Exception e) {
+            return def;
+        }
     }
 }
