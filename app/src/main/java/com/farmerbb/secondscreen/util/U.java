@@ -37,6 +37,7 @@ import android.content.res.Configuration;
 import android.hardware.display.DisplayManager;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Handler;
 import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
@@ -1445,7 +1446,7 @@ public final class U {
 
     public static void startForegroundService(Context context, Intent intent) {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-            context.startForegroundService(intent);
+            new Handler().post(() -> context.startForegroundService(intent));
         else
             context.startService(intent);
     }
