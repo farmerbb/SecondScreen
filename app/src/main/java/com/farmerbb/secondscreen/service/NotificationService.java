@@ -18,6 +18,8 @@ package com.farmerbb.secondscreen.service;
 import android.annotation.TargetApi;
 import android.app.ActivityManager;
 import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -177,8 +179,21 @@ public final class NotificationService extends RotationLockService {
         Intent mainActivityIntent = new Intent(this, MainActivity.class);
         PendingIntent mainActivityPendingIntent = PendingIntent.getActivity(this, 0, mainActivityIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
+        String id = "NotificationService";
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationManager mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+            CharSequence name = getString(R.string.profile_active);
+
+            int importance = prefMain.getBoolean("hide_notification", false)
+                    ? NotificationManager.IMPORTANCE_MIN
+                    : NotificationManager.IMPORTANCE_LOW;
+
+            mNotificationManager.createNotificationChannel(new NotificationChannel(id, name, importance));
+        }
+
         // Build the notification
-        mBuilder = new NotificationCompat.Builder(this)
+        mBuilder = new NotificationCompat.Builder(this, id)
                 .setContentIntent(mainActivityPendingIntent)
                 .setSmallIcon(R.drawable.ic_action_dock)
                 .setContentTitle(getResources().getString(R.string.notification))

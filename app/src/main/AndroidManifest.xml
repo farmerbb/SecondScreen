@@ -15,6 +15,7 @@
 -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.farmerbb.secondscreen"
     android:installLocation="internalOnly" >
 
@@ -47,13 +48,15 @@
 
     <uses-permission-sdk-23 android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission-sdk-23 android:name="android.permission.WRITE_SECURE_SETTINGS"/>
+    <uses-permission-sdk-23 android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission-sdk-23 android:name="com.farmerbb.secondscreen.support.USE_SUPPORT_LIBRARY"/>
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="${appName}"
-        android:theme="@style/Theme.Secondscreen.2" >
+        android:theme="@style/Theme.Secondscreen.2"
+        tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name="com.farmerbb.secondscreen.activity.DebugModeActivity"
             android:excludeFromRecents="true"

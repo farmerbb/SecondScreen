@@ -15,14 +15,21 @@
 
 package com.farmerbb.secondscreen.service;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.hardware.display.DisplayManager;
+import android.os.Build;
 import android.os.IBinder;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.view.Display;
 
+import com.farmerbb.secondscreen.R;
 import com.farmerbb.secondscreen.activity.HdmiActivity;
 import com.farmerbb.secondscreen.activity.TurnOffActivity;
 import com.farmerbb.secondscreen.util.U;
@@ -94,6 +101,29 @@ public final class DisplayConnectionService extends Service {
     public void onCreate() {
         DisplayManager manager = (DisplayManager) getSystemService(DISPLAY_SERVICE);
         manager.registerDisplayListener(listener, null);
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            String id = "DisplayConnectionService";
+
+            NotificationManager mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+            CharSequence name = getString(R.string.auto_start);
+            int importance = NotificationManager.IMPORTANCE_MIN;
+
+            mNotificationManager.createNotificationChannel(new NotificationChannel(id, name, importance));
+
+            // Build the notification
+            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, id)
+                    .setSmallIcon(R.drawable.ic_action_dock)
+                    .setContentTitle(getString(R.string.auto_start_active))
+                    .setOngoing(true)
+                    .setShowWhen(false);
+
+            // Set notification color on Lollipop
+            mBuilder.setColor(ContextCompat.getColor(this, R.color.primary_dark))
+                    .setVisibility(Notification.VISIBILITY_PUBLIC);
+
+            startForeground(2, mBuilder.build());
+        }
     }
 
     @Override

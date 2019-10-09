@@ -1084,6 +1084,6 @@ public final class ProfileLoadService extends IntentService {
         // Start (or restart) NotificationService
         Intent serviceIntent = new Intent(this, NotificationService.class);
         stopService(serviceIntent);
-        startService(serviceIntent);
+        U.startForegroundService(this, serviceIntent);
     }
 }

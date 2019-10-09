@@ -109,7 +109,7 @@ public final class NotificationSettingsActivity extends PreferenceActivity imple
             if(isNotificationServiceRunning()) {
                 Intent serviceIntent = new Intent(this, NotificationService.class);
                 stopService(serviceIntent);
-                startService(serviceIntent);
+                U.startForegroundService(this, serviceIntent);
             }
         }
     }
@@ -150,7 +150,7 @@ public final class NotificationSettingsActivity extends PreferenceActivity imple
         prefNewEditor.apply();
 
         if(restartNotification)
-            startService(serviceIntent);
+            U.startForegroundService(this, serviceIntent);
     }
 
     /**

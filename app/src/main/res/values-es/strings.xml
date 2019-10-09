@@ -225,5 +225,8 @@
     <string name="pref_title_notch_compat_mode">Notch compatibility mode</string>
     <string name="pref_summary_notch_compat_mode">Apply a workaround on devices with screen notches to improve display output</string>
     <string name="notch_compat_mode_toast">This setting will take effect the next time a profile is loaded</string>
+    <string name="profile_active">Profile active</string>
+    <string name="auto_start">Auto-start</string>
+    <string name="auto_start_active">Auto-start enabled, waiting for display connections&#8230;</string>
 
 </resources>

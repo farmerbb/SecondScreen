@@ -203,7 +203,7 @@ public final class SettingsFragment extends PreferenceFragment implements OnPref
         // Handle starting/stopping DisplayConnectionService
         Intent serviceIntent = new Intent(getActivity(), DisplayConnectionService.class);
         if(prefNew.getBoolean("hdmi", true))
-            getActivity().startService(serviceIntent);
+            U.startForegroundService(getActivity(), serviceIntent);
         else
             getActivity().stopService(serviceIntent);
 

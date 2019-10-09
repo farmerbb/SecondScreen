@@ -1443,4 +1443,17 @@ public final class U {
             return false;
         }
     }
+
+    public static void startForegroundService(Context context, Intent intent) {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+            context.startForegroundService(intent);
+        else
+            context.startService(intent);
+    }
+
+    public static int getOverlayType() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
+                ? WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
+                : WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY;
+    }
 }
