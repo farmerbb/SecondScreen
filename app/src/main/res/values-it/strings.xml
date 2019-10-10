@@ -45,7 +45,7 @@
     <string name="checking_for_superuser">Verifica dell\'accesso superuser... attendere prego.</string>
     <string name="decline">Declina</string>
     <string name="deleting_current_profile">Impossibile cancellare il profilo attualmente attivo</string>
-    <string name="dialog_about_message">SecondScreen: trasmissione dello schermo migliorata per dispositivi Android\n\n© 2018 Braden Farmer\nLogo dell\'app di mayowadavid</string>
+    <string name="dialog_about_message">SecondScreen: trasmissione dello schermo migliorata per dispositivi Android\n\n© 2019 Braden Farmer\nLogo dell\'app di mayowadavid</string>
     <string name="dialog_about_title">A proposito di SecondScreen</string>
     <string name="dialog_are_you_sure">Sei sicuro?</string>
     <string name="dialog_delete_button_title">Cancella profilo</string>

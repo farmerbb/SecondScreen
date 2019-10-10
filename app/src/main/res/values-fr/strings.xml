@@ -45,7 +45,7 @@
     <string name="checking_for_superuser">Checking for superuser access&#8230; please wait.</string>
     <string name="decline">Je refuse</string>
     <string name="deleting_current_profile">Impossible de supprimer le profile en cours</string>
-    <string name="dialog_about_message">SecondScreen: optimisez votre Android pour les grands écrans\n\n&#169; 2018 Braden Farmer\nApp logo by mayowadavid</string>
+    <string name="dialog_about_message">SecondScreen: optimisez votre Android pour les grands écrans\n\n&#169; 2019 Braden Farmer\nApp logo by mayowadavid</string>
     <string name="dialog_about_title">A propos de SecondScreen</string>
     <string name="dialog_are_you_sure">Etes vous sur?</string>
     <string name="dialog_delete_button_title">Supprimer le profile</string>

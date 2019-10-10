@@ -45,7 +45,7 @@
     <string name="checking_for_superuser">Checking for superuser access&#8230; please wait.</string>
     <string name="decline">Decline</string>
     <string name="deleting_current_profile">Cannot delete the currently active profile</string>
-    <string name="dialog_about_message">SecondScreen: better screen mirroring for Android devices\n\n&#169; 2018 Braden Farmer\nApp logo by mayowadavid</string>
+    <string name="dialog_about_message">SecondScreen: better screen mirroring for Android devices\n\n&#169; 2019 Braden Farmer\nApp logo by mayowadavid</string>
     <string name="dialog_about_title">About SecondScreen</string>
     <string name="dialog_are_you_sure">Are you sure?</string>
     <string name="dialog_delete_button_title">Delete profile</string>
