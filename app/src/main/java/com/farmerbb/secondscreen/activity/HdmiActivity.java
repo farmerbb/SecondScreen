@@ -25,7 +25,7 @@ import android.graphics.Typeface;
 import android.hardware.display.DisplayManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.content.LocalBroadcastManager;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.widget.ArrayAdapter;

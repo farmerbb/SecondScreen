@@ -25,6 +25,7 @@ dependencyUpdates {
 allprojects {
     repositories {
         jcenter()
+        google()
     }
 }
 

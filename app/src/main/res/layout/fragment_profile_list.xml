@@ -50,7 +50,7 @@
             android:textColor="@color/text_color_primary" >
         </ListView>
 
-        <android.support.design.widget.FloatingActionButton
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/button_floating_action"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

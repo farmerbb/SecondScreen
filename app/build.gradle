@@ -1,9 +1,5 @@
 apply plugin: 'com.android.application'
 
-ext {
-    SUPPORT_LIBRARY_VERSION = "28.0.0"
-}
-
 repositories {
     google()
 
@@ -96,9 +92,9 @@ android {
 }
 
 dependencies {
-    implementation "com.android.support:support-v4:${SUPPORT_LIBRARY_VERSION}"
-    implementation "com.android.support:appcompat-v7:${SUPPORT_LIBRARY_VERSION}"
-    implementation "com.android.support:design:${SUPPORT_LIBRARY_VERSION}"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'com.google.android.material:material:1.0.0'
     implementation 'org.apache.commons:commons-lang3:3.9'
     implementation 'eu.chainfire:libsuperuser:1.1.0.201907261845'
     implementation 'moe.banana:toast-compat:1.0.5'

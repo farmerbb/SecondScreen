@@ -48,7 +48,7 @@
 
     </LinearLayout>
 
-    <android.support.design.widget.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/button_floating_action_welcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
