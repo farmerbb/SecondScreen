@@ -709,7 +709,7 @@ public final class U {
     public static void showToast(Context context, String message, int length) {
         cancelToast();
 
-        ToastInterface toast =  new ToastCompatImpl(context, message, length);
+        ToastInterface toast = createToast(context.getApplicationContext(), message, length);
         toast.show();
 
         ToastHelper.getInstance().setLastToast(toast);
@@ -718,6 +718,13 @@ public final class U {
     public static void cancelToast() {
         ToastInterface toast = ToastHelper.getInstance().getLastToast();
         if(toast != null) toast.cancel();
+    }
+
+    private static ToastInterface createToast(Context context, String message, int length) {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1)
+            return new ToastFrameworkImpl(context, message, length);
+        else
+            return new ToastCompatImpl(context, message, length);
     }
 
     // Generates blurb text for profile options, used in various places in the UI
