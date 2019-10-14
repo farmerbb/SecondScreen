@@ -21,7 +21,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
-import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.ListPreference;
@@ -38,8 +37,6 @@ import com.farmerbb.secondscreen.fragment.dialog.QuickActionsDialogFragment;
 import com.farmerbb.secondscreen.service.LockDeviceService;
 import com.farmerbb.secondscreen.util.PluginBundleManagerQuickActions;
 import com.farmerbb.secondscreen.util.U;
-
-import java.util.Scanner;
 
 // This is the Quick Actions dialog, accessible by pressing the Quick Actions item in the action
 // bar in MainActivity, the Quick Actions button in the notification bar, or by choosing the
@@ -404,9 +401,6 @@ SharedPreferences.OnSharedPreferenceChangeListener {
 
                         String requestedRes = " ";
                         String requestedDpi = " ";
-                        int currentHeight = 0;
-                        int currentWidth = 0;
-                        int currentDpi;
 
                         switch(key) {
                             case "temp_size":
@@ -419,48 +413,8 @@ SharedPreferences.OnSharedPreferenceChangeListener {
                                 break;
                         }
 
-                        if(prefMain.getBoolean("debug_mode", false)) {
-                            String size = prefCurrent.getString("size", "reset");
-                            String density = prefCurrent.getString("density", "reset");
-
-                            if("reset".equals(size)) {
-                                currentHeight = prefMain.getInt("height", 0);
-                                currentWidth = prefMain.getInt("width", 0);
-                            } else {
-                                Scanner scanner = new Scanner(size);
-                                scanner.useDelimiter("x");
-
-                                if(prefMain.getBoolean("landscape", false)) {
-                                    currentHeight = scanner.nextInt();
-                                    currentWidth = scanner.nextInt();
-                                } else {
-                                    currentWidth = scanner.nextInt();
-                                    currentHeight = scanner.nextInt();
-                                }
-
-                                scanner.close();
-                            }
-
-                            if("reset".equals(density))
-                                currentDpi = prefMain.getInt("density", 0);
-                            else
-                                currentDpi = Integer.parseInt(density);
-                        } else {
-                            if((getApplicationContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT && !prefMain.getBoolean("landscape", false))
-                                    || (getApplicationContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE && prefMain.getBoolean("landscape", false))) {
-                                currentHeight = metrics.heightPixels;
-                                currentWidth = metrics.widthPixels;
-                            } else if((getApplicationContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE && !prefMain.getBoolean("landscape", false))
-                                    || (getApplicationContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT && prefMain.getBoolean("landscape", false))) {
-                                currentHeight = metrics.widthPixels;
-                                currentWidth = metrics.heightPixels;
-                            }
-
-                            currentDpi = metrics.densityDpi;
-                        }
-
                         // Check to see if the user is trying to set a blacklisted resolution/DPI combo
-                        blacklisted = U.isBlacklisted(requestedRes, requestedDpi, currentHeight, currentWidth, currentDpi);
+                        blacklisted = U.isBlacklisted(this, requestedRes, requestedDpi);
 
                         if(blacklisted && !prefMain.getBoolean("expert_mode", false))
                             U.showToastLong(this, R.string.blacklisted);

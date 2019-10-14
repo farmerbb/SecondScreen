@@ -16,6 +16,20 @@ android {
         applicationId "com.farmerbb.secondscreen"
         minSdkVersion 17
 
+        /* targetSdkVersion is explicitly set to API 27.
+         * This is the earliest API level that Google still allows apps to be published on the
+         * Play Store with, and also happens to be the latest API level that Android allows using
+         * reflection to set resolution / DPI on non-rooted devices with (on Android 9 and later)
+         *
+         * After November 1, 2019, the following changes will need to be made to SecondScreen:
+         *
+         * - Add verbiage somewhere in the app (a snackbar, maybe?) encouraging users to download
+         * the SecondScreen Support Library as that will be the only way for users on non-rooted
+         * devices running Android 9 or later to set resolution / DPI without a reboot
+         *
+         * - Re-implement the changes made in commit 434328b (and reverted in 3d36992) setting
+         * the default UI refresh method to "soft reboot" on Android 9 and later
+         */
         //noinspection OldTargetApi
         targetSdkVersion 27
 

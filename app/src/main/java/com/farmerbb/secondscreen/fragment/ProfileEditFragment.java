@@ -578,12 +578,9 @@ SharedPreferences.OnSharedPreferenceChangeListener {
 
             String requestedRes = prefNew.getString("size", "reset");
             String requestedDpi = prefNew.getString("density", "reset");
-            int currentHeight = prefMain.getInt("height", 0);
-            int currentWidth = prefMain.getInt("width", 0);
-            int currentDpi = U.getSystemProperty("ro.sf.lcd_density", prefMain.getInt("density", 0));
 
             // Check to see if the user is trying to set a blacklisted resolution/DPI combo
-            boolean blacklisted = U.isBlacklisted(requestedRes, requestedDpi, currentHeight, currentWidth, currentDpi);
+            boolean blacklisted = U.isBlacklisted(getActivity(), requestedRes, requestedDpi);
 
             if(blacklisted && !prefMain.getBoolean("expert_mode", false))
                 U.showToastLong(getActivity(), R.string.blacklisted);
