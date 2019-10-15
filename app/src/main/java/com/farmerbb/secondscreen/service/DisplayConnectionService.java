@@ -15,9 +15,9 @@
 
 package com.farmerbb.secondscreen.service;
 
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -31,6 +31,7 @@ import android.view.Display;
 
 import com.farmerbb.secondscreen.R;
 import com.farmerbb.secondscreen.activity.HdmiActivity;
+import com.farmerbb.secondscreen.activity.MainActivity;
 import com.farmerbb.secondscreen.activity.TurnOffActivity;
 import com.farmerbb.secondscreen.util.U;
 
@@ -103,6 +104,10 @@ public final class DisplayConnectionService extends Service {
         manager.registerDisplayListener(listener, null);
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            // Intent to launch MainActivity when notification is clicked
+            Intent mainActivityIntent = new Intent(this, MainActivity.class);
+            PendingIntent mainActivityPendingIntent = PendingIntent.getActivity(this, 0, mainActivityIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
             String id = "DisplayConnectionService";
 
             NotificationManager mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
@@ -113,6 +118,7 @@ public final class DisplayConnectionService extends Service {
 
             // Build the notification
             NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, id)
+                    .setContentIntent(mainActivityPendingIntent)
                     .setSmallIcon(R.drawable.ic_action_dock)
                     .setContentTitle(getString(R.string.auto_start_active))
                     .setOngoing(true)
