@@ -53,6 +53,7 @@ public final class SettingsFragment extends PreferenceFragment implements OnPref
      * implement this interface in order to receive event call backs. */
     public interface Listener {
         void showExpertModeDialog(CheckBoxPreference checkBoxPreference);
+        void showSafeModeDialog(CheckBoxPreference checkBoxPreference);
     }
 
     // Use this instance of the interface to deliver action events
@@ -231,11 +232,21 @@ public final class SettingsFragment extends PreferenceFragment implements OnPref
     @Override
     public boolean onPreferenceClick(Preference p) {
         SharedPreferences prefCurrent = U.getPrefCurrent(getActivity());
+        SharedPreferences prefNew = U.getPrefNew(getActivity());
 
         switch(p.getKey()) {
             case "safe_mode":
-                if(!prefCurrent.getBoolean("not_active", true) && !"quick_actions".equals(prefCurrent.getString("filename", "0")))
-                    safeMode = true;
+                if(!prefNew.getBoolean("safe_mode", true)) {
+                    SharedPreferences.Editor editor = prefNew.edit();
+                    editor.putBoolean("safe_mode", true);
+                    editor.apply();
+
+                    CheckBoxPreference checkBoxPreference = (CheckBoxPreference) p;
+                    checkBoxPreference.setChecked(true);
+
+                    listener.showSafeModeDialog(checkBoxPreference);
+                } else
+                    safeModePrefChanged();
                 break;
             case "hdmi_select_profile":
                 // Get number of files
@@ -249,7 +260,6 @@ public final class SettingsFragment extends PreferenceFragment implements OnPref
                 }
                 break;
             case "expert_mode":
-                SharedPreferences prefNew = U.getPrefNew(getActivity());
                 if(prefNew.getBoolean("expert_mode", false)) {
                     SharedPreferences.Editor editor = prefNew.edit();
                     editor.putBoolean("expert_mode", false);
@@ -283,5 +293,24 @@ public final class SettingsFragment extends PreferenceFragment implements OnPref
             editor.putBoolean("expert_mode", true);
             editor.apply();
         } catch (NullPointerException e) { /* Gracefully fail */ }
+    }
+
+    public void onSafeModeDialogPositiveClick(CheckBoxPreference checkBoxPreference) {
+        try {
+            checkBoxPreference.setChecked(false);
+
+            SharedPreferences prefNew = U.getPrefNew(getActivity());
+            SharedPreferences.Editor editor = prefNew.edit();
+            editor.putBoolean("safe_mode", false);
+            editor.apply();
+
+            safeModePrefChanged();
+        } catch (NullPointerException e) { /* Gracefully fail */ }
+    }
+
+    private void safeModePrefChanged() {
+        SharedPreferences prefCurrent = U.getPrefCurrent(getActivity());
+        if(!prefCurrent.getBoolean("not_active", true) && !"quick_actions".equals(prefCurrent.getString("filename", "0")))
+            safeMode = true;
     }
 }

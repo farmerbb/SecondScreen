@@ -29,12 +29,14 @@ import com.farmerbb.secondscreen.fragment.OverscanFragment;
 import com.farmerbb.secondscreen.fragment.SettingsFragment;
 import com.farmerbb.secondscreen.fragment.dialog.ExpertModeDialogFragment;
 import com.farmerbb.secondscreen.fragment.dialog.KeepOverscanDialogFragment;
+import com.farmerbb.secondscreen.fragment.dialog.SafeModeDialogFragment;
 
 // This activity serves as a container for any fragments that are not part of the main app flow.
 // Currently, this activity will load either the SettingsFragment, or the OverscanFragment
 // as part of the profile edit flow.
 public final class FragmentContainerActivity extends AppCompatActivity implements
         ExpertModeDialogFragment.Listener,
+        SafeModeDialogFragment.Listener,
         KeepOverscanDialogFragment.Listener,
         SettingsFragment.Listener,
         OverscanFragment.Listener {
@@ -107,6 +109,21 @@ public final class FragmentContainerActivity extends AppCompatActivity implement
         ExpertModeDialogFragment expertModeFragment = new ExpertModeDialogFragment();
         expertModeFragment.setPreference(checkBoxPreference);
         expertModeFragment.show(getFragmentManager(), "expert-mode");
+    }
+
+    @Override
+    public void onSafeModeDialogPositiveClick(CheckBoxPreference checkBoxPreference) {
+        if(getFragmentManager().findFragmentById(R.id.fragmentContainer) instanceof SettingsFragment) {
+            SettingsFragment fragment = (SettingsFragment) getFragmentManager().findFragmentByTag("SettingsFragment");
+            fragment.onSafeModeDialogPositiveClick(checkBoxPreference);
+        }
+    }
+
+    @Override
+    public void showSafeModeDialog(CheckBoxPreference checkBoxPreference) {
+        SafeModeDialogFragment safeModeFragment = new SafeModeDialogFragment();
+        safeModeFragment.setPreference(checkBoxPreference);
+        safeModeFragment.show(getFragmentManager(), "safe-mode");
     }
 
     @Override
