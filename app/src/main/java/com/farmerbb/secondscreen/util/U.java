@@ -20,6 +20,7 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.admin.DevicePolicyManager;
 import android.content.ActivityNotFoundException;
@@ -629,14 +630,23 @@ public final class U {
                             .append(" ").append(command).append("\n");
             }
 
-            Notification notification = new NotificationCompat.Builder(context)
+            NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            String id = "debug_mode";
+
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                CharSequence name = context.getString(R.string.debug_mode);
+                int importance = NotificationManager.IMPORTANCE_LOW;
+
+                nm.createNotificationChannel(new NotificationChannel(id, name, importance));
+            }
+
+            Notification notification = new NotificationCompat.Builder(context, id)
                     .setSmallIcon(R.drawable.ic_stat_name)
                     .setContentTitle(context.getResources().getString(R.string.debug_mode_enabled))
                     .setContentText(dump.toString())
                     .setStyle(new NotificationCompat.BigTextStyle().bigText(dump.toString()))
                     .build();
 
-            NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
             nm.notify(new Random().nextInt(), notification);
 
             // Some devices (Android TV) don't show notifications, so let's also print the commands

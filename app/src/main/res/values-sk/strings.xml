@@ -231,5 +231,6 @@
     <string name="auto_start_active">Auto-start enabled, waiting for display connections&#8230;</string>
     <string name="background_operations">Background operations</string>
     <string name="background_operations_active">Performing background operations&#8230;</string>
+    <string name="debug_mode">Debug mode</string>
 
 </resources>
