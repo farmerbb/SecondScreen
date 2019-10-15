@@ -362,7 +362,7 @@ public final class U {
 
         SharedPreferences prefMain = getPrefMain(context);
         String currentDpi;
-        String nativeDpi = Integer.toString(U.getSystemProperty("ro.sf.lcd_density", prefMain.getInt("density", 0)));
+        String nativeDpi = Integer.toString(getSystemProperty("ro.sf.lcd_density", prefMain.getInt("density", 0)));
 
         if(prefMain.getBoolean("debug_mode", false)) {
             SharedPreferences prefCurrent = getPrefCurrent(context);
@@ -658,6 +658,20 @@ public final class U {
 
     // Loads a profile with the given filename
     public static void loadProfile(Context context, String filename) {
+        SharedPreferences prefSaved = getPrefSaved(context, filename);
+        SharedPreferences prefMain = getPrefMain(context);
+
+        String requestedRes = prefSaved.getString("size", "reset");
+        String requestedDpi = prefSaved.getString("density", "reset");
+
+        // Check to see if the user is trying to load a profile with a blacklisted resolution/DPI combo
+        boolean blacklisted = isBlacklisted(context, requestedRes, requestedDpi);
+
+        if(blacklisted && !prefMain.getBoolean("expert_mode", false)) {
+            showToastLong(context, R.string.blacklisted);
+            return;
+        }
+        
         // Initialize the support library
         if(hasSupportLibrary(context)) {
             try {
@@ -678,7 +692,7 @@ public final class U {
             Intent intent = new Intent(context, ProfileLoadService.class);
             // Get filename of selected profile
             intent.putExtra(NAME, filename);
-            U.startService(context, intent);
+            startService(context, intent);
         } else {
             Intent intent = new Intent(context, WriteSettingsPermissionActivity.class);
             intent.putExtra("action", "load-profile");
@@ -699,7 +713,7 @@ public final class U {
 
             // Start TurnOffService
             Intent intent = new Intent(context, TurnOffService.class);
-            U.startService(context, intent);
+            startService(context, intent);
         } else {
             Intent intent = new Intent(context, WriteSettingsPermissionActivity.class);
             intent.putExtra("action", "turn-off-profile");
@@ -1127,7 +1141,7 @@ public final class U {
     }
 
     public static boolean isBlissOs(Context context) {
-        String blissVersion = U.getSystemProperty("ro.bliss.version");
+        String blissVersion = getSystemProperty("ro.bliss.version");
         return blissVersion != null && !blissVersion.isEmpty()
                 && BuildConfig.APPLICATION_ID.equals("com.farmerbb.secondscreen.free")
                 && isSystemApp(context);
@@ -1142,7 +1156,7 @@ public final class U {
         Display disp = wm.getDefaultDisplay();
         disp.getRealMetrics(metrics);
 
-        editor.putInt("density", U.getSystemProperty("ro.sf.lcd_density", metrics.densityDpi));
+        editor.putInt("density", getSystemProperty("ro.sf.lcd_density", metrics.densityDpi));
 
         if(context.getApplicationContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             if(wm.getDefaultDisplay().getRotation() == Surface.ROTATION_90
@@ -1355,7 +1369,7 @@ public final class U {
                             + "x"
                             + Integer.toString(prefMain.getInt("height", 0)));
 
-                    editor.putString("density", Integer.toString(U.getSystemProperty("ro.sf.lcd_density", prefMain.getInt("density", 0))));
+                    editor.putString("density", Integer.toString(getSystemProperty("ro.sf.lcd_density", prefMain.getInt("density", 0))));
 
                     editor.putBoolean("size-reset", true);
                     editor.putBoolean("density-reset", true);
@@ -1370,7 +1384,7 @@ public final class U {
                             + "x"
                             + Integer.toString(prefMain.getInt("height", 0)));
 
-                    editor.putString("density", Integer.toString(U.getSystemProperty("ro.sf.lcd_density", prefMain.getInt("density", 0))));
+                    editor.putString("density", Integer.toString(getSystemProperty("ro.sf.lcd_density", prefMain.getInt("density", 0))));
 
                     editor.putBoolean("size-reset", true);
                     editor.putBoolean("density-reset", true);
