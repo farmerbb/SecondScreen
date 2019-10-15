@@ -23,7 +23,7 @@ import com.farmerbb.secondscreen.util.U;
 
 // This service is run after LockDeviceService, to restore the user's previous screen lock timeout
 // preference which is set to 0 in order to lock the device immediately.
-public final class TimeoutService extends IntentService {
+public final class TimeoutService extends SecondScreenIntentService {
 
     /**
      * A constructor is required, and must call the super IntentService(String)
@@ -35,6 +35,8 @@ public final class TimeoutService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
+        super.onHandleIntent(intent);
+
         // Check to see if we need to reset the lock screen lock after timeout value
         SharedPreferences prefMain = U.getPrefMain(this);
         int timeout = prefMain.getInt("timeout", -1);

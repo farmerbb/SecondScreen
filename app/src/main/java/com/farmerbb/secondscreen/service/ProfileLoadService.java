@@ -58,7 +58,7 @@ import java.util.Arrays;
 // to the current.xml file, so that only actions that differ from those already performed are
 // executed.  Lastly, the ProfileLoadService starts (or restarts) the NotificationService so that
 // the user is always informed of what profile is currently active.
-public final class ProfileLoadService extends IntentService {
+public final class ProfileLoadService extends SecondScreenIntentService {
 
     String filename;
     Handler showToast;
@@ -75,6 +75,8 @@ public final class ProfileLoadService extends IntentService {
     @SuppressLint("CommitPrefEdits")
     @Override
     protected void onHandleIntent(Intent intent) {
+        super.onHandleIntent(intent);
+
         if(intent.getStringExtra(U.NAME) != null)
             filename = intent.getStringExtra(U.NAME);
 
@@ -1083,6 +1085,6 @@ public final class ProfileLoadService extends IntentService {
         // Start (or restart) NotificationService
         Intent serviceIntent = new Intent(this, NotificationService.class);
         stopService(serviceIntent);
-        U.startForegroundService(this, serviceIntent);
+        U.startService(this, serviceIntent);
     }
 }

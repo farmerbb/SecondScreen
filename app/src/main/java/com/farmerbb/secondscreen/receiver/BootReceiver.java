@@ -47,7 +47,7 @@ public final class BootReceiver extends BroadcastReceiver {
             // Restore DisplayConnectionService
             if(prefMain.getBoolean("hdmi", true) && prefMain.getBoolean("first-run", false)) {
                 Intent serviceIntent = new Intent(context, DisplayConnectionService.class);
-                U.startForegroundService(context, serviceIntent);
+                U.startService(context, serviceIntent);
             }
 
             if(!prefCurrent.getBoolean("not_active", true)) {
@@ -77,22 +77,22 @@ public final class BootReceiver extends BroadcastReceiver {
 
                         // Restore NotificationService
                         Intent serviceIntent = new Intent(context, NotificationService.class);
-                        U.startForegroundService(context, serviceIntent);
+                        U.startService(context, serviceIntent);
 
                         // Start BootService to run superuser commands
                         Intent serviceIntent2 = new Intent(context, BootService.class);
-                        context.startService(serviceIntent2);
+                        U.startService(context, serviceIntent2);
                     }
                 } else {
                     prefCurrent.edit().putBoolean("reboot_required", false).apply();
 
                     // Restore NotificationService
                     Intent serviceIntent = new Intent(context, NotificationService.class);
-                    U.startForegroundService(context, serviceIntent);
+                    U.startService(context, serviceIntent);
 
                     // Start BootService to run superuser commands
                     Intent serviceIntent2 = new Intent(context, BootService.class);
-                    context.startService(serviceIntent2);
+                    U.startService(context, serviceIntent2);
                 }
             }
         }

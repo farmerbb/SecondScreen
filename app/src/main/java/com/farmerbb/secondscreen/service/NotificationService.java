@@ -61,10 +61,10 @@ public final class NotificationService extends RotationLockService {
 
             if(U.castScreenActive(NotificationService.this)) {
                 Intent serviceIntent = new Intent(context, TempBacklightOnService.class);
-                context.startService(serviceIntent);
+                U.startService(context, serviceIntent);
             } else {
                 Intent serviceIntent = new Intent(context, ScreenOnService.class);
-                context.startService(serviceIntent);
+                U.startService(context, serviceIntent);
             }
         }
     };
@@ -82,7 +82,7 @@ public final class NotificationService extends RotationLockService {
             if(U.castScreenActive(NotificationService.this)
                     || screenOnTime < (System.currentTimeMillis() - 5000)) {
                 Intent serviceIntent = new Intent(context, ScreenOnService.class);
-                context.startService(serviceIntent);
+                U.startService(context, serviceIntent);
             }
         }
     };
@@ -212,7 +212,7 @@ public final class NotificationService extends RotationLockService {
         // Set notification color on Lollipop
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             mBuilder.setColor(ContextCompat.getColor(this, R.color.primary_dark))
-                    .setVisibility(Notification.VISIBILITY_PUBLIC);
+                    .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
         }
 
         startForeground(1, mBuilder.build());

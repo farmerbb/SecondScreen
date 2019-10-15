@@ -30,7 +30,7 @@ import java.io.File;
 // turn their device off and back on.
 // This service will turn the backlight off immediately after the user wakes their device from sleep.
 // (If the user is mirroring their display to Chromecast, the TempBacklightOnService is run instead.)
-public final class ScreenOnService extends IntentService {
+public final class ScreenOnService extends SecondScreenIntentService {
 
     /**
      * A constructor is required, and must call the super IntentService(String)
@@ -42,6 +42,8 @@ public final class ScreenOnService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
+        super.onHandleIntent(intent);
+
         // Turn the backlight back off after the device wakes up
         SharedPreferences prefCurrent = U.getPrefCurrent(this);
         SharedPreferences prefMain = U.getPrefMain(this);

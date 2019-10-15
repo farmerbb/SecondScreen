@@ -193,17 +193,17 @@ public final class SettingsFragment extends PreferenceFragment implements OnPref
             Intent serviceIntent = new Intent(getActivity(), SafeModeToggleService.class);
             if(prefNew.getBoolean("safe_mode", false) && !prefMain.getBoolean("safe_mode", false)) {
                 serviceIntent.putExtra("safe_mode", true);
-                getActivity().startService(serviceIntent);
+                U.startService(getActivity(), serviceIntent);
             } else if(!prefNew.getBoolean("safe_mode", false) && prefMain.getBoolean("safe_mode", false)) {
                 serviceIntent.putExtra("safe_mode", false);
-                getActivity().startService(serviceIntent);
+                U.startService(getActivity(), serviceIntent);
             }
         }
 
         // Handle starting/stopping DisplayConnectionService
         Intent serviceIntent = new Intent(getActivity(), DisplayConnectionService.class);
         if(prefNew.getBoolean("hdmi", true))
-            U.startForegroundService(getActivity(), serviceIntent);
+            U.startService(getActivity(), serviceIntent);
         else
             getActivity().stopService(serviceIntent);
 

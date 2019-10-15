@@ -37,7 +37,7 @@ import com.farmerbb.secondscreen.util.U;
 // If necessary, this service will also temporarily set the user's screen lock timeout preference
 // to 0, to ensure that the device is locked immediately.  The TimeoutService is run sometime after
 // to restore the original value.
-public final class LockDeviceService extends IntentService {
+public final class LockDeviceService extends SecondScreenIntentService {
 
     /**
      * A constructor is required, and must call the super IntentService(String)
@@ -49,6 +49,8 @@ public final class LockDeviceService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
+        super.onHandleIntent(intent);
+
         // Close the notification drawer
         Intent closeDrawer = new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
         sendBroadcast(closeDrawer);

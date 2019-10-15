@@ -189,7 +189,7 @@ public final class OverscanFragment extends PreferenceFragment implements
 
         Intent serviceIntent = new Intent(getActivity(), TestOverscanService.class);
         serviceIntent.putExtra("test_overscan", testOverscan);
-        getActivity().startService(serviceIntent);
+        U.startService(getActivity(), serviceIntent);
     }
 
     public void finish(boolean resetOverscan) {
@@ -221,7 +221,7 @@ public final class OverscanFragment extends PreferenceFragment implements
 
             Intent serviceIntent = new Intent(getActivity(), TestOverscanService.class);
             serviceIntent.putExtra("test_overscan", testOverscan);
-            getActivity().startService(serviceIntent);
+            U.startService(getActivity(), serviceIntent);
         }
 
         return true;

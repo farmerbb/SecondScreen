@@ -668,7 +668,7 @@ public final class U {
             Intent intent = new Intent(context, ProfileLoadService.class);
             // Get filename of selected profile
             intent.putExtra(NAME, filename);
-            context.startService(intent);
+            U.startService(context, intent);
         } else {
             Intent intent = new Intent(context, WriteSettingsPermissionActivity.class);
             intent.putExtra("action", "load-profile");
@@ -689,7 +689,7 @@ public final class U {
 
             // Start TurnOffService
             Intent intent = new Intent(context, TurnOffService.class);
-            context.startService(intent);
+            U.startService(context, intent);
         } else {
             Intent intent = new Intent(context, WriteSettingsPermissionActivity.class);
             intent.putExtra("action", "turn-off-profile");
@@ -997,8 +997,7 @@ public final class U {
             blacklisted = true;
 
         // On Android 10, blacklist resolutions that are larger than the device's native resolution
-        // TODO: need to figure out if this affects earlier Android versions as well
-        if(getCurrentApiVersion() >= 29.0 && (height > defaultHeight || width > defaultWidth))
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && (height > defaultHeight || width > defaultWidth))
             blacklisted = true;
 
         return blacklisted;
@@ -1462,7 +1461,7 @@ public final class U {
         }
     }
 
-    public static void startForegroundService(Context context, Intent intent) {
+    public static void startService(Context context, Intent intent) {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
             new Handler().post(() -> context.startForegroundService(intent));
         else

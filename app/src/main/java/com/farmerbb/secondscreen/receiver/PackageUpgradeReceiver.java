@@ -39,13 +39,13 @@ public final class PackageUpgradeReceiver extends BroadcastReceiver {
             // Restore DisplayConnectionService
             if(prefMain.getBoolean("hdmi", true) && prefMain.getBoolean("first-run", false)) {
                 Intent serviceIntent = new Intent(context, DisplayConnectionService.class);
-                U.startForegroundService(context, serviceIntent);
+                U.startService(context, serviceIntent);
             }
 
             // Restore NotificationService
             if(!prefCurrent.getBoolean("not_active", true)) {
                 Intent serviceIntent = new Intent(context, NotificationService.class);
-                U.startForegroundService(context, serviceIntent);
+                U.startService(context, serviceIntent);
             }
         }
     }

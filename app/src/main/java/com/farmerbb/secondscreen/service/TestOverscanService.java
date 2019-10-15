@@ -22,7 +22,7 @@ import android.content.SharedPreferences;
 import com.farmerbb.secondscreen.util.U;
 
 // This service is launched via OverscanActivity to temporarily test (and restore) overscan values.
-public final class TestOverscanService extends IntentService {
+public final class TestOverscanService extends SecondScreenIntentService {
 
     /**
      * A constructor is required, and must call the super IntentService(String)
@@ -34,6 +34,8 @@ public final class TestOverscanService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
+        super.onHandleIntent(intent);
+
         String overscanValues;
 
         SharedPreferences prefNew = U.getPrefNew(this);

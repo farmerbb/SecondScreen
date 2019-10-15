@@ -44,7 +44,7 @@ import java.util.Arrays;
 // that service, and essentially reverses these actions, to restore the device to the state it was
 // in before the profile was loaded.  It will also stop the NotificationService.
 
-public final class TurnOffService extends IntentService {
+public final class TurnOffService extends SecondScreenIntentService {
 
     Handler showToast;
 
@@ -60,6 +60,8 @@ public final class TurnOffService extends IntentService {
     @SuppressLint("CommitPrefEdits")
     @Override
     protected void onHandleIntent(Intent intent) {
+        super.onHandleIntent(intent);
+
         SharedPreferences prefCurrent = U.getPrefCurrent(this);
 
         if(U.hasElevatedPermissions(this, true))

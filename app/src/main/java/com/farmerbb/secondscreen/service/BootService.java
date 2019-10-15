@@ -29,7 +29,7 @@ import java.util.Arrays;
 
 // Service launched by BootReceiver.  Certain profile options (backlight off, vibration off, etc)
 // do not stick after a device reboot; this service takes care of re-running any needed commands.
-public final class BootService extends IntentService {
+public final class BootService extends SecondScreenIntentService {
 
     /**
      * A constructor is required, and must call the super IntentService(String)
@@ -41,6 +41,8 @@ public final class BootService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
+        super.onHandleIntent(intent);
+
         // Load preferences
         SharedPreferences prefCurrent = U.getPrefCurrent(this);
         SharedPreferences prefMain = U.getPrefMain(this);

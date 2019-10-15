@@ -23,7 +23,7 @@ import com.farmerbb.secondscreen.util.U;
 
 // This service is launched whenever the safe mode option has been changed in the app settings,
 // and a user-created profile is currently active.
-public final class SafeModeToggleService extends IntentService {
+public final class SafeModeToggleService extends SecondScreenIntentService {
 
     /**
      * A constructor is required, and must call the super IntentService(String)
@@ -35,6 +35,8 @@ public final class SafeModeToggleService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
+        super.onHandleIntent(intent);
+
         // Superuser commands to run
         final int safeModeDensityCommand = 0;
         final int safeModeSizeCommand = 1;

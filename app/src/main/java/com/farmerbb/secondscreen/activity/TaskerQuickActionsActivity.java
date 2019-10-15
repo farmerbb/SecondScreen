@@ -86,7 +86,7 @@ SharedPreferences.OnSharedPreferenceChangeListener {
         else if(launchShortcut) {
             if(key.equals("lock_device")) {
                 Intent intent = new Intent(this, LockDeviceService.class);
-                startService(intent);
+                U.startService(this, intent);
                 finish();
             } else if(key.equals("turn_off"))
                 runResetSettings();
@@ -497,7 +497,7 @@ SharedPreferences.OnSharedPreferenceChangeListener {
         if(launchedFromApp) {
             if(p.getKey().equals("lock_device")) {
                 Intent intent = new Intent(this, LockDeviceService.class);
-                startService(intent);
+                U.startService(this, intent);
                 finish();
             } else if(p.getKey().equals("turn_off"))
                 runResetSettings();

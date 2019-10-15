@@ -268,14 +268,14 @@ SystemAlertPermissionDialogFragment.Listener {
             // Restore DisplayConnectionService
             if(prefMain.getBoolean("hdmi", true) && prefMain.getBoolean("first-run", false)) {
                 Intent serviceIntent = new Intent(this, DisplayConnectionService.class);
-                U.startForegroundService(this, serviceIntent);
+                U.startService(this, serviceIntent);
             }
 
             // Restore NotificationService
             SharedPreferences prefCurrent = U.getPrefCurrent(this);
             if(!prefCurrent.getBoolean("not_active", true)) {
                 Intent serviceIntent = new Intent(this, NotificationService.class);
-                U.startForegroundService(this, serviceIntent);
+                U.startService(this, serviceIntent);
             }
 
             if(prefMain.getBoolean("first-run", false)) {
@@ -499,7 +499,7 @@ SystemAlertPermissionDialogFragment.Listener {
 
             // Restore DisplayConnectionService
             Intent serviceIntent = new Intent(this, DisplayConnectionService.class);
-            U.startForegroundService(this, serviceIntent);
+            U.startService(this, serviceIntent);
 
             // Determine if we need to show any dialogs before we create the fragments
             showDialogs();

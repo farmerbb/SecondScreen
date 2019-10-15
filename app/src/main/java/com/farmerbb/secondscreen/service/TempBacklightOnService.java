@@ -29,7 +29,7 @@ import java.io.File;
 // their device.
 // This service is only run if the user is mirroring their display to Chromecast.  For all other
 // scenarios, the ScreenOnService is run instead.
-public final class TempBacklightOnService extends IntentService {
+public final class TempBacklightOnService extends SecondScreenIntentService {
 
     /**
      * A constructor is required, and must call the super IntentService(String)
@@ -41,6 +41,8 @@ public final class TempBacklightOnService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
+        super.onHandleIntent(intent);
+
         SharedPreferences prefCurrent = U.getPrefCurrent(this);
         if(!prefCurrent.getBoolean("not_active", true)
                 && prefCurrent.getBoolean("backlight_off", false)

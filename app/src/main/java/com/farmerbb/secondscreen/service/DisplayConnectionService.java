@@ -120,7 +120,7 @@ public final class DisplayConnectionService extends Service {
 
             // Set notification color on Lollipop
             mBuilder.setColor(ContextCompat.getColor(this, R.color.primary_dark))
-                    .setVisibility(Notification.VISIBILITY_PUBLIC);
+                    .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
 
             startForeground(2, mBuilder.build());
         }
