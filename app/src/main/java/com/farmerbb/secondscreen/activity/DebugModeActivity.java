@@ -24,6 +24,7 @@ import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.widget.Toast;
 
+import com.farmerbb.secondscreen.BuildConfig;
 import com.farmerbb.secondscreen.R;
 import com.farmerbb.secondscreen.service.DisplayConnectionService;
 import com.farmerbb.secondscreen.service.NotificationService;
@@ -69,6 +70,9 @@ public class DebugModeActivity extends PreferenceActivity implements OnPreferenc
         Intent intent2 = new Intent(this, NotificationService.class);
         Intent intent3 = new Intent(U.SIMULATE_REBOOT);
         Intent intent4 = new Intent(U.SIMULATE_APP_UPGRADE);
+
+        intent3.setPackage(BuildConfig.APPLICATION_ID);
+        intent4.setPackage(BuildConfig.APPLICATION_ID);
 
         switch(p.getKey()) {
             case "show_simulated_size_density":
