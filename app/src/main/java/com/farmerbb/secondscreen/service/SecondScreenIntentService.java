@@ -28,6 +28,8 @@ import androidx.core.content.ContextCompat;
 
 import com.farmerbb.secondscreen.R;
 
+import java.util.Random;
+
 public abstract class SecondScreenIntentService extends IntentService {
 
     public SecondScreenIntentService(String name) {
@@ -57,7 +59,7 @@ public abstract class SecondScreenIntentService extends IntentService {
             mBuilder.setColor(ContextCompat.getColor(this, R.color.primary_dark))
                     .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
 
-            startForeground(3, mBuilder.build());
+            startForeground(new Random().nextInt(), mBuilder.build());
         }
     }
 }
