@@ -16,7 +16,6 @@
 package com.farmerbb.secondscreen.service;
 
 import android.annotation.SuppressLint;
-import android.app.IntentService;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
 import android.content.Intent;

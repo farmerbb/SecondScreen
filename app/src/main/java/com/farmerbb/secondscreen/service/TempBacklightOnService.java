@@ -15,7 +15,6 @@
 
 package com.farmerbb.secondscreen.service;
 
-import android.app.IntentService;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.provider.Settings;

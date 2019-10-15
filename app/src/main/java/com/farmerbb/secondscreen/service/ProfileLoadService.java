@@ -16,7 +16,6 @@
 package com.farmerbb.secondscreen.service;
 
 import android.annotation.SuppressLint;
-import android.app.IntentService;
 import android.app.UiModeManager;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
@@ -49,7 +48,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 
-// The ProfileLoadService is animportant service that is responsible for loading all profiles.
+// The ProfileLoadService is an important service that is responsible for loading all profiles.
 // It loads a xml file created by ProfileEditService, and will execute the actions based on
 // what options are set.  For actions requiring superuser access, it will instead generate a list
 // of commands to be run by superuser right after the non-root actions are performed.
