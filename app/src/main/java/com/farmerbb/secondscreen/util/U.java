@@ -1538,10 +1538,10 @@ public final class U {
     }
 
     public static int getExternalDisplayID(Context context) {
-        SharedPreferences prefCurrent = U.getPrefCurrent(context);
+        SharedPreferences prefCurrent = getPrefCurrent(context);
         int savedID = prefCurrent.getInt("external_display_id", -1);
 
-        if(savedID != 1)
+        if(savedID != -1)
             return savedID;
 
         DisplayManager dm = (DisplayManager) context.getSystemService(Context.DISPLAY_SERVICE);

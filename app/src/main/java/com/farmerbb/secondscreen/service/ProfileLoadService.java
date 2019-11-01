@@ -482,6 +482,9 @@ public final class ProfileLoadService extends SecondScreenIntentService {
         else
             editor.putInt("dock_mode_current", dockMode);
 
+        if(U.isDesktopModeActive(this))
+            runRotationCommand = false;
+
         if(runRotationCommand) {
             su[rotationCommand] = U.rotationCommand + Integer.toString(dockMode);
 
