@@ -96,18 +96,18 @@ public final class NonRootUtils {
     @SuppressLint("PrivateApi")
     private static void wmDensity(String commandArg, int displayID) throws Exception {
         // From android.os.UserHandle
-        final int USER_CURRENT = -2;
+        final int USER_CURRENT_OR_SELF = -3;
 
         if(commandArg.equals("reset")) {
             Class.forName("android.view.IWindowManager")
                     .getMethod("clearForcedDisplayDensityForUser", int.class, int.class)
-                    .invoke(getWindowManagerService(), displayID, USER_CURRENT);
+                    .invoke(getWindowManagerService(), displayID, USER_CURRENT_OR_SELF);
         } else {
             int density = Integer.parseInt(commandArg);
 
             Class.forName("android.view.IWindowManager")
                     .getMethod("setForcedDisplayDensityForUser", int.class, int.class, int.class)
-                    .invoke(getWindowManagerService(), displayID, density, USER_CURRENT);
+                    .invoke(getWindowManagerService(), displayID, density, USER_CURRENT_OR_SELF);
         }
     }
 
