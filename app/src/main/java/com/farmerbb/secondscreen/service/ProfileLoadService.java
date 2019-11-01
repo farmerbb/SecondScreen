@@ -292,8 +292,9 @@ public final class ProfileLoadService extends SecondScreenIntentService {
         if(runSizeCommand) {
             String size = prefSaved.getString("size", "reset");
 
-            // Swap height and width if notch compatibility mode is enabled
-            if(!"reset".equals(size) && prefMain.getBoolean("notch_compat_mode", false)) {
+            // Swap height and width under certain conditions
+            if((!"reset".equals(size) && prefMain.getBoolean("notch_compat_mode", false))
+                    || (U.isDesktopModeActive(this) && !prefMain.getBoolean("landscape", false))) {
                 String[] splitSize = size.split("x");
                 size = splitSize[1] + "x" + splitSize[0];
             }

@@ -1537,7 +1537,7 @@ public final class U {
         return desktopModePrefEnabled && getExternalDisplayID(context) != Display.DEFAULT_DISPLAY;
     }
 
-    public static int getExternalDisplayID(Context context) {
+    private static int getExternalDisplayID(Context context) {
         DisplayManager dm = (DisplayManager) context.getSystemService(Context.DISPLAY_SERVICE);
         Display[] displays = dm.getDisplays();
 
