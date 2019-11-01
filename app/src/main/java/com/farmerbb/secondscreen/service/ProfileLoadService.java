@@ -305,7 +305,7 @@ public final class ProfileLoadService extends SecondScreenIntentService {
                 else
                     su[sizeCommand] = U.safeModeSizeCommand(size.replace('x', ','));
             } else
-                su[sizeCommand] = U.sizeCommand(size);
+                su[sizeCommand] = U.sizeCommand(this, size);
         }
 
         if(runDensityCommand) {
@@ -317,7 +317,7 @@ public final class ProfileLoadService extends SecondScreenIntentService {
                 else
                     su[densityCommand] = U.safeModeDensityCommand(density);
             } else {
-                su[densityCommand] = U.densityCommand(density);
+                su[densityCommand] = U.densityCommand(this, density);
 
                 // We run the density command twice, for reliability
                 su[densityCommand2] = su[densityCommand];
@@ -381,10 +381,10 @@ public final class ProfileLoadService extends SecondScreenIntentService {
                                 + splitValues[0];
                     }
 
-                    su[overscanCommand] = U.overscanCommand + overscanValues;
+                    su[overscanCommand] = U.overscanCommand(this, overscanValues);
                 }
             } else if(!prefCurrent.getBoolean("not_active", true) && prefCurrent.getBoolean("overscan", false))
-                su[overscanCommand] = U.overscanCommand + "reset";
+                su[overscanCommand] = U.overscanCommand(this, "reset");
         }
 
         // Screen rotation

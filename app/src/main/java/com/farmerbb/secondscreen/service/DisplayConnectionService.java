@@ -22,7 +22,6 @@ import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.hardware.display.DisplayManager;
-import android.os.Build;
 import android.os.IBinder;
 
 import androidx.annotation.Nullable;
@@ -35,8 +34,8 @@ import com.farmerbb.secondscreen.R;
 import com.farmerbb.secondscreen.activity.HdmiActivity;
 import com.farmerbb.secondscreen.activity.MainActivity;
 import com.farmerbb.secondscreen.activity.TurnOffActivity;
-import com.farmerbb.secondscreen.util.ServiceBinder;
-import com.farmerbb.secondscreen.util.ServiceInterface;
+import com.farmerbb.secondscreen.support.ServiceBinder;
+import com.farmerbb.secondscreen.support.ServiceInterface;
 import com.farmerbb.secondscreen.util.U;
 
 // This is a long-running service started if the "Enable auto-start" preference is set.

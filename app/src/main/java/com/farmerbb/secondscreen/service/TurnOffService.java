@@ -198,7 +198,7 @@ public final class TurnOffService extends SecondScreenIntentService {
                 // Run a different command if we are restarting the ActivityManager
                 su[sizeCommand] = U.safeModeSizeCommand("null");
             else
-                su[sizeCommand] = U.sizeCommand("reset");
+                su[sizeCommand] = U.sizeCommand(this, "reset");
         }
 
         if(runDensityCommand) {
@@ -208,7 +208,7 @@ public final class TurnOffService extends SecondScreenIntentService {
                 // Run a different command if we are restarting the ActivityManager
                 su[densityCommand] = U.safeModeDensityCommand("null");
             else {
-                su[densityCommand] = U.densityCommand("reset");
+                su[densityCommand] = U.densityCommand(this, "reset");
 
                 // We run the density command twice, for reliability
                 su[densityCommand2] = su[densityCommand];
@@ -222,7 +222,7 @@ public final class TurnOffService extends SecondScreenIntentService {
 
         // Overscan
         if((Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR1) && prefCurrent.getBoolean("overscan", true))
-            su[overscanCommand] = U.overscanCommand + "reset";
+            su[overscanCommand] = U.overscanCommand(this, "reset");
 
         // Screen rotation
         Settings.System.putInt(getContentResolver(), Settings.System.USER_ROTATION, prefCurrent.getInt("user_rotation", Surface.ROTATION_0));

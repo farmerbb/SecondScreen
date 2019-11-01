@@ -31,11 +31,6 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 
-import com.farmerbb.secondscreen.service.DisplayConnectionService;
-import com.farmerbb.secondscreen.util.ServiceBinder;
-import com.farmerbb.secondscreen.util.ServiceInterface;
-import com.farmerbb.secondscreen.util.U;
-
 public abstract class RotationLockService extends Service implements ServiceInterface {
 
     WindowManager windowManager;
@@ -115,7 +110,7 @@ public abstract class RotationLockService extends Service implements ServiceInte
             WindowManager.LayoutParams params = new WindowManager.LayoutParams(
                     0,
                     0,
-                    U.getOverlayType(),
+                    SupportUtils.getOverlayType(),
                     WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
                     PixelFormat.TRANSLUCENT);
 

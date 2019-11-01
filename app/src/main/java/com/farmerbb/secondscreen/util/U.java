@@ -27,7 +27,6 @@ import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
@@ -39,8 +38,6 @@ import android.content.res.Configuration;
 import android.hardware.display.DisplayManager;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Handler;
-import android.os.IBinder;
 import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
@@ -64,6 +61,7 @@ import com.farmerbb.secondscreen.activity.WriteSettingsPermissionActivity;
 import com.farmerbb.secondscreen.receiver.LockDeviceReceiver;
 import com.farmerbb.secondscreen.service.ProfileLoadService;
 import com.farmerbb.secondscreen.service.TurnOffService;
+import com.farmerbb.secondscreen.support.SupportUtils;
 import com.farmerbb.secondscreen.support.NonRootUtils;
 
 import org.apache.commons.lang3.math.NumberUtils;
@@ -187,7 +185,6 @@ public final class U {
     public static final String chromeCommandRemove = "rm " + CHROME_COMMAND_LINE;
     public static final String rotationCommand = "am broadcast -a android.intent.action.DOCK_EVENT --ei android.intent.extra.DOCK_STATE ";
     public static final String rotationPrePostCommands = "settings put secure screensaver_activate_on_dock ";
-    public static final String overscanCommand = "wm overscan ";
     public static final String stayOnCommand = "settings put global stay_on_while_plugged_in ";
     public static final String timeoutCommand = "settings put secure lock_screen_lock_after_timeout ";
     public static final String hdmiRotationCommand = "setprop persist.demo.hdmirotation ";
@@ -206,18 +203,29 @@ public final class U {
             return "settings put secure display_density_forced " + args;
     }
 
-    public static String sizeCommand(String args) {
-        if(Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR1)
+    public static String sizeCommand(Context context, String args) {
+        if(SupportUtils.isDesktopModeActive(context))
+            return "wm size " + args + " -d " + SupportUtils.getExternalDisplayID(context);
+        else if(Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR1)
             return "wm size " + args;
         else
             return "am display-size " + args;
     }
 
-    public static String densityCommand(String args) {
+    public static String densityCommand(Context context, String args) {
+        if(SupportUtils.isDesktopModeActive(context))
+            return "wm density " + args + " -d " + SupportUtils.getExternalDisplayID(context);
         if(Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR1)
             return "wm density " + args;
         else
             return "am display-density " + args;
+    }
+
+    public static String overscanCommand(Context context, String args) {
+        if(SupportUtils.isDesktopModeActive(context))
+            return "wm overscan " + args + " -d " + SupportUtils.getExternalDisplayID(context);
+        else
+            return "wm overscan " + args;
     }
 
     public static String chromeCommand(Context context) {
@@ -319,6 +327,9 @@ public final class U {
     // Runs checks to determine if size or density commands need to be run.
     // Don't run these commands if we don't need to.
     public static boolean runSizeCommand(Context context, String requestedRes) {
+        if(SupportUtils.isDesktopModeActive(context))
+            return true;
+
         DisplayMetrics metrics = new DisplayMetrics();
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         Display disp = wm.getDefaultDisplay();
@@ -357,6 +368,9 @@ public final class U {
     }
 
     public static boolean runDensityCommand(Context context, String requestedDpi) {
+        if(SupportUtils.isDesktopModeActive(context))
+            return true;
+
         DisplayMetrics metrics = new DisplayMetrics();
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         Display disp = wm.getDefaultDisplay();
@@ -1487,55 +1501,8 @@ public final class U {
         }
     }
 
-    public static void startService(Context oldContext, Intent intent) {
-        Context context = oldContext.getApplicationContext();
-
-        ServiceConnection connection = new ServiceConnection() {
-            @Override
-            public void onServiceConnected(ComponentName name, IBinder service) {
-                // The binder of the service that returns the instance that is created.
-                ServiceBinder binder = (ServiceBinder) service;
-
-                // The getter method to acquire the service.
-                ServiceInterface myService = binder.getService();
-
-                // getServiceIntent(context) returns the relative service intent
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    context.startForegroundService(intent);
-                    myService.startForeground();
-                } else
-                    context.startService(intent);
-
-                // Release the connection to prevent leaks.
-                context.unbindService(this);
-            }
-
-            @Override
-            public void onBindingDied(ComponentName name) {}
-
-            @Override
-            public void onNullBinding(ComponentName name) {}
-
-            @Override
-            public void onServiceDisconnected(ComponentName name) {}
-        };
-
-        // Try to bind the service
-        try {
-            context.bindService(intent, connection, Context.BIND_AUTO_CREATE);
-        } catch (RuntimeException ignored) {
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                intent.putExtra("start_foreground", true);
-                new Handler().post(() -> context.startForegroundService(intent));
-            } else
-                context.startService(intent);
-        }
-    }
-
-    public static int getOverlayType() {
-        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
-                ? WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
-                : WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY;
+    public static void startService(Context context, Intent intent) {
+        SupportUtils.startService(context, intent);
     }
 
     @SuppressLint("PrivateApi")

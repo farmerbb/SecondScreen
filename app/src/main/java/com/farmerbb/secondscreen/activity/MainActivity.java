@@ -140,18 +140,18 @@ SystemAlertPermissionDialogFragment.Listener {
             Arrays.fill(su, "");
 
             su[chromeCommand] = U.chromeCommandRemove;
-            su[sizeCommand] = U.sizeCommand("reset");
+            su[sizeCommand] = U.sizeCommand(MainActivity.this, "reset");
 
             if(!(getPackageManager().hasSystemFeature("com.cyanogenmod.android")
                     && Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP_MR1)) {
-                su[densityCommand] = U.densityCommand("reset");
+                su[densityCommand] = U.densityCommand(MainActivity.this, "reset");
 
                 // We run the density command twice, for reliability
                 su[densityCommand2] = su[densityCommand];
             }
 
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2)
-                su[overscanCommand] = U.overscanCommand + "reset";
+                su[overscanCommand] = U.overscanCommand(MainActivity.this, "reset");
 
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
                 su[immersiveCommand] = U.immersiveCommand("do-nothing");

@@ -56,16 +56,16 @@ public final class NonRootUtils {
                         try {
                             switch(commandArgs[1]) {
                                 case "size":
-                                    wmSize(commandArgs[2]);
+                                    wmSize(context, commandArgs[2]);
                                     break;
                                 case "density":
                                     if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1)
-                                        wmDensity(commandArgs[2]);
+                                        wmDensity(context, commandArgs[2]);
                                     else
-                                        wmDensityOld(commandArgs[2]);
+                                        wmDensityOld(context, commandArgs[2]);
                                     break;
                                 case "overscan":
-                                    wmOverscan(commandArgs[2]);
+                                    wmOverscan(context, commandArgs[2]);
                                     break;
                             }
                         } catch (Exception e) { /* Gracefully fail */ }
@@ -93,44 +93,44 @@ public final class NonRootUtils {
     }
 
     @SuppressLint("PrivateApi")
-    private static void wmDensity(String commandArg) throws Exception {
+    private static void wmDensity(Context context, String commandArg) throws Exception {
         // From android.os.UserHandle
         final int USER_CURRENT_OR_SELF = -3;
 
         if(commandArg.equals("reset")) {
             Class.forName("android.view.IWindowManager")
                     .getMethod("clearForcedDisplayDensityForUser", int.class, int.class)
-                    .invoke(getWindowManagerService(), Display.DEFAULT_DISPLAY, USER_CURRENT_OR_SELF);
+                    .invoke(getWindowManagerService(), getDisplayID(context), USER_CURRENT_OR_SELF);
         } else {
             int density = Integer.parseInt(commandArg);
 
             Class.forName("android.view.IWindowManager")
                     .getMethod("setForcedDisplayDensityForUser", int.class, int.class, int.class)
-                    .invoke(getWindowManagerService(), Display.DEFAULT_DISPLAY, density, USER_CURRENT_OR_SELF);
+                    .invoke(getWindowManagerService(), getDisplayID(context), density, USER_CURRENT_OR_SELF);
         }
     }
 
     @SuppressLint("PrivateApi")
-    private static void wmDensityOld(String commandArg) throws Exception {
+    private static void wmDensityOld(Context context, String commandArg) throws Exception {
         if(commandArg.equals("reset")) {
             Class.forName("android.view.IWindowManager")
                     .getMethod("clearForcedDisplayDensity", int.class)
-                    .invoke(getWindowManagerService(), Display.DEFAULT_DISPLAY);
+                    .invoke(getWindowManagerService(), getDisplayID(context));
         } else {
             int density = Integer.parseInt(commandArg);
 
             Class.forName("android.view.IWindowManager")
                     .getMethod("setForcedDisplayDensity", int.class, int.class)
-                    .invoke(getWindowManagerService(), Display.DEFAULT_DISPLAY, density);
+                    .invoke(getWindowManagerService(), getDisplayID(context), density);
         }
     }
 
     @SuppressLint("PrivateApi")
-    private static void wmSize(String commandArg) throws Exception {
+    private static void wmSize(Context context, String commandArg) throws Exception {
         if(commandArg.equals("reset")) {
             Class.forName("android.view.IWindowManager")
                     .getMethod("clearForcedDisplaySize", int.class)
-                    .invoke(getWindowManagerService(), Display.DEFAULT_DISPLAY);
+                    .invoke(getWindowManagerService(), getDisplayID(context));
         } else {
             Scanner scanner = new Scanner(commandArg);
             scanner.useDelimiter("x");
@@ -142,12 +142,12 @@ public final class NonRootUtils {
 
             Class.forName("android.view.IWindowManager")
                     .getMethod("setForcedDisplaySize", int.class, int.class, int.class)
-                    .invoke(getWindowManagerService(), Display.DEFAULT_DISPLAY, width, height);
+                    .invoke(getWindowManagerService(), getDisplayID(context), width, height);
         }
     }
 
     @SuppressLint("PrivateApi")
-    private static void wmOverscan(String commandArg) throws Exception {
+    private static void wmOverscan(Context context, String commandArg) throws Exception {
         int left, top, right, bottom;
 
         if(commandArg.equals("reset"))
@@ -166,6 +166,13 @@ public final class NonRootUtils {
 
         Class.forName("android.view.IWindowManager")
                 .getMethod("setOverscan", int.class, int.class, int.class, int.class, int.class)
-                .invoke(getWindowManagerService(), Display.DEFAULT_DISPLAY, left, top, right, bottom);
+                .invoke(getWindowManagerService(), getDisplayID(context), left, top, right, bottom);
+    }
+    
+    private static int getDisplayID(Context context) {
+        if(SupportUtils.isDesktopModeActive(context))
+            return SupportUtils.getExternalDisplayID(context);
+        else
+            return Display.DEFAULT_DISPLAY;
     }
 }

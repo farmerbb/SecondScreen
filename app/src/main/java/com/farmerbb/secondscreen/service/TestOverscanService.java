@@ -85,6 +85,6 @@ public final class TestOverscanService extends SecondScreenIntentService {
                     + splitValues[0];
         }
 
-        U.runCommand(this, U.overscanCommand + overscanValues);
+        U.runCommand(this, U.overscanCommand(this, overscanValues));
     }
 }

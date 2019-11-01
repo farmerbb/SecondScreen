@@ -13,7 +13,7 @@
  * limitations under the License.
  */
 
-package com.farmerbb.secondscreen.util;
+package com.farmerbb.secondscreen.support;
 
 import android.os.Binder;
 
