@@ -50,6 +50,9 @@ public final class BootReceiver extends BroadcastReceiver {
                 U.startService(context, serviceIntent);
             }
 
+            if(prefCurrent.getInt("external_display_id", -1) > 1)
+                prefCurrent.edit().putInt("external_display_id", 1).apply();
+
             if(!prefCurrent.getBoolean("not_active", true)) {
                 if(prefMain.getBoolean("safe_mode", false)
                         && !"activity-manager".equals(prefCurrent.getString("ui_refresh", "do-nothing"))
