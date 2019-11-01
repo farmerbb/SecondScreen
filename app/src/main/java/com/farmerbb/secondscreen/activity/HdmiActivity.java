@@ -138,9 +138,7 @@ public final class HdmiActivity extends Activity {
         Display[] displays = dm.getDisplays();
         displays[displays.length - 1].getRealMetrics(metrics);
 
-        String extScreenRes = Integer.toString(displays[displays.length - 1].getWidth())
-                + "x"
-                + Integer.toString(displays[displays.length - 1].getHeight());
+        String extScreenRes = metrics.widthPixels + "x" + metrics.heightPixels;
 
         switch(extScreenRes) {
             case "3840x2160":
