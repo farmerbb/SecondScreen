@@ -25,13 +25,18 @@ import android.os.Build;
 import android.os.IBinder;
 import android.provider.Settings;
 import androidx.annotation.CallSuper;
+import androidx.annotation.Nullable;
+
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 
+import com.farmerbb.secondscreen.service.DisplayConnectionService;
+import com.farmerbb.secondscreen.util.ServiceBinder;
+import com.farmerbb.secondscreen.util.ServiceInterface;
 import com.farmerbb.secondscreen.util.U;
 
-public abstract class RotationLockService extends Service {
+public abstract class RotationLockService extends Service implements ServiceInterface {
 
     WindowManager windowManager;
     View view;
@@ -50,6 +55,19 @@ public abstract class RotationLockService extends Service {
         }
     };
 
+    private final ServiceBinder binder = new ServiceBinder() {
+        @Override
+        public ServiceInterface getService() {
+            return RotationLockService.this;
+        }
+    };
+
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        return binder;
+    }
+
     @Override
     @CallSuper
     public void onCreate() {
@@ -61,13 +79,19 @@ public abstract class RotationLockService extends Service {
 
         registerReceiver(userForegroundReceiver, filter1);
         registerReceiver(userBackgroundReceiver, filter2);
+    }
 
+    @Override
+    public void startForeground() {
         startService();
         drawSystemOverlay();
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        if(intent.getBooleanExtra("start_foreground", false))
+            startForeground();
+
         return START_STICKY;
     }
 
@@ -78,11 +102,6 @@ public abstract class RotationLockService extends Service {
         unregisterReceiver(userBackgroundReceiver);
 
         removeSystemOverlay();
-    }
-
-    @Override
-    public IBinder onBind(Intent arg0) {
-        return null;
     }
 
     private void drawSystemOverlay() {

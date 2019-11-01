@@ -24,6 +24,8 @@ import android.content.SharedPreferences;
 import android.hardware.display.DisplayManager;
 import android.os.Build;
 import android.os.IBinder;
+
+import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
@@ -33,6 +35,8 @@ import com.farmerbb.secondscreen.R;
 import com.farmerbb.secondscreen.activity.HdmiActivity;
 import com.farmerbb.secondscreen.activity.MainActivity;
 import com.farmerbb.secondscreen.activity.TurnOffActivity;
+import com.farmerbb.secondscreen.util.ServiceBinder;
+import com.farmerbb.secondscreen.util.ServiceInterface;
 import com.farmerbb.secondscreen.util.U;
 
 // This is a long-running service started if the "Enable auto-start" preference is set.
@@ -41,7 +45,7 @@ import com.farmerbb.secondscreen.util.U;
 // When a display is connected, it will launch the HdmiActivity.  When a display is removed, and a
 // profile is active, it will either launch the TurnOffService directly if the auto-start action is
 // set to load the currently active profile, or it will launch the TurnOffActivity otherwise.
-public final class DisplayConnectionService extends Service {
+public final class DisplayConnectionService extends Service implements ServiceInterface {
 
     DisplayManager.DisplayListener listener = new DisplayManager.DisplayListener() {
         @Override
@@ -98,42 +102,59 @@ public final class DisplayConnectionService extends Service {
         }
     };
 
+    private final ServiceBinder binder = new ServiceBinder() {
+        @Override
+        public ServiceInterface getService() {
+            return DisplayConnectionService.this;
+        }
+    };
+
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        return binder;
+    }
+
     @Override
     public void onCreate() {
         DisplayManager manager = (DisplayManager) getSystemService(DISPLAY_SERVICE);
         manager.registerDisplayListener(listener, null);
+    }
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            // Intent to launch MainActivity when notification is clicked
-            Intent mainActivityIntent = new Intent(this, MainActivity.class);
-            PendingIntent mainActivityPendingIntent = PendingIntent.getActivity(this, 0, mainActivityIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+    @Override
+    public void startForeground() {
+        // Intent to launch MainActivity when notification is clicked
+        Intent mainActivityIntent = new Intent(this, MainActivity.class);
+        PendingIntent mainActivityPendingIntent = PendingIntent.getActivity(this, 0, mainActivityIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-            String id = "DisplayConnectionService";
+        String id = "DisplayConnectionService";
 
-            NotificationManager mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-            CharSequence name = getString(R.string.auto_start);
-            int importance = NotificationManager.IMPORTANCE_MIN;
+        NotificationManager mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        CharSequence name = getString(R.string.auto_start);
+        int importance = NotificationManager.IMPORTANCE_MIN;
 
-            mNotificationManager.createNotificationChannel(new NotificationChannel(id, name, importance));
+        mNotificationManager.createNotificationChannel(new NotificationChannel(id, name, importance));
 
-            // Build the notification
-            NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, id)
-                    .setContentIntent(mainActivityPendingIntent)
-                    .setSmallIcon(R.drawable.ic_action_dock)
-                    .setContentTitle(getString(R.string.auto_start_active))
-                    .setOngoing(true)
-                    .setShowWhen(false);
+        // Build the notification
+        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, id)
+                .setContentIntent(mainActivityPendingIntent)
+                .setSmallIcon(R.drawable.ic_action_dock)
+                .setContentTitle(getString(R.string.auto_start_active))
+                .setOngoing(true)
+                .setShowWhen(false);
 
-            // Set notification color on Lollipop
-            mBuilder.setColor(ContextCompat.getColor(this, R.color.primary_dark))
-                    .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
+        // Set notification color on Lollipop
+        mBuilder.setColor(ContextCompat.getColor(this, R.color.primary_dark))
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
 
-            startForeground(2, mBuilder.build());
-        }
+        startForeground(2, mBuilder.build());
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        if(intent.getBooleanExtra("start_foreground", false))
+            startForeground();
+
         return START_STICKY;
     }
 
@@ -141,10 +162,5 @@ public final class DisplayConnectionService extends Service {
     public void onDestroy() {
         DisplayManager manager = (DisplayManager) getSystemService(DISPLAY_SERVICE);
         manager.unregisterDisplayListener(listener);
-    }
-
-    @Override
-    public IBinder onBind(Intent arg0) {
-        return null;
     }
 }

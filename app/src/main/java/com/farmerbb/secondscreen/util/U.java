@@ -27,6 +27,7 @@ import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
@@ -39,6 +40,7 @@ import android.hardware.display.DisplayManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
+import android.os.IBinder;
 import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
@@ -1485,11 +1487,49 @@ public final class U {
         }
     }
 
-    public static void startService(Context context, Intent intent) {
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-            new Handler().post(() -> context.startForegroundService(intent));
-        else
-            context.startService(intent);
+    public static void startService(Context oldContext, Intent intent) {
+        Context context = oldContext.getApplicationContext();
+
+        ServiceConnection connection = new ServiceConnection() {
+            @Override
+            public void onServiceConnected(ComponentName name, IBinder service) {
+                // The binder of the service that returns the instance that is created.
+                ServiceBinder binder = (ServiceBinder) service;
+
+                // The getter method to acquire the service.
+                ServiceInterface myService = binder.getService();
+
+                // getServiceIntent(context) returns the relative service intent
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    context.startForegroundService(intent);
+                    myService.startForeground();
+                } else
+                    context.startService(intent);
+
+                // Release the connection to prevent leaks.
+                context.unbindService(this);
+            }
+
+            @Override
+            public void onBindingDied(ComponentName name) {}
+
+            @Override
+            public void onNullBinding(ComponentName name) {}
+
+            @Override
+            public void onServiceDisconnected(ComponentName name) {}
+        };
+
+        // Try to bind the service
+        try {
+            context.bindService(intent, connection, Context.BIND_AUTO_CREATE);
+        } catch (RuntimeException ignored) {
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                intent.putExtra("start_foreground", true);
+                new Handler().post(() -> context.startForegroundService(intent));
+            } else
+                context.startService(intent);
+        }
     }
 
     public static int getOverlayType() {

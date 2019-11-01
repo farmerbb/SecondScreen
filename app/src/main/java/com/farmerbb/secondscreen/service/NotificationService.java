@@ -100,7 +100,7 @@ public final class NotificationService extends RotationLockService {
             try {
                 if(displays[displays.length - 2].getDisplayId() == Display.DEFAULT_DISPLAY) {
                     Intent serviceIntent = new Intent(NotificationService.this, ScreenOnService.class);
-                    startService(serviceIntent);
+                    U.startService(NotificationService.this, serviceIntent);
                 }
             } catch (ArrayIndexOutOfBoundsException e) { /* Gracefully fail */ }
         }
@@ -116,7 +116,7 @@ public final class NotificationService extends RotationLockService {
             try {
                 if(displays[displays.length - 1].getDisplayId() == Display.DEFAULT_DISPLAY) {
                     Intent serviceIntent = new Intent(NotificationService.this, TempBacklightOnService.class);
-                    startService(serviceIntent);
+                    U.startService(NotificationService.this, serviceIntent);
 
                     SharedPreferences prefMain = U.getPrefMain(NotificationService.this);
                     ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
