@@ -171,7 +171,7 @@ public final class NonRootUtils {
     }
     
     private static int getDisplayID(String[] commandArgs) {
-        if(commandArgs.length < 5 && !commandArgs[commandArgs.length - 2].equals("-d"))
+        if(commandArgs.length < 5 || !commandArgs[commandArgs.length - 2].equals("-d"))
             return Display.DEFAULT_DISPLAY;
         
         return Integer.parseInt(commandArgs[commandArgs.length - 1]);
