@@ -373,8 +373,9 @@ public final class ProfileLoadService extends SecondScreenIntentService {
                 }
 
                 if(!overscanValues.isEmpty()) {
-                    // Fix overscan values if notch compatibility mode is enabled
-                    if(prefMain.getBoolean("notch_compat_mode", false)) {
+                    // Fix overscan values under certain conditions
+                    if(prefMain.getBoolean("notch_compat_mode", false)
+                            || (U.isDesktopModeActive(this) && !prefMain.getBoolean("landscape", false))) {
                         String[] splitValues = overscanValues.split(",");
                         overscanValues = splitValues[1] + ","
                                 + splitValues[2] + ","
