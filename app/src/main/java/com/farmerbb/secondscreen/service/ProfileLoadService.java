@@ -1022,6 +1022,7 @@ public final class ProfileLoadService extends SecondScreenIntentService {
         editor.putInt("overscan_right", prefSaved.getInt("overscan_right", 20));
         editor.putInt("overscan_top", prefSaved.getInt("overscan_top", 20));
         editor.putInt("overscan_bottom", prefSaved.getInt("overscan_bottom", 20));
+        editor.putInt("external_display_id", U.getExternalDisplayID(this));
 
         // Set "not_active" status to false
         if(prefCurrent.getBoolean("not_active", true)) {
