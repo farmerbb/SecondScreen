@@ -61,8 +61,8 @@ import com.farmerbb.secondscreen.activity.WriteSettingsPermissionActivity;
 import com.farmerbb.secondscreen.receiver.LockDeviceReceiver;
 import com.farmerbb.secondscreen.service.ProfileLoadService;
 import com.farmerbb.secondscreen.service.TurnOffService;
-import com.farmerbb.secondscreen.support.SupportUtils;
 import com.farmerbb.secondscreen.support.NonRootUtils;
+import com.farmerbb.secondscreen.support.SupportUtils;
 
 import org.apache.commons.lang3.math.NumberUtils;
 
@@ -204,8 +204,8 @@ public final class U {
     }
 
     public static String sizeCommand(Context context, String args) {
-        if(SupportUtils.isDesktopModeActive(context))
-            return "wm size " + args + " -d " + SupportUtils.getExternalDisplayID(context);
+        if(isDesktopModeActive(context))
+            return "wm size " + args + " -d " + getExternalDisplayID(context);
         else if(Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR1)
             return "wm size " + args;
         else
@@ -213,8 +213,8 @@ public final class U {
     }
 
     public static String densityCommand(Context context, String args) {
-        if(SupportUtils.isDesktopModeActive(context))
-            return "wm density " + args + " -d " + SupportUtils.getExternalDisplayID(context);
+        if(isDesktopModeActive(context))
+            return "wm density " + args + " -d " + getExternalDisplayID(context);
         if(Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR1)
             return "wm density " + args;
         else
@@ -222,8 +222,8 @@ public final class U {
     }
 
     public static String overscanCommand(Context context, String args) {
-        if(SupportUtils.isDesktopModeActive(context))
-            return "wm overscan " + args + " -d " + SupportUtils.getExternalDisplayID(context);
+        if(isDesktopModeActive(context))
+            return "wm overscan " + args + " -d " + getExternalDisplayID(context);
         else
             return "wm overscan " + args;
     }
@@ -327,7 +327,7 @@ public final class U {
     // Runs checks to determine if size or density commands need to be run.
     // Don't run these commands if we don't need to.
     public static boolean runSizeCommand(Context context, String requestedRes) {
-        if(SupportUtils.isDesktopModeActive(context))
+        if(isDesktopModeActive(context))
             return true;
 
         DisplayMetrics metrics = new DisplayMetrics();
@@ -368,7 +368,7 @@ public final class U {
     }
 
     public static boolean runDensityCommand(Context context, String requestedDpi) {
-        if(SupportUtils.isDesktopModeActive(context))
+        if(isDesktopModeActive(context))
             return true;
 
         DisplayMetrics metrics = new DisplayMetrics();
@@ -1523,5 +1523,24 @@ public final class U {
         } catch (Exception e) {
             return def;
         }
+    }
+
+    public static boolean isDesktopModeActive(Context context) {
+        boolean desktopModePrefEnabled;
+
+        try {
+            desktopModePrefEnabled = Settings.Global.getInt(context.getContentResolver(), "force_desktop_mode_on_external_displays") == 1;
+        } catch (Settings.SettingNotFoundException e) {
+            desktopModePrefEnabled = false;
+        }
+
+        return desktopModePrefEnabled && getExternalDisplayID(context) != Display.DEFAULT_DISPLAY;
+    }
+
+    public static int getExternalDisplayID(Context context) {
+        DisplayManager dm = (DisplayManager) context.getSystemService(Context.DISPLAY_SERVICE);
+        Display[] displays = dm.getDisplays();
+
+        return displays[displays.length - 1].getDisplayId();
     }
 }
