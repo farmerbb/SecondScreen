@@ -1,0 +1,129 @@
+<!-- Copyright 2015 Braden Farmer
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+
+<resources>
+
+    <string-array name="new_profile_templates">
+        <item>TV (1080p)</item>
+        <item>TV (4K)</item>
+        <item>TV (720p)</item>
+        <item>监视器 (1080p)</item>
+        <item>AppRadio</item>
+        <item>其他 / 无</item>
+    </string-array>
+    <string-array name="pref_resolution_list">
+        <item>设备本机</item>
+        <item>3840x2160 (4K)</item>
+        <item>1920x1080 (1080p)</item>
+        <item>1280x720 (720p)</item>
+        <item>854x480 (480p)</item>
+        <item>2560x1600</item>
+        <item>2560x1440</item>
+        <item>2048x1536</item>
+        <item>1920x1200</item>
+        <item>1600x900</item>
+        <item>1440x900</item>
+        <item>1366x768</item>
+        <item>1280x800</item>
+        <item>1280x768</item>
+        <item>1024x768</item>
+        <item>960x600</item>
+        <item>800x600</item>
+        <item>800x480</item>
+    </string-array>
+    <string-array name="pref_dpi_list">
+        <item>设备本机</item>
+        <item>120dpi (ldpi)</item>
+        <item>160dpi (mdpi)</item>
+        <item>213dpi (tvdpi)</item>
+        <item>240dpi (hdpi)</item>
+        <item>320dpi (xhdpi)</item>
+        <item>480dpi (xxhdpi)</item>
+        <item>640dpi (xxxhdpi)</item>
+        <item>260dpi</item>
+        <item>280dpi</item>
+        <item>300dpi</item>
+        <item>340dpi</item>
+        <item>360dpi</item>
+        <item>400dpi</item>
+        <item>420dpi</item>
+        <item>560dpi</item>
+    </string-array>
+    <string-array name="pref_ui_refresh_list">
+        <item>无动作</item>
+        <item>重新启动系统用户界面并杀死后台应用</item>
+        <item>重新启动ActivityManager（软重启）</item>
+    </string-array>
+    <string-array name="pref_ui_refresh_list_alt">
+        <item>无动作</item>
+        <item>重新启动ActivityManager（软重启）</item>
+    </string-array>
+    <string-array name="pref_ui_refresh_list_non_root">
+        <item>无动作</item>
+        <item>杀死后台应用</item>
+        <item>手动重启</item>
+    </string-array>
+    <string-array name="pref_rotation_list">
+        <item>使用系统设置</item>
+        <item>强制自动旋转（停靠模式）</item>
+        <item>将方向锁定为横向</item>
+        <item>将方向锁定为纵向</item>
+    </string-array>
+    <string-array name="pref_quick_actions">
+        <item>启用</item>
+        <item>停用</item>
+        <item>切换</item>
+    </string-array>
+    <string-array name="pref_quick_actions_overscan">
+        <item>关闭</item>
+        <item>20%</item>
+        <item>40%</item>
+        <item>60%</item>
+        <item>80%</item>
+        <item>100%</item>
+        <item>切换</item>
+    </string-array>
+    <string-array name="pref_notification_action_list">
+        <item>关闭</item>
+        <item>快速操作</item>
+        <item>锁定</item>
+        <item>切换背光</item>
+        <item>切换Chrome桌面模式</item>
+        <item>切换沉浸模式</item>
+        <item>切换过扫描</item>
+        <item>切换振动</item>
+    </string-array>
+    <string-array name="pref_screen_timeout_list">
+        <item>使用系统设置</item>
+        <item>始终开启</item>
+        <item>充电时始终开启</item>
+    </string-array>
+    <string-array name="pref_immersive_list">
+        <item>设备默认</item>
+        <item>仅显示状态栏</item>
+        <item>隐藏状态和导航栏（沉浸模式）</item>
+    </string-array>
+    <string-array name="pref_immersive_list_alt">
+        <item>设备默认</item>
+        <item>仅显示状态栏</item>
+        <item>隐藏状态和导航栏（沉浸模式）</item>
+        <item>切换沉浸式模式</item>
+    </string-array>
+    <string-array name="pref_hdmi_rotation_list">
+        <item>横向</item>
+        <item>纵向</item>
+    </string-array>
+
+</resources>
