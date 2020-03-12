@@ -43,7 +43,7 @@
     <string name="both_versions_installed">您的设备上安装了多个版本的SecondScreen. 同时仅支持一个版本的SecondScreen.\n\n请卸载其他版本的SecondScreen，并重新启动.</string>
     <string name="check_for_update">检查更新</string>
     <string name="checking_for_superuser">检查超级用户访问&#8230; 请等待.</string>
-    <string name="decline">减少</string>
+    <string name="decline">拒绝</string>
     <string name="deleting_current_profile">无法删除当前使用的配置文件</string>
     <string name="dialog_about_message">SecondScreen：更好的Android设备屏幕镜像\n\n&#169; 2019 Braden Farmer\nApp logo by mayowadavid</string>
     <string name="dialog_about_title">关于 SecondScreen</string>
@@ -133,9 +133,9 @@
     <string name="pref_title_show_touches">显示修饰</string>
     <string name="pref_description_show_touches">显示触摸屏事件的视觉反馈</string>
     <string name="pref_title_rotation">屏幕方向</string>
-    <string name="pref_title_backlight_off">减少背光</string>
+    <string name="pref_title_backlight_off">降低背光</string>
     <string name="pref_description_backlight_off">连接显示器时，尽可能调暗设备的背光</string>
-    <string name="pref_title_vibration_off">减少震动</string>
+    <string name="pref_title_vibration_off">降低震动</string>
     <string name="pref_description_vibration_off">尽可能禁用设备振动</string>
     <string name="pref_title_chrome">Chrome中的桌面模式</string>
     <string name="pref_description_chrome">律在Chrome浏览器中显示桌面网站</string>
@@ -220,7 +220,7 @@
     <string name="pref_taskbar_settings_title_open">打开任务栏设置</string>
     <string name="pref_taskbar_settings_title_install">安装任务栏应用</string>
     <string name="blissos_default">Bliss OS默认配置文件</string>
-    <string name="action_continue">下一步</string>
+    <string name="action_continue">继续</string>
     <string name="pref_title_tasker_enabled">允许第三方应用程序集成</string>
     <string name="pref_summary_tasker_enabled">禁用以提高安全性</string>
     <string name="pref_title_notch_compat_mode">刘海屏兼容模式</string>
