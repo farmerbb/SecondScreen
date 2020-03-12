@@ -30,11 +30,11 @@
     <string name="action_save_reload">保存 &amp; 重新加载</string>
     <string name="action_save_only">仅保存</string>
     <string name="action_ok">确定</string>
-    <string name="action_settings">配置</string>
+    <string name="action_settings">设置</string>
     <string name="action_turn_off">关闭</string>
     <string name="action_turn_off_alt">关闭 %1$s</string>
     <string name="action_uninstall">卸载</string>
-    <string name="am_restart_warning">当投影到无线设备是，不推荐此配置</string>
+    <string name="am_restart_warning">当投影到无线设备是，不推荐此模式</string>
     <string name="any_profile">任意配置文件</string>
     <string name="app_name">SecondScreen</string>
     <string name="app_name_debug">SecondScreen (Debug)</string>
@@ -121,8 +121,8 @@
     <string name="pref_title_profile_name">配置文件名称</string>
     <string name="pref_title_resolution">分辨率</string>
     <string name="pref_title_dpi">DPI</string>
-    <string name="pref_title_overscan_settings">Overscan settings</string>
-    <string name="pref_title_overscan">启用overscan</string>
+    <string name="pref_title_overscan_settings">过扫描设置</string>
+    <string name="pref_title_overscan">启用过扫描</string>
     <string name="pref_description_overscan">对于裁剪部分图像的老式电视很有用</string>
     <string name="pref_title_bluetooth_on">启用蓝牙</string>
     <string name="pref_description_bluetooth_on">自动启用蓝牙（以连接键盘，鼠标和/或游戏控制器）</string>
