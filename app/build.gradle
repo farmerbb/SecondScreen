@@ -36,7 +36,7 @@ android {
         versionCode 183
         versionName "2.9.1"
 
-        resConfigs "en", "es", "fr", "sk", "nl", "it"
+        resConfigs "en", "es", "fr", "sk", "nl", "it", "zh"
         vectorDrawables.useSupportLibrary = true
 
         buildConfigField "float", "TESTED_API_VERSION", "29.0f"
