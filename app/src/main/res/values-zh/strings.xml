@@ -66,7 +66,7 @@
     <string name="expert_mode_dialog">专家模式改写SecondScreen不安全的分辨率和DPI的内部黑名单. 仅在您确切了解时使用该选项. 强烈建议使用安全模式.\n\n是否准备好启用专家模式?</string>
     <string name="expert_mode_summary">允许任何用户自定义的分辨率和DPI</string>
     <string name="failed_to_save">错误: 保存配置文件失败!</string>
-    <string name="first_run">本应用需要提升权限! 与所有此类应用程序一样，使用不当可能会导致设备无法使用.\n\n此应用仅适用于具有AOSP或Google体验ROM的设备! 不能保证在具有制造商皮肤的ROM的设备上正常运行.\n\n按下\"接受\"，即表示您确认自己对使用此应用程序的方式，使用该设备的设备类型以及获取设备上提升的权限的方法负责.</string>
+    <string name="first_run">本应用需要提升权限! 与所有此类应用程序一样，使用不当可能会导致设备无法使用.\n\n此应用仅适用于具有AOSP或原生ROM的设备! 不能保证在具有制造商皮肤的ROM的设备上正常运行.\n\n按下\"接受\"，即表示您确认自己对使用此应用程序的方式，使用该设备的设备类型以及获取设备上提升的权限的方法负责.</string>
     <string name="hdmi_checkbox">当连接显示设备时启动SecondScreen</string>
     <string name="hdmi_connected">显示设备已连接</string>
     <string name="label_load_profile">加载配置文件</string>
