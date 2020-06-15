@@ -177,7 +177,8 @@ public final class ProfileViewFragment extends Fragment {
                 break;
         }
 
-        generateProfileSettings(prefSaved.getBoolean("overscan", false), R.string.quick_overscan);
+        if(U.getCurrentApiVersion() <= 29.0f)
+            generateProfileSettings(prefSaved.getBoolean("overscan", false), R.string.quick_overscan);
 
         switch(prefSaved.getString("rotation_lock_new", "fallback")) {
             case "fallback":
@@ -203,17 +204,19 @@ public final class ProfileViewFragment extends Fragment {
 
         generateProfileSettings(prefSaved.getBoolean("show_touches", false), R.string.pref_title_show_touches);
 
-        switch(prefSaved.getString("immersive_new", "fallback")) {
-            case "fallback":
-                if(prefSaved.getBoolean("immersive", false))
+        if(U.getCurrentApiVersion() <= 29.0f) {
+            switch(prefSaved.getString("immersive_new", "fallback")) {
+                case "fallback":
+                    if(prefSaved.getBoolean("immersive", false))
+                        generateProfileSettings(true, R.string.pref_title_immersive);
+                    break;
+                case "status-only":
                     generateProfileSettings(true, R.string.pref_title_immersive);
-                break;
-            case "status-only":
-                generateProfileSettings(true, R.string.pref_title_immersive);
-                break;
-            case "immersive-mode":
-                generateProfileSettings(true, R.string.pref_title_immersive);
-                break;
+                    break;
+                case "immersive-mode":
+                    generateProfileSettings(true, R.string.pref_title_immersive);
+                    break;
+            }
         }
 
         generateProfileSettings(prefSaved.getBoolean("taskbar", false), R.string.quick_taskbar);

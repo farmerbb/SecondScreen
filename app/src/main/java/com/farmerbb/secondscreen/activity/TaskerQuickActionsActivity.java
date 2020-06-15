@@ -132,10 +132,10 @@ SharedPreferences.OnSharedPreferenceChangeListener {
             findPreference("turn_off").setOnPreferenceClickListener(this);
 
             // Disable unsupported preferences
-            if(Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2)
+            if(Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2 || U.getCurrentApiVersion() > 29.0f)
                 getPreferenceScreen().findPreference("temp_overscan").setEnabled(false);
 
-            if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
+            if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP || U.getCurrentApiVersion() > 29.0f)
                 getPreferenceScreen().findPreference("temp_immersive_new").setEnabled(false);
 
             if(!U.canEnableFreeform(this))
@@ -192,7 +192,6 @@ SharedPreferences.OnSharedPreferenceChangeListener {
 
     @SuppressWarnings("deprecation")
     private void resetSettingsButton() {
-
         SharedPreferences prefSaved = U.getPrefQuickActions(this);
         if(prefSaved.getBoolean("quick_actions_active", false))
             getPreferenceScreen().findPreference("turn_off").setEnabled(true);
