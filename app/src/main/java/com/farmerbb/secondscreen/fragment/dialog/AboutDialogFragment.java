@@ -29,6 +29,9 @@ import android.widget.TextView;
 import com.farmerbb.secondscreen.BuildConfig;
 import com.farmerbb.secondscreen.R;
 
+import java.util.Calendar;
+import java.util.TimeZone;
+
 // DialogFragment shown when "About SecondScreen" is clicked from the SettingsFragment
 public final class AboutDialogFragment extends DialogFragment {
 
@@ -81,8 +84,13 @@ public final class AboutDialogFragment extends DialogFragment {
             builder.setNegativeButton(R.string.check_for_update, (dialog, id) -> listener.onAboutDialogNegativeClick(this));
         }
 
+        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("America/Denver"));
+        calendar.setTimeInMillis(BuildConfig.TIMESTAMP);
+
+        int year = calendar.get(Calendar.YEAR);
+
         textView = view.findViewById(R.id.dialogMessage);
-        textView.setText(R.string.dialog_about_message);
+        textView.setText(getString(R.string.dialog_about_message, year));
         textView.setMovementMethod(LinkMovementMethod.getInstance());
 
         checkbox = view.findViewById(R.id.checkBoxLayout);

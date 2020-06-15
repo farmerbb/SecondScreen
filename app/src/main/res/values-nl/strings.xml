@@ -45,7 +45,7 @@
     <string name="checking_for_superuser">Bezig met controleren op su-toegang&#8230; even geduld.</string>
     <string name="decline">Afwijzen</string>
     <string name="deleting_current_profile">Het actieve profiel kan niet worden verwijderd</string>
-    <string name="dialog_about_message">SecondScreen: betere schermspiegeling voor Android-apparaten\n\n&#169; 2019 Braden Farmer\nApp-logo door mayowadavid</string>
+    <string name="dialog_about_message">SecondScreen: betere schermspiegeling voor Android-apparaten\n\n&#169; %d Braden Farmer\nApp-logo door mayowadavid</string>
     <string name="dialog_about_title">Over SecondScreen</string>
     <string name="dialog_are_you_sure">Weet je het zeker?</string>
     <string name="dialog_delete_button_title">Profiel verwijderen</string>

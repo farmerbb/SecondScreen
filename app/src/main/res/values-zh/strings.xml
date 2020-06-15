@@ -45,7 +45,7 @@
     <string name="checking_for_superuser">检查超级用户访问&#8230; 请等待.</string>
     <string name="decline">拒绝</string>
     <string name="deleting_current_profile">无法删除当前使用的配置文件</string>
-    <string name="dialog_about_message">SecondScreen：更好的Android设备屏幕镜像\n\n&#169; 2019 Braden Farmer\nApp logo by mayowadavid</string>
+    <string name="dialog_about_message">SecondScreen：更好的Android设备屏幕镜像\n\n&#169; %d Braden Farmer\nApp logo by mayowadavid</string>
     <string name="dialog_about_title">关于 SecondScreen</string>
     <string name="dialog_are_you_sure">是否确定?</string>
     <string name="dialog_delete_button_title">删除配置文件</string>

@@ -41,6 +41,7 @@ android {
 
         buildConfigField "float", "TESTED_API_VERSION", "29.0f"
         buildConfigField "String", "SUPPORT_APPLICATION_ID", "\"com.farmerbb.secondscreen.support\""
+        buildConfigField "long", "TIMESTAMP", "${System.currentTimeMillis()}L"
     }
 
     compileOptions {
