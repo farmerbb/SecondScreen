@@ -207,7 +207,7 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
 				temp = (Integer)defaultValue;
 			}
 			catch(Exception ex) {
-				Log.e(TAG, "Invalid default value: " + defaultValue);
+				Log.e(TAG, "Invalid default value: " + defaultValue.toString());
 			}
 			
 			persistInt(temp);
