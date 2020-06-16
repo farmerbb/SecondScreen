@@ -293,8 +293,7 @@ public final class ProfileLoadService extends SecondScreenIntentService {
             String size = prefSaved.getString("size", "reset");
 
             // Swap height and width under certain conditions
-            if(!"reset".equals(size) && (prefMain.getBoolean("notch_compat_mode", false)
-                    || (U.isDesktopModeActive(this) && !prefMain.getBoolean("landscape", false)))) {
+            if(!"reset".equals(size) && (U.isDesktopModeActive(this) && !prefMain.getBoolean("landscape", false))) {
                 String[] splitSize = size.split("x");
                 size = splitSize[1] + "x" + splitSize[0];
             }
@@ -374,8 +373,7 @@ public final class ProfileLoadService extends SecondScreenIntentService {
 
                 if(!overscanValues.isEmpty()) {
                     // Fix overscan values under certain conditions
-                    if(prefMain.getBoolean("notch_compat_mode", false)
-                            || (U.isDesktopModeActive(this) && !prefMain.getBoolean("landscape", false))) {
+                    if(U.isDesktopModeActive(this) && !prefMain.getBoolean("landscape", false)) {
                         String[] splitValues = overscanValues.split(",");
                         overscanValues = splitValues[1] + ","
                                 + splitValues[2] + ","

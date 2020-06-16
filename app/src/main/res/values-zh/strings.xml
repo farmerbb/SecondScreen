@@ -223,9 +223,6 @@
     <string name="action_continue">继续</string>
     <string name="pref_title_tasker_enabled">允许第三方应用程序集成</string>
     <string name="pref_summary_tasker_enabled">禁用以提高安全性</string>
-    <string name="pref_title_notch_compat_mode">刘海屏兼容模式</string>
-    <string name="pref_summary_notch_compat_mode">在异型屏设备上应用变通办法以改善显示输出</string>
-    <string name="notch_compat_mode_toast">此设置将在下次加载配置文件时生效</string>
     <string name="profile_active">配置文件激活</string>
     <string name="auto_start">自动启动</string>
     <string name="auto_start_active">启用自动启动，等待显示设备连接&#8230;</string>

@@ -76,8 +76,7 @@ public final class TestOverscanService extends SecondScreenIntentService {
         }
 
         // Fix overscan values under certain conditions
-        if((prefMain.getBoolean("notch_compat_mode", false)
-                || (U.isDesktopModeActive(this) && !prefMain.getBoolean("landscape", false)))
+        if((U.isDesktopModeActive(this) && !prefMain.getBoolean("landscape", false))
                 && !overscanValues.equals("reset")) {
             String[] splitValues = overscanValues.split(",");
             overscanValues = splitValues[1] + ","
