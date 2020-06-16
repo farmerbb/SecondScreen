@@ -15,7 +15,9 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <PreferenceCategory android:title="@string/pref_header_additional_settings" >
+    <PreferenceCategory
+        android:key="additional_settings"
+        android:title="@string/pref_header_additional_settings" >
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="bluetooth_on"

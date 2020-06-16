@@ -15,7 +15,9 @@
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <PreferenceCategory android:title="@string/pref_header_display_settings" >
+    <PreferenceCategory
+        android:key="display_settings"
+        android:title="@string/pref_header_display_settings" >
         <Preference
             android:key="size"
             android:title="@string/pref_title_resolution" >

@@ -28,10 +28,10 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
+import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
@@ -304,36 +304,32 @@ SharedPreferences.OnSharedPreferenceChangeListener {
 
         // Disable unsupported preferences
         if(!getActivity().getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH))
-            disablePreference(prefNew, "bluetooth_on", true);
+            disablePreference("bluetooth_on", "additional_settings", true);
 
         if(!getActivity().getPackageManager().hasSystemFeature(PackageManager.FEATURE_WIFI))
-            disablePreference(prefNew, "wifi_on", true);
+            disablePreference("wifi_on", "additional_settings", true);
 
         if(!getActivity().getPackageManager().hasSystemFeature("com.cyanogenmod.android"))
-            disablePreference(prefNew, "navbar", true);
+            disablePreference("navbar", "additional_settings", true);
 
         if(!U.canEnableOverscan())
-            disablePreference(prefNew, "overscan_settings", false);
+            disablePreference("overscan_settings", "display_settings", false);
 
-        if(!U.canEnableImmersiveMode()) {
-            disablePreference(prefNew, "immersive_new", false);
-
-            String summary = getResources().getStringArray(R.array.pref_immersive_list)[0];
-            findPreference("immersive_new").setSummary(summary);
-        }
+        if(!U.canEnableImmersiveMode())
+            disablePreference("immersive_new", "display_settings", false);
 
         if(!U.canEnableFreeform(getActivity()))
-            disablePreference(prefNew, "freeform", true);
+            disablePreference("freeform", "desktop_optimization", true);
 
         if(U.getChromePackageName(getActivity()) == null)
-            disablePreference(prefNew, "chrome", true);
+            disablePreference("chrome", "desktop_optimization", true);
 
         if(U.isInNonRootMode(getActivity())) {
-            disablePreference(prefNew, "hdmi_rotation", false);
-            disablePreference(prefNew, "chrome", false);
+            disablePreference("hdmi_rotation", "display_settings", false);
+            disablePreference("chrome", "desktop_optimization", false);
 
             if(!U.hasSupportLibrary(getActivity()))
-                disablePreference(prefNew, "show_touches", false);
+                disablePreference("show_touches", "additional_settings", false);
         }
 
         uiRefreshWarning = true;
@@ -351,17 +347,19 @@ SharedPreferences.OnSharedPreferenceChangeListener {
         else
             getActivity().setTitle(" " + prefNew.getString("profile_name", getResources().getString(R.string.action_new)));
 
-        if(prefNew.getBoolean("overscan", false) && U.canEnableOverscan())
-            findPreference("overscan_settings").setSummary(getResources().getString(R.string.enabled));
-        else
-            findPreference("overscan_settings").setSummary(getResources().getString(R.string.disabled));
+        if(U.canEnableOverscan()) {
+            if(prefNew.getBoolean("overscan", false))
+                findPreference("overscan_settings").setSummary(getResources().getString(R.string.enabled));
+            else
+                findPreference("overscan_settings").setSummary(getResources().getString(R.string.disabled));
+        }
 
         String taskbarPackageName = U.getTaskbarPackageName(getActivity());
         if(taskbarPackageName == null || !U.isPlayStoreRelease(getActivity())) {
-            disablePreference(prefNew, "taskbar", true);
+            disablePreference("taskbar", "desktop_optimization", true);
 
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P)
-                disablePreference(prefNew, "freeform", true);
+                disablePreference("freeform", "desktop_optimization", true);
         } else {
             findPreference("taskbar").setEnabled(true);
 
@@ -866,17 +864,15 @@ SharedPreferences.OnSharedPreferenceChangeListener {
         }
     }
 
-    private void disablePreference(SharedPreferences prefNew, String preferenceName, boolean shouldClear) {
+    private void disablePreference(String preferenceName, String categoryName, boolean shouldClear) {
+        SharedPreferences prefNew = U.getPrefNew(getActivity());
         if(shouldClear && prefNew.getBoolean(preferenceName, false)) {
             SharedPreferences.Editor editor = prefNew.edit();
             editor.putBoolean(preferenceName, false);
             editor.apply();
         }
 
-        Preference preference = getPreferenceScreen().findPreference(preferenceName);
-        preference.setEnabled(false);
-
-        if(preference instanceof CheckBoxPreference)
-            ((CheckBoxPreference) preference).setChecked(false);
+        PreferenceCategory category = (PreferenceCategory) getPreferenceScreen().findPreference(categoryName);
+        category.removePreference(getPreferenceScreen().findPreference(preferenceName));
     }
 }

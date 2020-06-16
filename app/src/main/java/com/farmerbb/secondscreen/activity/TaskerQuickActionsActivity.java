@@ -27,6 +27,7 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceCategory;
 import android.preference.PreferenceManager;
 import android.util.DisplayMetrics;
 import android.view.Display;
@@ -133,21 +134,21 @@ SharedPreferences.OnSharedPreferenceChangeListener {
 
             // Disable unsupported preferences
             if(!U.canEnableOverscan())
-                getPreferenceScreen().findPreference("temp_overscan").setEnabled(false);
+                disablePreference("temp_overscan");
 
             if(!U.canEnableImmersiveMode())
-                getPreferenceScreen().findPreference("temp_immersive_new").setEnabled(false);
+                disablePreference("temp_immersive_new");
 
             if(!U.canEnableFreeform(this))
-                getPreferenceScreen().findPreference("temp_freeform").setEnabled(false);
+                disablePreference("temp_freeform");
 
             if(U.getChromePackageName(this) == null)
-                getPreferenceScreen().findPreference("temp_chrome").setEnabled(false);
+                disablePreference("temp_chrome");
 
             if(U.isInNonRootMode(this)) {
-                getPreferenceScreen().findPreference("temp_hdmi_rotation").setEnabled(false);
-                getPreferenceScreen().findPreference("temp_chrome").setEnabled(false);
-                getPreferenceScreen().findPreference("temp_freeform").setEnabled(false);
+                disablePreference("temp_hdmi_rotation");
+                disablePreference("temp_chrome");
+                disablePreference("temp_freeform");
             }
 
             // Set active state of "Reset settings" button
@@ -587,5 +588,11 @@ SharedPreferences.OnSharedPreferenceChangeListener {
                 editor.apply();
             }
         }
+    }
+
+    @SuppressWarnings("deprecation")
+    private void disablePreference(String preferenceName) {
+        PreferenceCategory category = (PreferenceCategory) getPreferenceScreen().findPreference("available_actions");
+        category.removePreference(getPreferenceScreen().findPreference(preferenceName));
     }
 }

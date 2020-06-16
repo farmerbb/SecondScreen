@@ -21,7 +21,10 @@
         android:title="@string/quick_turn_off" >
     </Preference>
 
-    <PreferenceCategory android:title="@string/available_actions" >
+    <PreferenceCategory
+        android:key="available_actions"
+        android:title="@string/available_actions" >
+
         <ListPreference
             android:entries="@array/pref_quick_actions"
             android:entryValues="@array/pref_quick_actions_values"
