@@ -312,10 +312,10 @@ SharedPreferences.OnSharedPreferenceChangeListener {
         if(!getActivity().getPackageManager().hasSystemFeature("com.cyanogenmod.android"))
             disablePreference(prefNew, "navbar", true);
 
-        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2 || U.getCurrentApiVersion() > 29.0f)
+        if(!U.canEnableOverscan())
             disablePreference(prefNew, "overscan_settings", false);
 
-        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP || U.getCurrentApiVersion() > 29.0f) {
+        if(!U.canEnableImmersiveMode()) {
             disablePreference(prefNew, "immersive_new", false);
 
             String summary = getResources().getStringArray(R.array.pref_immersive_list)[0];
@@ -351,7 +351,7 @@ SharedPreferences.OnSharedPreferenceChangeListener {
         else
             getActivity().setTitle(" " + prefNew.getString("profile_name", getResources().getString(R.string.action_new)));
 
-        if(prefNew.getBoolean("overscan", false) && U.getCurrentApiVersion() <= 29.0f)
+        if(prefNew.getBoolean("overscan", false) && U.canEnableOverscan())
             findPreference("overscan_settings").setSummary(getResources().getString(R.string.enabled));
         else
             findPreference("overscan_settings").setSummary(getResources().getString(R.string.disabled));

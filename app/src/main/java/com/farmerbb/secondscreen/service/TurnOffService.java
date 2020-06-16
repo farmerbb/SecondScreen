@@ -221,7 +221,7 @@ public final class TurnOffService extends SecondScreenIntentService {
         }
 
         // Overscan
-        if((Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR1) && prefCurrent.getBoolean("overscan", true))
+        if(U.canEnableOverscan() && prefCurrent.getBoolean("overscan", true))
             su[overscanCommand] = U.overscanCommand(this, "reset");
 
         // Screen rotation
@@ -330,7 +330,7 @@ public final class TurnOffService extends SecondScreenIntentService {
         }
 
         // Immersive mode
-        if(!"do-nothing".equals(prefCurrent.getString("immersive_new", "do-nothing")))
+        if(U.canEnableImmersiveMode() && !"do-nothing".equals(prefCurrent.getString("immersive_new", "do-nothing")))
             su[immersiveCommand] = U.immersiveCommand("do-nothing");
 
         // HDMI rotation

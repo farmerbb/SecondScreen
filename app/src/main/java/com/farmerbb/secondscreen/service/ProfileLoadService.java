@@ -331,7 +331,7 @@ public final class ProfileLoadService extends SecondScreenIntentService {
         }
 
         // Overscan
-        if(Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR1) {
+        if(U.canEnableOverscan()) {
             if(prefSaved.getBoolean("overscan", false)) {
                 String overscanValues = "";
 
@@ -825,36 +825,38 @@ public final class ProfileLoadService extends SecondScreenIntentService {
         }
 
         // Immersive mode
-        if("fallback".equals(prefSaved.getString("immersive_new", "fallback")) && prefSaved.getBoolean("immersive", false))
-            editor.putString("immersive_new", "immersive-mode");
-        else
-            editor.putString("immersive_new", prefSaved.getString("immersive_new", "do-nothing"));
+        if(U.canEnableImmersiveMode()) {
+            if("fallback".equals(prefSaved.getString("immersive_new", "fallback")) && prefSaved.getBoolean("immersive", false))
+                editor.putString("immersive_new", "immersive-mode");
+            else
+                editor.putString("immersive_new", prefSaved.getString("immersive_new", "do-nothing"));
 
-        switch(prefSaved.getString("immersive_new", "fallback")) {
-            case "fallback":
-                if(prefSaved.getBoolean("immersive", false)) {
+            switch(prefSaved.getString("immersive_new", "fallback")) {
+                case "fallback":
+                    if(prefSaved.getBoolean("immersive", false)) {
+                        if(!"immersive-mode".equals(prefCurrent.getString("immersive_new", "do-nothing"))) {
+                            su[immersiveCommand] = U.immersiveCommand("immersive-mode");
+                        }
+                    } else {
+                        if(!"do-nothing".equals(prefCurrent.getString("immersive_new", "do-nothing")) && !prefCurrent.getBoolean("not_active", true))
+                            su[immersiveCommand] = U.immersiveCommand("do-nothing");
+                    }
+                    break;
+                case "status-only":
+                    if(!"status-only".equals(prefCurrent.getString("immersive_new", "do-nothing"))) {
+                        su[immersiveCommand] = U.immersiveCommand("status-only");
+                    }
+                    break;
+                case "immersive-mode":
                     if(!"immersive-mode".equals(prefCurrent.getString("immersive_new", "do-nothing"))) {
                         su[immersiveCommand] = U.immersiveCommand("immersive-mode");
                     }
-                } else {
+                    break;
+                case "do-nothing":
                     if(!"do-nothing".equals(prefCurrent.getString("immersive_new", "do-nothing")) && !prefCurrent.getBoolean("not_active", true))
                         su[immersiveCommand] = U.immersiveCommand("do-nothing");
-                }
-                break;
-            case "status-only":
-                if(!"status-only".equals(prefCurrent.getString("immersive_new", "do-nothing"))) {
-                    su[immersiveCommand] = U.immersiveCommand("status-only");
-                }
-                break;
-            case "immersive-mode":
-                if(!"immersive-mode".equals(prefCurrent.getString("immersive_new", "do-nothing"))) {
-                    su[immersiveCommand] = U.immersiveCommand("immersive-mode");
-                }
-                break;
-            case "do-nothing":
-                if(!"do-nothing".equals(prefCurrent.getString("immersive_new", "do-nothing")) && !prefCurrent.getBoolean("not_active", true))
-                    su[immersiveCommand] = U.immersiveCommand("do-nothing");
-                break;
+                    break;
+            }
         }
 
         // HDMI rotation

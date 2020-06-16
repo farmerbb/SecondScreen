@@ -1549,4 +1549,12 @@ public final class U {
 
         return displays[displays.length - 1].getDisplayId();
     }
+
+    public static boolean canEnableOverscan() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2 && U.getCurrentApiVersion() <= 29.0f;
+    }
+
+    public static boolean canEnableImmersiveMode() {
+        return Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && U.getCurrentApiVersion() <= 29.0f;
+    }
 }

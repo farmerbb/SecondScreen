@@ -177,7 +177,7 @@ public final class ProfileViewFragment extends Fragment {
                 break;
         }
 
-        if(U.getCurrentApiVersion() <= 29.0f)
+        if(U.canEnableOverscan())
             generateProfileSettings(prefSaved.getBoolean("overscan", false), R.string.quick_overscan);
 
         switch(prefSaved.getString("rotation_lock_new", "fallback")) {
@@ -204,15 +204,13 @@ public final class ProfileViewFragment extends Fragment {
 
         generateProfileSettings(prefSaved.getBoolean("show_touches", false), R.string.pref_title_show_touches);
 
-        if(U.getCurrentApiVersion() <= 29.0f) {
+        if(U.canEnableImmersiveMode()) {
             switch(prefSaved.getString("immersive_new", "fallback")) {
                 case "fallback":
                     if(prefSaved.getBoolean("immersive", false))
                         generateProfileSettings(true, R.string.pref_title_immersive);
                     break;
                 case "status-only":
-                    generateProfileSettings(true, R.string.pref_title_immersive);
-                    break;
                 case "immersive-mode":
                     generateProfileSettings(true, R.string.pref_title_immersive);
                     break;
