@@ -28,18 +28,24 @@ import com.farmerbb.secondscreen.util.U;
 // Receiver run by Tasker periodically to check the state of currently active profiles, whenever
 // a SecondScreen state is included as a condition in a Tasker profile.
 public final class TaskerConditionReceiver extends BroadcastReceiver {
+    Bundle lastbundle = null;
+
+
     @SuppressWarnings("deprecation")
     @Override
     public void onReceive(Context context, Intent intent) {
+        if (lastbundle.equals(intent.getBundleExtra(com.twofortyfouram.locale.api.Intent.EXTRA_BUNDLE))) {
+            return;
+        }
+        updateValues(intent);
         if(U.isExternalAccessDisabled(context)) return;
 
         BundleScrubber.scrub(intent);
 
-        final Bundle bundle = intent.getBundleExtra(com.twofortyfouram.locale.api.Intent.EXTRA_BUNDLE);
-        BundleScrubber.scrub(bundle);
+        BundleScrubber.scrub(lastbundle);
 
-        if(PluginBundleManager.isBundleValid(bundle)) {
-            String filename = bundle.getString(PluginBundleManager.BUNDLE_EXTRA_STRING_MESSAGE);
+        if(PluginBundleManager.isBundleValid(lastbundle)) {
+            String filename = lastbundle.getString(PluginBundleManager.BUNDLE_EXTRA_STRING_MESSAGE);
             SharedPreferences prefCurrent = context.getSharedPreferences("current", Context.MODE_MULTI_PROCESS);
 
             if("quick_actions".equals(prefCurrent.getString("filename", "0"))) {
@@ -71,5 +77,9 @@ public final class TaskerConditionReceiver extends BroadcastReceiver {
                 }
             }
         }
+    }
+
+    private void updateValues(Intent intent) {
+        lastbundle = intent.getBundleExtra(com.twofortyfouram.locale.api.Intent.EXTRA_BUNDLE);
     }
 }
