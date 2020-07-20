@@ -135,7 +135,6 @@ public abstract class SecondScreenIntentService extends IntentService implements
 
         @Override
         public void onReceive(Context context, Intent intent) {
-
             if (service.checkNetwork()) {
                 NetworkStateReceiver.disable(context);
 
@@ -152,10 +151,8 @@ public abstract class SecondScreenIntentService extends IntentService implements
                 long hoursLong = Long.parseLong(hours) * 60 * 60 * 1000;
 
                 if (autoRefreshEnabled && hoursLong != 0) {
-
                     final long alarmTime = preferences.getLong("last_auto_refresh_time", 0) + hoursLong;
                     alarmManager.set(AlarmManager.RTC, alarmTime, pendingIntent);
-
                 } else {
 
                     alarmManager.cancel(pendingIntent);
