@@ -34,11 +34,12 @@ public final class TaskerConditionReceiver extends BroadcastReceiver {
     @SuppressWarnings("deprecation")
     @Override
     public void onReceive(Context context, Intent intent) {
+        if(U.isExternalAccessDisabled(context)) return;
+
         if (lastbundle.equals(intent.getBundleExtra(com.twofortyfouram.locale.api.Intent.EXTRA_BUNDLE))) {
             return;
         }
         updateValues(intent);
-        if(U.isExternalAccessDisabled(context)) return;
 
         BundleScrubber.scrub(intent);
 
