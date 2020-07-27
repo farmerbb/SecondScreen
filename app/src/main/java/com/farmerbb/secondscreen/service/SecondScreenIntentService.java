@@ -16,11 +16,11 @@
 package com.farmerbb.secondscreen.service;
 
 import android.annotation.TargetApi;
-import android.app.IntentService;
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.content.Intent;
+import android.app.*;
+import android.content.*;
+import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.Network;
 import android.os.Build;
 import android.os.IBinder;
 
@@ -54,11 +54,17 @@ public abstract class SecondScreenIntentService extends IntentService implements
         return binder;
     }
 
+
     @CallSuper
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
-        if(intent.getBooleanExtra("start_foreground", false))
-            startForeground();
+        if (checkNetwork()) {
+            if(intent.getBooleanExtra("start_foreground", false))
+                startForeground();
+        }
+        else {
+            NetworkStateReceiver.enable(getApplicationContext());
+        }
     }
 
     @Override
@@ -107,5 +113,63 @@ public abstract class SecondScreenIntentService extends IntentService implements
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
 
         return mBuilder.build();
+    }
+
+    boolean checkNetwork() {
+        final ConnectivityManager connManager = (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        Network activeNetwork = connManager.getActiveNetwork();
+        if (activeNetwork != null) {
+            return true;
+        }
+        return false;
+    }
+
+    public static class NetworkStateReceiver extends BroadcastReceiver {
+        private static final String TAG = NetworkStateReceiver.class.getName();
+
+        private static SecondScreenIntentService service;
+
+        public static void setService(SecondScreenIntentService newService) {
+            service = newService;
+        }
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (service.checkNetwork()) {
+                NetworkStateReceiver.disable(context);
+
+                final AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+
+                final Intent innerIntent = new Intent(context, SecondScreenIntentService.class);
+                final PendingIntent pendingIntent = PendingIntent.getService(context, 0, innerIntent, 0);
+
+                SharedPreferences preferences = context.getSharedPreferences(context.getPackageName(), Context.MODE_PRIVATE);
+                preferences.edit();
+                boolean autoRefreshEnabled = preferences.getBoolean("pref_auto_refresh_enabled", false);
+
+                final String hours = preferences.getString("pref_auto_refresh_enabled", "0");
+                long hoursLong = Long.parseLong(hours) * 60 * 60 * 1000;
+
+                if (autoRefreshEnabled && hoursLong != 0) {
+                    final long alarmTime = preferences.getLong("last_auto_refresh_time", 0) + hoursLong;
+                    alarmManager.set(AlarmManager.RTC, alarmTime, pendingIntent);
+                } else {
+
+                    alarmManager.cancel(pendingIntent);
+                }
+            }
+        }
+
+        public static void enable(Context context) {
+            final PackageManager packageManager = context.getPackageManager();
+            final ComponentName receiver = new ComponentName(context, NetworkStateReceiver.class);
+            packageManager.setComponentEnabledSetting(receiver, PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
+        }
+
+        public static void disable(Context context) {
+            final PackageManager packageManager = context.getPackageManager();
+            final ComponentName receiver = new ComponentName(context, NetworkStateReceiver.class);
+            packageManager.setComponentEnabledSetting(receiver, PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP);
+        }
     }
 }
