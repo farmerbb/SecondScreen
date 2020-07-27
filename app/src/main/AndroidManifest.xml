@@ -31,7 +31,6 @@
         android:xlargeScreens="true" />
 
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
@@ -316,12 +315,6 @@
             android:name="com.farmerbb.secondscreen.service.TurnOffService"
             android:exported="true" >
         </service>
-        <receiver android:name="com.farmerbb.secondscreen.service.SecondScreenIntentService$NetworkStateReceiver"
-                  android:exported="true" android:enabled="false">
-            <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
-            </intent-filter>
-        </receiver>
     </application>
 
 </manifest>
