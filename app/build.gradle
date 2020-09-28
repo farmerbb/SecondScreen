@@ -38,7 +38,7 @@ android {
         resConfigs "en", "es", "fr", "sk", "nl", "it", "zh"
         vectorDrawables.useSupportLibrary = true
 
-        buildConfigField "float", "TESTED_API_VERSION", "29.0f"
+        buildConfigField "float", "TESTED_API_VERSION", "30.0f"
         buildConfigField "String", "SUPPORT_APPLICATION_ID", "\"com.farmerbb.secondscreen.support\""
         buildConfigField "long", "TIMESTAMP", "${System.currentTimeMillis()}L"
     }
