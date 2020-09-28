@@ -15,22 +15,7 @@ android {
     defaultConfig {
         applicationId "com.farmerbb.secondscreen"
         minSdkVersion 17
-
-        /* targetSdkVersion is explicitly set to API 29.
-         * This is the latest API level that Android allows using reflection to set resolution
-         * and DPI on non-rooted devices with (on Android 9 and later)
-         *
-         * After November 1, 2021, the following changes will need to be made to SecondScreen:
-         *
-         * - Add verbiage somewhere in the app (a snackbar, maybe?) encouraging users to download
-         * the SecondScreen Support Library as that will be the only way for users on non-rooted
-         * devices running Android 9 or later to set resolution / DPI without a reboot
-         *
-         * - Re-implement the changes made in commit 434328b (and reverted in 3d36992) setting
-         * the default UI refresh method to "soft reboot" on Android 9 and later
-         */
-        //noinspection OldTargetApi
-        targetSdkVersion 29
+        targetSdkVersion 30
 
         versionCode 183
         versionName "2.9.1"
@@ -107,10 +92,11 @@ android {
 
 dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'com.google.android.material:material:1.1.0'
-    implementation 'org.apache.commons:commons-lang3:3.10'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'com.google.android.material:material:1.2.1'
+    implementation 'org.apache.commons:commons-lang3:3.11'
     implementation 'eu.chainfire:libsuperuser:1.1.0.202004101746'
+    //noinspection GradleDependency
     implementation 'me.weishu:free_reflection:2.2.0'
     implementation 'moe.banana:toast-compat:1.0.5'
     implementation group:'com.twofortyfouram', name:'android-plugin-api-for-locale', version:'[1.0.2,2.0['
