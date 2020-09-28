@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
 import android.hardware.display.DisplayManager;
 import android.net.wifi.WifiManager;
@@ -156,9 +157,11 @@ public final class ProfileLoadService extends SecondScreenIntentService {
         final int showTouchesCommand = 20;
         final int vibrationCommand = 21;
         final int backlightCommand = 22;
+        final int setHomeActivityCommand = 23;
+        final int total = 24;
 
         // Initialize su array
-        String[] su = new String[backlightCommand + 1];
+        String[] su = new String[total];
         Arrays.fill(su, "");
 
         // Bluetooth
@@ -223,10 +226,30 @@ public final class ProfileLoadService extends SecondScreenIntentService {
             String taskbarPackageName = U.getTaskbarPackageName(this);
 
             if(taskbarPackageName != null) {
-                if(shouldEnableTaskbarHome)
+                if(shouldEnableTaskbarHome) {
                     taskbarIntent = new Intent("com.farmerbb.taskbar.ENABLE_HOME");
-                else if(shouldDisableTaskbarHome)
+
+                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        Intent homeIntent = new Intent(Intent.ACTION_MAIN);
+                        homeIntent.addCategory(Intent.CATEGORY_HOME);
+                        ResolveInfo defaultLauncher = getPackageManager().resolveActivity(homeIntent, PackageManager.MATCH_DEFAULT_ONLY);
+
+                        if(defaultLauncher != null) {
+                            editor.putString("home_activity", defaultLauncher.activityInfo.packageName + "/" + defaultLauncher.activityInfo.name);
+                            su[setHomeActivityCommand] = U.setHomeActivityCommand + taskbarPackageName + "/com.farmerbb.taskbar.activity.HomeActivity";
+                        }
+                    }
+                } else if(shouldDisableTaskbarHome) {
                     taskbarIntent = new Intent("com.farmerbb.taskbar.DISABLE_HOME");
+
+                    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        String defaultLauncher = prefCurrent.getString("home_activity", null);
+                        if(defaultLauncher != null) {
+                            editor.remove("home_activity");
+                            su[setHomeActivityCommand] = U.setHomeActivityCommand + defaultLauncher;
+                        }
+                    }
+                }
             }
 
             if(taskbarIntent != null) {
@@ -942,6 +965,7 @@ public final class ProfileLoadService extends SecondScreenIntentService {
                                 su[stayOnCommand],
                                 su[showTouchesCommand],
                                 su[densityCommand],
+                                su[setHomeActivityCommand],
                                 su[uiRefreshCommand]};
                     } else
                         su = new String[]{
@@ -958,6 +982,7 @@ public final class ProfileLoadService extends SecondScreenIntentService {
                                 su[daydreamsChargingCommand],
                                 su[stayOnCommand],
                                 su[showTouchesCommand],
+                                su[setHomeActivityCommand],
                                 su[uiRefreshCommand]};
                     break;
             }

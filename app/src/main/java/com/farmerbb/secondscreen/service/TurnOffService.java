@@ -116,9 +116,11 @@ public final class TurnOffService extends SecondScreenIntentService {
         final int uiRefreshCommand2 = 18;
         final int vibrationCommand = 19;
         final int backlightCommand = 20;
+        final int setHomeActivityCommand = 21;
+        final int total = 22;
 
         // Initialize su array
-        String[] su = new String[backlightCommand + 1];
+        String[] su = new String[total];
         Arrays.fill(su, "");
 
         // Bluetooth
@@ -147,8 +149,17 @@ public final class TurnOffService extends SecondScreenIntentService {
             Intent taskbarIntent = null;
             String taskbarPackageName = U.getTaskbarPackageName(this);
 
-            if(taskbarPackageName != null)
+            if(taskbarPackageName != null) {
                 taskbarIntent = new Intent("com.farmerbb.taskbar.DISABLE_HOME");
+
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    String defaultLauncher = prefCurrent.getString("home_activity", null);
+                    if(defaultLauncher != null) {
+                        editor.remove("home_activity");
+                        su[setHomeActivityCommand] = U.setHomeActivityCommand + defaultLauncher;
+                    }
+                }
+            }
 
             if(taskbarIntent != null) {
                 taskbarIntent.setPackage(taskbarPackageName);
@@ -366,6 +377,7 @@ public final class TurnOffService extends SecondScreenIntentService {
                             su[stayOnCommand],
                             su[showTouchesCommand],
                             su[densityCommand],
+                            su[setHomeActivityCommand],
                             su[uiRefreshCommand]};
                 } else
                     su = new String[]{
@@ -382,6 +394,7 @@ public final class TurnOffService extends SecondScreenIntentService {
                             su[daydreamsChargingCommand],
                             su[stayOnCommand],
                             su[showTouchesCommand],
+                            su[setHomeActivityCommand],
                             su[uiRefreshCommand]};
                 break;
         }
