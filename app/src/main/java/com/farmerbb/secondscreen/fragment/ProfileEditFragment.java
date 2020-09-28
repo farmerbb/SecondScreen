@@ -332,6 +332,9 @@ SharedPreferences.OnSharedPreferenceChangeListener {
                 disablePreference("show_touches", "additional_settings", false);
         }
 
+        if(U.getTaskbarPackageName(getActivity()) == null || !U.isPlayStoreRelease(getActivity()))
+            disablePreference("taskbar", "desktop_optimization", true);
+
         uiRefreshWarning = true;
     }
 
@@ -354,22 +357,9 @@ SharedPreferences.OnSharedPreferenceChangeListener {
                 findPreference("overscan_settings").setSummary(getResources().getString(R.string.disabled));
         }
 
-        String taskbarPackageName = U.getTaskbarPackageName(getActivity());
-        if(taskbarPackageName == null || !U.isPlayStoreRelease(getActivity())) {
-            disablePreference("taskbar", "desktop_optimization", true);
-
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P)
-                disablePreference("freeform", "desktop_optimization", true);
-        } else {
-            findPreference("taskbar").setEnabled(true);
-
-            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P)
-                findPreference("freeform").setEnabled(true);
-        }
-
         if(taskbarSettingsPrefEnabled) {
             findPreference("taskbar_settings").setTitle(
-                    taskbarPackageName == null
+                    U.getTaskbarPackageName(getActivity()) == null
                             ? R.string.pref_taskbar_settings_title_install
                             : R.string.pref_taskbar_settings_title_open);
         }
@@ -865,6 +855,9 @@ SharedPreferences.OnSharedPreferenceChangeListener {
     }
 
     private void disablePreference(String preferenceName, String categoryName, boolean shouldClear) {
+        Preference pref = getPreferenceScreen().findPreference(preferenceName);
+        if(pref == null) return;
+
         SharedPreferences prefNew = U.getPrefNew(getActivity());
         if(shouldClear && prefNew.getBoolean(preferenceName, false)) {
             SharedPreferences.Editor editor = prefNew.edit();
@@ -873,6 +866,6 @@ SharedPreferences.OnSharedPreferenceChangeListener {
         }
 
         PreferenceCategory category = (PreferenceCategory) getPreferenceScreen().findPreference(categoryName);
-        category.removePreference(getPreferenceScreen().findPreference(preferenceName));
+        category.removePreference(pref);
     }
 }

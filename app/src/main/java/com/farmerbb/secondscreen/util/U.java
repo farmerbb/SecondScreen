@@ -1415,7 +1415,7 @@ public final class U {
     public static boolean canEnableFreeform(Context context) {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.N
                 && (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_FREEFORM_WINDOW_MANAGEMENT)
-                || Build.VERSION.SDK_INT < Build.VERSION_CODES.P
+                || Build.VERSION.SDK_INT != Build.VERSION_CODES.P
                 || (getTaskbarPackageName(context) != null && isPlayStoreRelease(context)));
     }
 
