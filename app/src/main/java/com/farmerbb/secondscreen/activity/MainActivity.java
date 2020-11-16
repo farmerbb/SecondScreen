@@ -30,6 +30,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ShortcutInfo;
@@ -142,12 +143,21 @@ SystemAlertPermissionDialogFragment.Listener {
             su[chromeCommand] = U.chromeCommandRemove;
             su[sizeCommand] = U.sizeCommand(MainActivity.this, "reset");
 
-            if(!(getPackageManager().hasSystemFeature("com.cyanogenmod.android")
+            PackageManager pm = getPackageManager();
+            if(!(pm.hasSystemFeature("com.cyanogenmod.android")
                     && Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP_MR1)) {
-                su[densityCommand] = U.densityCommand(MainActivity.this, "reset");
+                Intent intent = new Intent(Intent.ACTION_MAIN);
+                intent.addCategory(Intent.CATEGORY_HOME);
+                ActivityInfo info = pm.resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY).activityInfo;
 
-                // We run the density command twice, for reliability
-                su[densityCommand2] = su[densityCommand];
+                if(!info.packageName.startsWith("com.farmerbb.taskbar")
+                        || !info.name.endsWith("HSLActivity")
+                        || !U.isDesktopModeActive(MainActivity.this)) {
+                    su[densityCommand] = U.densityCommand(MainActivity.this, "reset");
+
+                    // We run the density command twice, for reliability
+                    su[densityCommand2] = su[densityCommand];
+                }
             }
 
             if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2)
