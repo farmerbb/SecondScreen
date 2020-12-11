@@ -306,7 +306,7 @@ SharedPreferences.OnSharedPreferenceChangeListener {
         if(!getActivity().getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH))
             disablePreference("bluetooth_on", "additional_settings", true);
 
-        if(!getActivity().getPackageManager().hasSystemFeature(PackageManager.FEATURE_WIFI))
+        if(!U.canEnableWifi(getActivity()))
             disablePreference("wifi_on", "additional_settings", true);
 
         if(!getActivity().getPackageManager().hasSystemFeature("com.cyanogenmod.android"))

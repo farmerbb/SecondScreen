@@ -1558,4 +1558,9 @@ public final class U {
     public static boolean canEnableImmersiveMode() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && U.getCurrentApiVersion() <= 29.0f;
     }
+
+    public static boolean canEnableWifi(Context context) {
+        return Build.VERSION.SDK_INT < Build.VERSION_CODES.Q
+                && context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_WIFI);
+    }
 }

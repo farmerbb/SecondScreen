@@ -191,7 +191,7 @@ public final class ProfileLoadService extends SecondScreenIntentService {
         }
 
         // Wi-Fi
-        if(getPackageManager().hasSystemFeature(PackageManager.FEATURE_WIFI)) {
+        if(U.canEnableWifi(this)) {
             WifiManager wifi = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
             if(prefCurrent.getBoolean("not_active", true))
                 editor.putBoolean("wifi_on_system", wifi.isWifiEnabled());
