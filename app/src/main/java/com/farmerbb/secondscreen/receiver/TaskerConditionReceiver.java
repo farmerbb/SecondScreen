@@ -28,15 +28,15 @@ import com.farmerbb.secondscreen.util.U;
 // Receiver run by Tasker periodically to check the state of currently active profiles, whenever
 // a SecondScreen state is included as a condition in a Tasker profile.
 public final class TaskerConditionReceiver extends BroadcastReceiver {
-    Bundle lastbundle = null;
-
+    private Bundle lastbundle = null;
 
     @SuppressWarnings("deprecation")
     @Override
     public void onReceive(Context context, Intent intent) {
         if(U.isExternalAccessDisabled(context)) return;
 
-        if (lastbundle.equals(intent.getBundleExtra(com.twofortyfouram.locale.api.Intent.EXTRA_BUNDLE))) {
+        if(lastbundle != null && lastbundle.equals(intent.getBundleExtra(com.twofortyfouram.locale.api.Intent.EXTRA_BUNDLE))) {
+            // bundle hasn't changed: we can safely return
             return;
         }
         updateValues(intent);
