@@ -16,14 +16,17 @@
 package com.farmerbb.secondscreen;
 
 import android.app.Application;
-import android.content.Context;
+import android.os.Build;
 
-import me.weishu.reflection.Reflection;
+import org.lsposed.hiddenapibypass.HiddenApiBypass;
 
 public class SecondScreenApplication extends Application {
     @Override
-    protected void attachBaseContext(Context base) {
-        super.attachBaseContext(base);
-        Reflection.unseal(base);
+    public void onCreate() {
+        super.onCreate();
+        
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            HiddenApiBypass.addHiddenApiExemptions("");
+        }
     }
 }
