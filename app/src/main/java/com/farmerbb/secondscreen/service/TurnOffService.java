@@ -95,29 +95,30 @@ public final class TurnOffService extends SecondScreenIntentService {
         // Build commands to pass to su
 
         // Commands will be run in this order (except if "Restart ActivityManager" is selected)
-        final int densityCommand = 0;
-        final int densityCommand2 = 1;
-        final int sizeCommand = 2;
-        final int overscanCommand = 3;
-        final int rotationPreCommand = 4;
-        final int rotationCommand = 5;
-        final int rotationPostCommand = 6;
-        final int chromeCommand = 7;
-        final int chromeCommand2 = 8;
-        final int immersiveCommand = 9;
-        final int freeformCommand = 10;
-        final int hdmiRotationCommand = 11;
-        final int navbarCommand = 12;
-        final int daydreamsCommand = 13;
-        final int daydreamsChargingCommand = 14;
-        final int stayOnCommand = 15;
-        final int showTouchesCommand = 16;
-        final int uiRefreshCommand = 17;
-        final int uiRefreshCommand2 = 18;
-        final int vibrationCommand = 19;
-        final int backlightCommand = 20;
-        final int setHomeActivityCommand = 21;
-        final int total = 22;
+        final int wifiCommand = 0;
+        final int densityCommand = 1;
+        final int densityCommand2 = 2;
+        final int sizeCommand = 3;
+        final int overscanCommand = 4;
+        final int rotationPreCommand = 5;
+        final int rotationCommand = 6;
+        final int rotationPostCommand = 7;
+        final int chromeCommand = 8;
+        final int chromeCommand2 = 9;
+        final int immersiveCommand = 10;
+        final int freeformCommand = 11;
+        final int hdmiRotationCommand = 12;
+        final int navbarCommand = 13;
+        final int daydreamsCommand = 14;
+        final int daydreamsChargingCommand = 15;
+        final int stayOnCommand = 16;
+        final int showTouchesCommand = 17;
+        final int uiRefreshCommand = 18;
+        final int uiRefreshCommand2 = 19;
+        final int vibrationCommand = 20;
+        final int backlightCommand = 21;
+        final int setHomeActivityCommand = 22;
+        final int total = 23;
 
         // Initialize su array
         String[] su = new String[total];
@@ -133,8 +134,22 @@ public final class TurnOffService extends SecondScreenIntentService {
         }
 
         // Wi-Fi
+        Boolean enableWifi = null;
+
         if(prefCurrent.getBoolean("wifi_on", true)) {
-            U.setWifiEnabled(this, prefCurrent.getBoolean("wifi_on_system", false));
+            enableWifi = prefCurrent.getBoolean("wifi_on_system", false);
+        }
+
+        if (enableWifi != null) {
+            boolean wifiHandled = U.setWifiEnabled(this, enableWifi);
+
+            if (!wifiHandled) {
+                su[wifiCommand] = U.wifiCommand(enableWifi);
+
+                if(CommandDispatcher.getInstance().addCommand(this, su[wifiCommand])
+                        || U.isInNonRootMode(this))
+                    su[wifiCommand] = "";
+            }
         }
 
         // Clear default home

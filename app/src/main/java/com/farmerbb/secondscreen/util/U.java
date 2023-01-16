@@ -191,6 +191,10 @@ public final class U {
     public static final String hdmiRotationCommand = "setprop persist.demo.hdmirotation ";
     public static final String setHomeActivityCommand = "cmd package set-home-activity ";
 
+    public static String wifiCommand(boolean enabled) {
+        return "svc wifi " + (enabled ? "enable" : "disable");
+    }
+
     public static String safeModeSizeCommand(String args) {
         if(Build.VERSION.SDK_INT < Build.VERSION_CODES.N)
             return "settings put global display_size_forced " + args;
@@ -1566,7 +1570,7 @@ public final class U {
     }
 
     public static boolean canEnableWifi(Context context) {
-        if (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_WIFI)) {
+        if (!context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_WIFI)) {
             return false;
         }
 
@@ -1581,14 +1585,14 @@ public final class U {
         return hasSupportLibrary(context, 3);
     }
 
-    public static void setWifiEnabled(Context context, boolean enabled) {
+    public static boolean setWifiEnabled(Context context, boolean enabled) {
         WifiManager wifi = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
             wifi.setWifiEnabled(enabled);
-            return;
+            return true;
         }
 
-        runCommand(context, "svc wifi " + (enabled ? "enable" : "disable"));
+        return false;
     }
 }

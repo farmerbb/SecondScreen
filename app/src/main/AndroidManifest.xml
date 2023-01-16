@@ -54,6 +54,12 @@
     <uses-sdk
         tools:overrideLibrary="rikka.shizuku.provider,rikka.shizuku.api,rikka.shizuku.shared,rikka.shizuku.aidl"/>
 
+    <queries>
+        <package android:name="com.farmerbb.secondscreen.support" />
+        <package android:name="com.farmerbb.taskbar" />
+        <package android:name="com.farmerbb.taskbar.paid" />
+    </queries>
+
     <application
         android:name=".SecondScreenApplication"
         android:allowBackup="true"

@@ -134,31 +134,32 @@ public final class ProfileLoadService extends SecondScreenIntentService {
         // Build commands to pass to su
 
         // Commands will be run in this order (except if "Restart ActivityManager" is selected)
-        final int densityCommand = 0;
-        final int densityCommand2 = 1;
-        final int sizeCommand = 2;
-        final int overscanCommand = 3;
-        final int rotationPreCommand = 4;
-        final int rotationCommand = 5;
-        final int rotationPostCommand = 6;
-        final int chromeCommand = 7;
-        final int chromeCommand2 = 8;
-        final int immersiveCommand = 9;
-        final int freeformCommand = 10;
-        final int hdmiRotationCommand = 11;
-        final int navbarCommand = 12;
-        final int daydreamsCommand = 13;
-        final int daydreamsChargingCommand = 14;
-        final int safeModeDensityCommand = 15;
-        final int safeModeSizeCommand = 16;
-        final int uiRefreshCommand = 17;
-        final int uiRefreshCommand2 = 18;
-        final int stayOnCommand = 19;
-        final int showTouchesCommand = 20;
-        final int vibrationCommand = 21;
-        final int backlightCommand = 22;
-        final int setHomeActivityCommand = 23;
-        final int total = 24;
+        final int wifiCommand = 0;
+        final int densityCommand = 1;
+        final int densityCommand2 = 2;
+        final int sizeCommand = 3;
+        final int overscanCommand = 4;
+        final int rotationPreCommand = 5;
+        final int rotationCommand = 6;
+        final int rotationPostCommand = 7;
+        final int chromeCommand = 8;
+        final int chromeCommand2 = 9;
+        final int immersiveCommand = 10;
+        final int freeformCommand = 11;
+        final int hdmiRotationCommand = 12;
+        final int navbarCommand = 13;
+        final int daydreamsCommand = 14;
+        final int daydreamsChargingCommand = 15;
+        final int safeModeDensityCommand = 16;
+        final int safeModeSizeCommand = 17;
+        final int uiRefreshCommand = 18;
+        final int uiRefreshCommand2 = 19;
+        final int stayOnCommand = 20;
+        final int showTouchesCommand = 21;
+        final int vibrationCommand = 22;
+        final int backlightCommand = 23;
+        final int setHomeActivityCommand = 24;
+        final int total = 25;
 
         // Initialize su array
         String[] su = new String[total];
@@ -192,21 +193,35 @@ public final class ProfileLoadService extends SecondScreenIntentService {
 
         // Wi-Fi
         if(U.canEnableWifi(this)) {
+            Boolean enableWifi = null;
+
             WifiManager wifi = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
             if(prefCurrent.getBoolean("not_active", true))
                 editor.putBoolean("wifi_on_system", wifi.isWifiEnabled());
 
             if(prefSaved.getBoolean("wifi_on", false)) {
                 if(prefCurrent.getBoolean("not_active", true))
-                    U.setWifiEnabled(this, true);
+                    enableWifi = true;
                 else {
                     if(!prefCurrent.getBoolean("wifi_on", false))
-                        U.setWifiEnabled(this, true);
+                        enableWifi = true;
                 }
             } else {
                 if(!prefCurrent.getBoolean("not_active", true))
                     if(prefCurrent.getBoolean("wifi_on", false))
-                        U.setWifiEnabled(this, prefCurrent.getBoolean("wifi_on_system", false));
+                        enableWifi = prefCurrent.getBoolean("wifi_on_system", false);
+            }
+
+            if (enableWifi != null) {
+                boolean wifiHandled = U.setWifiEnabled(this, enableWifi);
+
+                if (!wifiHandled) {
+                    su[wifiCommand] = U.wifiCommand(enableWifi);
+
+                    if(CommandDispatcher.getInstance().addCommand(this, su[wifiCommand])
+                            || U.isInNonRootMode(this))
+                        su[wifiCommand] = "";
+                }
             }
         }
 

@@ -593,6 +593,9 @@ SharedPreferences.OnSharedPreferenceChangeListener {
     @SuppressWarnings("deprecation")
     private void disablePreference(String preferenceName) {
         PreferenceCategory category = (PreferenceCategory) getPreferenceScreen().findPreference("available_actions");
-        category.removePreference(getPreferenceScreen().findPreference(preferenceName));
+        Preference preference = getPreferenceScreen().findPreference(preferenceName);
+        if (category != null && preference != null) {
+            category.removePreference(preference);
+        }
     }
 }
