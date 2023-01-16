@@ -134,8 +134,7 @@ public final class TurnOffService extends SecondScreenIntentService {
 
         // Wi-Fi
         if(prefCurrent.getBoolean("wifi_on", true)) {
-            WifiManager wifi = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-            wifi.setWifiEnabled(prefCurrent.getBoolean("wifi_on_system", false));
+            U.setWifiEnabled(this, prefCurrent.getBoolean("wifi_on_system", false));
         }
 
         // Clear default home

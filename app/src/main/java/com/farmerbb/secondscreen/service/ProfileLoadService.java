@@ -198,15 +198,15 @@ public final class ProfileLoadService extends SecondScreenIntentService {
 
             if(prefSaved.getBoolean("wifi_on", false)) {
                 if(prefCurrent.getBoolean("not_active", true))
-                    wifi.setWifiEnabled(true);
+                    U.setWifiEnabled(this, true);
                 else {
                     if(!prefCurrent.getBoolean("wifi_on", false))
-                        wifi.setWifiEnabled(true);
+                        U.setWifiEnabled(this, true);
                 }
             } else {
                 if(!prefCurrent.getBoolean("not_active", true))
                     if(prefCurrent.getBoolean("wifi_on", false))
-                        wifi.setWifiEnabled(prefCurrent.getBoolean("wifi_on_system", false));
+                        U.setWifiEnabled(this, prefCurrent.getBoolean("wifi_on_system", false));
             }
         }
 

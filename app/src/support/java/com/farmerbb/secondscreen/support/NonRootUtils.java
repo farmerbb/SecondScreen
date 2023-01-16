@@ -19,6 +19,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.provider.Settings;
 import android.view.Display;
@@ -70,6 +71,13 @@ public final class NonRootUtils {
                                     break;
                             }
                         } catch (Exception e) { /* Gracefully fail */ }
+                    }
+
+                    break;
+                case "svc":
+                    if ("wifi".equals(commandArgs[1])) {
+                        WifiManager wifi = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+                        wifi.setWifiEnabled("enable".equals(commandArgs[2]));
                     }
 
                     break;

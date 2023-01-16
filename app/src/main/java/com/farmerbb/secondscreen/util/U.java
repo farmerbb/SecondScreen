@@ -37,6 +37,7 @@ import android.content.pm.Signature;
 import android.content.res.Configuration;
 import android.hardware.display.DisplayManager;
 import android.net.Uri;
+import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.preference.Preference;
 import android.preference.PreferenceManager;
@@ -1483,11 +1484,16 @@ public final class U {
     }
 
     public static boolean hasSupportLibrary(Context context) {
+        return hasSupportLibrary(context, 0);
+    }
+
+    private static boolean hasSupportLibrary(Context context, int minVersion) {
         PackageManager pm = context.getPackageManager();
         try {
-            pm.getPackageInfo(BuildConfig.SUPPORT_APPLICATION_ID, 0);
+            PackageInfo pInfo = pm.getPackageInfo(BuildConfig.SUPPORT_APPLICATION_ID, 0);
             return pm.checkSignatures(BuildConfig.SUPPORT_APPLICATION_ID, BuildConfig.APPLICATION_ID)
-                    == PackageManager.SIGNATURE_MATCH;
+                    == PackageManager.SIGNATURE_MATCH
+                    && pInfo.versionCode >= minVersion;
         } catch (PackageManager.NameNotFoundException e) {
             return false;
         }
@@ -1560,7 +1566,29 @@ public final class U {
     }
 
     public static boolean canEnableWifi(Context context) {
-        return Build.VERSION.SDK_INT < Build.VERSION_CODES.Q
-                && context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_WIFI);
+        if (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_WIFI)) {
+            return false;
+        }
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+            return true;
+        }
+
+        if (hasElevatedPermissions(context) && !isInNonRootMode(context)) {
+            return true;
+        }
+
+        return hasSupportLibrary(context, 3);
+    }
+
+    public static void setWifiEnabled(Context context, boolean enabled) {
+        WifiManager wifi = (WifiManager) context.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+            wifi.setWifiEnabled(enabled);
+            return;
+        }
+
+        runCommand(context, "svc wifi " + (enabled ? "enable" : "disable"));
     }
 }
