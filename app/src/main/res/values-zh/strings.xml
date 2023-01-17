@@ -230,5 +230,6 @@
     <string name="background_operations_active">执行后台操作&#8230;</string>
     <string name="debug_mode">调试模式</string>
     <string name="safe_mode_dialog">强烈建议开启安全模式.\n\n禁用此选项可使SecondScreen在重新启动后保持活动状态. \n仅当您知道在出现问题时如何通过adb恢复设备的分辨率和密度设置时，才禁用此选项.</string>
+    <string name="shizuku_dialog">SecondScreen uses Shizuku to change device settings, such as resolution and density.\n\nPlease close this dialog once Shizuku permission has been granted.</string>
 
 </resources>

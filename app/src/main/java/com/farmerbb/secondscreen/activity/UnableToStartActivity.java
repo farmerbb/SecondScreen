@@ -50,6 +50,8 @@ public final class UnableToStartActivity extends AppCompatActivity implements Sh
         super.onCreate(savedInstanceState);
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && Shizuku.pingBinder()) {
+            proceedWithOnCreateShizuku();
+
             boolean isGranted;
             if(Shizuku.isPreV11() || Shizuku.getVersion() < 11) {
                 isGranted = checkSelfPermission(ShizukuProvider.PERMISSION) == PackageManager.PERMISSION_GRANTED;
@@ -127,6 +129,22 @@ public final class UnableToStartActivity extends AppCompatActivity implements Sh
 
         button1.setText(R.string.action_continue);
         button1.setOnClickListener(v -> proceedWithProfileLoad());
+
+        button2.setVisibility(View.GONE);
+    }
+
+    private void proceedWithOnCreateShizuku() {
+        setContentView(R.layout.activity_turn_off);
+        setTitle(R.string.permission_needed);
+
+        TextView textView = findViewById(R.id.turnOffTextView);
+        textView.setText(R.string.shizuku_dialog);
+
+        Button button1 = findViewById(R.id.turnOffButtonPrimary);
+        Button button2 = findViewById(R.id.turnOffButtonSecondary);
+
+        button1.setText(R.string.action_close);
+        button1.setOnClickListener(v -> finish());
 
         button2.setVisibility(View.GONE);
     }

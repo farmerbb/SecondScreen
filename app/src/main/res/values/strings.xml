@@ -230,5 +230,6 @@
     <string name="background_operations_active">Performing background operations&#8230;</string>
     <string name="debug_mode">Debug mode</string>
     <string name="safe_mode_dialog">Leaving safe mode on is strongly recommended.\n\nDisabling this option allows SecondScreen to stay active across reboots. Only disable this option if you know how to restore your device\'s resolution and density settings via adb if something goes wrong.</string>
+    <string name="shizuku_dialog">SecondScreen uses Shizuku to change device settings, such as resolution and density.\n\nPlease close this dialog once Shizuku permission has been granted.</string>
 
 </resources>
