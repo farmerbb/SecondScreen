@@ -177,7 +177,7 @@ public final class NotificationService extends RotationLockService {
 
         // Intent to launch MainActivity when notification is clicked
         Intent mainActivityIntent = new Intent(this, MainActivity.class);
-        PendingIntent mainActivityPendingIntent = PendingIntent.getActivity(this, 0, mainActivityIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent mainActivityPendingIntent = PendingIntent.getActivity(this, 0, mainActivityIntent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
         String id = "NotificationService";
 
@@ -232,25 +232,25 @@ public final class NotificationService extends RotationLockService {
             // Turn Off
             customIntent = new Intent(this, TurnOffActivity.class);
             customIntent.putExtra("notification", true);
-            customPendingIntent = PendingIntent.getActivity(this, code, customIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            customPendingIntent = PendingIntent.getActivity(this, code, customIntent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
             customString = getResources().getStringArray(R.array.pref_notification_action_list)[0];
         } else if(key.equals("lock-device")) {
             // Lock Device
             customIntent = new Intent(this, LockDeviceService.class);
-            customPendingIntent = PendingIntent.getService(this, code, customIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            customPendingIntent = PendingIntent.getService(this, code, customIntent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
             customString = getResources().getStringArray(R.array.pref_notification_action_list)[2];
         } else if(key.equals("quick-actions")) {
             // Quick Actions
             customIntent = new Intent(this, TaskerQuickActionsActivity.class);
             customIntent.putExtra("launched-from-app", true);
-            customPendingIntent = PendingIntent.getActivity(this, code, customIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            customPendingIntent = PendingIntent.getActivity(this, code, customIntent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
             customString = getResources().getStringArray(R.array.pref_notification_action_list)[1];
         } else if(key.startsWith("temp_")) {
             // Toggle
             customIntent = new Intent(this, TaskerQuickActionsActivity.class);
             customIntent.putExtra(U.KEY, key.equals("temp_immersive") ? "temp_immersive_new" : key);
             customIntent.putExtra(U.VALUE, "Toggle");
-            customPendingIntent = PendingIntent.getActivity(this, code, customIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            customPendingIntent = PendingIntent.getActivity(this, code, customIntent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
             String onOffString;
 
             switch(key) {

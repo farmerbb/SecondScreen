@@ -85,7 +85,8 @@
         </activity>
         <activity
             android:name="com.farmerbb.secondscreen.activity.DummyLauncherActivity"
-            android:enabled="false" >
+            android:enabled="false"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -119,7 +120,8 @@
             android:name="com.farmerbb.secondscreen.activity.MainActivity"
             android:label="${appName}"
             android:launchMode="singleTask"
-            android:windowSoftInputMode="adjustPan" >
+            android:windowSoftInputMode="adjustPan"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.APPLICATION_PREFERENCES"/>
@@ -133,7 +135,9 @@
             android:excludeFromRecents="true"
             android:label="${appName}"
             android:theme="@style/Theme.Secondscreen.Dialog.List"
-            android:documentLaunchMode="always" >
+            android:documentLaunchMode="always"
+            android:exported="true"
+            tools:ignore="ExportedPreferenceActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -173,7 +177,8 @@
             android:icon="@mipmap/ic_launcher"
             android:label="@string/label_quick_actions"
             android:documentLaunchMode="always"
-            android:theme="@style/Theme.Secondscreen.QuickActionsDialog" >
+            android:theme="@style/Theme.Secondscreen.QuickActionsDialog"
+            tools:ignore="ExportedPreferenceActivity">
             <intent-filter>
                 <action android:name="com.twofortyfouram.locale.intent.action.EDIT_SETTING" />
                 <action android:name="android.intent.action.MAIN" />
@@ -276,7 +281,8 @@
         </service>
         <service
             android:name="com.farmerbb.secondscreen.service.DisableKeyboardService"
-            android:permission="android.permission.BIND_INPUT_METHOD">
+            android:permission="android.permission.BIND_INPUT_METHOD"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.view.InputMethod" />
             </intent-filter>

@@ -181,6 +181,8 @@ public final class NotificationSettingsActivity extends PreferenceActivity imple
     @SuppressWarnings("deprecation")
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (key == null) return;
+
         if(key.contains("notification_action")) {
             String value = sharedPreferences.getString(key, "null");
 

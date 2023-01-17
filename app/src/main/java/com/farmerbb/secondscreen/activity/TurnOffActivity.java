@@ -63,8 +63,7 @@ public final class TurnOffActivity extends AppCompatActivity {
         String filename = prefCurrent.getString("filename", "0");
 
         // Close notification drawer
-        Intent closeDrawer = new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
-        sendBroadcast(closeDrawer);
+        U.closeNotificationDrawer(this);
 
         // Handle intents
         Intent quickLaunchIntent = getIntent();

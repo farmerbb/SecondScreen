@@ -1592,4 +1592,12 @@ public final class U {
 
         return false;
     }
+
+    @SuppressLint("MissingPermission")
+    public static void closeNotificationDrawer(Context context) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) {
+            Intent closeDrawer = new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
+            context.sendBroadcast(closeDrawer);
+        }
+    }
 }

@@ -124,7 +124,7 @@ public final class DisplayConnectionService extends Service implements ServiceIn
     public void startForeground() {
         // Intent to launch MainActivity when notification is clicked
         Intent mainActivityIntent = new Intent(this, MainActivity.class);
-        PendingIntent mainActivityPendingIntent = PendingIntent.getActivity(this, 0, mainActivityIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent mainActivityPendingIntent = PendingIntent.getActivity(this, 0, mainActivityIntent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
         String id = "DisplayConnectionService";
 

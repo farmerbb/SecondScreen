@@ -64,8 +64,7 @@ SharedPreferences.OnSharedPreferenceChangeListener {
         super.onCreate(savedInstanceState);
 
         // Close notification drawer
-        Intent closeDrawer = new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
-        sendBroadcast(closeDrawer);
+        U.closeNotificationDrawer(this);
 
         String key = "Null";
         String value = "Null";
@@ -199,6 +198,8 @@ SharedPreferences.OnSharedPreferenceChangeListener {
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (key == null) return;
+
         if(launchedFromApp)
             runQuickAction(key, sharedPreferences.getString(key, "Null"));
         else

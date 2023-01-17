@@ -51,8 +51,7 @@ public final class LockDeviceService extends SecondScreenIntentService {
         super.onHandleIntent(intent);
 
         // Close the notification drawer
-        Intent closeDrawer = new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
-        sendBroadcast(closeDrawer);
+        U.closeNotificationDrawer(this);
 
         // Determine current charging status
         IntentFilter ifilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
@@ -94,7 +93,7 @@ public final class LockDeviceService extends SecondScreenIntentService {
 
         // Schedule TimeoutService to reset lock screen timeout to original value
         Intent timeoutService = new Intent(this, TimeoutService.class);
-        PendingIntent pendingIntent = PendingIntent.getService(this, 123456, timeoutService, PendingIntent.FLAG_CANCEL_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getService(this, 123456, timeoutService, PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
         AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         manager.set(AlarmManager.RTC, System.currentTimeMillis() + 1000, pendingIntent);

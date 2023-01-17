@@ -129,8 +129,7 @@ public final class HdmiActivity extends Activity {
             header.setTypeface(Typeface.DEFAULT);
 
         // Close notification drawer
-        Intent closeDrawer = new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS);
-        sendBroadcast(closeDrawer);
+        U.closeNotificationDrawer(this);
 
         DisplayManager dm = (DisplayManager) getApplicationContext().getSystemService(DISPLAY_SERVICE);
         DisplayMetrics metrics = new DisplayMetrics();

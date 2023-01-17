@@ -226,6 +226,8 @@ public final class OverscanFragment extends PreferenceFragment implements
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (key == null) return;
+
         if(key.equals("overscan_left_expert")
                 || key.equals("overscan_right_expert")
                 || key.equals("overscan_top_expert")

@@ -53,7 +53,7 @@ public class DisableKeyboardService extends InputMethodService {
 
         if(notificationId == null && isEditingText && !hasHardwareKeyboard) {
             Intent keyboardChangeIntent = new Intent(this, KeyboardChangeReceiver.class);
-            PendingIntent keyboardChangePendingIntent = PendingIntent.getBroadcast(this, 0, keyboardChangeIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            PendingIntent keyboardChangePendingIntent = PendingIntent.getBroadcast(this, 0, keyboardChangeIntent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
             NotificationCompat.Builder notification = new NotificationCompat.Builder(this)
                     .setContentIntent(keyboardChangePendingIntent)

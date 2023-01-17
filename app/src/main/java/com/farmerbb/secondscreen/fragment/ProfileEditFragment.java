@@ -421,6 +421,8 @@ SharedPreferences.OnSharedPreferenceChangeListener {
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (key == null) return;
+
         prefChange = true;
 
         switch(key) {
