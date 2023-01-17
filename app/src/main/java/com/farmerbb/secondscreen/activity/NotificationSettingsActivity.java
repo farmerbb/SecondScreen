@@ -157,7 +157,7 @@ public final class NotificationSettingsActivity extends PreferenceActivity imple
      * A preference value change listener that updates the preference's summary
      * to reflect its new value.
      */
-    private static Preference.OnPreferenceChangeListener opcl = (preference, value) -> {
+    private static final Preference.OnPreferenceChangeListener opcl = (preference, value) -> {
         String stringValue = value.toString();
 
         if(preference instanceof ListPreference) {

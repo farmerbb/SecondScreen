@@ -44,7 +44,7 @@ public final class TimeoutService extends SecondScreenIntentService {
             editor.remove("timeout");
             editor.apply();
 
-            U.runCommand(this, U.timeoutCommand + Integer.toString(timeout));
+            U.runCommand(this, U.timeoutCommand + timeout);
         }
     }
 }

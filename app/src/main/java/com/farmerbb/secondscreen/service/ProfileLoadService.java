@@ -312,10 +312,8 @@ public final class ProfileLoadService extends SecondScreenIntentService {
         // Determine if CyanogenMod workaround is needed
         // Recent builds of CyanogenMod require the "Restart ActivityManager" UI refresh method
         // to be set, to work around the automatic reboot when the DPI is changed.
-        boolean cmWorkaround = false;
-        if(getPackageManager().hasSystemFeature("com.cyanogenmod.android")
-                && Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP_MR1)
-            cmWorkaround = true;
+        boolean cmWorkaround = getPackageManager().hasSystemFeature("com.cyanogenmod.android")
+                && Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP_MR1;
 
         String uiRefresh = (cmWorkaround || rebootRequired)
                 ? "activity-manager"
@@ -373,10 +371,10 @@ public final class ProfileLoadService extends SecondScreenIntentService {
                 String overscanValues = "";
 
                 if(prefCurrent.getBoolean("not_active", true)) {
-                    overscanValues = Integer.toString(prefSaved.getInt("overscan_bottom", 20)) + ","
-                            + Integer.toString(prefSaved.getInt("overscan_left", 20)) + ","
-                            + Integer.toString(prefSaved.getInt("overscan_top", 20)) + ","
-                            + Integer.toString(prefSaved.getInt("overscan_right", 20));
+                    overscanValues = prefSaved.getInt("overscan_bottom", 20) + ","
+                            + prefSaved.getInt("overscan_left", 20) + ","
+                            + prefSaved.getInt("overscan_top", 20) + ","
+                            + prefSaved.getInt("overscan_right", 20);
                 } else {
                     if(prefCurrent.getBoolean("overscan", false)) {
                         // Check saved overscan integers against current overscan integers
@@ -385,27 +383,27 @@ public final class ProfileLoadService extends SecondScreenIntentService {
                         || (prefSaved.getInt("overscan_top", 0) != prefCurrent.getInt("overscan_top", 20))
                         || (prefSaved.getInt("overscan_right", 0) != prefCurrent.getInt("overscan_right", 20))) {
                             if(prefMain.getBoolean("landscape", false)) {
-                                overscanValues = Integer.toString(prefSaved.getInt("overscan_left", 20)) + ","
-                                        + Integer.toString(prefSaved.getInt("overscan_top", 20)) + ","
-                                        + Integer.toString(prefSaved.getInt("overscan_right", 20)) + ","
-                                        + Integer.toString(prefSaved.getInt("overscan_bottom", 20));
+                                overscanValues = prefSaved.getInt("overscan_left", 20) + ","
+                                        + prefSaved.getInt("overscan_top", 20) + ","
+                                        + prefSaved.getInt("overscan_right", 20) + ","
+                                        + prefSaved.getInt("overscan_bottom", 20);
                             } else {
-                                overscanValues = Integer.toString(prefSaved.getInt("overscan_bottom", 20)) + ","
-                                        + Integer.toString(prefSaved.getInt("overscan_left", 20)) + ","
-                                        + Integer.toString(prefSaved.getInt("overscan_top", 20)) + ","
-                                        + Integer.toString(prefSaved.getInt("overscan_right", 20));
+                                overscanValues = prefSaved.getInt("overscan_bottom", 20) + ","
+                                        + prefSaved.getInt("overscan_left", 20) + ","
+                                        + prefSaved.getInt("overscan_top", 20) + ","
+                                        + prefSaved.getInt("overscan_right", 20);
                             }
                         }
                     } else if(prefMain.getBoolean("landscape", false)) {
-                        overscanValues = Integer.toString(prefSaved.getInt("overscan_left", 20)) + ","
-                                + Integer.toString(prefSaved.getInt("overscan_top", 20)) + ","
-                                + Integer.toString(prefSaved.getInt("overscan_right", 20)) + ","
-                                + Integer.toString(prefSaved.getInt("overscan_bottom", 20));
+                        overscanValues = prefSaved.getInt("overscan_left", 20) + ","
+                                + prefSaved.getInt("overscan_top", 20) + ","
+                                + prefSaved.getInt("overscan_right", 20) + ","
+                                + prefSaved.getInt("overscan_bottom", 20);
                     } else {
-                        overscanValues = Integer.toString(prefSaved.getInt("overscan_bottom", 20)) + ","
-                                + Integer.toString(prefSaved.getInt("overscan_left", 20)) + ","
-                                + Integer.toString(prefSaved.getInt("overscan_top", 20)) + ","
-                                + Integer.toString(prefSaved.getInt("overscan_right", 20));
+                        overscanValues = prefSaved.getInt("overscan_bottom", 20) + ","
+                                + prefSaved.getInt("overscan_left", 20) + ","
+                                + prefSaved.getInt("overscan_top", 20) + ","
+                                + prefSaved.getInt("overscan_right", 20);
                     }
                 }
 
@@ -522,7 +520,7 @@ public final class ProfileLoadService extends SecondScreenIntentService {
             runRotationCommand = false;
 
         if(runRotationCommand) {
-            su[rotationCommand] = U.rotationCommand + Integer.toString(dockMode);
+            su[rotationCommand] = U.rotationCommand + dockMode;
 
             // Workaround for if Daydreams is enabled and we are enabling dock mode
             if(dockMode == Intent.EXTRA_DOCK_STATE_DESK
@@ -545,12 +543,12 @@ public final class ProfileLoadService extends SecondScreenIntentService {
                 if(!"always-on".equals(prefCurrent.getString("screen_timeout", "null"))) {
                     Settings.System.putInt(getContentResolver(), Settings.System.SCREEN_OFF_TIMEOUT, 2147482000);
                     if(!prefCurrent.getBoolean("not_active", true))
-                        su[stayOnCommand] = U.stayOnCommand + Integer.toString(prefCurrent.getInt("stay_on_while_plugged_in_system", 0));
+                        su[stayOnCommand] = U.stayOnCommand + prefCurrent.getInt("stay_on_while_plugged_in_system", 0);
                 }
                 break;
             case "always-on-charging":
                 if(!"always-on-charging".equals(prefCurrent.getString("screen_timeout", "null"))) {
-                    su[stayOnCommand] = U.stayOnCommand + Integer.toString(BatteryManager.BATTERY_PLUGGED_AC
+                    su[stayOnCommand] = U.stayOnCommand + (BatteryManager.BATTERY_PLUGGED_AC
                             | BatteryManager.BATTERY_PLUGGED_USB | BatteryManager.BATTERY_PLUGGED_WIRELESS);
                     if(!prefCurrent.getBoolean("not_active", true))
                         Settings.System.putInt(getContentResolver(), Settings.System.SCREEN_OFF_TIMEOUT, prefCurrent.getInt("screen_timeout_system", 60000));
@@ -559,7 +557,7 @@ public final class ProfileLoadService extends SecondScreenIntentService {
             case "do-nothing":
                 if(!"do-nothing".equals(prefCurrent.getString("screen_timeout", "null")) && !prefCurrent.getBoolean("not_active", true)) {
                     Settings.System.putInt(getContentResolver(), Settings.System.SCREEN_OFF_TIMEOUT, prefCurrent.getInt("screen_timeout_system", 60000));
-                    su[stayOnCommand] = U.stayOnCommand + Integer.toString(prefCurrent.getInt("stay_on_while_plugged_in_system", 0));
+                    su[stayOnCommand] = U.stayOnCommand + prefCurrent.getInt("stay_on_while_plugged_in_system", 0);
                 }
                 break;
         }
@@ -678,7 +676,7 @@ public final class ProfileLoadService extends SecondScreenIntentService {
             if(prefCurrent.getInt("vibration_value", -1) != -1) {
                 for(File vibrationOff : U.vibrationOff) {
                     if(vibrationOff.exists())
-                        su[vibrationCommand] = "echo " + Integer.toString(prefCurrent.getInt("vibration_value", -1)) + " > " + vibrationOff.getAbsolutePath();
+                        su[vibrationCommand] = "echo " + prefCurrent.getInt("vibration_value", -1) + " > " + vibrationOff.getAbsolutePath();
                 }
 
                 editor.putInt("vibration_value", -1);
@@ -732,7 +730,7 @@ public final class ProfileLoadService extends SecondScreenIntentService {
                                 // Manually update the sysfs value to guarantee that the backlight will restore
                                 for(File backlightOff : U.backlightOff) {
                                     if(backlightOff.exists()) {
-                                        su[backlightCommand] = "echo " + Integer.toString(prefCurrent.getInt("backlight_value", -1)) + " > " + backlightOff.getAbsolutePath();
+                                        su[backlightCommand] = "echo " + prefCurrent.getInt("backlight_value", -1) + " > " + backlightOff.getAbsolutePath();
                                         break;
                                     }
                                 }
@@ -778,7 +776,7 @@ public final class ProfileLoadService extends SecondScreenIntentService {
                     // Manually update the sysfs value to guarantee that the backlight will restore
                     for(File backlightOff : U.backlightOff) {
                         if(backlightOff.exists()) {
-                            su[backlightCommand] = "echo " + Integer.toString(prefCurrent.getInt("backlight_value", -1)) + " > " + backlightOff.getAbsolutePath();
+                            su[backlightCommand] = "echo " + prefCurrent.getInt("backlight_value", -1) + " > " + backlightOff.getAbsolutePath();
                             break;
                         }
                     }

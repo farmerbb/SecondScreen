@@ -194,10 +194,7 @@ SharedPreferences.OnSharedPreferenceChangeListener {
     @SuppressWarnings("deprecation")
     private void resetSettingsButton() {
         SharedPreferences prefSaved = U.getPrefQuickActions(this);
-        if(prefSaved.getBoolean("quick_actions_active", false))
-            getPreferenceScreen().findPreference("turn_off").setEnabled(true);
-        else
-            getPreferenceScreen().findPreference("turn_off").setEnabled(false);
+        getPreferenceScreen().findPreference("turn_off").setEnabled(prefSaved.getBoolean("quick_actions_active", false));
     }
 
     @Override

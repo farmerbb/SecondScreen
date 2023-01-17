@@ -67,7 +67,7 @@ public final class OverscanFragment extends PreferenceFragment implements
             listener = (Listener) activity;
         } catch (ClassCastException e) {
             // The activity doesn't implement the interface, throw exception
-            throw new ClassCastException(activity.toString()
+            throw new ClassCastException(activity
                     + " must implement Listener");
         }
     }
@@ -166,14 +166,11 @@ public final class OverscanFragment extends PreferenceFragment implements
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-        case android.R.id.home:
-            // Override default Android "up" behavior to instead mimic the back button
+        if (item.getItemId() == android.R.id.home) {// Override default Android "up" behavior to instead mimic the back button
             this.onBackPressed();
             return true;
-        default:
-            return super.onOptionsItemSelected(item);
         }
+        return super.onOptionsItemSelected(item);
     }
 
     public void onBackPressed() {
@@ -253,7 +250,7 @@ public final class OverscanFragment extends PreferenceFragment implements
      * A preference value change listener that updates the preference's summary
      * to reflect its new value.
      */
-    private static Preference.OnPreferenceChangeListener opcl = (preference, value) -> {
+    private static final Preference.OnPreferenceChangeListener opcl = (preference, value) -> {
         String stringValue = value.toString();
 
         // Damage control if user inputs an empty value

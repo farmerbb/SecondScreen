@@ -272,13 +272,10 @@ public final class NotificationService extends RotationLockService {
                     break;
                 case "temp_immersive":
                 case "temp_immersive_new":
-                    switch(prefCurrent.getString("immersive_new", "fallback")) {
-                        case "immersive-mode":
-                            onOffString = " " + getResources().getStringArray(R.array.pref_quick_actions)[1];
-                            break;
-                        default:
-                            onOffString = " " + getResources().getStringArray(R.array.pref_quick_actions)[0];
-                            break;
+                    if ("immersive-mode".equals(prefCurrent.getString("immersive_new", "fallback"))) {
+                        onOffString = " " + getResources().getStringArray(R.array.pref_quick_actions)[1];
+                    } else {
+                        onOffString = " " + getResources().getStringArray(R.array.pref_quick_actions)[0];
                     }
 
                     customString = getResources().getString(R.string.immersive) + onOffString;

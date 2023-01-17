@@ -62,7 +62,7 @@ public final class NewProfileDialogFragment extends DialogFragment implements Ad
             listener = (Listener) activity;
         } catch (ClassCastException e) {
             // The activity doesn't implement the interface, throw exception
-            throw new ClassCastException(activity.toString()
+            throw new ClassCastException(activity
                     + " must implement Listener");
         }
     }

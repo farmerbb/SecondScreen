@@ -273,7 +273,7 @@ public final class U {
                         processid = process.pid;
                 }
 
-                return "sleep 1 && kill " + Integer.toString(processid);
+                return "sleep 1 && kill " + processid;
             } else
                 return "sleep 1 && am restart";
         } else {
@@ -293,7 +293,7 @@ public final class U {
             else if(processid == 0)
                 return "sleep 2 && pkill com.android.systemui";
             else
-                return "sleep 2 && kill " + Integer.toString(processid);
+                return "sleep 2 && kill " + processid;
         }
     }
 
@@ -343,9 +343,9 @@ public final class U {
 
         SharedPreferences prefMain = getPrefMain(context);
         String currentRes = " ";
-        String nativeRes = Integer.toString(prefMain.getInt("width", 0))
+        String nativeRes = prefMain.getInt("width", 0)
                 + "x"
-                + Integer.toString(prefMain.getInt("height", 0));
+                + prefMain.getInt("height", 0);
 
         if(prefMain.getBoolean("debug_mode", false)) {
             SharedPreferences prefCurrent = getPrefCurrent(context);
@@ -356,14 +356,14 @@ public final class U {
         } else {
             if((context.getApplicationContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT && !prefMain.getBoolean("landscape", false))
                     || (context.getApplicationContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE && prefMain.getBoolean("landscape", false))) {
-                currentRes = Integer.toString(metrics.widthPixels)
+                currentRes = metrics.widthPixels
                         + "x"
-                        + Integer.toString(metrics.heightPixels);
+                        + metrics.heightPixels;
             } else if((context.getApplicationContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE && !prefMain.getBoolean("landscape", false))
                     || (context.getApplicationContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT && prefMain.getBoolean("landscape", false))) {
-                currentRes = Integer.toString(metrics.heightPixels)
+                currentRes = metrics.heightPixels
                         + "x"
-                        + Integer.toString(metrics.widthPixels);
+                        + metrics.widthPixels;
             }
         }
 
@@ -802,13 +802,10 @@ public final class U {
                         if(key.equals("temp_immersive_new"))
                             key = "temp_immersive";
 
-                        switch(prefCurrent.getString("immersive_new", "fallback")) {
-                            case "immersive-mode":
-                                value = a.getResources().getStringArray(R.array.pref_quick_actions)[1];
-                                break;
-                            default:
-                                value = a.getResources().getStringArray(R.array.pref_quick_actions)[0];
-                                break;
+                        if ("immersive-mode".equals(prefCurrent.getString("immersive_new", "fallback"))) {
+                            value = a.getResources().getStringArray(R.array.pref_quick_actions)[1];
+                        } else {
+                            value = a.getResources().getStringArray(R.array.pref_quick_actions)[0];
                         }
                         break;
                     case "temp_overscan":
@@ -965,7 +962,7 @@ public final class U {
                             int width = scanner.nextInt();
                             scanner.close();
 
-                            blurb = Integer.toString(width) + "x" + Integer.toString(height);
+                            blurb = width + "x" + height;
                             break;
                     }
                 }
@@ -1387,9 +1384,9 @@ public final class U {
                     editor.putBoolean("vibration_off", true);
 
                 if(prefMain.getBoolean("expert_mode", false)) {
-                    editor.putString("size", Integer.toString(prefMain.getInt("width", 0))
+                    editor.putString("size", prefMain.getInt("width", 0)
                             + "x"
-                            + Integer.toString(prefMain.getInt("height", 0)));
+                            + prefMain.getInt("height", 0));
 
                     editor.putString("density", Integer.toString(getSystemProperty("ro.sf.lcd_density", prefMain.getInt("density", 0))));
 
@@ -1402,9 +1399,9 @@ public final class U {
             // Other / None
             case 5:
                 if(prefMain.getBoolean("expert_mode", false)) {
-                    editor.putString("size", Integer.toString(prefMain.getInt("width", 0))
+                    editor.putString("size", prefMain.getInt("width", 0)
                             + "x"
-                            + Integer.toString(prefMain.getInt("height", 0)));
+                            + prefMain.getInt("height", 0));
 
                     editor.putString("density", Integer.toString(getSystemProperty("ro.sf.lcd_density", prefMain.getInt("density", 0))));
 

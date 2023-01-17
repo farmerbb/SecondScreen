@@ -60,7 +60,7 @@ public final class BootService extends SecondScreenIntentService {
         Arrays.fill(su, "");
 
         if("auto-rotate".equals(prefCurrent.getString("rotation_lock_new", "do-nothing"))) {
-            su[rotationCommand] = U.rotationCommand + Integer.toString(Intent.EXTRA_DOCK_STATE_DESK);
+            su[rotationCommand] = U.rotationCommand + Intent.EXTRA_DOCK_STATE_DESK;
             if(Settings.Secure.getInt(getContentResolver(), "screensaver_enabled", 0) == 1
                     && Settings.Secure.getInt(getContentResolver(), "screensaver_activate_on_dock", 0) == 1) {
                 su[rotationPreCommand] = U.rotationPrePostCommands + "0";

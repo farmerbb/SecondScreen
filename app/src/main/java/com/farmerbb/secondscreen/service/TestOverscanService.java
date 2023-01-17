@@ -42,15 +42,15 @@ public final class TestOverscanService extends SecondScreenIntentService {
 
         if(intent.getBooleanExtra("test_overscan", true)) {
             if(prefMain.getBoolean("landscape", false)) {
-                overscanValues = Integer.toString(prefNew.getInt("overscan_left", 0)) + ","
-                        + Integer.toString(prefNew.getInt("overscan_top", 0)) + ","
-                        + Integer.toString(prefNew.getInt("overscan_right", 0)) + ","
-                        + Integer.toString(prefNew.getInt("overscan_bottom", 0));
+                overscanValues = prefNew.getInt("overscan_left", 0) + ","
+                        + prefNew.getInt("overscan_top", 0) + ","
+                        + prefNew.getInt("overscan_right", 0) + ","
+                        + prefNew.getInt("overscan_bottom", 0);
             } else {
-                overscanValues = Integer.toString(prefNew.getInt("overscan_bottom", 0)) + ","
-                        + Integer.toString(prefNew.getInt("overscan_left", 0)) + ","
-                        + Integer.toString(prefNew.getInt("overscan_top", 0)) + ","
-                        + Integer.toString(prefNew.getInt("overscan_right", 0));
+                overscanValues = prefNew.getInt("overscan_bottom", 0) + ","
+                        + prefNew.getInt("overscan_left", 0) + ","
+                        + prefNew.getInt("overscan_top", 0) + ","
+                        + prefNew.getInt("overscan_right", 0);
             }
         } else {
             SharedPreferences prefCurrent = U.getPrefCurrent(this);
@@ -60,15 +60,15 @@ public final class TestOverscanService extends SecondScreenIntentService {
                 SharedPreferences prefSaved = U.getPrefSaved(this, prefCurrent.getString("filename", "0"));
                 if(prefSaved.getBoolean("overscan", false)) {
                     if(prefMain.getBoolean("landscape", false)) {
-                        overscanValues = Integer.toString(prefSaved.getInt("overscan_left", 0)) + ","
-                                + Integer.toString(prefSaved.getInt("overscan_top", 0)) + ","
-                                + Integer.toString(prefSaved.getInt("overscan_right", 0)) + ","
-                                + Integer.toString(prefSaved.getInt("overscan_bottom", 0));
+                        overscanValues = prefSaved.getInt("overscan_left", 0) + ","
+                                + prefSaved.getInt("overscan_top", 0) + ","
+                                + prefSaved.getInt("overscan_right", 0) + ","
+                                + prefSaved.getInt("overscan_bottom", 0);
                     } else {
-                        overscanValues = Integer.toString(prefSaved.getInt("overscan_bottom", 0)) + ","
-                                + Integer.toString(prefSaved.getInt("overscan_left", 0)) + ","
-                                + Integer.toString(prefSaved.getInt("overscan_top", 0)) + ","
-                                + Integer.toString(prefSaved.getInt("overscan_right", 0));
+                        overscanValues = prefSaved.getInt("overscan_bottom", 0) + ","
+                                + prefSaved.getInt("overscan_left", 0) + ","
+                                + prefSaved.getInt("overscan_top", 0) + ","
+                                + prefSaved.getInt("overscan_right", 0);
                     }
                 } else
                     overscanValues = "reset";

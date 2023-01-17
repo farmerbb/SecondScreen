@@ -54,7 +54,7 @@ public final class TempBacklightOnService extends SecondScreenIntentService {
                 // Manually update the sysfs value to guarantee that the backlight will restore
                 for(File backlightOff : U.backlightOff) {
                     if(backlightOff.exists()) {
-                        U.runCommand(this, "echo " + Integer.toString(prefCurrent.getInt("backlight_value", -1)) + " > " + backlightOff.getAbsolutePath());
+                        U.runCommand(this, "echo " + prefCurrent.getInt("backlight_value", -1) + " > " + backlightOff.getAbsolutePath());
                         break;
                     }
                 }

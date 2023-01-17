@@ -75,7 +75,7 @@ public final class ProfileViewFragment extends Fragment {
             listener = (Listener) activity;
         } catch (ClassCastException e) {
             // The activity doesn't implement the interface, throw exception
-            throw new ClassCastException(activity.toString()
+            throw new ClassCastException(activity
                     + " must implement Listener");
         }
     }
@@ -171,10 +171,8 @@ public final class ProfileViewFragment extends Fragment {
         generateProfileSettings(prefSaved.getBoolean("navbar", false), R.string.profile_view_navbar);
         generateProfileSettings(prefSaved.getBoolean("freeform", false), R.string.profile_view_freeform);
 
-        switch(prefSaved.getString("hdmi_rotation", "landscape")) {
-            case "portrait":
-                generateProfileSettings(true, R.string.profile_view_hdmi_output);
-                break;
+        if ("portrait".equals(prefSaved.getString("hdmi_rotation", "landscape"))) {
+            generateProfileSettings(true, R.string.profile_view_hdmi_output);
         }
 
         if(U.canEnableOverscan())

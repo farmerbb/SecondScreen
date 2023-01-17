@@ -97,7 +97,7 @@ SharedPreferences.OnSharedPreferenceChangeListener {
             listener = (Listener) activity;
         } catch (ClassCastException e) {
             // The activity doesn't implement the interface, throw exception
-            throw new ClassCastException(activity.toString()
+            throw new ClassCastException(activity
                     + " must implement Listener");
         }
     }
@@ -178,9 +178,9 @@ SharedPreferences.OnSharedPreferenceChangeListener {
 
             if(prefMain.getBoolean("expert_mode", false)) {
                 if("reset".equals(prefSaved.getString("size", "reset"))) {
-                    editor.putString("size", Integer.toString(prefMain.getInt("width", 0))
+                    editor.putString("size", prefMain.getInt("width", 0)
                             + "x"
-                            + Integer.toString(prefMain.getInt("height", 0)));
+                            + prefMain.getInt("height", 0));
 
                     editor.putBoolean("size-reset", true);
                 } else
@@ -195,9 +195,9 @@ SharedPreferences.OnSharedPreferenceChangeListener {
                 if(prefSaved.getBoolean("size-reset", false)) {
                     editor.remove("size-reset");
 
-                    String nativeRes = Integer.toString(prefMain.getInt("width", 0))
+                    String nativeRes = prefMain.getInt("width", 0)
                             + "x"
-                            + Integer.toString(prefMain.getInt("height", 0));
+                            + prefMain.getInt("height", 0);
 
                     if(nativeRes.equals(prefSaved.getString("size", "reset")))
                         editor.putString("size", "reset");

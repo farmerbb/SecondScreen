@@ -66,10 +66,7 @@ public final class PluginBundleManagerQuickActions
         if (TextUtils.isEmpty(bundle.getString(BUNDLE_EXTRA_STRING_KEY)))
             return false;
 
-        if (TextUtils.isEmpty(bundle.getString(BUNDLE_EXTRA_STRING_VALUE)))
-            return false;
-
-        return true;
+        return !TextUtils.isEmpty(bundle.getString(BUNDLE_EXTRA_STRING_VALUE));
     }
 
     public static Bundle generateBundle(final Context context, final String key, final String value)

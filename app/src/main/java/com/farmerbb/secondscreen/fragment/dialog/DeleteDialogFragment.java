@@ -47,7 +47,7 @@ public final class DeleteDialogFragment extends DialogFragment {
             listener = (Listener) activity;
         } catch (ClassCastException e) {
             // The activity doesn't implement the interface, throw exception
-            throw new ClassCastException(activity.toString()
+            throw new ClassCastException(activity
                     + " must implement Listener");
         }
     }

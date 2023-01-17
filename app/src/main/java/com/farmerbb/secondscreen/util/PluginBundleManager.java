@@ -59,10 +59,7 @@ public final class PluginBundleManager
             return false;
 
 
-        if (TextUtils.isEmpty(bundle.getString(BUNDLE_EXTRA_STRING_MESSAGE)))
-            return false;
-
-        return true;
+        return !TextUtils.isEmpty(bundle.getString(BUNDLE_EXTRA_STRING_MESSAGE));
     }
 
     /**

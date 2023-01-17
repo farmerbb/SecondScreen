@@ -153,10 +153,7 @@ public final class TurnOffService extends SecondScreenIntentService {
         }
 
         // Clear default home
-        boolean shouldDisableTaskbarHome = false;
-
-        if(prefCurrent.getBoolean("clear_home", false))
-            shouldDisableTaskbarHome = true;
+        boolean shouldDisableTaskbarHome = prefCurrent.getBoolean("clear_home", false);
 
         boolean shouldClearHome = shouldDisableTaskbarHome;
         if(shouldClearHome) {
@@ -201,10 +198,8 @@ public final class TurnOffService extends SecondScreenIntentService {
         // Determine if CyanogenMod workaround is needed
         // Recent builds of CyanogenMod require the "Restart ActivityManager" UI refresh method
         // to be set, to work around the automatic reboot when the DPI is changed.
-        boolean cmWorkaround = false;
-        if(getPackageManager().hasSystemFeature("com.cyanogenmod.android")
-                && Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP_MR1)
-            cmWorkaround = true;
+        boolean cmWorkaround = getPackageManager().hasSystemFeature("com.cyanogenmod.android")
+                && Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP_MR1;
 
         String uiRefresh = (cmWorkaround || rebootRequired)
                 ? "activity-manager"
@@ -255,13 +250,10 @@ public final class TurnOffService extends SecondScreenIntentService {
 
         // Run checks to determine if rotation command needs to be run.
         // Don't run this command if we don't need to.
-        boolean runRotationCommand = true;
-
-        if(prefCurrent.getInt("dock_mode", Intent.EXTRA_DOCK_STATE_UNDOCKED) == prefCurrent.getInt("dock_mode_current", Intent.EXTRA_DOCK_STATE_UNDOCKED))
-            runRotationCommand = false;
+        boolean runRotationCommand = prefCurrent.getInt("dock_mode", Intent.EXTRA_DOCK_STATE_UNDOCKED) != prefCurrent.getInt("dock_mode_current", Intent.EXTRA_DOCK_STATE_UNDOCKED);
 
         if(runRotationCommand) {
-            su[rotationCommand] = U.rotationCommand + Integer.toString(prefCurrent.getInt("dock_mode", Intent.EXTRA_DOCK_STATE_UNDOCKED));
+            su[rotationCommand] = U.rotationCommand + prefCurrent.getInt("dock_mode", Intent.EXTRA_DOCK_STATE_UNDOCKED);
 
             // Workaround for if Daydreams is enabled and we are enabling dock mode
             if(prefCurrent.getInt("dock_mode", Intent.EXTRA_DOCK_STATE_UNDOCKED) == Intent.EXTRA_DOCK_STATE_DESK
@@ -279,7 +271,7 @@ public final class TurnOffService extends SecondScreenIntentService {
                 Settings.System.putInt(getContentResolver(), Settings.System.SCREEN_OFF_TIMEOUT, prefCurrent.getInt("screen_timeout_system", 60000));
                 break;
             case "always-on-charging":
-                su[stayOnCommand] = U.stayOnCommand + Integer.toString(prefCurrent.getInt("stay_on_while_plugged_in_system", 0));
+                su[stayOnCommand] = U.stayOnCommand + prefCurrent.getInt("stay_on_while_plugged_in_system", 0);
                 break;
         }
 
@@ -300,7 +292,7 @@ public final class TurnOffService extends SecondScreenIntentService {
             if(prefCurrent.getInt("vibration_value", -1) != -1) {
                 for(File vibrationOff : U.vibrationOff) {
                     if(vibrationOff.exists())
-                        su[vibrationCommand] = "echo " + Integer.toString(prefCurrent.getInt("vibration_value", -1)) + " > " + vibrationOff.getAbsolutePath();
+                        su[vibrationCommand] = "echo " + prefCurrent.getInt("vibration_value", -1) + " > " + vibrationOff.getAbsolutePath();
                 }
             }
 
@@ -318,7 +310,7 @@ public final class TurnOffService extends SecondScreenIntentService {
                 // Manually update the sysfs value to guarantee that the backlight will restore
                 for(File backlightOff : U.backlightOff) {
                     if(backlightOff.exists()) {
-                        su[backlightCommand] = "echo " + Integer.toString(prefCurrent.getInt("backlight_value", -1)) + " > " + backlightOff.getAbsolutePath();
+                        su[backlightCommand] = "echo " + prefCurrent.getInt("backlight_value", -1) + " > " + backlightOff.getAbsolutePath();
                         break;
                     }
                 }
@@ -414,15 +406,9 @@ public final class TurnOffService extends SecondScreenIntentService {
         }
 
         // Determine if we need to stop Taskbar
-        boolean shouldDisableFreeform = false;
+        boolean shouldDisableFreeform = prefCurrent.getBoolean("freeform", false);
 
-        if(prefCurrent.getBoolean("freeform", false))
-            shouldDisableFreeform = true;
-
-        boolean shouldStopTaskbar = false;
-
-        if(prefCurrent.getBoolean("taskbar", false))
-            shouldStopTaskbar = true;
+        boolean shouldStopTaskbar = prefCurrent.getBoolean("taskbar", false);
 
         // Clear preferences and commit (for reliability)
         editor.clear();

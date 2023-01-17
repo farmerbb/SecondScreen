@@ -115,7 +115,7 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
 			}
 		}
 		catch(Exception ex) {
-			Log.e(TAG, "Error binding view: " + ex.toString());
+			Log.e(TAG, "Error binding view: " + ex);
 		}
 		
 		//if dependency is false from the beginning, disable the seek bar

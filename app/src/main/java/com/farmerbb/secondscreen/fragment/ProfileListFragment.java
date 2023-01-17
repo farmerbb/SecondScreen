@@ -117,7 +117,7 @@ public final class ProfileListFragment extends Fragment {
             listener = (Listener) activity;
         } catch (ClassCastException e) {
             // The activity doesn't implement the interface, throw exception
-            throw new ClassCastException(activity.toString()
+            throw new ClassCastException(activity
                                          + " must implement Listener");
         }
     }
@@ -264,17 +264,11 @@ public final class ProfileListFragment extends Fragment {
                 if("quick_actions".equals(prefCurrent.getString("filename", "0"))) {
                     SharedPreferences prefSaved = listener.getPrefQuickActions();
                     for(int i = 0; i < numOfFiles; i++) {
-                        if(profileList[0][i].equals(prefSaved.getString("original_filename", "0")))
-                            listView.setItemChecked(i, true);
-                        else
-                            listView.setItemChecked(i, false);
+                        listView.setItemChecked(i, profileList[0][i].equals(prefSaved.getString("original_filename", "0")));
                     }
                 } else {
                     for(int i = 0; i < numOfFiles; i++) {
-                        if(profileList[0][i].equals(prefCurrent.getString("filename", "0")))
-                            listView.setItemChecked(i, true);
-                        else
-                            listView.setItemChecked(i, false);
+                        listView.setItemChecked(i, profileList[0][i].equals(prefCurrent.getString("filename", "0")));
                     }
                 }
 
@@ -292,17 +286,11 @@ public final class ProfileListFragment extends Fragment {
                 if("quick_actions".equals(prefCurrent.getString("filename", "0"))) {
                     SharedPreferences prefSaved = listener.getPrefQuickActions();
                     for(int i = 0; i < numOfFiles; i++) {
-                        if(profileList[0][i].equals(prefSaved.getString("original_filename", "0")))
-                            listView.setItemChecked(i, true);
-                        else
-                            listView.setItemChecked(i, false);
+                        listView.setItemChecked(i, profileList[0][i].equals(prefSaved.getString("original_filename", "0")));
                     }
                 } else {
                     for(int i = 0; i < numOfFiles; i++) {
-                        if(profileList[0][i].equals(prefCurrent.getString("filename", "0")))
-                            listView.setItemChecked(i, true);
-                        else
-                            listView.setItemChecked(i, false);
+                        listView.setItemChecked(i, profileList[0][i].equals(prefCurrent.getString("filename", "0")));
                     }
                 }
 
@@ -319,17 +307,11 @@ public final class ProfileListFragment extends Fragment {
             if("quick_actions".equals(prefCurrent.getString("filename", "0"))) {
                 SharedPreferences prefSaved = listener.getPrefQuickActions();
                 for(int i = 0; i < numOfFiles; i++) {
-                    if(profileList[0][i].equals(prefSaved.getString("original_filename", "0")))
-                        listView.setItemChecked(i, true);
-                    else
-                        listView.setItemChecked(i, false);
+                    listView.setItemChecked(i, profileList[0][i].equals(prefSaved.getString("original_filename", "0")));
                 }
             } else {
                 for(int i = 0; i < numOfFiles; i++) {
-                    if(profileList[0][i].equals(prefCurrent.getString("filename", "0")))
-                        listView.setItemChecked(i, true);
-                    else
-                        listView.setItemChecked(i, false);
+                    listView.setItemChecked(i, profileList[0][i].equals(prefCurrent.getString("filename", "0")));
                 }
             }
 

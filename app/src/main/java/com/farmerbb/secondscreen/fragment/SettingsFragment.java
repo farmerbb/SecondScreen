@@ -70,7 +70,7 @@ public final class SettingsFragment extends PreferenceFragment implements OnPref
             listener = (Listener) activity;
         } catch (ClassCastException e) {
             // The activity doesn't implement the interface, throw exception
-            throw new ClassCastException(activity.toString()
+            throw new ClassCastException(activity
                     + " must implement Listener");
         }
     }
@@ -160,14 +160,11 @@ public final class SettingsFragment extends PreferenceFragment implements OnPref
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                // Override default Android "up" behavior to instead mimic the back button
-                this.onBackPressed();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == android.R.id.home) {// Override default Android "up" behavior to instead mimic the back button
+            this.onBackPressed();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     public void onBackPressed() {

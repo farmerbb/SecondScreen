@@ -21,9 +21,9 @@ import android.widget.Toast;
 // Shows a toast message inside ProfileLoadService and TurnOffService, where the standard toast
 // methods won't work.
 public final class ShowToast implements Runnable {
-    private Context context;
-    private int text;
-    private int length;
+    private final Context context;
+    private final int text;
+    private final int length;
 
     public ShowToast(Context context, int text, int length) {
         this.context = context;
@@ -32,13 +32,10 @@ public final class ShowToast implements Runnable {
     }
 
     public void run() {
-        switch(length) {
-            case Toast.LENGTH_LONG:
-                U.showToastLong(context, text);
-                break;
-            default:
-                U.showToast(context, text);
-                break;
+        if (length == Toast.LENGTH_LONG) {
+            U.showToastLong(context, text);
+        } else {
+            U.showToast(context, text);
         }
     }
 }

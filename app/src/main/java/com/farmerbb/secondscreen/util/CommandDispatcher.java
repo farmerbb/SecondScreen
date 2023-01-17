@@ -25,7 +25,7 @@ import java.util.List;
 
 public class CommandDispatcher {
 
-    private List<String> commands = new ArrayList<>();
+    private final List<String> commands = new ArrayList<>();
 
     private static CommandDispatcher theInstance;
 

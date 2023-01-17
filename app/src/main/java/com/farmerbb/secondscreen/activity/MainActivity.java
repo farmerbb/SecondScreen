@@ -201,7 +201,7 @@ SystemAlertPermissionDialogFragment.Listener {
     boolean returningFromGrantingSystemAlertPermission = false;
     String savedFilename;
 
-    private BroadcastReceiver showDialogsReceiver = new BroadcastReceiver() {
+    private final BroadcastReceiver showDialogsReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             showMoreDialogs();
