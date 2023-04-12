@@ -116,6 +116,7 @@ public final class U {
 
     public static final File[] backlightOff = {
             new File("/sys/class/leds/lcd-backlight", "brightness"),
+            new File("/sys/class/backlight/panel0-backlight", "brightness"),
             new File("/sys/class/backlight/pwm-backlight", "brightness"),
             new File("/sys/class/backlight/intel_backlight", "brightness"),
             new File("/sys/class/backlight/tegra-dsi-backlight.0", "brightness"),
