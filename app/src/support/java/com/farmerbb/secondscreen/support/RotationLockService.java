@@ -117,6 +117,8 @@ public abstract class RotationLockService extends Service implements ServiceInte
             params.gravity = Gravity.TOP | Gravity.START;
             params.screenOrientation = screenOrientation;
 
+            if (view != null) return;
+
             view = new View(this);
             windowManager.addView(view, params);
         }
