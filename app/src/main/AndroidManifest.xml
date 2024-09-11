@@ -16,7 +16,6 @@
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.farmerbb.secondscreen"
     android:installLocation="internalOnly" >
 
     <uses-feature
@@ -49,6 +48,8 @@
     <uses-permission-sdk-23 android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission-sdk-23 android:name="android.permission.WRITE_SECURE_SETTINGS"/>
     <uses-permission-sdk-23 android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission-sdk-23 android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
+    <uses-permission-sdk-23 android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission-sdk-23 android:name="com.farmerbb.secondscreen.support.USE_SUPPORT_LIBRARY"/>
 
     <uses-sdk
@@ -277,7 +278,11 @@
 
         <service
             android:name="com.farmerbb.secondscreen.service.BootService"
-            android:exported="true" >
+            android:exported="true"
+            android:foregroundServiceType="specialUse">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="This is a short-lived service that is required to be run in the foreground to accomplish its tasks"/>
         </service>
         <service
             android:name="com.farmerbb.secondscreen.service.DisableKeyboardService"
@@ -292,43 +297,83 @@
         </service>
         <service
             android:name="com.farmerbb.secondscreen.service.DisplayConnectionService"
-            android:exported="true" >
+            android:exported="true"
+            android:foregroundServiceType="specialUse">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="This foreground service is required for hosting broadcast receivers that listen to display connection events, which are hosted inside of a service instead of an activity"/>
         </service>
         <service
             android:name="com.farmerbb.secondscreen.service.LockDeviceService"
-            android:exported="true" >
+            android:exported="true"
+            android:foregroundServiceType="specialUse">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="This is a short-lived service that is required to be run in the foreground to accomplish its tasks"/>
         </service>
         <service
             android:name="com.farmerbb.secondscreen.service.NotificationService"
-            android:exported="true" >
+            android:exported="true"
+            android:foregroundServiceType="specialUse">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="This foreground service is required in order to access core functionality while the user is outside the app, via a notification with action buttons"/>
         </service>
         <service
             android:name="com.farmerbb.secondscreen.service.ProfileLoadService"
-            android:exported="true" >
+            android:exported="true"
+            android:foregroundServiceType="specialUse">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="This is a short-lived service that is required to be run in the foreground to accomplish its tasks"/>
         </service>
         <service
             android:name="com.farmerbb.secondscreen.service.SafeModeToggleService"
-            android:exported="true" >
+            android:exported="true"
+            android:foregroundServiceType="specialUse">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="This is a short-lived service that is required to be run in the foreground to accomplish its tasks"/>
         </service>
         <service
             android:name="com.farmerbb.secondscreen.service.ScreenOnService"
-            android:exported="true" >
+            android:exported="true"
+            android:foregroundServiceType="specialUse">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="This is a short-lived service that is required to be run in the foreground to accomplish its tasks"/>
         </service>
         <service
             android:name="com.farmerbb.secondscreen.service.TempBacklightOnService"
-            android:exported="true" >
+            android:exported="true"
+            android:foregroundServiceType="specialUse">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="This is a short-lived service that is required to be run in the foreground to accomplish its tasks"/>
         </service>
         <service
             android:name="com.farmerbb.secondscreen.service.TestOverscanService"
-            android:exported="true" >
+            android:exported="true"
+            android:foregroundServiceType="specialUse">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="This is a short-lived service that is required to be run in the foreground to accomplish its tasks"/>
         </service>
         <service
             android:name="com.farmerbb.secondscreen.service.TimeoutService"
-            android:exported="true" >
+            android:exported="true"
+            android:foregroundServiceType="specialUse">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="This is a short-lived service that is required to be run in the foreground to accomplish its tasks"/>
         </service>
         <service
             android:name="com.farmerbb.secondscreen.service.TurnOffService"
-            android:exported="true" >
+            android:exported="true"
+            android:foregroundServiceType="specialUse">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="This is a short-lived service that is required to be run in the foreground to accomplish its tasks"/>
         </service>
 
         <provider

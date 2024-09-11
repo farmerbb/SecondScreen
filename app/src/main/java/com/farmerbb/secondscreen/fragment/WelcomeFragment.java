@@ -108,28 +108,29 @@ public final class WelcomeFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle presses on the action bar items
-        switch(item.getItemId()) {
-            // Quick Actions button
-            case R.id.action_quick:
-                Intent intentQuick = new Intent(getActivity(), TaskerQuickActionsActivity.class);
-                intentQuick.putExtra("launched-from-app", true);
-                startActivity(intentQuick);
-                return true;
+        int itemId = item.getItemId();
 
-            // Settings button
-            case R.id.action_settings:
-                Intent intentSettings = new Intent(getActivity(), FragmentContainerActivity.class);
-                intentSettings.putExtra("tag", "SettingsFragment");
-                startActivity(intentSettings);
-                return true;
-
-            // About button
-            case R.id.action_about:
-                DialogFragment aboutFragment = new AboutDialogFragment();
-                aboutFragment.show(getFragmentManager(), "about");
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        // Quick Actions button
+        if (itemId == R.id.action_quick) {
+            Intent intentQuick = new Intent(getActivity(), TaskerQuickActionsActivity.class);
+            intentQuick.putExtra("launched-from-app", true);
+            startActivity(intentQuick);
+            return true;
+        }
+        // Settings button
+        else if (itemId == R.id.action_settings) {
+            Intent intentSettings = new Intent(getActivity(), FragmentContainerActivity.class);
+            intentSettings.putExtra("tag", "SettingsFragment");
+            startActivity(intentSettings);
+            return true;
+        }
+        // About button
+        else if (itemId == R.id.action_about) {
+            DialogFragment aboutFragment = new AboutDialogFragment();
+            aboutFragment.show(getFragmentManager(), "about");
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
         }
     }
 }

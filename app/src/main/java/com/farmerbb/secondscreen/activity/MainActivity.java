@@ -15,6 +15,7 @@
 
 package com.farmerbb.secondscreen.activity;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.ActivityManager;
@@ -42,6 +43,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
+import androidx.annotation.NonNull;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.appcompat.app.AppCompatActivity;
 import android.view.Window;
@@ -306,7 +308,7 @@ SystemAlertPermissionDialogFragment.Listener {
 
                 // Determine if we need to show any dialogs before we create the fragments
                 if(savedInstanceState == null)
-                    showDialogs();
+                    showDialogs(false);
 
                 // Read debug mode preference
                 if(isDebugModeEnabled(false))
@@ -512,7 +514,7 @@ SystemAlertPermissionDialogFragment.Listener {
             U.startService(this, serviceIntent);
 
             // Determine if we need to show any dialogs before we create the fragments
-            showDialogs();
+            showDialogs(false);
 
             // Set launcher shortcuts on API 25+
             setLauncherShortcuts();
@@ -914,8 +916,12 @@ SystemAlertPermissionDialogFragment.Listener {
         finish();
     }
 
-    private void showDialogs() {
-        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.M || U.hasElevatedPermissions(this))
+    private void showDialogs(boolean hasPreviouslyRequestedPermission) {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
+                && checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED
+                && !hasPreviouslyRequestedPermission) {
+            requestPermissions(new String[]{Manifest.permission.POST_NOTIFICATIONS}, 42);
+        } else if(Build.VERSION.SDK_INT < Build.VERSION_CODES.M || U.hasElevatedPermissions(this))
             showMoreDialogs();
         else
             startActivity(new Intent(this, UnableToStartActivity.class));
@@ -1070,5 +1076,11 @@ SystemAlertPermissionDialogFragment.Listener {
             savedFilename = null;
             onFirstLoadPositiveClick(null, filename, false);
         }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        showDialogs(true);
     }
 }

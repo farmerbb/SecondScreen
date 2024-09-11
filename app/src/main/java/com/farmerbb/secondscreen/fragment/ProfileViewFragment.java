@@ -266,45 +266,46 @@ public final class ProfileViewFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                // Override default Android "up" behavior to instead mimic the back button
-                onBackPressed();
-                return true;
+        int itemId = item.getItemId();
 
-            // Edit button
-            case R.id.action_edit:
-                Bundle bundle = new Bundle();
-                bundle.putString("filename", filename);
+        // Override default Android "up" behavior to instead mimic the back button
+        if (itemId == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        // Edit button
+        else if (itemId == R.id.action_edit) {
+            Bundle bundle = new Bundle();
+            bundle.putString("filename", filename);
 
-                Fragment fragment = new ProfileEditFragment();
-                fragment.setArguments(bundle);
+            Fragment fragment = new ProfileEditFragment();
+            fragment.setArguments(bundle);
 
-                getFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.profileViewEdit, fragment, "ProfileEditFragment")
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                        .commit();
+            getFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.profileViewEdit, fragment, "ProfileEditFragment")
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                    .commit();
 
-                return true;
-
-            // Delete button
-            case R.id.action_delete_2:
-                // Show toast if this is the currently active profile
-                SharedPreferences prefCurrent = U.getPrefCurrent(getActivity());
-                if("quick_actions".equals(prefCurrent.getString("filename", "0"))) {
-                    SharedPreferences prefSaved = U.getPrefQuickActions(getActivity());
-                    if(filename.equals(prefSaved.getString("original_filename", "0")))
-                        U.showToast(getActivity(), R.string.deleting_current_profile);
-                    else
-                        listener.showDeleteDialog();
-                } else if(filename.equals(prefCurrent.getString("filename", "0")))
+            return true;
+        }
+        // Delete button
+        else if (itemId == R.id.action_delete_2) {
+            // Show toast if this is the currently active profile
+            SharedPreferences prefCurrent = U.getPrefCurrent(getActivity());
+            if ("quick_actions".equals(prefCurrent.getString("filename", "0"))) {
+                SharedPreferences prefSaved = U.getPrefQuickActions(getActivity());
+                if (filename.equals(prefSaved.getString("original_filename", "0")))
                     U.showToast(getActivity(), R.string.deleting_current_profile);
                 else
                     listener.showDeleteDialog();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+            } else if (filename.equals(prefCurrent.getString("filename", "0")))
+                U.showToast(getActivity(), R.string.deleting_current_profile);
+            else
+                listener.showDeleteDialog();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
         }
     }
 

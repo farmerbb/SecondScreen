@@ -388,34 +388,35 @@ SharedPreferences.OnSharedPreferenceChangeListener {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()) {
-            case android.R.id.home:
-                // Override default Android "up" behavior to instead mimic the back button
-                onBackPressed(filename, false, true);
-                return true;
+        int itemId = item.getItemId();
 
-                // Save button
-            case R.id.action_save:
-                onBackPressed(filename, false, false);
-                return true;
-
-                // Delete button
-            case R.id.action_delete:
-                // Show toast if this is the currently active profile
-                SharedPreferences prefCurrent = U.getPrefCurrent(getActivity());
-                if("quick_actions".equals(prefCurrent.getString("filename", "0"))) {
-                    SharedPreferences prefSaved = U.getPrefQuickActions(getActivity());
-                    if(filename.equals(prefSaved.getString("original_filename", "0")))
-                        U.showToast(getActivity(), R.string.deleting_current_profile);
-                    else
-                        listener.showDeleteDialog();
-                } else if(filename.equals(prefCurrent.getString("filename", "0")))
+        // Override default Android "up" behavior to instead mimic the back button
+        if (itemId == android.R.id.home) {
+            onBackPressed(filename, false, true);
+            return true;
+        }
+        // Save button
+        else if (itemId == R.id.action_save) {
+            onBackPressed(filename, false, false);
+            return true;
+        }
+        // Delete button
+        else if (itemId == R.id.action_delete) {
+            // Show toast if this is the currently active profile
+            SharedPreferences prefCurrent = U.getPrefCurrent(getActivity());
+            if ("quick_actions".equals(prefCurrent.getString("filename", "0"))) {
+                SharedPreferences prefSaved = U.getPrefQuickActions(getActivity());
+                if (filename.equals(prefSaved.getString("original_filename", "0")))
                     U.showToast(getActivity(), R.string.deleting_current_profile);
                 else
                     listener.showDeleteDialog();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+            } else if (filename.equals(prefCurrent.getString("filename", "0")))
+                U.showToast(getActivity(), R.string.deleting_current_profile);
+            else
+                listener.showDeleteDialog();
+            return true;
+        } else {
+            return super.onOptionsItemSelected(item);
         }
     }
 
