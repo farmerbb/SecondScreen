@@ -19,8 +19,8 @@ android {
         //noinspection OldTargetApi
         targetSdkVersion 34
 
-        versionCode 185
-        versionName "2.9.3"
+        versionCode 186
+        versionName "2.9.4"
 
         resConfigs "en", "es", "fr", "sk", "nl", "it", "zh"
         vectorDrawables.useSupportLibrary = true
